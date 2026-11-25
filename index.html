@@ -934,6 +934,11 @@ img.gico{width:1.4em;height:1.4em;object-fit:contain;vertical-align:-0.35em;filt
 .bsp .spimg,.bsp .spemo{height:42px;width:auto;font-size:30px}.bsp small{font-size:9.5px;line-height:1.1;text-align:center}.bsp em{font-style:normal;font-size:9.5px;color:#ffd166}.bsp.no{opacity:.4;filter:grayscale(.8)}
 .bagEq{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:6px}
 h3 img.uiico{height:24px;width:auto;vertical-align:middle}
+.rkl{display:flex;flex-direction:column;gap:5px}.rkr{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:12px;background:rgba(20,15,40,.7);border:1px solid rgba(255,255,255,.08)}
+.rkr.top{border-color:rgba(255,209,102,.5);background:linear-gradient(90deg,rgba(255,209,102,.18),rgba(20,15,40,.7))}.rkr.me{border-color:#7dffcf;box-shadow:0 0 0 1.5px #7dffcf inset}
+.rkn{width:30px;text-align:center;font-size:20px}.rkn b{font-size:14px;color:var(--muted)}.rka img.art{height:38px;width:38px;object-fit:contain}.rka{width:40px;text-align:center}
+.rkm{flex:1;min-width:0;display:flex;flex-direction:column}.rkm b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rkm small{font-size:11px;color:var(--muted)}.rks{font-weight:800;color:#ffd166;font-family:Georgia,serif}
+.rkme{margin-top:8px;padding:8px;border-radius:10px;background:rgba(125,255,207,.1);border:1px solid rgba(125,255,207,.35);font-size:13px;text-align:center}
 .hubhead b img.uiico{height:30px;vertical-align:-8px;margin-right:2px}
 .shtabs button:has(i){display:flex;flex-direction:column;align-items:center;gap:1px;padding:4px 1px 5px;font-size:12px;line-height:1.15;min-width:0}.shtabs button i{font-style:normal}
 img.elico{height:1.2em;vertical-align:-.25em}
@@ -1486,7 +1491,7 @@ const UI_READY = new Set(['ui_adv.webp', 'ui_altar.webp', 'ui_boss.webp', 'ui_ch
 const ITEMI = (typeof window!=='undefined'&&window.ITEM_IMG)||{};
 const clsIco = k => ITEMI['cls_'+k] ? `<img class="uiico" src="${ITEMI['cls_'+k]}" alt="">` : (CLASSES[k]?CLASSES[k].icon:'');
 const uiIco = (k, emoji) => ITEMI[k] ? `<img class="uiico" src="${ITEMI[k]}" alt="">` : UI_READY.has('ui_'+k+'.webp') ? `<img class="uiico" src="art/ui_${k}.webp" alt="">` : emoji;
-const PAGE_BG = {bag:'bg_treasure.jpg', skin:'bg_wardrobe.jpg', troop:'bg_barracks.jpg', forge:'bg_forge.jpg', shop_shard:'bg_market.jpg', shop_medal:'bg_treasure.jpg', shop_skin:'bg_potionshop.jpg', shop_pvp:'bg_castle.jpg', adv:'bg_sky.jpg', perm:'bg_treasure.jpg', chars:'bg_altar.jpg', gacha:'bg_summon.jpg'};
+const PAGE_BG = {rank:'bg_summon.jpg', bag:'bg_treasure.jpg', skin:'bg_wardrobe.jpg', troop:'bg_barracks.jpg', forge:'bg_forge.jpg', shop_shard:'bg_market.jpg', shop_medal:'bg_treasure.jpg', shop_skin:'bg_potionshop.jpg', shop_pvp:'bg_castle.jpg', adv:'bg_sky.jpg', perm:'bg_treasure.jpg', chars:'bg_altar.jpg', gacha:'bg_summon.jpg'};
 const LIGHT_BG = new Set(['gacha','skin']);
 const pageBg = k => PAGE_BG[k] ? (LIGHT_BG.has(k) ? `style="background:linear-gradient(rgba(14,10,30,.15),rgba(14,10,30,.35) 45%,rgba(14,10,30,.85)),url(art/${PAGE_BG[k]}) center top/cover no-repeat #140f28"` : `style="background:linear-gradient(rgba(14,10,30,.55),rgba(14,10,30,.88) 40%,rgba(14,10,30,.95)),url(art/${PAGE_BG[k]}) center top/cover no-repeat #140f28"`) : '';
 function evArt(e){ if (e && e.qart) return e.qart; return (e && ART.ev[e.enhancing||e.type==='mEquip' ? 'mEquip' : e.type]) || {}; }
@@ -2198,12 +2203,24 @@ function fight(mons, onWin){
   if (UI) { S.phase='battle'; UI.playBattle(res, mons, finish); } else finish();
 }
 function score(){ const boss = S.over && S.over.win ? bossLevel()*300 : 0; return S.floor*10 + S.lv*20 + boss + aliveMates()*100 + gearScore(); }
+/* คะแนนจัดอันดับหอคอยไร้สิ้นสุด: แยกจากคะแนนเหรียญตรา คิดจากหลายอย่างรวมกัน */
+function rankScore(win){ const st=stats(), t=S.st||{}, bl=bossLevel(), sk=(S.skillLv||[]).reduce((a,b)=>a+(b||0),0);
+  const pw=Math.round((st.maxhp||0)/10 + Math.max(st.atk||0,st.matk||0)*2 + (st.def||0) + (st.mdef||0) + (st.cri||0)*20 + Math.max(0,(st.cridmg||0)-100)*4 + (st.pen||0)*15 + (st.spd||0)*2);
+  const bossPart = win ? bl*2000 : (t.bossHp&&t.bossHp.max ? Math.round((1-t.bossHp.left/t.bossHp.max)*bl*1000) : 0);
+  const parts=[['🧭',`ชั้นที่ไปถึง ${S.floor} x 100`,S.floor*100],['⭐',`เลเวลตัวละคร ${S.lv} x 40`,S.lv*40],
+    ['😈',win?`ปราบบอส Lv.${bl} x 2,000`:`ดาเมจใส่บอส Lv.${bl}`,bossPart],['🛡️','อุปกรณ์ (คะแนนอุปกรณ์ x 6)',gearScore()*6],
+    ['📘',`เลเวลสกิลรวม ${sk} x 120`,sk*120],['💪','พลังจากค่าสถานะ',pw],['👾',`มอนสเตอร์ที่กำจัด ${S.kills||0} x 5`,(S.kills||0)*5],
+    ['🤝',`เพื่อนที่รอด ${aliveMates()} x 500`,aliveMates()*500],['🌟',`ดาววีรชน ${starOf(S.char)} x 300`,starOf(S.char)*300]];
+  let total=parts.reduce((a,p)=>a+p[2],0); const mults=[];
+  if (S.curses){ mults.push(['☠️',`โบนัสคำสาป ${S.curses} ครั้ง`,1+0.1*S.curses]); }
+  if (win && S.cls==='villager'){ mults.push(['🌾','โบนัสชาวบ้านปราบบอส',1.3]); }
+  mults.forEach(x=>total*=x[2]); return {total:Math.round(total), parts, mults}; }
 function endRun(win, cause){
   if (S.over) return;
   S.over = {win, cause: cause||''}; if (S.daily) rng = Math.random;
   const sc = score(); let medals = Math.floor(sc/100);
   if (win && S.cls==='villager'){ medals = Math.floor(medals*1.5); S.over.villagerWin = true; }
-  S.over.score = sc; S.over.medals = medals;
+  S.over.score = sc; S.over.medals = medals; S.over.rank = rankScore(win);
   S.phase = win?'victory':'dead';
   saveMeta(sc, medals, win);
 }
@@ -2627,7 +2644,8 @@ function dailyLogin(m){ const k=dayKey(); if (m.login.last===k) return 0;
 /* จบรอบ */
 function saveMeta(sc, medals, win){
   const m = loadMeta(), rw = {tickets:0, shards:0, newChar:null, char:null, mission:0, rec:null};
-  m.medals+=medals; m.best=Math.max(m.best,sc); m.runs++; if(win) m.wins++; if(win && S.cls==='villager') m.villagerWins=(m.villagerWins||0)+1;
+  m.medals+=medals; m.best=Math.max(m.best,sc); m.runs++;
+  { const rk=S.over&&S.over.rank?S.over.rank.total:0; rw.rankPrev=m.rankBest||0; if (rk>(m.rankBest||0)){ m.rankBest=rk; m.rankInfo={floor:S.floor,lv:S.lv,win:!!win,char:S.char?S.char.id:null,cls:S.cls,t:Date.now()}; rw.rankNew=true; } } if(win) m.wins++; if(win && S.cls==='villager') m.villagerWins=(m.villagerWins||0)+1;
   if (win && S.char){ const id=S.char.id, a=ALLCHARS[id]; rw.char=id; const snap=snapshot();
     if (!owned(m,id)){ m.chars[id]={star:1, form:false, recs:[snap], main:0}; rw.newChar=id; rw.tickets+=1; rw.rec={placed:true, first:true};
       if (!m.show.main) m.show.main=id; }
@@ -2643,7 +2661,8 @@ function saveMeta(sc, medals, win){
   m.daily.runs++; if (m.daily.runs>=3 && !m.daily.mission){ m.daily.mission=true; rw.mission=2; rw.tickets+=2; }
   if (S.daily){ const b=m.dailyBest&&m.dailyBest.day===S.daily ? m.dailyBest : null; rw.daily={floor:S.floor, win, prev:b?b.floor:0};
     if (!b){ rw.tickets+=2; rw.dailyFirst=2; }
-    if (!b || S.floor>b.floor || (win&&!b.win)) m.dailyBest={day:S.daily, floor:Math.max(S.floor,b?b.floor:0), win:win||!!(b&&b.win), score:Math.max(sc,b?b.score:0)}; }
+    const rk=S.over&&S.over.rank?S.over.rank.total:0;
+    if (!b || S.floor>b.floor || (win&&!b.win) || rk>(b.rank||0)) m.dailyBest={day:S.daily, floor:Math.max(S.floor,b?b.floor:0), win:win||!!(b&&b.win), score:Math.max(sc,b?b.score:0), rank:Math.max(rk,b&&b.rank||0)}; }
   m.tickets += rw.tickets; storeMeta(m);
   if (S.over) S.over.rw = rw;
 }
@@ -3235,7 +3254,8 @@ if (typeof document !== 'undefined') (function(){
   function idleRow(m){ const d=m.idle, mins=chestMins(m), ok=mins>=CHEST_MIN, ms=m.daily.mission?'✅':`${m.daily.runs}/3`, D=dhDragon(), dt=DH_TRIES-dhState(m).tries.n;
     return `<div class="iside l"><button class="sbtn chest ${ok?'ready':''}" data-act="ichest"><i>${uiIco('chest','🎁')}</i><span id="ichestt">${hm(mins)}</span>
         <div class="cbar"><i id="ichestb" style="width:${mins/CHEST_MAX*100}%"></i></div><b id="ichest">${ok?'กดรับได้':`อีก ${CHEST_MIN-mins} น.`}</b></button>
-      <button class="sbtn" data-act="imission"><i>${uiIco('mission','🎯')}</i><span>ภารกิจ</span><b>${ms}</b></button></div>
+      <button class="sbtn" data-act="imission"><i>${uiIco('mission','🎯')}</i><span>ภารกิจ</span><b>${ms}</b></button>
+      <button class="sbtn" data-act="hub" data-k="rank"><i>${uiIco('rank','🏆')}</i><span>อันดับ</span></button></div>
       <div class="iside r"><button class="sbtn ev" data-act="dhopen" style="--dc:${D.col}"><i>${DRAGON_READY.has(`dragon_${D.el}.webp`)?`<img class="uiico" src="art/dragon_${D.el}.webp" alt="">`:'🐲'}</i><span>ล่ามังกร</span><b>${dt>0?`เหลือ ${dt}`:'ครบแล้ว'}</b></button>
       ${d.farm?`<button class="sbtn fight" id="ifight" data-act="ifight"><i>${d.sub===9?uiIco('boss','👹'):'⚔️'}</i><span>${d.sub===9?'สู้บอส':'ลุยต่อ'}</span></button>`:''}</div>`; }
   function altPick(m,c,sl){ const d=m.idle, mine=Object.entries(ALLCHARS).filter(([id,x])=>heroIdleCls(id)===c&&m.chars[id]);
@@ -4128,9 +4148,36 @@ if (typeof document !== 'undefined') (function(){
       else if (h==='bag'){ hub='bag'; bagTab=t; bagItem=null; } else if (h==='adv'){ hub='adv'; advPrep=t==='prep'; } else hub=h;
       render(); window.scrollTo(0,0); const o=document.querySelector('.overlay'); if (o) o.scrollTop=0; return true; }
     return false; }
+  /* ---------- ตารางอันดับ ---------- */
+  let rkTab='endless'; const RK_CACHE={}, RK_TABS=[['endless','mode_endless','หอคอยไร้สิ้นสุด'],['daily','ic_calendar','รายวัน'],['hundred','mode_hundred','ร้อยชั้น'],['dragon','boss','ล่ามังกร']];
+  const rkPeriod=(k,m)=>k==='daily'?dayKey():k==='dragon'?String((m.dh&&m.dh.wk)||'-'):'all';
+  function rkLoad(k,force){ const m=loadMeta(), per=rkPeriod(k,m), key=k+'|'+per, C=window.__dqCloud;
+    if (!C||!C.lbTop){ RK_CACHE[key]={err:'ระบบอันดับใช้ได้บนเว็บเกมเท่านั้น'}; return; }
+    if (RK_CACHE[key]&&!force&&(RK_CACHE[key].loading||Date.now()-RK_CACHE[key].t<30000)) return;
+    RK_CACHE[key]=Object.assign(RK_CACHE[key]||{},{loading:true});
+    Promise.all([C.lbTop(k,per), C.auth?C.lbMine(k,per).catch(()=>null):Promise.resolve(null)])
+      .then(([top,mine])=>{ RK_CACHE[key]={top,mine,t:Date.now()}; }).catch(e=>{ RK_CACHE[key]={err:'โหลดอันดับไม่ได้ ตรวจอินเทอร์เน็ตแล้วลองใหม่',t:0}; })
+      .then(()=>{ if (hub==='rank') render(); }); }
+  function rkIco(k){ const t=RK_TABS.find(x=>x[0]===k); return t[1].startsWith('mode_')?`<img class="uiico" src="art/${t[1]}.webp" alt="">`:uiIco(t[1],'🏆'); }
+  const rkEsc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]);
+  function rkRow(r,i,me){ const a=r.hero&&ALLCHARS[r.hero], d=r.detail||{}, sub=rkTab==='endless'||rkTab==='daily'?`ชั้น ${d.floor||'-'} · Lv.${d.lv||'-'}${d.win?' · ปราบบอส':''}`:'';
+    const medal=i<3?['🥇','🥈','🥉'][i]:`<b>${i+1}</b>`;
+    return `<div class="rkr ${me?'me':''} ${i<3?'top':''}"><span class="rkn">${medal}</span><span class="rka">${a?charArt(a.c,false,true):'🙂'}</span><span class="rkm"><b>${rkEsc(r.name||'ผู้กล้า')}</b>${sub?`<small>${sub}</small>`:''}</span><span class="rks">${fmt(r.score)}${rkTab==='hundred'?' ชั้น':''}</span></div>`; }
+  function hubRank(m){ rkLoad(rkTab); const per=rkPeriod(rkTab,m), D=RK_CACHE[rkTab+'|'+per]||{}, C=window.__dqCloud, uid=C&&C.auth&&C.auth.user.id;
+    const tabs=`<div class="gtabs btabs">${RK_TABS.map(([k,ic,n])=>`<button class="${rkTab===k?'on':''}" data-act="rktab" data-k="${k}"><i>${rkIco(k)}</i><span>${n}</span></button>`).join('')}</div>`;
+    const note={endless:'คะแนนสูงสุดตลอดกาล คิดจากชั้น เลเวล บอส อุปกรณ์ สกิล ค่าสถานะ และอื่นๆ',daily:'คะแนนสูงสุดของด่านท้าทายวันนี้ รีเซ็ตทุกวันตอนตี 5',hundred:'จำนวนชั้นที่ผ่านในหอคอยร้อยชั้น',dragon:'ดาเมจสูงสุดใน 1 การต่อสู้ของสัปดาห์นี้ รีเซ็ตทุกสัปดาห์'}[rkTab];
+    let body;
+    if (D.err) body=`<p class="csd">${D.err}</p>`;
+    else if (!D.top) body=`<p class="csd" style="text-align:center">กำลังโหลดอันดับ…</p>`;
+    else body=D.top.length?`<div class="rkl">${D.top.map((r,i)=>rkRow(r,i,r.user_id===uid)).join('')}</div>`:`<p class="csd" style="text-align:center">ยังไม่มีใครติดอันดับ เป็นคนแรกเลย!</p>`;
+    const mine = !uid ? `<div class="rkme">เข้าสู่ระบบเพื่อติดอันดับ <button class="mini" data-cloud="login">เข้าสู่ระบบ</button></div>`
+      : D.mine&&D.mine.rank ? `<div class="rkme">อันดับของคุณ <b>#${fmt(D.mine.rank)}</b> จาก ${fmt(D.mine.total)} คน · ${fmt(D.mine.score)}${rkTab==='hundred'?' ชั้น':''}</div>`
+      : D.top ? `<div class="rkme">คุณยังไม่ติดอันดับในหมวดนี้</div>` : '';
+    return `<div class="overlay hub" ${pageBg('rank')}>${hubHead(m,'🏆 ตารางอันดับ')}${tabs}<div class="sumbox"><div class="csd">${note}</div>${mine}</div><div class="sumbox">${body}</div>
+      <button class="choice alt wide" data-act="rkreload"><span>🔄 รีเฟรช</span></button>${nav()}</div>`; }
   function hubView(){ const m=loadMeta();
     const W = wPop ? worldPop() : '';
-    if (hub==='adv') return hubAdv(m)+W; if (hub==='perm'){ hub='shop'; shTab='medal'; } if (hub==='shop') return hubShop(m)+W; if (hub==='troop') return hubTroop(m)+W; if (hub==='dragon') return hubDragon(m)+W; if (hub==='hundred') return hubHundred(m)+W; if (hub==='relicbag') return hubRelicBag(m)+W; if (hub==='bag') return hubBag(m)+W; if (hub==='spirits') return hubSpirits(m)+W; if (hub==='nest') return hubNest(m)+W; if (hub==='chars') return hubChars(m)+charPopup(m)+tryPopHtml(m)+W; if (hub==='gacha') return hubGacha(m)+W;
+    if (hub==='adv') return hubAdv(m)+W; if (hub==='perm'){ hub='shop'; shTab='medal'; } if (hub==='shop') return hubShop(m)+W; if (hub==='troop') return hubTroop(m)+W; if (hub==='dragon') return hubDragon(m)+W; if (hub==='hundred') return hubHundred(m)+W; if (hub==='relicbag') return hubRelicBag(m)+W; if (hub==='bag') return hubBag(m)+W; if (hub==='rank') return hubRank(m)+W; if (hub==='spirits') return hubSpirits(m)+W; if (hub==='nest') return hubNest(m)+W; if (hub==='chars') return hubChars(m)+charPopup(m)+tryPopHtml(m)+W; if (hub==='gacha') return hubGacha(m)+W;
     return hubHome(m)+W; }
   function hubAct(act, b){
     const m = loadMeta();
@@ -4155,6 +4202,8 @@ if (typeof document !== 'undefined') (function(){
     if (/^ht/.test(act) && htAct(act,b)) return true;
     if (/^rb/.test(act) && rbAct(act,b)) return true;
     if (/^bag/.test(act) && bagAct(act,b)) return true;
+    if (act==='rktab'){ rkTab=b.dataset.k; render(); return true; }
+    if (act==='rkreload'){ const C=window.__dqCloud; Promise.resolve(C&&C.lbSync?C.lbSync():0).then(()=>rkLoad(rkTab,true)); render(); return true; }
     if (/^(sp|nest)/.test(act) && spAct(act,b)) return true;
     if (/^rl/.test(act) && relicAct(act,b)) return true;
     if (act==='frset'){ const m1=loadMeta(); m1.frame=b.dataset.k; storeMeta(m1); render(); return true; }
@@ -4305,6 +4354,10 @@ if (typeof document !== 'undefined') (function(){
           ${row('🏆','<b>คะแนนรวม</b>',`<span style="color:var(--gold)">${fmt(o.score)}</span>`)}
           ${row('🎖️','เหรียญตราที่ได้',`<span style="color:var(--gold)">+${o.medals}</span>`)}
           ${row('📈','คะแนนสูงสุดของคุณ',fmt(m.best))}</div>
+        ${o.rank?`<div class="sumbox rkbox"><h3>${uiIco('rank','🏅')} คะแนนจัดอันดับ</h3>${o.rank.parts.filter(p=>p[2]).map(p=>row(p[0],p[1],fmt(p[2]))).join('')}
+          ${o.rank.mults.map(x=>row(x[0],x[1],'x'+x[2].toFixed(1))).join('')}
+          ${row('🏅','<b>คะแนนจัดอันดับรอบนี้</b>',`<span style="color:var(--gold);font-size:18px">${fmt(o.rank.total)}</span>`)}
+          ${row('📈','สถิติสูงสุดของคุณ',(o.rw&&o.rw.rankNew)?`<span style="color:var(--exp)">${fmt(m.rankBest)} สถิติใหม่!</span>`:fmt(m.rankBest||0))}</div>`:''}
         ${(()=>{ const rw=o.rw||{}, rows=[], r=rw.rec;
           if (rw.newChar) rows.push(row(charArt(S.char),'ตัวละครใหม่ถาวร!',`<span style="color:var(--gold)">${S.char.name}</span>${S.char.hidden?' (อาชีพลับ!)':''}`));
           else if (rw.char) rows.push(row(charArt(S.char),`เศษ ${S.char.name}`,`+${rw.shards}`));
@@ -4691,7 +4744,7 @@ if (typeof document !== 'undefined') (function(){
     d.querySelector('#dql').onclick=async()=>{ set(K_DIRTY,'1'); await push(true); close(); };
   }
   async function logout(){ await push(true); try{ await req('/auth/v1/logout',{method:'POST'},true); }catch(e){}
-    auth=null; [K_AUTH,K_TS,K_UID,K_DIRTY,K_GUEST,'dq_meta'].forEach(k=>set(k,null)); location.reload(); }
+    auth=null; [K_AUTH,K_TS,K_UID,K_DIRTY,K_GUEST,'dq_meta','dq_lb_sent'].forEach(k=>set(k,null)); location.reload(); }
   // ส่วนบัญชีในหน้าตั้งค่า (เกมเรียกผ่าน window.cloudHtml)
   function paintStatus(){ const e=document.querySelector('.cloudbox .cst'); if (e&&auth) e.textContent=status||'☁️ เซฟจะขึ้นบัญชีอัตโนมัติ'; }
   window.cloudHtml=function(){ return auth
@@ -4707,7 +4760,26 @@ if (typeof document !== 'undefined') (function(){
   // เริ่มต้น
   const LIVE=/github\.io$/.test(location.hostname)||location.protocol==='file:';   // หน้าล็อกอินเด้งเองเฉพาะเว็บจริง (ในแชท Claude ต่อเซิร์ฟเวอร์ไม่ได้)
   fromEmailLink().then(done=>{ if (done) return; if (auth) afterLogin(false); else if (LIVE && get(K_GUEST)!=='1') showAuth(); });
-  window.__dqCloud={push,pull,get auth(){ return auth; }};
+  /* ---------- ตารางอันดับ ---------- */
+  const rpc=(fn,args)=>userReq('/rest/v1/rpc/'+fn,{method:'POST',body:JSON.stringify(args)});
+  async function lbTop(board,period){ return await req(`/rest/v1/leaderboard?select=user_id,score,name,hero,detail&board=eq.${board}&period=eq.${encodeURIComponent(period)}&order=score.desc,updated_at.asc&limit=100`,{method:'GET'},!!auth); }
+  async function lbMine(board,period){ const r=await rpc('my_rank',{p_board:board,p_period:period}); return r&&r[0]||null; }
+  let lbBusy=false;
+  async function lbSync(){ if (!auth||lbBusy) return; lbBusy=true;
+    try{ let m; try{ m=JSON.parse(get('dq_meta')||'null'); }catch(e){} if (!m){ lbBusy=false; return; }
+      let sent={}; try{ sent=JSON.parse(get('dq_lb_sent')||'{}'); }catch(e){}
+      const name=(m.name||'ผู้กล้า').slice(0,20), hero=(m.show&&m.show.main)||null, d=new Date(Date.now()-5*3600e3), today=d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
+      const list=[];
+      if (m.rankBest) list.push(['endless','all',m.rankBest,m.rankInfo||{}]);
+      if (m.dailyBest&&m.dailyBest.day===today&&m.dailyBest.rank) list.push(['daily',today,m.dailyBest.rank,{floor:m.dailyBest.floor,win:m.dailyBest.win}]);
+      if (m.ht&&m.ht.best) list.push(['hundred','all',m.ht.best,{}]);
+      if (m.dh&&m.dh.best&&m.dh.wk!=null) list.push(['dragon',String(m.dh.wk),Math.round(m.dh.best),{slain:!!m.dh.slain}]);
+      for (const [b,per,sc,det] of list){ const k=b+'|'+per; if (sent[k]&&sent[k].s>=sc&&sent[k].n===name&&sent[k].h===hero) continue;
+        try{ await rpc('submit_score',{p_board:b,p_period:per,p_score:sc,p_name:name,p_hero:hero,p_detail:det}); sent[k]={s:sc,n:name,h:hero}; }catch(e){} }
+      const keep={}; Object.keys(sent).forEach(k=>{ if (/^(endless|hundred)\|/.test(k)||k==='daily|'+today||k.startsWith('dragon|')) keep[k]=sent[k]; }); set('dq_lb_sent',JSON.stringify(keep));
+    }catch(e){} lbBusy=false; }
+  const _push=push; push=async function(f){ await _push(f); lbSync(); };
+  window.__dqCloud={push,pull,lbTop,lbMine,lbSync,get auth(){ return auth; }};
 })();
 </script>
 </body>
