@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="th"><head><meta charset="utf-8">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1080px;height:1350px;overflow:hidden;background:#120b1e;font-family:"Sarabun",sans-serif;color:#fff4dc}
+.p{position:relative;width:1080px;height:1350px;overflow:hidden}
+.bg{position:absolute;left:0;right:0;top:0;height:900px;background:url(../art/bg_loading.webp) center 18%/cover no-repeat}
+.fade{position:absolute;left:0;right:0;top:0;height:900px;background:linear-gradient(180deg,rgba(18,11,30,.62) 0%,rgba(18,11,30,.05) 30%,rgba(18,11,30,.1) 55%,#120b1e 98%)}
+.glow{position:absolute;left:-200px;right:-200px;top:820px;height:700px;background:radial-gradient(ellipse at 50% 30%,rgba(90,50,150,.55),transparent 65%)}
+.top{position:absolute;top:44px;left:0;right:0;text-align:center}
+.badge{display:inline-block;font-family:"Mitr";font-weight:500;font-size:24px;letter-spacing:1px;color:#3a2600;background:linear-gradient(180deg,#ffe58a,#ffbf2e 55%,#e8901a);padding:6px 22px;border-radius:999px;box-shadow:0 4px 0 #9a5a0a}
+.logo{margin-top:22px;line-height:1.02;filter:drop-shadow(0 0 26px rgba(18,11,30,.85))}
+.l1{display:block;font-family:"Mitr";font-weight:500;font-size:44px;color:#fff4d8;letter-spacing:3px;text-shadow:0 3px 0 #5a2a0a}
+.l2{display:block;font-family:"Mitr";font-weight:600;font-size:118px;color:#ffd84a;text-shadow:0 -3px 0 #fff4b8,0 4px 0 #f08c12,0 9px 0 #4a1a06,0 0 40px rgba(255,170,60,.65)}
+.tag{margin-top:16px;font-family:"Mitr";font-size:32px;color:#fff;text-shadow:0 2px 8px #000,0 0 4px #000}
+.mid{position:absolute;top:760px;left:50px;right:50px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.chip{text-align:center;background:rgba(24,15,42,.88);border:2px solid rgba(255,211,77,.5);border-radius:20px;padding:10px 4px 12px}
+.chip b{display:block;font-family:"Mitr";font-weight:600;font-size:52px;line-height:1.05;color:#ffd34d}
+.chip span{font-size:22px;color:#d9cdf2}
+.feat{margin-top:22px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.f{display:flex;align-items:center;gap:14px;background:rgba(32,22,52,.85);border:1.5px solid rgba(201,163,74,.35);border-radius:18px;padding:12px 16px}
+.f img{width:60px;height:60px;object-fit:contain;flex:0 0 auto}
+.f b{display:block;font-family:"Mitr";font-weight:500;font-size:25px;color:#fff4dc;line-height:1.2}
+.f small{font-size:19px;color:#c9bce2;line-height:1.3;display:block}
+.heroes{position:absolute;left:0;right:0;top:1048px;display:flex;justify-content:center;align-items:flex-end}
+.heroes img{height:150px;margin:0 -12px;filter:drop-shadow(0 8px 10px rgba(0,0,0,.6))}
+.heroes img.sil{filter:brightness(0) drop-shadow(0 0 10px rgba(255,140,240,.9));opacity:.9;height:138px}
+.soon{position:absolute;top:1205px;right:30px;z-index:3;font-family:"Mitr";font-size:20px;color:#7dffcf;background:rgba(18,11,30,.85);border:1.5px solid #7dffcf;border-radius:999px;padding:4px 14px;transform:rotate(4deg)}
+.bot{position:absolute;left:0;right:0;bottom:0;height:118px;background:linear-gradient(180deg,rgba(18,11,30,0),#2a1a48);display:flex;align-items:center;justify-content:center;gap:22px}
+.cta{font-family:"Mitr";font-weight:600;font-size:38px;color:#3a2600;background:linear-gradient(180deg,#ffe58a,#ffbf2e 55%,#e8901a);padding:12px 40px;border-radius:20px;box-shadow:0 6px 0 #9a5a0a,0 10px 30px rgba(255,170,40,.4)}
+.cta2{text-align:left;font-size:23px;line-height:1.35;color:#fff4dc}
+.cta2 b{font-family:"Mitr";font-weight:500;color:#7dffcf}
+</style></head><body><div class="p">
+<div class="bg"></div><div class="fade"></div><div class="glow"></div>
+<div class="top"><span class="badge">🎮 เกมใหม่ · เล่นฟรี</span>
+  <div class="logo"><span class="l1">ผู้กล้าแห่ง</span><span class="l2">ดันเจี้ยนไร้สิ้นสุด</span></div>
+  <div class="tag">เริ่มจากชาวบ้านธรรมดา สู่ผู้กล้าแห่งหอคอยที่ไม่มีวันสิ้นสุด</div></div>
+<div class="mid">
+  <div class="stats">
+    <div class="chip"><b>36</b><span>วีรชน</span></div><div class="chip"><b>108</b><span>สกินชุด</span></div>
+    <div class="chip"><b>10</b><span>ดินแดน · บอส</span></div><div class="chip"><b>6</b><span>โหมดเกม</span></div></div>
+  <div class="feat">
+    <div class="f"><img src="../art/mode_endless.webp"><div><b>หอคอยไร้สิ้นสุด</b><small>เริ่มใหม่ทุกรอบ ไต่ให้สูงที่สุด</small></div></div>
+    <div class="f"><img id="i1" src=""><div><b>12 อาชีพ + อาชีพลับ</b><small>เลือกเส้นทาง ปลุกวีรชนคลาส 2</small></div></div>
+    <div class="f"><img id="i2" src=""><div><b>ตารางอันดับ</b><small>แข่งคะแนนกับผู้เล่นทั่วประเทศ</small></div></div>
+    <div class="f"><img src="../art/ui_altar.webp"><div><b>เซฟออนไลน์</b><small>เล่นต่อได้ทั้งมือถือและคอม</small></div></div>
+  </div>
+</div>
+<div class="soon">✨ วีรชนใหม่กำลังจะมา</div>
+<div class="heroes">
+  <img src="../art/char_shada.webp"><img src="../art/char_celeste.webp"><img src="../art/char_artemis.webp"><img src="../art/char_leo.webp" style="height:172px;position:relative;z-index:2"><img src="../art/char_luna.webp"><img src="../art/char_blaze.webp"><img src="../art/char_athena.webp"><img class="sil" src="../art/char_nameless.webp">
+</div>
+<div class="bot"><div class="cta">⚔️ เล่นเลย</div><div class="cta2"><b>ลิงก์อยู่ในโพสต์ 👇</b><br>เปิดบนเบราว์เซอร์ได้ทันที ไม่ต้องติดตั้ง</div></div>
+</div>
+<script src="../art/items.js"></script>
+<script>const I=window.ITEM_IMG||{}; document.getElementById('i1').src=I.cls_warrior||''; document.getElementById('i2').src=I.rank||'';</script>
+</body></html>
