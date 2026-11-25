@@ -2834,9 +2834,9 @@ if (typeof document !== 'undefined') (function(){
       <div class="sndset"><div class="pop-r"><span>🎵 เสียงเพลง</span><b id="sv_mus">${Math.round(SND.set.mus*100)}%</b></div><input type="range" min="0" max="100" value="${Math.round(SND.set.mus*100)}" oninput="sndVol('mus',this.value)">
         <div class="pop-r"><span>🔊 เสียงเอฟเฟกต์</span><b id="sv_sfx">${Math.round(SND.set.sfx*100)}%</b></div><input type="range" min="0" max="100" value="${Math.round(SND.set.sfx*100)}" oninput="sndVol('sfx',this.value)"></div>
       <div class="pbtns"><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
-      ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${saveHtml()}
+      ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้ · v1.6<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v1.6<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
@@ -4584,7 +4584,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="note">เราเก็บอีเมลของคุณไว้เพื่อเข้าสู่ระบบและบันทึกความคืบหน้าเกมเท่านั้น ไม่เปิดเผยให้ผู้อื่น<br>รหัสผ่านถูกเข้ารหัส ผู้ดูแลเกมมองไม่เห็น</div>`);
     d.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{ mode=b.dataset.m; showAuth(); });
     d.querySelector('[data-x=guest]').onclick=()=>{ set(K_GUEST,'1'); close(); };
-    const fg=d.querySelector('[data-x=forgot]'); if (fg) fg.onclick=()=>showAuth('ระบบรีเซ็ตรหัสผ่านทางอีเมลยังไม่เปิดให้ใช้ ถ้าลืมรหัสผ่าน ติดต่อผู้ดูแลเกมได้เลย','err');
+    const fg=d.querySelector('[data-x=forgot]'); if (fg) fg.onclick=()=>showForgot(d.querySelector('#dqe').value.trim());
     d.querySelector('#dqf').onsubmit=async ev=>{ ev.preventDefault(); const e=d.querySelector('#dqe').value.trim(), p=d.querySelector('#dqp').value, m=d.querySelector('#dqm'), btn=d.querySelector('.go');
       if (signup && p!==d.querySelector('#dqp2').value){ m.className='msg err'; m.textContent='รหัสผ่านทั้งสองช่องไม่ตรงกัน'; return; }
       btn.disabled=true; m.className='msg'; m.textContent='กำลังดำเนินการ…';
@@ -4593,6 +4593,36 @@ if (typeof document !== 'undefined') (function(){
         keep(r); set(K_GUEST,null); await afterLogin(true); }
       catch(err){ m.className='msg err'; m.textContent=thErr(err); btn.disabled=false; } };
   }
+  const SITE=location.origin+location.pathname;
+  function showForgot(pre){ const d=box(`<h2>🔑 ลืมรหัสผ่าน</h2><div class="sub">กรอกอีเมลที่ใช้สมัคร เราจะส่งลิงก์สำหรับตั้งรหัสผ่านใหม่ไปให้</div>
+      <form id="dqf"><label>อีเมล</label><input id="dqe" type="email" autocomplete="email" required value="${esc(pre||'')}">
+      <button class="go" type="submit">ส่งลิงก์ตั้งรหัสผ่านใหม่</button></form><div class="msg" id="dqm"></div>
+      <button class="alt" id="dqb">กลับไปหน้าเข้าสู่ระบบ</button>`);
+    d.querySelector('#dqb').onclick=()=>{ mode='login'; showAuth(); };
+    d.querySelector('#dqf').onsubmit=async ev=>{ ev.preventDefault(); const m=d.querySelector('#dqm'), btn=d.querySelector('.go'); btn.disabled=true; m.className='msg'; m.textContent='กำลังส่ง…';
+      try{ await req('/auth/v1/recover?redirect_to='+encodeURIComponent(SITE),{method:'POST',body:JSON.stringify({email:d.querySelector('#dqe').value.trim()})});
+        m.className='msg ok'; m.innerHTML='ส่งแล้ว! เปิดอีเมลแล้วกดลิงก์ในนั้นภายใน 1 ชั่วโมง<br>ถ้าไม่เห็น ลองดูในกล่องจดหมายขยะ (สแปม)'; }
+      catch(err){ m.className='msg err'; m.textContent=thErr(err); } btn.disabled=false; }; }
+  function showNewPw(){ const d=box(`<h2>🔑 ตั้งรหัสผ่านใหม่</h2><div class="sub">${esc(auth.user.email)}</div>
+      <form id="dqf"><label>รหัสผ่านใหม่ (อย่างน้อย 6 ตัว)</label><input id="dqp" type="password" autocomplete="new-password" required minlength="6">
+      <label>ยืนยันรหัสผ่านใหม่</label><input id="dqp2" type="password" autocomplete="new-password" required minlength="6">
+      <button class="go" type="submit">บันทึกรหัสผ่านใหม่</button></form><div class="msg" id="dqm"></div>`);
+    d.querySelector('#dqf').onsubmit=async ev=>{ ev.preventDefault(); const p=d.querySelector('#dqp').value, m=d.querySelector('#dqm'), btn=d.querySelector('.go');
+      if (p!==d.querySelector('#dqp2').value){ m.className='msg err'; m.textContent='รหัสผ่านทั้งสองช่องไม่ตรงกัน'; return; }
+      btn.disabled=true; m.className='msg'; m.textContent='กำลังบันทึก…';
+      try{ await userReq('/auth/v1/user',{method:'PUT',body:JSON.stringify({password:p})}); m.className='msg ok'; m.textContent='เปลี่ยนรหัสผ่านแล้ว กำลังเข้าเกม…';
+        set(K_GUEST,null); setTimeout(()=>afterLogin(true),700); }
+      catch(err){ m.className='msg err'; m.textContent=/same|different/i.test(err.message)?'รหัสผ่านใหม่ต้องไม่ซ้ำกับรหัสเดิม':thErr(err); btn.disabled=false; } }; }
+  // กลับมาจากลิงก์ในอีเมล: ข้อมูลอยู่หลังเครื่องหมาย # ของลิงก์
+  async function fromEmailLink(){ const h=new URLSearchParams(location.hash.slice(1)); if (!h.get('access_token')&&!h.get('error_code')&&!h.get('error')) return false;
+    history.replaceState(null,'',location.pathname+location.search);
+    if (!h.get('access_token')){ mode='login'; showAuth(/expired/i.test(h.get('error_code')||'')?'ลิงก์หมดอายุหรือถูกใช้ไปแล้ว กด "ลืมรหัสผ่าน?" เพื่อขอลิงก์ใหม่':'ลิงก์ไม่ถูกต้อง ลองขอลิงก์ใหม่อีกครั้ง','err'); return true; }
+    try{ const tmp={access_token:h.get('access_token'),refresh_token:h.get('refresh_token'),expires_in:+h.get('expires_in')||3600};
+      auth={access_token:tmp.access_token,refresh_token:tmp.refresh_token,expires_at:Date.now()+tmp.expires_in*1000,user:{id:'',email:''}};
+      const u=await req('/auth/v1/user',{method:'GET'},true); keep(Object.assign(tmp,{user:u}));
+      if (h.get('type')==='recovery') showNewPw(); else { set(K_GUEST,null); await afterLogin(true); } }
+    catch(e){ auth=null; set(K_AUTH,null); mode='login'; showAuth('ลิงก์ใช้ไม่ได้: '+thErr(e),'err'); }
+    return true; }
   const summ=m=>{ try{ const n=Object.keys(m.chars||{}).length; return `วีรชน ${n} ตัว · เหรียญตรา ${m.medals||0} · ชั้นสูงสุด ${m.best||0}`; }catch(e){ return ''; } };
   const hasProg=raw=>{ try{ const m=JSON.parse(raw); return Object.keys(m.chars||{}).length>0||(m.best||0)>0||(m.runs||0)>0; }catch(e){ return false; } };
   function useCloud(row){ set('dq_meta',JSON.stringify(row.data)); set(K_TS,row.updated_at); set(K_UID,auth.user.id); set(K_DIRTY,null); location.reload(); }
@@ -4628,7 +4658,7 @@ if (typeof document !== 'undefined') (function(){
     d.querySelector('#dqy').onclick=()=>{ d.querySelector('#dqy').disabled=true; logout(); }; d.querySelector('#dqn').onclick=close; return true; }
   // เริ่มต้น
   const LIVE=/github\.io$/.test(location.hostname)||location.protocol==='file:';   // หน้าล็อกอินเด้งเองเฉพาะเว็บจริง (ในแชท Claude ต่อเซิร์ฟเวอร์ไม่ได้)
-  if (auth) afterLogin(false); else if (LIVE && get(K_GUEST)!=='1') showAuth();
+  fromEmailLink().then(done=>{ if (done) return; if (auth) afterLogin(false); else if (LIVE && get(K_GUEST)!=='1') showAuth(); });
   window.__dqCloud={push,pull,get auth(){ return auth; }};
 })();
 </script>
