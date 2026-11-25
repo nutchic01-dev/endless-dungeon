@@ -951,6 +951,13 @@ img.elico{height:1.2em;vertical-align:-.25em}
 .npcsay small{display:block;font-size:10px;color:#9a5a0a;font-weight:700}
 @keyframes npcsay{0%{opacity:0;transform:translateY(8px) scale(.8)}8%{opacity:1;transform:none}88%{opacity:1}100%{opacity:0}}
 
+.uname{position:absolute;left:0;right:0;top:26%;text-align:center;z-index:14;pointer-events:none;animation:uname 1.6s ease-out forwards}
+.uname small{display:block;font-size:13px;color:#fff;font-weight:700;letter-spacing:1px;text-shadow:0 2px 4px #000}
+.uname b{display:inline-block;font-family:Mitr,sans-serif;font-size:34px;font-weight:700;color:#fff;padding:2px 22px;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--c1) 70%,#000) 20%,color-mix(in srgb,var(--c1) 70%,#000) 80%,transparent);text-shadow:0 0 12px var(--c1),0 3px 0 #000,0 0 3px #000}
+@keyframes uname{0%{opacity:0;transform:scale(2.2)}12%{opacity:1;transform:scale(.95)}20%{transform:scale(1.05)}80%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.1) translateY(-14px)}}
+.hidq .sil{filter:brightness(0) drop-shadow(0 0 5px #c07bff);opacity:.9;height:58px;width:auto;max-width:100%;object-fit:contain}
+.hidq .ccs{font-size:10px;line-height:1.3;color:#d9b3ff}
+.hidbox{border-color:#9b6bff!important;box-shadow:0 0 18px rgba(155,107,255,.35)}
 /* ---- อัลติเมทเฉพาะตัว ---- */
 .ufx{position:absolute;inset:0;pointer-events:none;z-index:13;overflow:hidden}
 .ufx i{position:absolute;display:block}
@@ -2788,7 +2795,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      <span class="proto">v2.8</span></div>`;
+      <span class="proto">v2.9</span></div>`;
   }
   function partyHtml(){
     const hpOf = i => battleView ? battleView.hps[i]/battleView.maxs[i] : null;
@@ -3006,8 +3013,7 @@ if (typeof document !== 'undefined') (function(){
       ${resetAsk?`<button class="choice danger" data-act="resetdo"><span>ยืนยันลบข้อมูลทั้งหมด</span><small>ย้อนกลับไม่ได้</small></button><button class="choice alt" data-act="resetno"><span>ยกเลิก</span></button>`
         :`<button class="choice alt" data-act="resetask"><span>ลบข้อมูลเกมทั้งหมด</span><small>เริ่มใหม่</small></button>`}</div>
       <div class="sndset"><div class="pop-r"><span>🎵 เสียงเพลง</span><b id="sv_mus">${Math.round(SND.set.mus*100)}%</b></div><input type="range" min="0" max="100" value="${Math.round(SND.set.mus*100)}" oninput="sndVol('mus',this.value)">
-        <div class="pop-r"><span>🔊 เสียงเอฟเฟกต์</span><b id="sv_sfx">${Math.round(SND.set.sfx*100)}%</b></div><input type="range" min="0" max="100" value="${Math.round(SND.set.sfx*100)}" oninput="sndVol('sfx',this.value)">
-        <div class="pop-r"><span>🗣️ เสียงพากย์ NPC</span><b id="sv_voice">${SND.set.voice===0?'ปิด':'เปิด'}</b></div><input type="range" min="0" max="100" value="${Math.round((SND.set.voice==null?1:SND.set.voice)*100)}" oninput="sndVol('voice',this.value);var o=document.getElementById('sv_voice');if(o)o.textContent=this.value>0?this.value+'%':'ปิด'"></div>
+        <div class="pop-r"><span>🔊 เสียงเอฟเฟกต์</span><b id="sv_sfx">${Math.round(SND.set.sfx*100)}%</b></div><input type="range" min="0" max="100" value="${Math.round(SND.set.sfx*100)}" oninput="sndVol('sfx',this.value)"></div>
       <div class="pbtns"><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
@@ -3082,14 +3088,16 @@ if (typeof document !== 'undefined') (function(){
   }
   function hubChars(m){
     const cls = ['tank','warrior','mage','support','archer','assassin'];
-    const hid = Object.keys(ALLCHARS).filter(id=>ALLCHARS[id].tier==='hid' && (owned(m,id) || (m.shards[id]||0)>0));
+    const hid = Object.keys(ALLCHARS).filter(id=>ALLCHARS[id].tier==='hid'), STN={atk:'ATK',matk:'MATK',hp:'HP',def:'DEF',cri:'คริติคอล',pen:'เจาะเกราะ'};
+    const hidCard = id => { if (owned(m,id) || (m.shards[id]||0)>0) return charCard(m,id); const k=ALLCHARS[id].cls, h=HIDDEN[k];
+      return `<div class="ccard lock hid hidq"><div class="cci"><img class="sil" src="${ART.char[id]||''}" alt=""></div><div class="ccn">???</div><div class="gs">🔒 วีรชนลับ</div><div class="ccs">ตอนเป็นชาวบ้าน ฝึก ${STN[h.by]||h.by} ×${h.need}</div></div>`; };
     const ex = Object.keys(m.shards).reduce((s,id)=>s+(owned(m,id)?Math.max(0,(m.shards[id]||0)-shardLeft(m,id)):0),0);
     return `<div class="overlay hub" ${pageBg('chars')}>${hubHead(m,'🎴 ตัวละคร')}
       <div class="row2"><button class="choice alt" data-act="rbopen"><span>🏺 คลังเรลิก</span><small>แยกหลายชิ้น</small></button><button class="choice alt" data-act="spopen"><span>🐾 สัตว์วิญญาณ</span><small>${Object.keys(spState(m).own).length}/24 ตัว</small></button></div>
       <p style="font-size:13px">ชนะบอสเพื่อรับตัวละครถาวร · ดาวละ 50 เศษ · 5 ดาวแล้วกลายร่างด้วย 100 เศษ</p>
       ${ex?`<button class="choice alt" data-act="dustex"><span>แปลงเศษส่วนเกิน ${ex} ชิ้นเป็นผงดาว</span></button>`:''}
       ${cls.map(k=>`<div class="sumbox"><h3>${clsIco(k)} ${CLASSES[k].name}</h3><div class="cgrid">${CHARS[k].map(c=>charCard(m,c.id)).join('')}</div></div>`).join('')}
-      ${hid.length?`<div class="sumbox"><h3>🌟 อาชีพลับ</h3><div class="cgrid">${hid.map(id=>charCard(m,id)).join('')}</div></div>`:''}${nav()}</div>`;
+      <div class="sumbox hidbox"><h3>🌟 วีรชนลับ <small class="gs">${hid.filter(id=>owned(m,id)).length}/${hid.length}</small></h3><p class="gs" style="font-size:12px;margin:0 0 8px">ปลดล็อกอาชีพลับในหอคอยไร้สิ้นสุด แล้วชนะบอสเพื่อรับเป็นวีรชนถาวร</p><div class="cgrid">${hid.map(hidCard).join('')}</div></div>${nav()}</div>`;
   }
   function recHtml(r, i, isMain, id){
     const g = Object.values(r.gear);
@@ -3359,9 +3367,7 @@ if (typeof document !== 'undefined') (function(){
   function npcSpeak(){ const box=document.getElementById('npc'); if (!box||battleView||!S||!S.ev){ return; } const v=NPC_VOICE[S.ev.type==='offer'?'mEquip':S.ev.type]; if (!v) return;
     const key=S.floor+':'+S.ev.type.replace('offer','mEquip'); if (npcSaid===key) return; npcSaid=key;
     const line=v.lines[Math.floor(Math.random()*v.lines.length)], b=document.createElement('div'); b.className='npcsay'; b.innerHTML=`<small>${v.name}</small>${line}`; box.appendChild(b); setTimeout(()=>b.remove(),3600);
-    const vol=SND.set.voice==null?1:SND.set.voice; if (vol<=0) return;
-    let spoke=false; try{ if (thVoice && !auto){ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(line); u.voice=thVoice; u.lang=thVoice.lang; u.pitch=v.pitch; u.rate=v.rate; u.volume=Math.min(1,vol); speechSynthesis.speak(u); spoke=true; } }catch(e){}
-    if (!spoke) SND.blip(v.blip, Math.min(12, Math.round(line.length/4))); }
+  }
 
   /* ---------- อัลติเมทเฉพาะตัว: เอฟเฟกต์ + เสียงตะโกนชื่อท่า (ใช้ทุกโหมด) ---------- */
   const ULT_STYLE = {leo:['dome','#ffd34d','#fff3b0'],coral:['dome','#3ac8ff','#c8f4ff'],gason:['pillar','#e0b45a','#8a6a3a'],brenda:['dome','#ff6a3a','#ffd34d'],titan:['burst','#fff08a','#c9a34a'],
@@ -3374,7 +3380,7 @@ if (typeof document !== 'undefined') (function(){
   const ULT_EL = {fire:['meteor','#ff5a1f','#ffd34d'],water:['wave','#3ac8ff','#e8fdff'],wood:['storm','#8fe36a','#ffffff'],earth:['burst','#e0b45a','#ffffff'],light:['pillar','#fff3b0','#ffffff'],dark:['moon','#b77bff','#efe6ff']};
   const ULT_MALE = new Set(['leo','gason','titan','blaze','raiden','ignis','panpan','toby','ash','finn','raven','scorp','sol','yami','nameless','sage','giant','knight','gambler','smith','villager']);
   function ultStyle(id, el, kind){ const s=ULT_STYLE[id]; if (s) return s; if (kind && /heal|shield|revive|teamDR|undying|buff/.test(kind)) return ['dome','#7dff9a','#ffffff']; return ULT_EL[el]||ULT_EL.light; }
-  function ultFX(layer, id, el, kind, tx, ty, hx, hy){ if (!layer) return; const [st,c1,c2]=ultStyle(id,el,kind), W=layer.clientWidth, H=layer.clientHeight;
+  function ultFX(layer, id, el, kind, tx, ty, hx, hy, name){ if (!layer) return; const [st,c1,c2]=ultStyle(id,el,kind), W=layer.clientWidth, H=layer.clientHeight;
     const f=document.createElement('div'); f.className='ufx u-'+st; f.style.setProperty('--c1',c1); f.style.setProperty('--c2',c2);
     const at=(x,y,cls,extra)=>`<i class="${cls}" style="left:${x}px;top:${y}px;${extra||''}"></i>`, R=(a,b)=>a+Math.random()*(b-a); let h=`<i class="ufl" style="--x:${tx}px;--y:${ty}px"></i>`;
     if (st==='meteor') for (let i=0;i<3;i++) h+=at(tx+R(-30,30),ty+R(-20,20),'um',`--sx:${R(120,200)}px;--sy:${-R(220,300)}px;animation-delay:${i*0.14}s`)+at(tx,ty,'uring',`animation-delay:${0.45+i*0.14}s`);
@@ -3387,12 +3393,10 @@ if (typeof document !== 'undefined') (function(){
     if (st==='storm') h+=at(tx,ty,'us')+at(tx,ty,'us s2');
     if (st==='moon') h+=at(tx,ty,'uo')+at(tx,ty,'uring','animation-delay:.5s');
     if (st==='dome') h+=at(hx,hy,'uv')+Array.from({length:10},()=>at(hx+R(-120,120),hy-R(0,30),'uq',`animation-delay:${R(0,0.5)}s`)).join('');
-    f.innerHTML=h; layer.appendChild(f); setTimeout(()=>f.remove(),1500);
+    if (name){ const ch=ALLCHARS[id]; h+=`<div class="uname"><small>${ch?ch.c.name:''}</small><b>${name}</b></div>`; }
+    f.innerHTML=h; layer.appendChild(f); setTimeout(()=>f.remove(),name?1700:1500);
     setTimeout(()=>SND.sfx(st==='dome'?'heal':'boom'),st==='meteor'?450:250); }
-  let ultSpokeAt=0;
-  function speakUlt(id, name){ if (!name) return; const now=Date.now(); if (now-ultSpokeAt<1800) return; ultSpokeAt=now; const vol=SND.set.voice==null?1:SND.set.voice; if (vol<=0) return;
-    let ok=false; try{ if (thVoice){ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(name.replace(/[✨!]/g,'')+'!'); u.voice=thVoice; u.lang=thVoice.lang; u.pitch=ULT_MALE.has(id)?0.75:1.35; u.rate=1.08; u.volume=Math.min(1,vol); speechSynthesis.speak(u); ok=true; } }catch(e){}
-    if (!ok) SND.blip(ULT_MALE.has(id)?170:330, 5); }
+  function speakUlt(){}   // เสียงพากย์ถูกยกเลิก: ใช้ข้อความชื่อท่าแทน (ดู ultFX)
   function relXY(layer, el, fy){ if (!layer||!el) return [0,0]; const a=layer.getBoundingClientRect(), r=el.getBoundingClientRect(); return [r.left-a.left+r.width/2, r.top-a.top+r.height*(fy==null?0.45:fy)]; }
   function afterRender(){ document.querySelectorAll('.overlay.hub, .pop-bg').forEach(emoSwap); sndAuto(); try{ npcSpeak(); }catch(e){} { const el=document.getElementById('tut'); if (el&&tutKey&&tutCtx()!==tutKey){ el.remove(); tutKey=null; } } clearTimeout(afterRender.t); afterRender.t=setTimeout(tutCheck,350); }
   const SND_ACT = {pull:'pull',skpull:'pull',rlpull:'pull',altup:'upgrade',rlup:'upgrade',starup:'levelup',awaken:'levelup',class:'levelup',ichest:'coin',shbuy:'coin',rlbuy:'coin',skbuy:'coin',dustbuy:'coin',htswc:'coin',htsweep:'coin',
@@ -3772,7 +3776,7 @@ if (typeof document !== 'undefined') (function(){
         const d=h.dps*tm.relB*(tm.hasC?1:0.75)*regen*(0.9+Math.random()*0.2); F.dmg+=d; dhFx(fmtN(d),'dhd'+(h.em>1?' weak':''),52+Math.random()*22,28+Math.random()*24);
         if (u){ u.classList.remove('hit'); void u.offsetWidth; u.classList.add('hit'); } SND.sfx(({fire:'fire',water:'ice',wood:'slash',earth:'hit',light:'magic',dark:'dark'})[h.el]||'hit'); }
       if (F.ultT[i]<=0){ F.ultT[i]=9; const d=h.dps*tm.relB*(tm.hasC?1:0.75)*regen*5; F.dmg+=d; dhFx(`💥 ${fmtN(d)}`,'dhd ult',58,22+i*8); dhFx('','dhbeam el-'+h.el,40,40);
-        { const st=document.getElementById('dhstage'), [tx,ty]=relXY(st,document.getElementById('dhdrag')), [hx,hy]=relXY(st,u,0.9); SND.sfx('charge'); speakUlt(h.id, (CHAR_KIT[h.id]&&CHAR_KIT[h.id].ult&&CHAR_KIT[h.id].ult.name)||'ท่าไม้ตาย'); ultFX(st, h.id, h.el, h.cls==='support'?'healAll':h.cls==='tank'?'shieldAll':'dmg', tx, ty, hx, hy); st&&st.classList.add('shake'); setTimeout(()=>st&&st.classList.remove('shake'),300); }
+        { const st=document.getElementById('dhstage'), [tx,ty]=relXY(st,document.getElementById('dhdrag')), [hx,hy]=relXY(st,u,0.9); SND.sfx('charge'); ultFX(st, h.id, h.el, h.cls==='support'?'healAll':h.cls==='tank'?'shieldAll':'dmg', tx, ty, hx, hy, (CHAR_KIT[h.id]&&CHAR_KIT[h.id].ult&&CHAR_KIT[h.id].ult.name)||'ท่าไม้ตาย'); st&&st.classList.add('shake'); setTimeout(()=>st&&st.classList.remove('shake'),300); }
         if (u){ u.classList.remove('ult'); void u.offsetWidth; u.classList.add('ult'); } } });
     F.atkT-=dt; if (F.atkT<=0){ F.atkT=[3,2.6,2.2,1.4][F.phase]; let d=1500*[1,1.25,1.5,2.2][F.phase]*(tm.hasC?1:1.4);
       if (tm.T.some(h=>h.cls==='tank')) d*=0.75; d*=1-(tm.res||0); if (F.drT>0) d*=0.5; F.hp-=d; dhFx('-'+fmtN(d),'dhd bad',18,48); dhFx('','dhbreath',30,45); SND.sfx('fire'); SND.sfx('heavy'); document.getElementById('dhstage')?.classList.add('shake'); setTimeout(()=>document.getElementById('dhstage')?.classList.remove('shake'),300); }
@@ -3949,8 +3953,8 @@ if (typeof document !== 'undefined') (function(){
   function htHeal(h,v){ if (h.hp<=0) return; const a=Math.min(h.mx-h.hp,v); h.hp+=a; SND.sfx('heal'); const [x,y,,H]=htPos(h,true); if (a>1) htFx({k:'n',x,y:y-H*0.17,txt:'+'+fmtN(a),col:'#7dff9a'}); }
   function htHeroAct(F,h){ const eA=F.E.filter(e=>e.hp>0); if (!eA.length) return; const fr=eA.filter(e=>e.slot<3), pool=fr.length?fr:eA, hA=F.T.filter(x=>x.hp>0);
     const low=hA.reduce((a,b)=>a.hp/a.mx<b.hp/b.mx?a:b), tg0=pool[0];
-    if (h.en>=100){ h.en=0; h.lg=1; const [x,y,,H]=htPos(h,true); htFx({k:'ult',x,y:y-H*0.2,txt:h.ult,col:heroCol(F.M,h.id)}); SND.sfx('charge'); speakUlt(h.id, h.ult); F.shk=0.35;
-      { const st=document.querySelector('.htstage'), [ex,ey,,H2]=htPos(tg0||eA[0],false); ultFX(st, h.id, h.el, h.cls==='support'?'healAll':h.cls==='tank'?'shieldAll':'dmg', ex, ey-H2*0.08, x, y); }
+    if (h.en>=100){ h.en=0; h.lg=1; const [x,y,,H]=htPos(h,true); htFx({k:'ult',x,y:y-H*0.2,txt:'',col:heroCol(F.M,h.id)}); SND.sfx('charge'); speakUlt(h.id, h.ult); F.shk=0.35;
+      { const st=document.querySelector('.htstage'), [ex,ey,,H2]=htPos(tg0||eA[0],false); ultFX(st, h.id, h.el, h.cls==='support'?'healAll':h.cls==='tank'?'shieldAll':'dmg', ex, ey-H2*0.08, x, y, h.ult); }
       if (h.cls==='warrior') pool.forEach(e=>htDmgE(F,h,e,3.2));
       else if (h.cls==='mage') eA.forEach(e=>htDmgE(F,h,e,2));
       else if (h.cls==='archer') htDmgE(F,h,eA.reduce((a,b)=>a.hp>b.hp?a:b),6);
