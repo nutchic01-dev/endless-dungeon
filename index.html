@@ -169,7 +169,7 @@ img.art{height:1.3em;width:auto;vertical-align:middle;object-fit:contain;-webkit
 /* hub */
 .overlay.hub{gap:10px}
 .wallet{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
-.wallet span{background:var(--panel);border-radius:999px;padding:5px 12px;font-size:14px}
+.wallet span{background:var(--panel);border-radius:999px;padding:5px 12px;font-size:14px;cursor:pointer}
 .wallet b{color:var(--gold)}
 .hubgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;max-width:420px}
 .hubgrid button{background:var(--panel);color:var(--ink);border-radius:16px;padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:2px;border:2px solid var(--panel2)}
@@ -945,6 +945,28 @@ img.elico{height:1.2em;vertical-align:-.25em}
 .htmon small img.elico{height:1.15em!important;width:auto!important;max-width:none;display:inline;vertical-align:-.2em}
 
 .gtabs button i img{height:28px!important;width:auto;display:block}.gtabs button:has(i img){padding:4px 2px 5px}
+
+.rrbtn{flex-direction:column;align-items:center;gap:2px;text-align:center}.rrbtn span{white-space:nowrap}
+.npcsay{position:absolute;right:4px;bottom:100%;z-index:9;min-width:150px;max-width:200px;background:#fff8e6;color:#3a2600;font-size:13px;font-weight:600;line-height:1.35;padding:7px 11px;border-radius:14px 14px 4px 14px;box-shadow:0 4px 0 rgba(0,0,0,.25),0 0 0 2px #c9a34a;text-align:left;animation:npcsay 3.6s ease-out forwards;pointer-events:none}
+.npcsay small{display:block;font-size:10px;color:#9a5a0a;font-weight:700}
+@keyframes npcsay{0%{opacity:0;transform:translateY(8px) scale(.8)}8%{opacity:1;transform:none}88%{opacity:1}100%{opacity:0}}
+/* ---- ความมันส์ตอนต่อสู้ ---- */
+.actor.flash .em{animation:hflash .22s ease-out}@keyframes hflash{0%{filter:brightness(3.2) saturate(0) drop-shadow(0 0 10px #fff)}100%{filter:none}}
+.actor.kb{animation:kb .28s ease-out}@keyframes kb{30%{transform:translateX(14px)}100%{transform:none}}
+.actor.kbl{animation:kbl .28s ease-out}@keyframes kbl{30%{transform:translateX(-12px)}100%{transform:none}}
+.actor.m-lunge .em{animation:mlunge .34s ease-out}@keyframes mlunge{0%{transform:none}40%{transform:translateX(-46px) scale(1.12) rotate(-6deg)}100%{transform:none}}
+.actor.p-spin .em{animation:pspin .5s ease-out}@keyframes pspin{0%{transform:none}25%{transform:translateX(30px)}60%{transform:translateX(56px) rotate(360deg) scale(1.1);filter:drop-shadow(0 0 12px #fff) drop-shadow(-18px 0 0 rgba(255,255,255,.3))}100%{transform:rotate(360deg)}}
+.actor.p-charge .em{position:relative}
+.actor.dying .em{animation:mdie .5s ease-out forwards}@keyframes mdie{0%{filter:brightness(3) saturate(0)}50%{transform:scale(1.18) rotate(4deg);filter:brightness(2.4) saturate(0);opacity:.9}100%{transform:scale(.6) translateY(20px);opacity:0}}
+.scflash{position:absolute;inset:0;z-index:11;pointer-events:none;background:radial-gradient(circle at 70% 55%,#fff,var(--c) 30%,transparent 75%);mix-blend-mode:screen;animation:scfl .4s ease-out forwards}@keyframes scfl{0%{opacity:.9}100%{opacity:0}}
+.scene.zpunch{animation:zp .35s ease-out}@keyframes zp{0%{transform:scale(1)}25%{transform:scale(1.06) translate(-4px,3px)}55%{transform:scale(1.02) translate(4px,-2px)}100%{transform:none}}
+.sparks{position:absolute;z-index:9;pointer-events:none;width:0;height:0}
+.sparks i{position:absolute;left:-2px;top:-14px;width:4px;height:28px;border-radius:3px;background:linear-gradient(#fff,var(--c));box-shadow:0 0 8px var(--c);transform:rotate(var(--a)) translateY(0);animation:spk .5s ease-out forwards}
+@keyframes spk{0%{transform:rotate(var(--a)) translateY(-6px) scaleY(.4);opacity:1}100%{transform:rotate(var(--a)) translateY(calc(var(--d) * -1)) scaleY(.2);opacity:0}}
+.float.crit{font-size:32px;color:#ffd34d;text-shadow:0 0 10px #ff8a00,0 3px 0 #6a2a00,0 0 2px #000;animation:floatCrit .95s forwards}
+.float.crit.big{font-size:40px;color:#fff3a8;text-shadow:0 0 16px #ff4d00,0 4px 0 #7a1a00,0 0 3px #000}
+.float.hurt{color:#ff7d8e}
+@keyframes floatCrit{0%{opacity:0;transform:scale(2.2) rotate(-8deg)}15%{opacity:1;transform:scale(.9) rotate(-4deg)}25%{transform:scale(1.15)}100%{opacity:0;transform:translateY(-60px) scale(1)}}
 </style>
 </head>
 <body>
@@ -1016,7 +1038,7 @@ const CONFIG = {
   villagerTrain: 1.25, awakenBase: 6, awakenPity: 3, awakenCap: 25, orbNeed: 7, orbRate: 1,
   events: [
     ['monster',33],['training',12],['mStat',3],['mSkill',3],['mPotion',2],['mEquip',4],['bad',9],
-    ['gold',7],['rest',6],['chest',4],['stone',4],['goodMon',4],['badMon',4],['rune',4],['boss',1],['orb',0],['altar',0.2]
+    ['gold',7],['rest',6],['chest',4],['stone',4],['goodMon',4],['badMon',4],['rune',8],['boss',1],['orb',0],['altar',0.2]
   ]
 };
 const ELEMENTS = {
@@ -1312,7 +1334,7 @@ const SND = (()=>{ let ctx=null, master, musG, sfxG, track=null, want=null, step
   const set={mus:0.5,sfx:0.7}; try{ Object.assign(set, JSON.parse(localStorage.getItem('dq_snd')||'{}')); }catch(e){}
   const hz = m => 440*Math.pow(2,(m-69)/12);
   function init(){ try{ if (ctx){ if (ctx.state==='suspended') ctx.resume(); return true; } const AC=window.AudioContext||window.webkitAudioContext; if (!AC) return false;
-    ctx=new AC(); master=ctx.createGain(); master.gain.value=0.9; master.connect(ctx.destination);
+    ctx=new AC(); master=ctx.createGain(); master.gain.value=0.9; { const cp=ctx.createDynamicsCompressor(); cp.threshold.value=-14; cp.knee.value=8; cp.ratio.value=5; cp.attack.value=0.002; cp.release.value=0.12; master.connect(cp); cp.connect(ctx.destination); }
     musG=ctx.createGain(); sfxG=ctx.createGain(); musG.gain.value=set.mus*0.5; sfxG.gain.value=set.sfx; musG.connect(master); sfxG.connect(master);
     timer=setInterval(sched,60); return true; }catch(e){ return false; } }
   function tone(f,t,d,type,v,dest,slide,att){ const o=ctx.createOscillator(), g=ctx.createGain(); o.type=type||'sine'; o.frequency.setValueAtTime(f,t);
@@ -1348,8 +1370,19 @@ const SND = (()=>{ let ctx=null, master, musG, sfxG, track=null, want=null, step
     while (nextT<ctx.currentTime+0.3){ playStep(T,step,nextT); nextT+=60/T.bpm/2; step++; } }
   const SFX={
     click:(t,d)=>tone(880,t,0.05,'square',0.04,d),
-    hit:(t,d)=>{ noise(t,0.07,0.22,d,1200,0.7); tone(200,t,0.08,'square',0.06,d,90); },
-    crit:(t,d)=>{ noise(t,0.14,0.32,d,2500,0.7,600); tone(900,t,0.14,'sawtooth',0.07,d,250); },
+    hit:(t,d)=>{ noise(t,0.06,0.3,d,1800,0.8,500); tone(160,t,0.12,'sine',0.35,d,50); tone(240,t,0.06,'square',0.05,d,110); },
+    crit:(t,d)=>{ noise(t,0.05,0.4,d,5000,0.6); noise(t+0.02,0.22,0.35,d,2200,0.7,400); tone(110,t,0.25,'sine',0.5,d,38); tone(1400,t,0.18,'sawtooth',0.06,d,300); tone(2637,t+0.03,0.35,'sine',0.05,d); },
+    slash:(t,d)=>{ noise(t,0.12,0.28,d,900,1.2,7000); noise(t+0.08,0.05,0.3,d,2600,0.8); tone(150,t+0.08,0.12,'sine',0.32,d,55); tone(1900,t+0.08,0.16,'triangle',0.04,d,1300); },
+    heavy:(t,d)=>{ tone(90,t,0.5,'sine',0.6,d,30); noise(t,0.35,0.4,d,700,0.6,150); noise(t,0.06,0.35,d,4000,0.7); tone(55,t+0.05,0.6,'triangle',0.3,d,28); },
+    fire:(t,d)=>{ noise(t,0.45,0.32,d,500,0.7,2500); noise(t+0.05,0.3,0.18,d,3000,1.5,800); tone(120,t,0.3,'sawtooth',0.08,d,60); },
+    ice:(t,d)=>{ [96,100,103,108].forEach((m,i)=>tone(hz(m),t+i*0.03,0.3,'sine',0.06,d)); noise(t,0.18,0.25,d,6000,2,2500); tone(140,t,0.1,'sine',0.25,d,60); },
+    thunder:(t,d)=>{ noise(t,0.04,0.5,d,6000,0.4); noise(t+0.03,0.6,0.35,d,400,0.5,80); tone(70,t,0.6,'sawtooth',0.12,d,30); },
+    dark:(t,d)=>{ tone(220,t,0.4,'sawtooth',0.07,d,55); tone(233,t,0.4,'sawtooth',0.07,d,58); noise(t,0.4,0.2,d,350,1.5,120); },
+    arrow:(t,d)=>{ noise(t,0.1,0.18,d,3000,3,8000); noise(t+0.09,0.05,0.3,d,1500,0.8); tone(180,t+0.09,0.08,'sine',0.25,d,70); },
+    enemy:(t,d)=>{ noise(t,0.1,0.32,d,600,0.6,200); tone(95,t,0.16,'sine',0.4,d,40); },
+    charge:(t,d)=>{ tone(180,t,0.5,'sawtooth',0.06,d,1400); tone(270,t,0.5,'square',0.03,d,2100); noise(t,0.5,0.12,d,400,2,6000); },
+    boom:(t,d)=>{ tone(70,t,0.8,'sine',0.7,d,25); noise(t,0.7,0.5,d,1200,0.5,90); noise(t,0.08,0.4,d,5000,0.6); },
+    kill:(t,d)=>{ noise(t,0.3,0.3,d,2500,0.8,300); tone(600,t,0.3,'square',0.05,d,80); [79,84].forEach((m,i)=>tone(hz(m),t+0.12+i*0.06,0.18,'triangle',0.06,d)); },
     magic:(t,d)=>{ tone(600,t,0.2,'sine',0.1,d,1500); tone(900,t+0.04,0.2,'sine',0.07,d,2200); },
     heal:(t,d)=>[72,76,79].forEach((m,i)=>tone(hz(m),t+i*0.06,0.25,'sine',0.09,d)),
     coin:(t,d)=>{ tone(1319,t,0.08,'square',0.06,d); tone(1760,t+0.07,0.18,'square',0.06,d); },
@@ -1366,11 +1399,13 @@ const SND = (()=>{ let ctx=null, master, musG, sfxG, track=null, want=null, step
     open:(t,d)=>{ tone(523,t,0.08,'triangle',0.07,d); tone(784,t+0.06,0.14,'triangle',0.07,d); },
   };
   function sfx(n){ if (!ctx||set.sfx<=0||!SFX[n]) return; const now=performance.now(); if (last[n]&&now-last[n]<55) return; last[n]=now; try{ SFX[n](ctx.currentTime+0.005,sfxG); }catch(e){} }
+  function blip(pitch, n){ if (!ctx||(set.voice===0)) return; const t0=ctx.currentTime+0.01, v=(set.voice==null?1:set.voice)*0.07;
+    for (let i=0;i<n;i++){ const f=pitch*(0.85+Math.random()*0.35); tone(f,t0+i*0.075,0.06,'square',v,sfxG,f*1.12); } }
   function music(n){ want=n; }
   function vol(k,v){ set[k]=v; try{ localStorage.setItem('dq_snd',JSON.stringify(set)); }catch(e){} if (ctx){ musG.gain.value=set.mus*0.5; sfxG.gain.value=set.sfx; } }
   if (typeof document!=='undefined') document.addEventListener('pointerdown',()=>init(),{capture:true});
   if (typeof document!=='undefined') document.addEventListener('visibilitychange',()=>{ if (!ctx) return; if (document.hidden) ctx.suspend(); else ctx.resume(); });
-  return {sfx, music, vol, set, init};
+  return {sfx, music, vol, set, init, blip};
 })();
 if (typeof window!=='undefined') window.sndVol = (k,v) => { SND.vol(k,v/100); const o=document.getElementById('sv_'+k); if (o) o.textContent=v+'%'; };
 /* ---------- utils ---------- */
@@ -1524,7 +1559,7 @@ function mergeBS(b, win){ const t=S.st; t.battles++; if(win) t.wins++;
   ['maxHit','heroMax','bossMax'].forEach(k=>t[k]=Math.max(t[k],b[k]));
   ['heroMin','bossMin'].forEach(k=>{ if(b[k]) t[k]=t[k]?Math.min(t[k],b[k]):b[k]; });
   if (b.bossHp) t.bossHp=b.bossHp; }
-function runeGain(){ if (S.rune.lv < 5) S.rune.lv++; S.rune.timer = CONFIG.runeLife + accVal('compass'); addLog(`ได้${RUNE[S.rune.lv].name} (หลบบอส ${RUNE[S.rune.lv].pct}%)`,'good'); }
+function runeGain(n=1){ S.rune.lv = Math.min(5, S.rune.lv + n); S.rune.timer = CONFIG.runeLife + accVal('compass'); addLog(`ได้${RUNE[S.rune.lv].name} (หลบบอส ${RUNE[S.rune.lv].pct}%)`,'good'); }
 function bossLevel(){ return 1 + Math.floor(S.floor/25) + S.curses + S.escapes; }
 function rollChar(cls){ const list=CHARS[cls], sp=list.filter(c=>c.sp), nm=list.filter(c=>!c.sp); return chance(CONFIG.specialRate)&&sp.length ? pick(sp) : pick(nm); }
 function aliveMates(){ return S.party.filter(m=>!m.ko).length; }
@@ -2073,9 +2108,27 @@ function buildEvent(type){
         {label:'สู้', sub:'ชนะ = EXP + คำสาป', fn:()=>fight([m], ()=>{ addExp(monExp(F)); maybeDrop(25,1); return `ชนะ แต่… ${applyCurse()}`; })},
         {label:'หนี', sub:'สำเร็จ 60%', alt:true, fn:()=> chance(60) ? done('หนีพ้น ไม่โดนคำสาป','good') : (addLog('หนีไม่พ้น!','bad'), fight([m], ()=>{ addExp(monExp(F)); return `ชนะ แต่… ${applyCurse()}`; }))}]); }
     case 'rune': {
-      if (chance(25)) return ev('พบรูนโบราณ!','🔷','รูนส่องแสงอยู่บนพื้น',[{label:'เก็บรูน', fn:()=>{ runeGain(); done(`ได้${RUNE[S.rune.lv].name}`,'good'); }}]);
-      return ev('แท่นบูชารูน','🗿','แท่นหินสลักอักษรโบราณ ลองแตะดูไหม?',[
-        {label:'แตะแท่นบูชา', sub:'50% ได้รูน / พลาด สเตตัสลด', fn:()=>{ if(chance(50)){ runeGain(); done(`แท่นตอบรับ ได้${RUNE[S.rune.lv].name}`,'good'); } else { S.mods.atk-=3; done('แท่นดูดพลัง ATK/MATK -3% ถาวร','bad'); } }},
+      const cur = S.rune.lv ? `\nตอนนี้มี ${RUNE[S.rune.lv].name} (หลบบอส ${RUNE[S.rune.lv].pct}%) เหลือ ${S.rune.timer} ชั้น` : '\nตอนนี้ยังไม่มีรูน';
+      const nx = k => RUNE[Math.min(5,S.rune.lv+k)].name, got = () => `ได้${RUNE[S.rune.lv].name} (หลบบอส ${RUNE[S.rune.lv].pct}%)`;
+      const sub = weighted([['find',26],['altar',22],['luck',20],['up',20],['trade',12]]);
+      if (sub==='find') return ev('พบรูนโบราณ!','🔷','รูนส่องแสงอยู่บนพื้น'+cur,[{label:'เก็บรูน', sub:S.rune.lv?`อัปเป็น${nx(1)}`:'', fn:()=>{ runeGain(); done(got(),'good'); }}]);
+      if (sub==='luck') return ev('โชคดี! ฝนรูนตก','🌠','ดาวตกพุ่งผ่านหอคอย เศษรูนโปรยลงมารอบตัว เลือกเก็บได้ 1 ทาง'+cur,[
+        {label:'เก็บกำมือใหญ่', sub:`40% ได้ 2 ระดับ (${nx(2)}) / 60% ได้ 1 ระดับ`, fn:()=>{ const n=chance(40)?2:1; runeGain(n); done(n===2?`โชคดีสุดๆ! ${got()}`:got(),'good'); }},
+        {label:'เก็บทีละชิ้นอย่างระวัง', sub:`ได้ 1 ระดับแน่นอน + อายุรูนเต็ม`, alt:true, fn:()=>{ runeGain(1); done(got(),'good'); }}]);
+      if (sub==='up'){ const price=Math.round(50+4*F);
+        if (!S.rune.lv) return ev('วงเวทเลื่อนระดับรูน','🌀','วงเวทโบราณรอให้วางรูน แต่คุณยังไม่มีรูนสักก้อน… ผู้เฝ้าวงเวทมอบรูนเริ่มต้นให้'+cur,[
+          {label:'รับรูนขาว', fn:()=>{ runeGain(1); done(got(),'good'); }}]);
+        return ev('วงเวทเลื่อนระดับรูน','🌀','วางรูนลงกลางวงเวท พลังโบราณจะยกระดับรูนให้'+cur,[
+          {label:'เลื่อนระดับฟรี', sub:`→ ${nx(1)} · อายุรูนเต็ม`, disabled:S.rune.lv>=5, fn:()=>{ runeGain(1); done(`รูนเลื่อนระดับ! ${got()}`,'good'); }},
+          {label:'ถวายทองเลื่อน 2 ระดับ', sub:`${fmt(price)} ทอง → ${nx(2)}`, disabled:S.gold<price||S.rune.lv>=4, fn:()=>{ S.gold-=price; runeGain(2); done(`รูนเปล่งแสงจ้า! ${got()}`,'good'); }},
+          {label:'เดินผ่าน', alt:true, fn:()=>done('เดินผ่านไป')}]); }
+      if (sub==='trade'){ const price=Math.round(40+3*F);
+        return ev('นักแสวงบุญขายรูน','🧙','นักแสวงบุญพกรูนติดตัวมาหลายก้อน ยินดีแบ่งขาย'+cur,[
+          {label:'ซื้อรูน', sub:`${fmt(price)} ทอง · ${S.rune.lv?'อัปเป็น'+nx(1):'ได้รูนขาว'}`, disabled:S.gold<price||S.rune.lv>=5, fn:()=>{ S.gold-=price; runeGain(1); done(got(),'good'); }},
+          {label:'ขอพรให้รูน', sub:'อายุรูนกลับมาเต็ม (ฟรี)', disabled:!S.rune.lv, fn:()=>{ S.rune.timer=CONFIG.runeLife+accVal('compass'); done(`อายุ${RUNE[S.rune.lv].name}เต็มแล้ว (${S.rune.timer} ชั้น)`,'good'); }},
+          {label:'ไม่ซื้อ', alt:true, fn:()=>done('เดินผ่านไป')}]); }
+      return ev('แท่นบูชารูน','🗿','แท่นหินสลักอักษรโบราณ ลองแตะดูไหม?'+cur,[
+        {label:'แตะแท่นบูชา', sub:'60% ได้รูน / พลาด สเตตัสลด', fn:()=>{ if(chance(60)){ runeGain(); done(`แท่นตอบรับ ${got()}`,'good'); } else { S.mods.atk-=3; done('แท่นดูดพลัง ATK/MATK -3% ถาวร','bad'); } }},
         {label:'เดินผ่าน', alt:true, fn:()=>done('เดินผ่านไป')}]); }
     case 'mEquip': return merchantEquip();
     case 'altar': return ev('แท่นบูชาโบราณ','⛩️','แท่นหินเก่าแก่ส่องแสงอ่อนๆ มีช่องว่างรูปแหวนอยู่ตรงกลาง',[
@@ -2117,11 +2170,24 @@ function offerEvent(it, prefix, back, paid){
   if (paid) choices.push({label:'ไม่เอาแล้ว · ออกจากร้าน', alt:true, leave:true, sub:`คืนเงิน ${fmt(paid)} ทอง`, fn:()=>{ S.gold+=paid; S.st.items=Math.max(0,S.st.items-1); S.shop=null; done(`คืน ${it.name} ได้เงินคืน ${fmt(paid)} ทอง แล้วออกจากร้าน`); }});
   return {type:'offer', item:it, title:'ได้อุปกรณ์!', icon:itIco(it), text:`${prefix?prefix+'\n\n':''}${itemHtml(it)}\n\n${cur}`, choices};
 }
+function shopPreview(it, i){
+  const price=buyVal(it), slots = it.slot==='acc' ? (S.acc2 ? ['acc','acc2'] : ['acc']) : [it.slot];
+  const cur = slots.map(s=>`ตอนนี้ (${SLOT_NAME[s]}): ${itemHtml(S.gear[s])}`).join('\n');
+  const choices = slots.map(s=>{ const old=S.gear[s], lock=!!(old&&old.lock);
+    return {label:`ซื้อ${slots.length>1?' ใส่'+SLOT_NAME[s]:''}`, disabled:S.gold<price||lock,
+      sub: lock?'🔒 ของเดิมล็อกอยู่' : S.gold<price?`${fmt(price)} ทอง (ทองไม่พอ)` : `${fmt(price)} ทอง${old?` · ของเดิมขายได้ +${fmt(sellVal(old))}`:''}`,
+      fn:()=>{ S.gold-=price; S.st.items++; S.shop.items.splice(S.shop.items.indexOf(it),1);
+        if (old) sellGold(sellVal(old)); const mx0=stats().maxhp; S.gear[s]=it; S.hp=Math.max(1,S.hp+stats().maxhp-mx0);
+        S.result={text:old?`ซื้อและสวมใส่ ${it.name} แล้ว (ขาย ${old.name} ได้ ${fmt(sellVal(old))} ทอง)`:`ซื้อและสวมใส่ ${it.name} แล้ว`}; S.ev=merchantEquip(); }}; });
+  choices.push({label:'กลับไปหน้าร้าน', alt:true, back:true, fn:()=>{ S.ev = merchantEquip(); }});
+  choices.push({label:'ออกจากร้าน', alt:true, leave:true, fn:()=>{ S.shop=null; done('ออกจากร้านพ่อค้าอุปกรณ์'); }});
+  return {type:'offer', item:it, title:'ดูสินค้า', icon:itIco(it), text:`${itemHtml(it)}\nราคา <b class="gold">${fmt(price)} ทอง</b> (มี ${fmt(S.gold)})\n\n${cur}`, choices};
+}
 function merchantEquip(){
   const F=S.floor;
   if (!S.shop || S.shop.f!==F) S.shop = {f:F, items:[0,1,2].map(i=>makeItem(F, null, i===0?Math.max(1,rollRarity(F)):rollRarity(F)))};
   const choices = S.shop.items.map((it,i)=>({label:`<span class="r${it.r}">${itIco(it)} ${it.name}</span>`, sub:`${it.set?setTag(it.set)+' ':''}${RARITY[it.r].th} · ${fmt(buyVal(it))} ทอง`, disabled:S.gold<buyVal(it), item:it,
-    fn:()=>{ S.gold-=buyVal(it); S.st.items++; S.shop.items.splice(i,1); S.ev = offerEvent(it, `ซื้อ ${it.name}`, merchantEquip, buyVal(it)); }}));
+    fn:()=>{ S.ev = shopPreview(it, i); }}));
   const hasGear = Object.values(S.gear).some(x=>x && x.plus<10);
   choices.push({label:'🔨 ตีบวกอุปกรณ์', alt:true, disabled:!hasGear, enh:true, fn:()=>{ S.ev = enhanceMenu(); }});
   choices.push({label:'ออกจากร้าน', alt:true, wide:true, leave:true, fn:()=>{ S.shop=null; done('ออกจากร้านพ่อค้าอุปกรณ์'); }});
@@ -2525,6 +2591,7 @@ function normMeta(m){
   Object.values(m.chars).forEach(c=>{ if (!c.recs) c.recs=[]; if (c.main==null) c.main=0; });
   if (!m.idle) m.idle={st:1,sub:1,best:0,farm:false,gold:0,chestT:Date.now(),alt:{},hero:{}};
   if (!m.idle.hero2) m.idle.hero2={}; if (!m.eq) m.eq=eqDefault(); if (!m.skin) m.skin={}; if (!m.skins) m.skins={}; if (m.skinSh==null) m.skinSh=0; if (m.sktix==null) m.sktix=10; SKIN_EQ=m.skin;
+  if (m.reroll){ m.medals+=20; m.reroll=false; }   // หินสุ่มวีรชนแบบเก่า (ซื้อล่วงหน้า) → คืนเหรียญตรา
   if (!m.relics) m.relics=[]; { const seen=new Set(), worn=new Set(); m.relics.forEach((r,i)=>{ if (!r.uid||seen.has(r.uid)) r.uid=(r.uid||'r')+'_'+i; seen.add(r.uid); if (r.on){ if (worn.has(r.on)) r.on=null; else worn.add(r.on); } }); } if (m.rc==null) m.rc=30; if (m.ro==null) m.ro=5; if (m.rtix==null) m.rtix=5; if (m.rsh==null) m.rsh=0; if (m.rpity==null) m.rpity=0;
   IDLE_CLS.forEach(c=>{ if (!m.idle.alt[c]) m.idle.alt[c]={atk:0,hp:0,spd:0,cnt:0}; });
   if (!m.idle.v2){ if ((m.idle.best||0)>0) IDLE_CLS.forEach(c=>{ if (m.idle.best>=IDLE_UNLOCK[c] && !m.idle.hero[c]) m.idle.hero[c]='_c1'; }); m.idle.v2=1; }
@@ -2578,15 +2645,14 @@ function applyRunStart(m, consume){
   if (pm.accSlot) S.acc2 = true;
   let rl = pm.startRune?1:0;
   if (consume && m.prep){ if (m.prep.gold) S.gold += m.prep.gold; if (m.prep.rune) rl = Math.max(rl, m.prep.rune); m.prep = null; storeMeta(m); }
-  if (consume && m.reroll){ S.reroll = 1; m.reroll = false; storeMeta(m); }   // หินสุ่มวีรชนใหม่: ใช้ได้เฉพาะรอบนี้ ไม่ได้ใช้ก็หายไป
   if (rl){ S.rune = {lv:rl, timer:CONFIG.runeLife}; }
   adaptGear();
   S.hp = stats().maxhp;
 }
-function rerollBuy(m){ if (m.reroll || m.medals<REROLL_COST) return false; m.medals-=REROLL_COST; m.reroll=true; return true; }
-function rerollUse(){ if (!S.reroll || !S.char || S.picked || !CHARS[S.cls]) return false;
+function rerollOk(){ return !!(S && S.char && !S.picked && !S.daily && !S.rerolled && CHARS[S.cls] && !S.char.hidden); }
+function rerollUse(){ if (!rerollOk()) return false; const m=loadMeta(); if (m.medals<REROLL_COST) return false; m.medals-=REROLL_COST; storeMeta(m); S.rerolled=1;
   const pool=CHARS[S.cls], old=S.char; let c=rollChar(S.cls), g=0; while (pool.length>1 && c.id===old.id && g++<20) c=rollChar(S.cls);
-  S.char=c; S.reroll=0; if (starOf(c)>=5) S.skillLv[2]=Math.max(S.skillLv[2],2); S.hp=Math.min(S.hp, stats().maxhp);
+  S.char=c; if (starOf(c)>=5) S.skillLv[2]=Math.max(S.skillLv[2],2); S.hp=Math.min(S.hp, stats().maxhp);
   addLog(`สุ่มวีรชนใหม่ ได้ ${c.name}${c.sp?' (ตัวพิเศษ!)':''}`,'good'); return true; }
 function prepBuy(m){ if (m.prep || m.medals<PREP_COST) return null; m.medals-=PREP_COST; m.prep = Object.assign({}, weighted(PREP)); return m.prep; }
 /* สุ่มสถานะถาวร */
@@ -2682,7 +2748,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      <span class="proto">v2.6</span></div>`;
+      <span class="proto">v2.7</span></div>`;
   }
   function partyHtml(){
     const hpOf = i => battleView ? battleView.hps[i]/battleView.maxs[i] : null;
@@ -2817,7 +2883,8 @@ if (typeof document !== 'undefined') (function(){
   const TIER_TH = {n:'ปกติ', sp:'ตัวพิเศษ', hid:'อาชีพลับ'};
   function cName(m,id){ const a=ALLCHARS[id]; return a.tier==='hid' && !owned(m,id) ? 'อาชีพลับ ???' : a.c.name; }
   function cIcon(m,id){ const a=ALLCHARS[id]; return a.tier==='hid' && !owned(m,id) ? '❔' : charArt(a.c, m.chars[id]&&m.chars[id].form); }
-  function wallet(m){ return `<div class="wallet"><span>${uiIco('medal','🎖️')} <b>${fmt(m.medals)}</b></span><span>${uiIco('ticket','🎟️')} <b>${fmt(m.tickets)}</b></span><span>${uiIco('dust','✨')} <b>${fmt(m.dust)}</b></span></div>`; }
+  function wallet(m, home){ const c=(ico,v,t)=>`<span data-act="hub" data-k="bag" title="${t}">${ico} <b>${fmt(v)}</b></span>`;
+    return `<div class="wallet${home?' home':''}">${home?c(uiIco('gold','💰'),Math.floor((m.idle&&m.idle.gold)||0),'ทองเมือง'):''}${c(uiIco('medal','🎖️'),m.medals,'เหรียญตรา')}${c(uiIco('ticket','🎟️'),m.tickets,'ตั๋วสุ่มเศษ')}${c(uiIco('dust','✨'),m.dust,'ผงดาว')}</div>`; }
   const HEAD_ICO = {'⚔️':()=>uiIco('adv','⚔️'),'🎒':()=>uiIco('bag','🎒'),'🎖️':()=>uiIco('medal','🎖️'),'🎴':()=>uiIco('chars','🎴'),'🏪':()=>uiIco('shop','🏪'),'🏯':()=>'<img class="uiico" src="art/mode_hundred.webp" alt="">','🏺':()=>uiIco('tab_relic','🏺'),'🐲':()=>uiIco('boss','🐲'),'🐾':()=>EGG(),'👗':()=>uiIco('skin','👗'),'🔮':()=>uiIco('gacha','🔮'),'🗼':()=>'<img class="uiico" src="art/mode_endless.webp" alt="">','🛡️':()=>uiIco('troop','🛡️')};
   const headIco = t => { const k=Object.keys(HEAD_ICO).find(e=>t.startsWith(e+' ')); return k ? HEAD_ICO[k]()+t.slice(k.length) : t; };
   /* แทนอีโมจิของไอเทม/สกุลเงิน/ธาตุ ด้วยไอคอนวาด หลังวาดหน้าทุกครั้ง (เฉพาะหน้าเมือง ไม่แตะฉากต่อสู้) */
@@ -2873,7 +2940,7 @@ if (typeof document !== 'undefined') (function(){
     const mi = freeK ? clsArt(freeK) : main ? charArt(ALLCHARS[main].c, m.chars[main].form) : clsArt('villager');
     return `<div class="overlay hub home" style="background:linear-gradient(rgba(20,15,40,.25),rgba(20,15,40,.55)),url(${ART.hub}) center/cover no-repeat #140f28">
       <div class="ptop"><button class="loreb" data-act="wopen" title="ตำนานโลก">${uiIco('lore','📜')}</button><button class="avatar fr-${frameOf(m)} ${main&&!freeK&&m.chars[main].form?'form':''}" data-act="avpick" title="เลือกตัวที่จะโชว์">${mi}<span class="avedit">✎</span></button><div class="pinfo"><b>${m.name}</b><div class="gs">ชนะบอส ${m.wins} · คะแนนสูงสุด ${fmt(m.best)}</div><div class="badges"><span title="ตราสัญลักษณ์">🏅</span><span>🔒</span><span>🔒</span></div></div><button class="cog" data-act="settings">${uiIco('settings','⚙️')}</button></div>
-      ${wallet(m)}
+      ${wallet(m,1)}
       ${loginGift?`<div class="hubmsg">🎁 ล็อกอินวันที่ ${m.login.streak}/7 ได้ตั๋วสุ่มเศษ ${loginGift} ใบ</div>`:''}
       <canvas id="idlecv"></canvas><div class="idlesp"></div>${idleRow(m)}
 
@@ -2899,7 +2966,8 @@ if (typeof document !== 'undefined') (function(){
       ${resetAsk?`<button class="choice danger" data-act="resetdo"><span>ยืนยันลบข้อมูลทั้งหมด</span><small>ย้อนกลับไม่ได้</small></button><button class="choice alt" data-act="resetno"><span>ยกเลิก</span></button>`
         :`<button class="choice alt" data-act="resetask"><span>ลบข้อมูลเกมทั้งหมด</span><small>เริ่มใหม่</small></button>`}</div>
       <div class="sndset"><div class="pop-r"><span>🎵 เสียงเพลง</span><b id="sv_mus">${Math.round(SND.set.mus*100)}%</b></div><input type="range" min="0" max="100" value="${Math.round(SND.set.mus*100)}" oninput="sndVol('mus',this.value)">
-        <div class="pop-r"><span>🔊 เสียงเอฟเฟกต์</span><b id="sv_sfx">${Math.round(SND.set.sfx*100)}%</b></div><input type="range" min="0" max="100" value="${Math.round(SND.set.sfx*100)}" oninput="sndVol('sfx',this.value)"></div>
+        <div class="pop-r"><span>🔊 เสียงเอฟเฟกต์</span><b id="sv_sfx">${Math.round(SND.set.sfx*100)}%</b></div><input type="range" min="0" max="100" value="${Math.round(SND.set.sfx*100)}" oninput="sndVol('sfx',this.value)">
+        <div class="pop-r"><span>🗣️ เสียงพากย์ NPC</span><b id="sv_voice">${SND.set.voice===0?'ปิด':'เปิด'}</b></div><input type="range" min="0" max="100" value="${Math.round((SND.set.voice==null?1:SND.set.voice)*100)}" oninput="sndVol('voice',this.value);var o=document.getElementById('sv_voice');if(o)o.textContent=this.value>0?this.value+'%':'ปิด'"></div>
       <div class="pbtns"><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
@@ -2948,10 +3016,6 @@ if (typeof document !== 'undefined') (function(){
         ${p?`<div class="prep-res">ได้ ${pTxt(p)}<div class="gs">ใช้ในรอบถัดไป</div></div>`
           :`<button class="choice" data-act="prep" ${m.medals<PREP_COST?'disabled':''}><span>เปิดถุงเสบียง</span><small>${PREP_COST} 🎖️</small></button>`}
         <div class="odds">${PREP.map(([x,w])=>`<span>${x.gold?'💰 '+fmt(x.gold):'🔷 รูน'+RUNE[x.rune].name.replace('รูน','')} <b>${w}%</b></span>`).join('')}</div></div>
-      <div class="sumbox"><h3>${uiIco('reroll','🎲')} หินสุ่มวีรชนใหม่</h3>
-        <p style="font-size:13px;text-align:left">จ่าย ${REROLL_COST} เหรียญตรา ตอน Lv.40 ถ้าไม่พอใจวีรชนคลาส 2 ที่สุ่มได้ กดสุ่มใหม่ได้อีก 1 ครั้ง (ใช้ได้เฉพาะรอบถัดไปรอบเดียว ไม่ได้ใช้ก็หายไป ต้องซื้อใหม่ทุกรอบ)</p>
-        ${m.reroll?`<div class="prep-res">🎲 มีหินสุ่มวีรชนใหม่ 1 ก้อน<div class="gs">ใช้ได้ในรอบถัดไปรอบเดียว</div></div>`
-          :`<button class="choice" data-act="rrbuy" ${m.medals<REROLL_COST?'disabled':''}><span>แลกหินสุ่มวีรชนใหม่</span><small>${REROLL_COST} 🎖️</small></button>`}</div>
       <div class="sumbox"><h3>🎖️ ติดตัวจากสถานะถาวร</h3>
         <div class="sumr"><span>HP / ATK / MATK</span><b>+${fmt(pm.hp)} / +${fmt(pm.atk)} / +${fmt(pm.matk)}</b></div>
         <div class="sumr"><span>DEF / MDEF</span><b>+${fmt(pm.def)} / +${fmt(pm.mdef)}</b></div>
@@ -3242,7 +3306,23 @@ if (typeof document !== 'undefined') (function(){
     else if (S.phase==='title' && hub==='gacha') tr='gacha';
     SND.music(tr);
     if (sndPhase!==S.phase){ if (S.phase==='dead') SND.sfx('lose'); if (S.phase==='victory') SND.sfx('win'); sndPhase=S.phase; } }
-  function afterRender(){ document.querySelectorAll('.overlay.hub, .pop-bg').forEach(emoSwap); sndAuto(); { const el=document.getElementById('tut'); if (el&&tutKey&&tutCtx()!==tutKey){ el.remove(); tutKey=null; } } clearTimeout(afterRender.t); afterRender.t=setTimeout(tutCheck,350); }
+  const NPC_VOICE = {
+    mEquip:{name:'ช่างตีเหล็ก', pitch:0.55, rate:0.95, blip:150, lines:['เหล็กร้อนๆ ตีใหม่ๆ เลือกได้เลย!','ของดีต้องคู่กับผู้กล้าแบบเจ้า!','อาวุธคมกริบ รับประกันไม่หักกลางศึก!']},
+    mStat:{name:'นักเล่นแร่แปรธาตุ', pitch:1.5, rate:1.1, blip:420, lines:['ฮิฮิ… จิบเดียวแข็งแกร่งขึ้นทันที!','ยาวิเศษสูตรลับ เพิ่งต้มเสร็จเมื่อกี้เอง!','ไม่ระเบิดหรอกน่า… มั้งนะ ฮิฮิ']},
+    mPotion:{name:'พ่อค้ายาเร่', pitch:1.15, rate:1.0, blip:300, lines:['สมุนไพรจากป่าลึก หายเหนื่อยทันใจจ้า!','เจ็บตรงไหนบอกมา มียาครบทุกขนาน!','แวะพักก่อนสิ ทางข้างหน้ายังอีกไกล']},
+    mSkill:{name:'บรรณารักษ์', pitch:0.95, rate:0.85, blip:240, lines:['ความรู้คือพลัง… อ่านสักเล่มไหม?','ตำราเล่มนี้ ซ่อนท่าไม้ตายไว้นะ','ชู่ว… ในห้องสมุดต้องเงียบ']},
+    rune:{name:'ผู้พิทักษ์รูน', pitch:0.4, rate:0.75, blip:110, lines:['รูนโบราณ… กระซิบชื่อของเจ้า','แสงแห่งรูน จะนำทางเจ้าหนีความมืด','บอสอยู่ไม่ไกลแล้ว… เตรียมรูนไว้ให้ดี']},
+  };
+  let npcSaid='', thVoice=null;
+  function pickThVoice(){ try{ const vs=speechSynthesis.getVoices(); thVoice=vs.find(v=>/^th/i.test(v.lang))||null; }catch(e){} }
+  if (typeof speechSynthesis!=='undefined'){ pickThVoice(); try{ speechSynthesis.onvoiceschanged=pickThVoice; }catch(e){} }
+  function npcSpeak(){ const box=document.getElementById('npc'); if (!box||battleView||!S||!S.ev){ return; } const v=NPC_VOICE[S.ev.type==='offer'?'mEquip':S.ev.type]; if (!v) return;
+    const key=S.floor+':'+S.ev.type.replace('offer','mEquip'); if (npcSaid===key) return; npcSaid=key;
+    const line=v.lines[Math.floor(Math.random()*v.lines.length)], b=document.createElement('div'); b.className='npcsay'; b.innerHTML=`<small>${v.name}</small>${line}`; box.appendChild(b); setTimeout(()=>b.remove(),3600);
+    const vol=SND.set.voice==null?1:SND.set.voice; if (vol<=0) return;
+    let spoke=false; try{ if (thVoice && !auto){ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(line); u.voice=thVoice; u.lang=thVoice.lang; u.pitch=v.pitch; u.rate=v.rate; u.volume=Math.min(1,vol); speechSynthesis.speak(u); spoke=true; } }catch(e){}
+    if (!spoke) SND.blip(v.blip, Math.min(12, Math.round(line.length/4))); }
+  function afterRender(){ document.querySelectorAll('.overlay.hub, .pop-bg').forEach(emoSwap); sndAuto(); try{ npcSpeak(); }catch(e){} { const el=document.getElementById('tut'); if (el&&tutKey&&tutCtx()!==tutKey){ el.remove(); tutKey=null; } } clearTimeout(afterRender.t); afterRender.t=setTimeout(tutCheck,350); }
   const SND_ACT = {pull:'pull',skpull:'pull',rlpull:'pull',altup:'upgrade',rlup:'upgrade',starup:'levelup',awaken:'levelup',class:'levelup',ichest:'coin',shbuy:'coin',rlbuy:'coin',skbuy:'coin',dustbuy:'coin',htswc:'coin',htsweep:'coin',
     start:'start',htgo:'start',dhgo:'start',ifight:'start',htnext:'start',htretry:'start',revealok:'open',hub:'click',gtab:'click',ctab:'click',trtab:'click',shtab:'click',htmap:'click',htsel:'click',htslot:'click',settings:'open',cpop:'open',rlbreak:'hit'};
   document.addEventListener('click', e=>{ const b=e.target.closest&&e.target.closest('[data-act]'); if (!b||b.disabled||b.dataset.act==='noop') return; const a=b.dataset.act, n=SND_ACT[a];
@@ -4106,7 +4186,6 @@ if (typeof document !== 'undefined') (function(){
       ['eqtix',uiIco('eqtix','⚒️'),'ตั๋วตีอุปกรณ์',m.eq.tix,'ใช้ตีอุปกรณ์ให้นักรบที่โรงตีเหล็ก','troop:eq','ไปโรงตีเหล็ก'],
       ['energy',uiIco('energy','⚡'),'สายฟ้า',ht.en,'ใช้เข้าหอคอยร้อยชั้น ฟื้นเองตามเวลา','hundred','ไปหอคอยร้อยชั้น'],
       ['orb',uiIco('orb','🔮'),'ลูกแก้วลึกลับ',m.orbs||0,`พบในหอคอยไร้สิ้นสุด สะสมครบ ${CONFIG.orbNeed} ลูกจะเกิดเรื่องพิเศษ…`,'',''],
-      ['reroll',uiIco('reroll','🎲'),'หินสุ่มวีรชนใหม่',m.reroll?1:0,'ใช้สุ่มวีรชนคลาส 2 ใหม่ 1 ครั้งตอน Lv.40 ใช้ได้รอบถัดไปรอบเดียว','adv:prep','หน้าเตรียมตัว'],
       ['prep',uiIco('prep','🎒'),'ถุงเสบียง',m.prep?1:0,m.prep?`ข้างในมี ${m.prep.gold?'ทอง '+fmt(m.prep.gold):RUNE[m.prep.rune].name} ใช้ตอนเริ่มรอบถัดไป`:'ซื้อได้ที่หน้าเตรียมตัวก่อนเข้าหอคอย','adv:prep','หน้าเตรียมตัว'],
     ]; }
   function bagItemTab(m){ const L=bagItems(m), it=L.find(x=>x[0]===bagItem);
@@ -4186,7 +4265,6 @@ if (typeof document !== 'undefined') (function(){
     if (act==='perm'){ const n=+b.dataset.n; lastPerm=[]; for(let i=0;i<n;i++){ const r=permRoll(m); if(!r) break; lastPerm.push(r); }
       return done(lastPerm.length<n ? (lastPerm.length?`สุ่มได้ ${lastPerm.length} ครั้ง (เหรียญไม่พอ)`:'เหรียญตราไม่พอ') : ''); }
     if (act==='prep'){ const r=prepBuy(m); return done(r?'เปิดถุงเสบียงแล้ว!':'เหรียญตราไม่พอ'); }
-    if (act==='rrbuy'){ const r=rerollBuy(m); return done(r?'ได้หินสุ่มวีรชนใหม่แล้ว!':'เหรียญตราไม่พอ'); }
     if (act==='cpop'){ charPop = b.dataset.k; hubMsg=''; relSel=null; render(); return true; }
     if (act==='cclose'){ charPop = null; render(); return true; }
     if (act==='starup'){ const id=b.dataset.k; if (starUp(m,id)) hubMsg = m.chars[id].form ? `✦ ${ALLCHARS[id].c.name} กลายร่างแล้ว!` : `⭐ ${ALLCHARS[id].c.name} เป็น ${m.chars[id].star} ดาวแล้ว!`; storeMeta(m); render(); return true; }
@@ -4310,7 +4388,7 @@ if (typeof document !== 'undefined') (function(){
       return `<div class="overlay"><h1>${S.char.sp?'✨ ได้ตัวพิเศษ! ✨':'ตัวละครของคุณ'}</h1>${revealCard(S.cls,S.char,false)}
         ${S.party.map(m=>revealCard(m.cls,m.char,true)).join('')}
         <p style="font-size:13px">บอสรอบนี้: ${elIcon(S.bossEl)} <b>ธาตุ${ELEMENTS[S.bossEl].name}</b>${(()=>{ const opp=S.bossEl==='dark'?'light':'dark'; const n=[S.char&&S.char.el===opp?unitName(S.cls,S.char):null,...S.party.map(m=>m.char&&m.char.el===opp?unitName(m.cls,m.char):null)].filter(Boolean); return n.length?`<br>⚡ ${n.join(', ')} ธาตุตรงข้ามบอส: ตีแรงขึ้นและโดนแรงขึ้น 30%`:''; })()}</p><p style="font-size:12px">บอสเริ่มโผล่ได้แล้วตั้งแต่ชั้นถัดไป</p>
-        ${S.reroll&&!S.picked?`<button class="choice alt" data-act="reroll"><span>🎲 สุ่มวีรชนใหม่</span><small>ใช้หินสุ่ม 1 ก้อน · ได้ผลใหม่ต้องใช้ตัวนั้น</small></button>`:''}
+        ${rerollOk()?(()=>{ const md=loadMeta().medals; return `<button class="choice alt rrbtn" data-act="reroll" ${md<REROLL_COST?'disabled':''}><span>${uiIco('reroll','🎲')} ใช้หินสุ่มวีรชนใหม่</span><small>${REROLL_COST} 🎖️ · มีอยู่ ${fmt(md)} · ใช้ได้รอบละ 1 ครั้ง</small></button>`; })():''}
         <button class="choice" data-act="revealok"><span>ลุยต่อ!</span></button></div>`;
     }
     if (S.phase==='dead' || S.phase==='victory'){
@@ -4391,7 +4469,7 @@ if (typeof document !== 'undefined') (function(){
   const FX = {slash:['','fx-slash'], magic:['✦','fx-magic'], fire:['🔥','fx-fire'], ice:['❄️','fx-ice'], thunder:['⚡','fx-thunder'], poison:['🫧','fx-poison'], dark:['🌙','fx-magic'], arrow:['','fx-slash'],
     dot:['','fx-dot'], claw:['','fx-claw'], boss:['','fx-claw big'], heal:['✚','fx-heal'], shield:['','fx-shield'], buff:['▲','fx-buff']};
   function fxAt(el, kind, big){
-    SND.sfx(({slash:'hit',claw:'hit',boss:'crit',magic:'magic',fire:'magic',ice:'magic',thunder:'magic',dark:'magic',poison:'magic',arrow:'hit',dot:'hit',heal:'heal',shield:'open',buff:'open'})[kind]||'hit');
+    SND.sfx(big&&!['heal','shield','buff'].includes(kind)?'crit':({slash:'slash',claw:'slash',boss:'heavy',magic:'magic',fire:'fire',ice:'ice',thunder:'thunder',dark:'dark',poison:'dark',arrow:'arrow',dot:'hit',heal:'heal',shield:'open',buff:'open'})[kind]||'hit');
     if (!el || !FX[kind]) return; const [ico, cls] = FX[kind], sc=document.getElementById('scene'); if (!sc) return;
     const r = el.getBoundingClientRect(), a = sc.getBoundingClientRect();
     const f = document.createElement('div'); f.className = 'fx '+cls+(big?' big':''); f.style.left = (r.left-a.left+r.width/2)+'px'; f.style.top = (r.top-a.top+r.height*0.4)+'px';
@@ -4410,12 +4488,18 @@ if (typeof document !== 'undefined') (function(){
     const f=document.createElement('div'); f.className='fx2 '+kind; f.style.left=(r.left-a.left+r.width/2)+'px'; f.style.top=(r.top-a.top+(kind==='ring'||kind==='pillar'?r.height*0.92:r.height*0.4))+'px'; f.style.setProperty('--c', col||'#fff');
     if (kind==='bubble') f.style.setProperty('--w', Math.max(r.width,r.height)*1.15+'px');
     sc.appendChild(f); setTimeout(()=>f.remove(), 900); }
-  function pose(el, k){ if (!el) return; el.classList.remove('lunge','p-dash','p-jump','p-cast','p-pray','p-raise','p-charge'); void el.offsetWidth; el.classList.add(k); }
+  function pose(el, k){ if (!el) return; el.classList.remove('lunge','p-dash','p-jump','p-cast','p-pray','p-raise','p-charge','p-spin','m-lunge'); void el.offsetWidth; el.classList.add(k); }
   function cutIn(fr){ const sc=document.getElementById('scene'); if (!sc) return; const a=document.getElementById('u'+fr.from), im=a&&a.querySelector('img'), col=EL_FXC[fr.el]||(fr.sp?'#ffd34d':'#8fd0ff');
     const c=document.createElement('div'); c.className='cutin'+(fr.sp?' sp':''); c.style.setProperty('--c',col);
     c.innerHTML=`<div class="cib"></div><div class="cil"></div>${im?`<img src="${im.src}" alt="">`:`<span class="cie">${a?a.querySelector('.em')?.innerHTML||'':''}</span>`}<div class="cit"><small>${fr.sp?'✨ ท่าไม้ตาย':'อัลติเมท'}</small><b>${fr.sname||''}</b></div>`;
     sc.appendChild(c); setTimeout(()=>c.remove(), 950); }
   function shake(n){ const sc=document.getElementById('scene'); if (!sc) return; sc.classList.remove('shake','shake2'); void sc.offsetWidth; sc.classList.add(n>1?'shake2':'shake'); }
+  function flashHit(el, back){ if (!el) return; el.classList.remove('flash','kb','kbl'); void el.offsetWidth; el.classList.add('flash', back?'kbl':'kb'); }
+  function scFlash(col){ const sc=document.getElementById('scene'); if (!sc) return; const f=document.createElement('div'); f.className='scflash'; f.style.setProperty('--c',col||'#fff'); sc.appendChild(f); setTimeout(()=>f.remove(),400); }
+  function zoomPunch(){ const sc=document.getElementById('scene'); if (!sc) return; sc.classList.remove('zpunch'); void sc.offsetWidth; sc.classList.add('zpunch'); }
+  function sparks(el, col, n){ const sc=document.getElementById('scene'); if (!sc||!el) return; const r=el.getBoundingClientRect(), a=sc.getBoundingClientRect();
+    const f=document.createElement('div'); f.className='sparks'; f.style.left=(r.left-a.left+r.width/2)+'px'; f.style.top=(r.top-a.top+r.height*0.45)+'px'; f.style.setProperty('--c',col||'#fff');
+    f.innerHTML=Array.from({length:n||8},(_,i)=>`<i style="--a:${i*(360/(n||8))+Math.random()*25}deg;--d:${40+Math.random()*45}px"></i>`).join(''); sc.appendChild(f); setTimeout(()=>f.remove(),600); }
   function banner(text, sp){
     const sc = document.getElementById('scene'); if (!sc) return;
     const b = document.createElement('div'); b.className='banner'+(sp==='combo'?' combo':sp?' sp':''); b.innerHTML=`<span>${text}</span>`;
@@ -4557,24 +4641,28 @@ if (typeof document !== 'undefined') (function(){
           const el = document.getElementById(fr.target==='mon'?'monActor':'u'+fr.target);
           const RNG_FX=['magic','fire','ice','arrow','thunder','poison','dark'], col=EL_FXC[fr.el]||'#ffffff';
           if (fr.from!=null){ const a=document.getElementById('u'+fr.from), ranged=RNG_FX.includes(fr.fx);
-            if (a) pose(a, fr.big ? 'p-charge' : ranged ? 'p-cast' : fr.sl==='s1' ? 'p-dash' : fr.sl==='s3' ? 'p-jump' : 'lunge');
+            if (a) pose(a, fr.big ? 'p-charge' : ranged ? 'p-cast' : fr.sl==='s1' ? 'p-dash' : fr.sl==='s2' ? 'p-spin' : fr.sl==='s3' ? 'p-jump' : 'lunge');
             if (a && ranged && fr.fx!=='thunder') projectile(a, el, fr.fx); }
+          else if (fr.target!=='mon'){ pose(document.getElementById('monActor'),'m-lunge'); SND.sfx('enemy'); }
           if (fr.fx==='thunder') fx2(el,'bolt','#fff27a');
           if (fr.big){ fx2(el,'ring',col); fx2(el,'pillar',col); }
           else if (fr.crit && fr.target==='mon') fx2(el,'xslash',col);
-          if (el){ el.classList.remove('hit'); void el.offsetWidth; el.classList.add('hit'); }
+          if (el){ el.classList.remove('hit'); void el.offsetWidth; el.classList.add('hit'); flashHit(el, fr.target!=='mon'); }
           fxAt(el, fr.fx, fr.big||fr.crit);
+          if (fr.target==='mon') sparks(el, col, fr.big?14:fr.crit?10:6);
+          if (fr.big){ scFlash(col); zoomPunch(); setTimeout(()=>SND.sfx('boom'),60); }
           if (fr.big || (fr.crit && fr.target==='mon')) shake(fr.big?2:1);
-          floatAt(el, fmt(fr.dmg), fr.crit?'crit':'');
+          floatAt(el, fmt(fr.dmg)+(fr.crit?'!':''), fr.big?'crit big':fr.crit?'crit':fr.target!=='mon'?'hurt':'');
         }
         if (fr.type==='heal'){ (fr.who==='all'?[0,1,2]:[fr.who]).forEach(k=>{ const e=document.getElementById('u'+k); fxAt(e,'heal'); fx2(e,'ring','#7dff9a'); fx2(e,'rise','#7dff9a'); floatAt(e, '+'+fmt(fr.dmg), 'heal'); }); }
         if (fr.type==='info' && fr.fx==='shield') [0,1,2].forEach(k=>{ const e=document.getElementById('u'+k); fxAt(e,'shield'); fx2(e,'bubble','#8fd0ff'); pose(e,'p-raise'); });
         if (fr.type==='info' && fr.fx==='buff') [0,1,2].forEach(k=>{ const e=document.getElementById('u'+k); fxAt(e,'buff'); fx2(e,'rise','#ffb35a'); pose(e,'p-raise'); });
-        if (fr.type==='ult'){ if (fr.from!=null){ cutIn(fr); const a=document.getElementById('u'+fr.from); if (a) pose(a, fr.kind==='dmg'||!fr.kind?'p-charge':fr.kind.startsWith('heal')||fr.kind==='revive'?'p-pray':'p-raise'); } else banner(fr.text, fr.sp); }
+        if (fr.type==='kill'){ const me=document.getElementById('monActor'); if (me){ me.classList.remove('dying'); void me.offsetWidth; me.classList.add('dying'); } SND.sfx('kill'); sparks(me,'#ffe08a',12); }
+        if (fr.type==='ult'){ if (fr.from!=null){ SND.sfx('charge'); cutIn(fr); const a=document.getElementById('u'+fr.from); if (a) pose(a, fr.kind==='dmg'||!fr.kind?'p-charge':fr.kind.startsWith('heal')||fr.kind==='revive'?'p-pray':'p-raise'); } else banner(fr.text, fr.sp); }
         if (fr.type==='combo'){ banner(fr.text, 'combo'); shake(1); }
         const b = document.getElementById('blog'); if (b){ const d=document.createElement('div'); d.textContent=fr.text;
           d.className = fr.type==='ult'||fr.type==='combo'?'ult':fr.crit?'crit':fr.type==='lose'?'bad':fr.type==='kill'?'good':''; b.prepend(d); }
-        setTimeout(tick, (fr.type==='ult'?900:fr.type==='combo'?650:380)/speed);
+        setTimeout(tick, (fr.type==='ult'?900:fr.type==='combo'?650:fr.type==='hit'&&(fr.big||fr.crit)?470:380)/speed);
       };
       setTimeout(tick, 250);
     }
