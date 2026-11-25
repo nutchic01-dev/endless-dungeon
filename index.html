@@ -943,6 +943,54 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v1.6</div>
+<div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
+<div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
+<div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
+<style>
+#dqload{position:fixed;inset:0;z-index:10000;background:#140c22;overflow:hidden;transition:opacity .6s ease;font-family:"Mitr","Sarabun",sans-serif;cursor:default}
+#dqload.out{opacity:0;pointer-events:none}
+#dqload .ldbg{position:absolute;inset:0;background:url(art/bg_loading.webp) center/cover no-repeat;animation:ldzoom 18s ease-in-out infinite alternate}
+@keyframes ldzoom{from{transform:scale(1.02)}to{transform:scale(1.1) translateY(-1.5%)}}
+#dqload .ldsh{position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,10,40,.55) 0%,rgba(20,10,40,0) 30%,rgba(0,0,0,0) 62%,rgba(8,4,16,.88) 100%)}
+#dqload .ldver{position:absolute;top:max(12px,env(safe-area-inset-top));right:14px;color:#fff;font-weight:600;font-size:14px;text-shadow:0 1px 3px #000,0 0 2px #000}
+#dqload .ldlogo{position:absolute;left:0;right:0;top:9vh;text-align:center;line-height:1.02;animation:ldin .9s cubic-bezier(.2,1.4,.4,1) both}
+@keyframes ldin{from{opacity:0;transform:scale(.6) translateY(-20px)}to{opacity:1;transform:none}}
+#dqload .l1{margin-bottom:10px;font-size:min(7vw,34px);font-weight:600;color:#fff4d8;letter-spacing:2px;text-shadow:0 2px 0 #5a2a0a,0 0 10px rgba(0,0,0,.7)}
+#dqload .l2{font-size:min(15vw,72px);font-weight:600;line-height:1.08}
+#dqload .l2 span{position:relative;display:inline-block;isolation:isolate;padding:0 8px;color:#ffd84a;text-shadow:0 -2px 0 #fff4b8,0 2px 0 #f08c12}
+#dqload .l2 span::before{content:attr(data-t);position:absolute;left:8px;top:0;z-index:-1;-webkit-text-fill-color:#3b1405;-webkit-text-stroke:7px #3b1405;transform:translateY(4px);text-shadow:0 0 18px rgba(255,170,60,.6)}
+#dqload .ldbot{position:absolute;left:0;right:0;bottom:max(7vh,calc(env(safe-area-inset-bottom) + 30px));display:flex;flex-direction:column;align-items:center;gap:10px;padding:0 9%}
+#dqload .ldbar{position:relative;width:100%;max-width:420px;height:14px;border-radius:9px;background:rgba(10,6,20,.75);border:2px solid #c9a34a;box-shadow:0 0 0 2px rgba(0,0,0,.5),inset 0 2px 4px rgba(0,0,0,.6)}
+#dqload .ldfill{height:100%;width:0;border-radius:7px;background:linear-gradient(180deg,#ffe58a,#ffb21f 55%,#e07a10);box-shadow:0 0 10px #ffb21f;transition:width .35s ease}
+#dqload .ldrun{position:absolute;bottom:4px;left:0;height:46px;transform:translateX(-50%);transition:left .35s ease;filter:drop-shadow(0 2px 2px rgba(0,0,0,.6));animation:ldhop .42s ease-in-out infinite alternate}
+@keyframes ldhop{from{margin-bottom:0}to{margin-bottom:5px}}
+#dqload .ldtxt{color:#fff;font-size:15px;text-shadow:0 1px 3px #000,0 0 2px #000}
+#dqload .ldtap{display:none;color:#ffe08a;font-size:19px;font-weight:600;text-shadow:0 2px 4px #000,0 0 10px rgba(255,190,60,.8);animation:ldblink 1.3s ease-in-out infinite}
+@keyframes ldblink{50%{opacity:.35}}
+#dqload.ready .ldtxt{display:none}#dqload.ready .ldtap{display:block}#dqload.ready{cursor:pointer}#dqload.ready .ldrun{animation:none}
+#dqload .ldtip{color:#d9cdf2;font-size:12.5px;text-align:center;min-height:34px;max-width:420px;text-shadow:0 1px 2px #000;transition:opacity .4s}
+</style>
+<script>
+(function(){
+  const root=document.getElementById('dqload'), fill=root.querySelector('.ldfill'), run=root.querySelector('.ldrun'), txt=root.querySelector('.ldtxt'), tip=root.querySelector('.ldtip');
+  const TIPS=['เคล็ดลับ: ทุกครั้งที่จบรอบในหอคอยไร้สิ้นสุด จะได้เหรียญตราไว้สุ่มสถานะถาวร','เคล็ดลับ: ถึง Lv.40 จะได้สุ่มวีรชนคลาส 2 ซื้อหินสุ่มใหม่ได้ก่อนเข้ารอบ',
+    'เคล็ดลับ: วีรชนที่วางบนแท่นหน้าเมืองจะหาทองให้แม้ตอนไม่ได้เล่น','เคล็ดลับ: ธาตุที่ชนะทางกันสร้างดาเมจได้มากขึ้น ลองจัดทีมให้เหมาะกับบอส',
+    'เคล็ดลับ: ล่ามังกรทุกวันเพื่อสะสมเกล็ดมังกรและตั๋วเรลิก','เคล็ดลับ: เศษวีรชนส่วนเกินย่อยเป็นผงดาวได้ที่หน้ากระเป๋า','เคล็ดลับ: เข้าสู่ระบบแล้วเล่นต่อได้ทุกเครื่อง เซฟขึ้นบัญชีให้อัตโนมัติ'];
+  const STEP=['กำลังเปิดประตูดันเจี้ยน…','กำลังปลุกเหล่าวีรชน…','กำลังจุดคบเพลิงในหอคอย…','กำลังนับสมบัติในคลัง…','เกือบพร้อมแล้ว…'];
+  let ti=Math.floor(Math.random()*TIPS.length); const showTip=()=>{ tip.style.opacity=0; setTimeout(()=>{ tip.textContent=TIPS[ti++%TIPS.length]; tip.style.opacity=1; },300); }; showTip(); const tipT=setInterval(showTip,3800);
+  const files=["mode_boss.webp", "mode_daily.webp", "mode_element.webp", "mode_endless.webp", "mode_hundred.webp", "mode_nest.webp", "mode_pvp.webp", "ui_adv.webp", "ui_altar.webp", "ui_boss.webp", "ui_chars.webp", "ui_chest.webp", "ui_crystal.webp", "ui_dust.webp", "ui_equip.webp", "ui_gacha.webp", "ui_gold.webp", "ui_home.webp", "ui_lore.webp", "ui_medal.webp", "ui_mission.webp", "ui_oracle.webp", "ui_relicbox.webp", "ui_relictix.webp", "ui_scale.webp", "ui_settings.webp", "ui_shop.webp", "ui_skin.webp", "ui_ticket.webp", "ui_troop.webp", "bg_summon.jpg", "bg_sky.jpg", "char_villager.webp"]; let done=0, total=files.length+1, shown=0, pageLoaded=false, t0=Date.now();
+  const set=p=>{ p=Math.max(shown,Math.min(1,p)); shown=p; fill.style.width=(p*100)+'%'; run.style.left=(p*100)+'%'; txt.textContent=STEP[Math.min(STEP.length-1,Math.floor(p*STEP.length))]; };
+  const tick=()=>{ done++; set(done/total*0.95); check(); };
+  files.forEach(f=>{ const im=new Image(); im.onload=im.onerror=tick; im.src='art/'+f; });
+  window.addEventListener('load',()=>{ pageLoaded=true; tick(); });
+  function check(){ if (done<total||!pageLoaded) return; const wait=Math.max(0,1600-(Date.now()-t0)); setTimeout(ready,wait); }
+  let isReady=false;
+  function ready(){ if (isReady) return; isReady=true; set(1); root.classList.add('ready'); }
+  setTimeout(()=>{ pageLoaded=true; done=total; check(); },12000);   // เน็ตช้ามาก: ไม่ให้ค้างเกิน 12 วินาที
+  root.addEventListener('click',()=>{ if (!isReady) return; clearInterval(tipT); root.classList.add('out'); setTimeout(()=>root.remove(),650); });
+})();
+</script>
 <div id="app"></div>
 <script src="art/spirits.js"></script><script src="art/items.js"></script>
 <script>
