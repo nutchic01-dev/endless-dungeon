@@ -2834,7 +2834,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="sndset"><div class="pop-r"><span>🎵 เสียงเพลง</span><b id="sv_mus">${Math.round(SND.set.mus*100)}%</b></div><input type="range" min="0" max="100" value="${Math.round(SND.set.mus*100)}" oninput="sndVol('mus',this.value)">
         <div class="pop-r"><span>🔊 เสียงเอฟเฟกต์</span><b id="sv_sfx">${Math.round(SND.set.sfx*100)}%</b></div><input type="range" min="0" max="100" value="${Math.round(SND.set.sfx*100)}" oninput="sndVol('sfx',this.value)"></div>
       <div class="pbtns"><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
-      ${saveHtml()}
+      ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${saveHtml()}
       ${devHtml(m)}
       <div class="pop-f" data-act="vertap">ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้ · v1.6<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
@@ -4513,6 +4513,123 @@ if (typeof document !== 'undefined') (function(){
   });
   { const m=loadMeta(); loginGift=dailyLogin(m); storeMeta(m); }
   newRun(); S.phase='title'; render();
+})();
+</script>
+<script>
+/* ===== บัญชีผู้เล่น + เซฟออนไลน์ (Supabase) ===== */
+(function(){
+  const SB_URL='https://anskfairdpcbmfkldaeh.supabase.co', SB_KEY='sb_publishable_pf2MQtTwcnQuYJByYWR2Sw_lSBZvQS1';
+  const LS=localStorage, K_AUTH='dq_auth', K_GUEST='dq_guest', K_TS='dq_cloud_ts', K_UID='dq_cloud_uid', K_DIRTY='dq_dirty';
+  const get=k=>{ try{ return LS.getItem(k); }catch(e){ return null; } }, set=(k,v)=>{ try{ v==null?LS.removeItem(k):LS.setItem(k,v); }catch(e){} };
+  let auth=null; try{ auth=JSON.parse(get(K_AUTH)||'null'); }catch(e){}
+  let status='', pushT=null, busy=false;
+  const TH={'Invalid login credentials':'อีเมลหรือรหัสผ่านไม่ถูกต้อง','User already registered':'อีเมลนี้สมัครไว้แล้ว ลองเข้าสู่ระบบแทน',
+    'Email not confirmed':'บัญชียังไม่ได้ยืนยันอีเมล (ผู้ดูแลต้องปิด Confirm email ใน Supabase)','Signups not allowed for this instance':'ตอนนี้ปิดรับสมัครสมาชิกใหม่อยู่',
+    'Unable to validate email address: invalid format':'รูปแบบอีเมลไม่ถูกต้อง'};
+  const thErr=e=>{ const s=(e&&e.message)||String(e); if (/Failed to fetch|NetworkError|Load failed/i.test(s)) return 'เชื่อมต่อเซิร์ฟเวอร์ไม่ได้ ตรวจอินเทอร์เน็ตแล้วลองใหม่';
+    if (/Password should be at least/i.test(s)) return 'รหัสผ่านต้องยาวอย่างน้อย 6 ตัวอักษร'; if (/weak/i.test(s)) return 'รหัสผ่านง่ายเกินไป ลองตั้งให้ยาวขึ้น';
+    if (/rate limit|too many/i.test(s)) return 'ลองบ่อยเกินไป รอสักครู่แล้วลองใหม่'; return TH[s]||s; };
+  async function req(path,opt={},useUser){ const h={'apikey':SB_KEY,'Content-Type':'application/json'}; if (useUser&&auth) h.Authorization='Bearer '+auth.access_token;
+    const r=await fetch(SB_URL+path,Object.assign({},opt,{headers:Object.assign(h,opt.headers||{})})); const t=await r.text(); let j=null; try{ j=t?JSON.parse(t):null; }catch(e){}
+    if (!r.ok){ const err=new Error((j&&(j.msg||j.error_description||j.message||j.error))||('HTTP '+r.status)); err.status=r.status; throw err; } return j; }
+  function keep(s){ auth={access_token:s.access_token,refresh_token:s.refresh_token,expires_at:Date.now()+(s.expires_in||3600)*1000,user:{id:s.user.id,email:s.user.email}}; set(K_AUTH,JSON.stringify(auth)); }
+  async function fresh(){ if (!auth) return false; if (Date.now()<auth.expires_at-60000) return true;
+    try{ keep(await req('/auth/v1/token?grant_type=refresh_token',{method:'POST',body:JSON.stringify({refresh_token:auth.refresh_token})})); return true; }
+    catch(e){ if (e.status===400||e.status===401){ auth=null; set(K_AUTH,null); } return false; } }
+  async function userReq(path,opt){ if (!await fresh()) throw new Error('หมดเวลาเข้าสู่ระบบ กรุณาเข้าสู่ระบบใหม่');
+    try{ return await req(path,opt,true); }catch(e){ if (e.status===401){ auth.expires_at=0; if (await fresh()) return await req(path,opt,true); } throw e; } }
+  const pull=async()=>{ const r=await userReq(`/rest/v1/saves?select=data,updated_at&user_id=eq.${auth.user.id}`,{method:'GET'}); return r&&r[0]||null; };
+  async function push(force){ if (!auth||busy) return; if (!force&&get(K_DIRTY)!=='1') return; busy=true;
+    try{ const raw=get('dq_meta'); if (!raw){ busy=false; return; } const ts=new Date().toISOString();
+      await userReq('/rest/v1/saves?on_conflict=user_id',{method:'POST',headers:{Prefer:'resolution=merge-duplicates,return=minimal'},body:JSON.stringify({user_id:auth.user.id,data:JSON.parse(raw),updated_at:ts})});
+      set(K_TS,ts); set(K_UID,auth.user.id); set(K_DIRTY,null); status='☁️ เซฟขึ้นบัญชีแล้ว '+new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'}); }
+    catch(e){ status='⚠️ ยังเซฟขึ้นบัญชีไม่ได้ ('+thErr(e)+') จะลองใหม่อัตโนมัติ'; }
+    busy=false; paintStatus(); }
+  function schedule(){ if (!auth||pushT) return; pushT=setTimeout(()=>{ pushT=null; push(); },8000); }
+  // ดักการเซฟของเกม: ทุกครั้งที่เกมเซฟลงเครื่อง ให้จดว่าต้องส่งขึ้นบัญชี
+  const _store=window.storeMeta; window.storeMeta=function(m){ _store(m); set(K_DIRTY,'1'); schedule(); };
+  document.addEventListener('visibilitychange',()=>{ if (document.visibilityState==='hidden') push(); });
+  setInterval(()=>push(),60000);
+
+  /* ---------- หน้าต่าง ---------- */
+  const css=`#dqa{position:fixed;inset:0;z-index:9999;background:radial-gradient(circle at 50% 20%,#3a2560,#120c1c 70%);display:flex;align-items:center;justify-content:center;padding:18px;font-family:inherit;color:#fff3d6;overflow:auto}
+  #dqa .bx{width:100%;max-width:360px;background:rgba(28,19,44,.96);border:1.5px solid #c9a34a;border-radius:18px;padding:20px 18px;box-shadow:0 10px 40px rgba(0,0,0,.6)}
+  #dqa h2{margin:0 0 4px;text-align:center;font-size:20px;color:#ffd77a}#dqa .sub{text-align:center;font-size:13px;color:#cdbfe6;margin-bottom:14px}
+  #dqa .tb{display:flex;gap:6px;margin-bottom:12px}#dqa .tb button{flex:1;padding:9px;border-radius:10px;border:1px solid #5a4680;background:#231833;color:#d9cdf2;font:inherit;font-size:14px;cursor:pointer}
+  #dqa .tb button.on{background:linear-gradient(#ffd34d,#e3a51f);color:#3a2600;border-color:#ffd34d;font-weight:700}
+  #dqa label{display:block;font-size:13px;color:#cdbfe6;margin:8px 0 4px}#dqa input{width:100%;box-sizing:border-box;padding:11px 12px;border-radius:10px;border:1px solid #5a4680;background:#140e1f;color:#fff;font:inherit;font-size:16px}
+  #dqa .go{width:100%;margin-top:14px;padding:12px;border:0;border-radius:12px;background:linear-gradient(#ffd34d,#e3a51f);color:#3a2600;font:inherit;font-size:16px;font-weight:800;cursor:pointer}
+  #dqa .go:disabled{opacity:.6}#dqa .alt{width:100%;margin-top:8px;padding:10px;border-radius:12px;border:1px solid #5a4680;background:transparent;color:#d9cdf2;font:inherit;font-size:14px;cursor:pointer}
+  #dqa .msg{margin-top:10px;font-size:13px;text-align:center;min-height:18px}#dqa .msg.err{color:#ff9a9a}#dqa .msg.ok{color:#9dffb0}
+  #dqa .note{font-size:11px;color:#9f92b8;text-align:center;margin-top:12px;line-height:1.5}#dqa .lk{background:none;border:0;color:#ffd77a;font:inherit;font-size:13px;text-decoration:underline;cursor:pointer;padding:0;margin-top:8px}
+  #dqa .ch{display:flex;flex-direction:column;gap:8px;margin-top:6px}#dqa .ch button{text-align:left;padding:12px;border-radius:12px;border:1.5px solid #5a4680;background:#231833;color:#fff;font:inherit;cursor:pointer}
+  #dqa .ch button b{display:block;color:#ffd77a;margin-bottom:3px}#dqa .ch button small{color:#cdbfe6;font-size:12px}
+  .cloudbox{margin-top:10px;padding:10px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid rgba(201,163,74,.35);font-size:13px}
+  .cloudbox .cst{font-size:12px;color:#cdbfe6;margin:4px 0 8px}.cloudbox button{padding:8px 12px;border-radius:10px;border:1px solid #5a4680;background:#231833;color:#fff;font:inherit;font-size:13px;cursor:pointer;margin-right:6px}`;
+  const st=document.createElement('style'); st.textContent=css; document.head.appendChild(st);
+  let mode='login';
+  const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]);
+  function box(html){ let d=document.getElementById('dqa'); if (!d){ d=document.createElement('div'); d.id='dqa'; document.body.appendChild(d); } d.innerHTML=`<div class="bx">${html}</div>`; return d; }
+  function close(){ const d=document.getElementById('dqa'); if (d) d.remove(); }
+  function showAuth(msg,cls){ const signup=mode==='signup';
+    const d=box(`<h2>⚔️ ผู้กล้าแห่งดันเจี้ยนไร้สิ้นสุด</h2><div class="sub">เข้าสู่ระบบเพื่อเซฟความคืบหน้าไว้ในบัญชี เล่นต่อได้ทุกเครื่อง</div>
+      <div class="tb"><button data-m="login" class="${signup?'':'on'}">เข้าสู่ระบบ</button><button data-m="signup" class="${signup?'on':''}">สมัครสมาชิก</button></div>
+      <form id="dqf"><label>อีเมล</label><input id="dqe" type="email" autocomplete="email" required placeholder="you@example.com">
+      <label>รหัสผ่าน ${signup?'(อย่างน้อย 6 ตัว)':''}</label><input id="dqp" type="password" autocomplete="${signup?'new-password':'current-password'}" required minlength="6">
+      ${signup?'<label>ยืนยันรหัสผ่าน</label><input id="dqp2" type="password" autocomplete="new-password" required minlength="6">':''}
+      <button class="go" type="submit">${signup?'สมัครและเริ่มเล่น':'เข้าสู่ระบบ'}</button></form>
+      ${signup?'':'<div style="text-align:center"><button class="lk" data-x="forgot">ลืมรหัสผ่าน?</button></div>'}
+      <div class="msg ${cls||''}" id="dqm">${msg||''}</div>
+      <button class="alt" data-x="guest">เล่นแบบไม่ล็อกอิน (เซฟไว้ในเครื่องนี้เท่านั้น)</button>
+      <div class="note">เราเก็บอีเมลของคุณไว้เพื่อเข้าสู่ระบบและบันทึกความคืบหน้าเกมเท่านั้น ไม่เปิดเผยให้ผู้อื่น<br>รหัสผ่านถูกเข้ารหัส ผู้ดูแลเกมมองไม่เห็น</div>`);
+    d.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{ mode=b.dataset.m; showAuth(); });
+    d.querySelector('[data-x=guest]').onclick=()=>{ set(K_GUEST,'1'); close(); };
+    const fg=d.querySelector('[data-x=forgot]'); if (fg) fg.onclick=()=>showAuth('ระบบรีเซ็ตรหัสผ่านทางอีเมลยังไม่เปิดให้ใช้ ถ้าลืมรหัสผ่าน ติดต่อผู้ดูแลเกมได้เลย','err');
+    d.querySelector('#dqf').onsubmit=async ev=>{ ev.preventDefault(); const e=d.querySelector('#dqe').value.trim(), p=d.querySelector('#dqp').value, m=d.querySelector('#dqm'), btn=d.querySelector('.go');
+      if (signup && p!==d.querySelector('#dqp2').value){ m.className='msg err'; m.textContent='รหัสผ่านทั้งสองช่องไม่ตรงกัน'; return; }
+      btn.disabled=true; m.className='msg'; m.textContent='กำลังดำเนินการ…';
+      try{ const r=await req(signup?'/auth/v1/signup':'/auth/v1/token?grant_type=password',{method:'POST',body:JSON.stringify({email:e,password:p})});
+        if (!r||!r.access_token){ m.className='msg ok'; m.textContent='สมัครแล้ว แต่ระบบให้ยืนยันอีเมลก่อน (ผู้ดูแลต้องปิด Confirm email ใน Supabase)'; btn.disabled=false; return; }
+        keep(r); set(K_GUEST,null); await afterLogin(true); }
+      catch(err){ m.className='msg err'; m.textContent=thErr(err); btn.disabled=false; } };
+  }
+  const summ=m=>{ try{ const n=Object.keys(m.chars||{}).length; return `วีรชน ${n} ตัว · เหรียญตรา ${m.medals||0} · ชั้นสูงสุด ${m.best||0}`; }catch(e){ return ''; } };
+  const hasProg=raw=>{ try{ const m=JSON.parse(raw); return Object.keys(m.chars||{}).length>0||(m.best||0)>0||(m.runs||0)>0; }catch(e){ return false; } };
+  function useCloud(row){ set('dq_meta',JSON.stringify(row.data)); set(K_TS,row.updated_at); set(K_UID,auth.user.id); set(K_DIRTY,null); location.reload(); }
+  async function afterLogin(fromForm){ let row;
+    try{ row=await pull(); }catch(e){ if (fromForm){ box(`<h2>เข้าสู่ระบบแล้ว</h2><div class="msg err">โหลดเซฟจากบัญชีไม่ได้: ${esc(thErr(e))}</div><button class="go" id="dqok">เล่นต่อด้วยเซฟในเครื่อง</button>`).querySelector('#dqok').onclick=close; } return; }
+    const raw=get('dq_meta'), sameAcc=get(K_UID)===auth.user.id;
+    if (!row){ set(K_DIRTY,'1'); await push(true); close(); return; }
+    if (sameAcc){ const lt=Date.parse(get(K_TS)||0)||0, ct=Date.parse(row.updated_at)||0;
+      if (ct>lt+1000) return useCloud(row);                 // มีเซฟใหม่กว่าจากเครื่องอื่น
+      close(); push(); return; }
+    if (!raw||!hasProg(raw)) return useCloud(row);          // เครื่องนี้ยังไม่มีความคืบหน้า → ใช้เซฟในบัญชีเลย
+    let lm={}; try{ lm=JSON.parse(raw); }catch(e){}
+    const d=box(`<h2>เลือกเซฟที่จะใช้</h2><div class="sub">บัญชีนี้มีเซฟอยู่แล้ว และเครื่องนี้ก็มีเซฟอยู่ จะใช้อันไหน?</div>
+      <div class="ch"><button id="dqc"><b>☁️ เซฟในบัญชี</b><small>${esc(summ(row.data))}<br>อัปเดตล่าสุด ${new Date(row.updated_at).toLocaleString('th-TH')}</small></button>
+      <button id="dql"><b>📱 เซฟในเครื่องนี้</b><small>${esc(summ(lm))}</small></button></div>
+      <div class="note">อันที่ไม่ได้เลือกจะถูกเขียนทับ</div>`);
+    d.querySelector('#dqc').onclick=()=>useCloud(row);
+    d.querySelector('#dql').onclick=async()=>{ set(K_DIRTY,'1'); await push(true); close(); };
+  }
+  async function logout(){ await push(true); try{ await req('/auth/v1/logout',{method:'POST'},true); }catch(e){}
+    auth=null; [K_AUTH,K_TS,K_UID,K_DIRTY,K_GUEST,'dq_meta'].forEach(k=>set(k,null)); location.reload(); }
+  // ส่วนบัญชีในหน้าตั้งค่า (เกมเรียกผ่าน window.cloudHtml)
+  function paintStatus(){ const e=document.querySelector('.cloudbox .cst'); if (e&&auth) e.textContent=status||'☁️ เซฟจะขึ้นบัญชีอัตโนมัติ'; }
+  window.cloudHtml=function(){ return auth
+    ? `<div class="cloudbox"><b>👤 บัญชี:</b> ${esc(auth.user.email)}<div class="cst">${esc(status||'☁️ เซฟจะขึ้นบัญชีอัตโนมัติ')}</div><button data-cloud="sync">เซฟขึ้นบัญชีตอนนี้</button><button data-cloud="logout">ออกจากระบบ</button></div>`
+    : `<div class="cloudbox"><b>👤 ยังไม่ได้เข้าสู่ระบบ</b><div class="cst">ตอนนี้เซฟอยู่ในเครื่องนี้เท่านั้น เข้าสู่ระบบเพื่อเก็บเซฟไว้ในบัญชีและเล่นต่อได้ทุกเครื่อง</div><button data-cloud="login">เข้าสู่ระบบ / สมัครสมาชิก</button></div>`; };
+  document.addEventListener('click',async ev=>{ const b=ev.target.closest('[data-cloud]'); if (!b) return; ev.stopPropagation(); const a=b.dataset.cloud;
+    if (a==='login'){ mode='login'; showAuth(); }
+    if (a==='logout'){ if (confirmBox()) ; }
+    if (a==='sync'){ status='กำลังเซฟ…'; paintStatus(); await push(true); } },true);
+  function confirmBox(){ const d=box(`<h2>ออกจากระบบ?</h2><div class="sub">เกมจะเซฟขึ้นบัญชีก่อน แล้วล้างข้อมูลในเครื่องนี้ ล็อกอินกลับมาเมื่อไหร่ก็เล่นต่อได้</div>
+      <button class="go" id="dqy">ออกจากระบบ</button><button class="alt" id="dqn">ยกเลิก</button>`);
+    d.querySelector('#dqy').onclick=()=>{ d.querySelector('#dqy').disabled=true; logout(); }; d.querySelector('#dqn').onclick=close; return true; }
+  // เริ่มต้น
+  const LIVE=/github\.io$/.test(location.hostname)||location.protocol==='file:';   // หน้าล็อกอินเด้งเองเฉพาะเว็บจริง (ในแชท Claude ต่อเซิร์ฟเวอร์ไม่ได้)
+  if (auth) afterLogin(false); else if (LIVE && get(K_GUEST)!=='1') showAuth();
+  window.__dqCloud={push,pull,get auth(){ return auth; }};
 })();
 </script>
 </body>
