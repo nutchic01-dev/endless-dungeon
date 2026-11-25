@@ -315,12 +315,12 @@ img.art{height:1.3em;width:auto;vertical-align:middle;object-fit:contain;-webkit
 .sec-title{display:flex;align-items:center;gap:10px;color:#e8c77a;font-weight:800;font-size:14px;margin:14px 0 8px}
 .sec-title::before,.sec-title::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,#6b5326,transparent)}
 .sgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.scard{display:flex;gap:10px;align-items:center;background:linear-gradient(90deg,#20172a,#18111f);border:1px solid #2e2238;border-left:4px solid var(--c);border-radius:12px;padding:10px 12px}
-.scard.wide{grid-column:1/-1}
-.scard .si{font-size:26px}
-.scard .sl{font-size:12px;color:var(--muted)}
-.scard .sv{font-size:22px;font-weight:800;font-family:Georgia,serif;color:#fff1d6}
-.scard .sx{font-size:13px;color:#ffb347;font-family:inherit}
+.stcard{display:flex;gap:10px;align-items:center;background:linear-gradient(90deg,#20172a,#18111f);border:1px solid #2e2238;border-left:4px solid var(--c);border-radius:12px;padding:10px 12px}
+.stcard.wide{grid-column:1/-1}
+.stcard .si{font-size:26px}
+.stcard .sl{font-size:12px;color:var(--muted)}
+.stcard .sv{font-size:22px;font-weight:800;font-family:Georgia,serif;color:#fff1d6}
+.stcard .sx{font-size:13px;color:#ffb347;font-family:inherit}
 .gear-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .gcard{position:relative;border-radius:14px;padding:14px 8px 10px;text-align:center;border:2px solid #4b5563;background:linear-gradient(160deg,#2a3140,#1b2029);color:var(--ink);font:inherit}
 .gcard .gi{font-size:40px;line-height:1.1;filter:drop-shadow(0 3px 3px rgba(0,0,0,.5))}
@@ -2651,7 +2651,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="choices auto-row"><button class="choice" data-act="walk"><span>เดินต่อ ▶</span><small>ชั้น ${S.floor+1}</small></button><button class="choice ${auto?'on':'alt'}" data-act="auto"><span>${auto?'⏸ หยุด':'⏩ อัตโนมัติ'}</span></button><button class="choice alt cogbtn" data-act="acfgopen" title="ตั้งค่าอัตโนมัติ"><span>⚙️</span></button></div>${autoMsg?`<div class="automsg">${autoMsg}</div>`:''}<div class="scroll-hint">▼ เลื่อนลงดูข้อมูลวีรชน</div></div>`;
   }
   function statCard(icon, label, val, extra, color, wide){
-    return `<div class="scard ${wide?'wide':''}" style="--c:${color}"><div class="si">${icon}</div><div><div class="sl">${label}</div><div class="sv">${val}${extra?` <span class="sx">(+${extra})</span>`:''}</div></div></div>`;
+    return `<div class="stcard ${wide?'wide':''}" style="--c:${color}"><div class="si">${icon}</div><div><div class="sl">${label}</div><div class="sv">${val}${extra?` <span class="sx">(+${extra})</span>`:''}</div></div></div>`;
   }
   function gearCard(slot){
     const it = S.gear[slot];
