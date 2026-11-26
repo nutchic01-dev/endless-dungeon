@@ -948,6 +948,9 @@ img.elico{height:1.2em;vertical-align:-.25em}
 
 .rrbtn{flex-direction:column;align-items:center;gap:2px;text-align:center}.rrbtn span{white-space:nowrap}
 .npcsay{position:absolute;right:4px;bottom:100%;z-index:9;min-width:150px;max-width:200px;background:#fff8e6;color:#3a2600;font-size:13px;font-weight:600;line-height:1.35;padding:7px 11px;border-radius:14px 14px 4px 14px;box-shadow:0 4px 0 rgba(0,0,0,.25),0 0 0 2px #c9a34a;text-align:left;animation:npcsay 3.6s ease-out forwards;pointer-events:none}
+.vosub{position:fixed;left:50%;bottom:86px;transform:translateX(-50%);z-index:99999;max-width:min(320px,88vw);background:rgba(20,12,40,.92);color:#fff;font-size:14px;font-weight:600;line-height:1.4;padding:8px 14px;border-radius:14px;box-shadow:0 0 0 2px #c9a34a,0 6px 18px rgba(0,0,0,.5);text-align:center;pointer-events:none;animation:vosubIn .25s ease-out}
+.vosub small{display:block;font-size:11px;color:#ffd77a;font-weight:700}
+@keyframes vosubIn{from{opacity:0;transform:translate(-50%,10px)}to{opacity:1;transform:translate(-50%,0)}}
 .npcsay small{display:block;font-size:10px;color:#9a5a0a;font-weight:700}
 @keyframes npcsay{0%{opacity:0;transform:translateY(8px) scale(.8)}8%{opacity:1;transform:none}88%{opacity:1}100%{opacity:0}}
 
@@ -2795,7 +2798,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      <span class="proto">v3.0</span></div>`;
+      <span class="proto">v3.1</span></div>`;
   }
   function partyHtml(){
     const hpOf = i => battleView ? battleView.hps[i]/battleView.maxs[i] : null;
@@ -3880,6 +3883,19 @@ if (typeof document !== 'undefined') (function(){
   const HT_MAX = 100, HT_OPEN = 50, HT_TIME = 120, HT_EN_MAX = 60, HT_EN_MS = 6*60*1000;
   /* ภาพใหม่ที่ส่งมาแล้ว (ใส่ชื่อไฟล์ไม่มี .webp) : mon_xxx, mb_<map>, bs_<map>, bg_<map> */
   const MAPART_READY = new Set(['bs_forest','bs_crystal','bs_sky','bs_sea','bs_desert','bs_castle','bs_ice','bs_lava','bs_heaven','bs_abyss','mb_abyss','mb_castle','mb_crystal','mb_desert','mb_forest','mb_heaven','mb_ice','mb_lava','mb_sea','mb_sky','mon_coralcrab','mon_darkmermaid','mon_firefox','mon_goldlion','mon_holystatue','mon_jelly','mon_lostangel','mon_madwisp','mon_mummy','mon_sandworm','mon_scarab','mon_sharkguard']);
+  const VO_PICK={"leo": "สิงห์ทองไม่เคยถอย! ข้าจะปกป้องทุกคนเอง!", "coral": "กระแสน้ำจะคุ้มครองเจ้าเอง", "gason": "ภูผาไม่เคยหวั่นไหว ข้าก็เช่นกัน", "brenda": "โล่ใบนี้ ไม่มีใครเจาะผ่าน!", "titan": "ราชาเหล็ก พร้อมออกรบ!", "marine": "ดาบของข้า สงบดั่งคลื่น แต่ร้ายกาจ", "blaze": "ฮ่า! ไฟลุกแล้ว ใครอยากโดนเผาบ้าง!", "raiden": "ฟ้าผ่าครั้งเดียว ก็พอแล้ว!", "mira": "ดาบคู่นี้ เร็วกว่าที่เจ้าคิดนะ!", "athena": "รุ่งเช้ามาถึงแล้ว ตามข้ามา!", "elena": "แสงจันทร์จะนำทางเรา", "ivy": "ดอกไม้สวยๆ… แต่มีพิษนะจ๊ะ", "luna": "ราตรีนี้… เป็นของข้า", "ignis": "ไฟของข้า เผาได้ทุกสิ่ง!", "celeste": "จงคุกเข่าต่อหน้าราชินีน้ำแข็ง", "panpan": "เจ็บตรงไหน ปันปันช่วยเอง!", "nyx": "ราตรีเงียบงัน… จะโอบกอดเจ้า", "serena": "แสงยามเช้า จะรักษาทุกบาดแผล", "toby": "มาฟังเพลงของโทบี้กันเถอะ!", "lumina": "ขอพรแห่งแสง จงอยู่กับเจ้า", "seris": "ลูกศรของข้า ไม่เคยพลาดเป้า", "ash": "ศรไฟพร้อมแล้ว ยิงเลย!", "finn": "ป่าคือบ้าน ข้าคือนักล่า", "raven": "เป้าหมาย อยู่ในสายตาแล้ว", "artemis": "ดวงดาวชี้ทาง ให้ศรของข้า", "scorp": "พิษแมงป่อง… ไม่มียาแก้", "sol": "แดดส่องที่ไหน ความตายอยู่ที่นั่น", "yami": "ข้าคือเงา… เจ้ามองไม่เห็นข้าหรอก", "kira": "จิ้งจอกเจ้าเล่ห์ มาแล้วจ้า!", "shada": "ติดใยของข้าแล้ว… หนีไม่พ้นหรอก", "nameless": "ชื่อไม่สำคัญ… ดาบจะพูดแทนข้า", "sage": "ความรู้ คืออาวุธที่คมที่สุด", "giant": "ยักษ์ใจดี จะช่วยเจ้าเอง ฮ่าฮ่า", "knight": "อัศวินพเนจร พร้อมรับใช้!", "gambler": "เดิมพันครั้งนี้ ข้าไม่มีวันแพ้!", "smith": "ค้อนนี้ตีเหล็กมาร้อยปี ตีหัวสัตว์ก็ได้!"};
+  const VO_BOSS={"forest": "ใครบังอาจย่ำป่าของข้า!", "crystal": "ผู้บุกรุก… ต้องถูกบดขยี้", "sky": "ฟ้าจะลงโทษเจ้า!", "sea": "จมลงไป… พร้อมกับข้า", "desert": "ใครปลุกข้าจากการหลับใหล!", "castle": "ยินดีต้อนรับ… อาหารมื้อค่ำของข้า", "ice": "ความอบอุ่นของเจ้า จะดับลงตรงนี้", "lava": "มนุษย์ตัวจ้อย… จงมอดไหม้!", "heaven": "แม้แต่สวรรค์ ก็ทิ้งเจ้าแล้ว", "abyss": "ในที่สุด… เจ้าก็มาถึงจุดจบ"};
+  const VO_VIL=["ข้าแค่ชาวบ้านธรรมดา… แต่จะไม่ยอมแพ้!", "สักวัน ข้าจะเป็นผู้กล้าให้ได้!"];
+  let voAudio=null;
+  function voPlay(src, who, line){
+    try{ document.querySelectorAll('.vosub').forEach(x=>x.remove()); if (line){ const b=document.createElement('div'); b.className='vosub'; b.innerHTML=`<small>${who||''}</small>${line}`; document.body.appendChild(b); setTimeout(()=>b.remove(),3600); } }catch(e){}
+    const vol=SND.set.voice==null?1:SND.set.voice; if (vol<=0) return;
+    try{ if (npcAudio) npcAudio.pause(); if (voAudio) voAudio.pause(); voAudio=new Audio(src); voAudio.volume=Math.min(1,vol); const pr=voAudio.play(); if (pr&&pr.catch) pr.catch(()=>{}); }catch(e){}
+  }
+  function voPick(id){ const a=ALLCHARS[id]; if (!a||!VO_PICK[id]) return; voPlay(`art/vo/pick_${id}.mp3`, a.c.name, VO_PICK[id]); }
+  function voVillager(){ const n=Math.floor(Math.random()*VO_VIL.length); voPlay(`art/vo/villager_${n+1}.mp3`,'ชาวบ้าน',VO_VIL[n]); }
+  function voBoss(key, name){ if (!VO_BOSS[key]) return; voPlay(`art/vo/boss_${key}.mp3`, name, VO_BOSS[key]); }
+
   const HT_MAPS = [
     {key:'forest', band:'ป่าเวทมนตร์', mini:['ราชาเห็ดยักษ์','🍄','wood'], boss:['พฤกษาจอมพิโรธ','🌳','wood']},
     {key:'crystal', band:'ถ้ำคริสตัล', mini:['ราชินีแมงมุมผลึก','🕷️','earth'], boss:['โกเลมคริสตัลโบราณ','💎','earth']},
@@ -3983,7 +3999,7 @@ if (typeof document !== 'undefined') (function(){
     F.t+=dt; if (F.sh>0) F.sh-=dt; if (F.tau>0) F.tau-=dt;
     F.T.forEach(h=>{ if (h.hp<=0) return; if (h.heal) h.hp=Math.min(h.mx,h.hp+h.mx*0.004*h.heal*dt); h.at-=dt; if (h.at<=0){ h.at=1.15/h.spd; htHeroAct(F,h); } });
     F.E.forEach(e=>{ if (e.hp<=0) return; e.at-=dt; if (e.at<=0){ e.at=e.boss?2:1.6; htEnemyAct(F,e); } });
-    if (!F.E.some(e=>e.hp>0)){ if (F.wi<F.W.length-1){ F.wi++; htWave(); F.pause=1; F.banner={txt:F.wi===2&&htKind(F.f)==='boss'?'👑 บอสประจำแมพปรากฏตัว!':F.wi===2&&htKind(F.f)==='mini'?'⚔️ มินิบอสปรากฏตัว!':`ระลอก ${F.wi+1}/${F.W.length}`,sub:'',t:1.3}; } else return htEnd(true); }
+    if (!F.E.some(e=>e.hp>0)){ if (F.wi<F.W.length-1){ F.wi++; htWave(); F.pause=1; if (F.wi===2&&htKind(F.f)==='boss'&&!F.cus){ const MB=htMapOf(F.f); voBoss(MB.key, MB.boss[0]); } F.banner={txt:F.wi===2&&htKind(F.f)==='boss'?'👑 บอสประจำแมพปรากฏตัว!':F.wi===2&&htKind(F.f)==='mini'?'⚔️ มินิบอสปรากฏตัว!':`ระลอก ${F.wi+1}/${F.W.length}`,sub:'',t:1.3}; } else return htEnd(true); }
     if (!F.T.some(h=>h.hp>0)) return htEnd(false);
     if (F.sp){ F.sp.lg=Math.max(0,F.sp.lg-dt*2); F.sp.t-=dt; if (F.sp.t<=0){ F.sp.t=15; htSpirit(F); } }
     if (F.t>=F.time) return htEnd(false,true);
@@ -4347,7 +4363,7 @@ if (typeof document !== 'undefined') (function(){
     if (act==='perm'){ const n=+b.dataset.n; lastPerm=[]; for(let i=0;i<n;i++){ const r=permRoll(m); if(!r) break; lastPerm.push(r); }
       return done(lastPerm.length<n ? (lastPerm.length?`สุ่มได้ ${lastPerm.length} ครั้ง (เหรียญไม่พอ)`:'เหรียญตราไม่พอ') : ''); }
     if (act==='prep'){ const r=prepBuy(m); return done(r?'เปิดถุงเสบียงแล้ว!':'เหรียญตราไม่พอ'); }
-    if (act==='cpop'){ charPop = b.dataset.k; hubMsg=''; relSel=null; render(); return true; }
+    if (act==='cpop'){ charPop = b.dataset.k; hubMsg=''; relSel=null; render(); if (m.chars&&m.chars[charPop]) voPick(charPop); return true; }
     if (act==='cclose'){ charPop = null; render(); return true; }
     if (act==='starup'){ const id=b.dataset.k; if (starUp(m,id)) hubMsg = m.chars[id].form ? `✦ ${ALLCHARS[id].c.name} กลายร่างแล้ว!` : `⭐ ${ALLCHARS[id].c.name} เป็น ${m.chars[id].star} ดาวแล้ว!`; storeMeta(m); render(); return true; }
     if (act==='todust'){ const g=toDust(m,b.dataset.k,Infinity); return done(`ได้ผงดาว ${g} ${uiIco('dust','✨')}`); }
@@ -4756,7 +4772,7 @@ if (typeof document !== 'undefined') (function(){
     const act = b.dataset.act;
     if (hubAct(act, b)) return;
     if (act==='start') advPrep=false;
-    if (act==='start'){ rng = Math.random; newRun(true); hub=null; partySel=[]; popSlot=null; render(); window.scrollTo(0,0); return; }
+    if (act==='start'){ rng = Math.random; newRun(true); hub=null; partySel=[]; popSlot=null; render(); window.scrollTo(0,0); if (!S.daily) setTimeout(voVillager,350); return; }
     if (act==='daily'){ startDaily(); hub=null; partySel=[]; popSlot=null; render(); window.scrollTo(0,0); return; }
     if (act==='walk'){ autoMsg=''; step(); render(); return; }
     if (act==='acfgopen'){ acfgPop = true; render(); return; }
