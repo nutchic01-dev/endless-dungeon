@@ -966,9 +966,10 @@ h3 img.uiico{height:24px;width:auto;vertical-align:middle}
 .ticker{display:flex;align-items:center;gap:8px;width:100%;max-width:440px;margin:2px auto 0;padding:4px 10px 4px 4px;border-radius:999px;background:linear-gradient(90deg,rgba(40,22,70,.92),rgba(25,15,45,.85));border:1.5px solid #c9a34a;box-shadow:0 3px 10px rgba(0,0,0,.45);flex-shrink:0}
 .tkic{flex:0 0 30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;background:radial-gradient(circle at 35% 30%,#ffe58a,#e8901a);box-shadow:0 0 0 2px #fff4c8 inset,0 0 10px rgba(255,200,80,.6);animation:tkpulse 1.6s ease-in-out infinite}
 .tkwin{flex:1;min-width:0;overflow:hidden;-webkit-mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
-.tktxt{display:inline-block;white-space:nowrap;padding-left:100%;font-size:14px;font-weight:600;color:#ffe9a8;text-shadow:0 1px 2px #000;animation:tkrun linear infinite}
+.tktxt{display:inline-block;white-space:nowrap;padding-left:100%;font-size:14px;font-weight:600;color:#ffe9a8;text-shadow:0 1px 2px #000;animation:tkrun linear 1 forwards}
 
 .overlay.hub.home>.ticker{width:calc(100% - 20px);margin-top:4px}.overlay.hub.home .loreb{top:auto!important;left:auto!important;right:62px;bottom:6px}
+.ticker{transition:opacity .4s,transform .4s;min-height:40px}.ticker.tkhide{opacity:0;transform:translateY(-6px);pointer-events:none}
 @keyframes tkrun{from{transform:translateX(0)}to{transform:translateX(-100%)}}@keyframes tkpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
 .rkl{display:flex;flex-direction:column;gap:5px}.rkr{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:12px;background:rgba(20,15,40,.7);border:1px solid rgba(255,255,255,.08)}
 .rkr.top{border-color:rgba(255,209,102,.5);background:linear-gradient(90deg,rgba(255,209,102,.18),rgba(20,15,40,.7))}.rkr.me{border-color:#7dffcf;box-shadow:0 0 0 1.5px #7dffcf inset}
@@ -1049,7 +1050,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.12</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.13</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -2856,7 +2857,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.12</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.13</span>'}</div>`;
   }
   let runSet=false, runQuit=false;
   function runPop(){
@@ -3060,8 +3061,16 @@ if (typeof document !== 'undefined') (function(){
     'ประกาศ : ตอนนี้เกมอยู่ในช่วง Early Access ขอบคุณผู้เล่นทุกท่านที่ร่วมกันทดสอบครับ 🙏',
     'เจอบัคหรือมีข้อเสนอแนะ แจ้งได้ในแชทโลกเลยครับ 💬',
   ];
-  function tickerHtml(){ if (!ANNOUNCE.length) return ''; const txt=ANNOUNCE.join('　　✦　　'), dur=Math.max(14, Math.round(txt.length*0.28)), off=(Date.now()/1000)%dur;
-    return `<div class="ticker" data-act="noop"><span class="tkic">🎙️</span><div class="tkwin"><div class="tktxt" style="animation-duration:${dur}s;animation-delay:-${off.toFixed(2)}s">${txt}</div></div></div>`; }
+  const TK_GAP = 3*60*1000;   // แสดงประกาศทุกๆ 3 นาที (วิ่งครบ 1 รอบแล้วซ่อน)
+  const tkTxt = () => ANNOUNCE.join('　　✦　　'), tkDur = () => Math.max(14, Math.round(tkTxt().length*0.28));
+  let tkStart = Date.now()+3000;
+  function tkOn(){ const n=Date.now(); return n>=tkStart && n<tkStart+tkDur()*1000; }
+  const tkInner = () => { const dur=tkDur(), off=Math.max(0,(Date.now()-tkStart)/1000); return `<span class="tkic">🎙️</span><div class="tkwin"><div class="tktxt" style="animation-duration:${dur}s;animation-delay:-${off.toFixed(2)}s">${tkTxt()}</div></div>`; };
+  function tickerHtml(){ if (!ANNOUNCE.length) return ''; const on=tkOn(); return `<div class="ticker ${on?'':'tkhide'}" data-act="noop">${on?tkInner():''}</div>`; }
+  setInterval(()=>{ if (Date.now()>=tkStart+tkDur()*1000) tkStart=Date.now()+TK_GAP;
+    const el=document.querySelector('.overlay.hub.home>.ticker'); if (!el) return; const on=tkOn(), shown=!el.classList.contains('tkhide');
+    if (on && !shown){ el.innerHTML=tkInner(); el.classList.remove('tkhide'); }
+    else if (!on && shown){ el.classList.add('tkhide'); setTimeout(()=>{ if (el.classList.contains('tkhide')) el.innerHTML=''; },450); } },1000);
   function hubHome(m){
     const sm = m.show.main||'', freeK = sm.startsWith('cls:') ? sm.slice(4) : null;
     const main = freeK ? sm : owned(m,sm) ? sm : null, team = (m.show.team||[]).filter(id=>owned(m,id)&&id!==main).slice(0,2);
@@ -3100,7 +3109,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="pbtns"><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.12<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.13<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
