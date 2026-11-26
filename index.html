@@ -976,7 +976,8 @@ h3 img.uiico{height:24px;width:auto;vertical-align:middle}
 .aropp{display:grid;grid-template-columns:1fr auto;gap:4px 8px;align-items:center;padding:8px;border-radius:12px;background:rgba(20,15,40,.7);border:1px solid rgba(255,255,255,.08);margin-bottom:6px}
 .arot b{font-size:14px}.arot small{display:block;font-size:11.5px;color:#cdbfe6}.arbot{font-style:normal;font-size:10px;margin-left:5px;padding:1px 6px;border-radius:8px;background:#3a2f55;color:#cdbfe6}
 .arteam{grid-column:1/2;display:flex;gap:3px}.arteam span{position:relative;width:38px;height:38px;border-radius:9px;background:rgba(255,255,255,.06);overflow:hidden;display:flex;align-items:center;justify-content:center}.arteam img{width:44px;height:44px;object-fit:cover;object-position:top}.arteam i{position:absolute;right:0;bottom:0;font-style:normal;font-size:10px}
-.arfight{grid-column:2/3;grid-row:1/3;width:auto!important;margin:0!important;padding:8px 12px!important}.arlock{font-size:54px;text-align:center}.arbeta{font-size:11.5px;color:#ffd77a;background:rgba(255,190,80,.12);border:1px dashed rgba(255,200,100,.5);border-radius:10px;padding:3px 10px;text-align:center}
+.arfight{grid-column:2/3;grid-row:1/3;width:auto!important;margin:0!important;padding:8px 12px!important}.gdtw{overflow-x:auto;margin:4px 0}.gdt{width:100%;border-collapse:collapse;font-size:12.5px;color:#e9def7}.gdt th{background:rgba(255,214,140,.16);color:#ffd77a;font-weight:700;padding:6px 4px;white-space:nowrap}.gdt td{padding:6px 4px;text-align:center;border-bottom:1px dashed rgba(255,255,255,.12);white-space:nowrap}.gdn{font-size:12px;color:#cfc2e4;line-height:1.6;margin-top:6px}.gdcl{flex-direction:column;align-items:flex-start;gap:2px}.gdcl small{color:#cfc2e4;font-size:12px}.gdtabs button span{font-size:11px}
+.arlock{font-size:54px;text-align:center}.arbeta{font-size:11.5px;color:#ffd77a;background:rgba(255,190,80,.12);border:1px dashed rgba(255,200,100,.5);border-radius:10px;padding:3px 10px;text-align:center}
 .rkl{display:flex;flex-direction:column;gap:5px}.rkr{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:12px;background:rgba(20,15,40,.7);border:1px solid rgba(255,255,255,.08)}
 .rkr.top{border-color:rgba(255,209,102,.5);background:linear-gradient(90deg,rgba(255,209,102,.18),rgba(20,15,40,.7))}.rkr.me{border-color:#7dffcf;box-shadow:0 0 0 1.5px #7dffcf inset}
 .rkn{width:30px;text-align:center;font-size:20px}.rkn b{font-size:14px;color:var(--muted)}.rka img.art{height:38px;width:38px;object-fit:contain}.rka{width:40px;text-align:center}
@@ -1056,7 +1057,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.14</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.15</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -2863,7 +2864,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.14</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.15</span>'}</div>`;
   }
   let runSet=false, runQuit=false;
   function runPop(){
@@ -3112,10 +3113,10 @@ if (typeof document !== 'undefined') (function(){
       <div class="sndset"><div class="pop-r"><span>🎵 เสียงเพลง</span><b id="sv_mus">${Math.round(SND.set.mus*100)}%</b></div><input type="range" min="0" max="100" value="${Math.round(SND.set.mus*100)}" oninput="sndVol('mus',this.value)">
         <div class="pop-r"><span>🔊 เสียงเอฟเฟกต์</span><b id="sv_sfx">${Math.round(SND.set.sfx*100)}%</b></div><input type="range" min="0" max="100" value="${Math.round(SND.set.sfx*100)}" oninput="sndVol('sfx',this.value)">
         <div class="pop-r"><span>🗣️ เสียงพากย์</span><b id="sv_voice">${SND.set.voice===0?'ปิด':Math.round((SND.set.voice==null?1:SND.set.voice)*100)+'%'}</b></div><input type="range" min="0" max="100" value="${Math.round((SND.set.voice==null?1:SND.set.voice)*100)}" oninput="sndVol('voice',this.value);var o=document.getElementById('sv_voice');if(o)o.textContent=this.value>0?this.value+'%':'ปิด'"></div>
-      <div class="pbtns"><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
+      <div class="pbtns"><button class="choice" data-act="guideopen"><span>📚 ข้อมูลเกม</span><small>ระดับอุปกรณ์ · ธาตุ · อาชีพ · อัตราสุ่ม · โหมดเกม</small></button><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.14<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.15<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
@@ -4439,6 +4440,46 @@ if (typeof document !== 'undefined') (function(){
     if (act==='arngo'){ hubMsg=''; arStart(+b.dataset.i); return true; }
     if (act==='arnskip'){ arSkip(); return true; }
     return false; }
+  /* ---------- 📚 ข้อมูลเกม (ความรู้เบื้องต้น) ---------- */
+  let gdTab='eq';
+  function hubGuide(m){
+    const T=[['eq','⚒️','อุปกรณ์'],['el','🔥','ธาตุ'],['cls','🛡️','อาชีพ'],['gc','🔮','อัตราสุ่ม'],['mode','🗺️','โหมดเกม']];
+    const tabs=`<div class="gtabs shtabs gdtabs">${T.map(([k,ic,n])=>`<button class="${gdTab===k?'on':''}" data-act="gdtab" data-k="${k}"><i>${ic}</i><span>${n}</span></button>`).join('')}</div>`;
+    const tb=(h,rows)=>`<div class="gdtw"><table class="gdt"><tr>${h.map(x=>`<th>${x}</th>`).join('')}</tr>${rows.map(r=>`<tr>${r.map(x=>`<td>${x}</td>`).join('')}</tr>`).join('')}</table></div>`;
+    const pc=v=>v>=10?v.toFixed(1):v>=1?v.toFixed(1):v.toFixed(2);
+    let body='';
+    if (gdTab==='eq'){
+      const tc=(t,x)=>`<b style="color:${EQ_TIER[t].c}">${x}</b>`;
+      const lvs=[1,5,10,15,20], RT=lvs.map(L=>forgeRates(L)), rr=EQ_TIER.map((T,t)=>[tc(t,T.n),...RT.map(r=>tc(t,pc(r[t]*100)))]);
+      body=`<div class="sumbox"><h3>⚒️ อุปกรณ์นักรบ (โรงตีเหล็ก) · 7 ระดับ</h3>
+        ${tb(['#','ระดับ','ท้ายชื่อ','พลัง Lv.1','มีไว้ในคลัง'],EQ_TIER.map((T,i)=>[i+1,tc(i,T.n),T.m,'+'+Math.round(EQ_BASE[i]*100)+'%','+'+(+(EQ_OWN[i]*100).toFixed(1))+'%']))}
+        <div class="gdn">• ดูระดับจากชื่อได้ เช่น <b style="color:${EQ_TIER[5].c}">ดาบมังกร</b> = เทพ · <b style="color:${EQ_TIER[6].c}">ธนูสวรรค์</b> = อมตะ<br>• อาวุธเพิ่มโจมตี · ชุดเพิ่ม HP · ใส่ได้อาชีพละ 1 อาวุธ + 1 ชุด<br>• แต่ละระดับมี 2 แบบ แบบที่ 2 แรงกว่า 15%<br>• อัปเลเวลด้วยชิ้นซ้ำ สูงสุด Lv.${EQ_MAXLV} (Lv.50 แรงประมาณ 6.9 เท่าของ Lv.1)<br>• ทุกชิ้นที่เก็บไว้ช่วยเพิ่มพลังทั้งอาชีพ แม้ไม่ได้ใส่</div></div>
+        <div class="sumbox"><h3>🎲 โอกาสออก (%) ตามเลเวลโรงตีเหล็ก</h3>
+        ${tb(['ระดับ',...lvs.map(L=>'Lv.'+L)],rr)}
+        <div class="gdn">ยิ่งตีบ่อย โรงตีเลเวลยิ่งขึ้น ของดีออกง่ายขึ้น และได้ตั๋วตีเหล็กเพิ่มทุกครั้งที่เลเวลอัป</div></div>
+        <div class="sumbox"><h3>🗡️ อุปกรณ์ระหว่างลงดันเจี้ยน · 4 ระดับ</h3>
+        ${tb(['#','ระดับ','ความแรง','ราคาขาย'],RARITY.map((R,i)=>[i+1,`<b class="r${i}">${R.th}</b>`,'×'+R.k,'×'+R.sell]))}
+        <div class="gdn">• ของชุดนี้ใช้ได้เฉพาะรอบนั้น จบรอบแล้วหาย<br>• ของเซ็ตแรงขึ้นตามระดับชิ้นที่ใส่: ธรรมดา 45% · หายาก 65% · มหากาพย์ 85% · ตำนาน 100%</div></div>`;
+    } else if (gdTab==='el'){
+      const E=k=>`${ELEMENTS[k].icon} ${ELEMENTS[k].name}`;
+      body=`<div class="sumbox"><h3>🔥 ธาตุชนะทาง</h3>
+        ${tb(['ธาตุ','ชนะ (ตีแรง ×1.3)','แพ้ (ตีเบา ×0.75)'],Object.keys(BEATS).map(k=>[`<b>${E(k)}</b>`,E(BEATS[k]),E(Object.keys(BEATS).find(x=>BEATS[x]===k))]))}
+        <div class="gdn">วงจร: 💧น้ำ → 🔥ไฟ → 🌿ไม้ → 🪨ดิน → 💧น้ำ<br>☀️แสง กับ 🌑มืด ชนะกันและกัน<br>เลือกฮีโร่ธาตุที่ชนะบอส จะตีแรงขึ้นมาก</div></div>`;
+    } else if (gdTab==='cls'){
+      body=`<div class="sumbox"><h3>🛡️ อาชีพ</h3>${Object.entries(CLASSES).filter(([k,c])=>c.desc&&!/^อาชีพลับ/.test(c.desc)).map(([k,c])=>`<div class="sumr gdcl"><span>${c.icon} <b>${c.name}</b></span><small>${c.desc}</small></div>`).join('')}
+        <div class="gdn">🌑 ยังมีอาชีพลับซ่อนอยู่ ลองค้นหาระหว่างผจญภัยดู<br>ทีมที่ดีควรมี แทงค์ไว้ยืนหน้า + ซัพพอตไว้ฮีล + ตัวตีแรง</div></div>`;
+    } else if (gdTab==='gc'){
+      const TH={n:'ปกติ',sp:'ตัวพิเศษ',hid:'อาชีพลับ'};
+      body=`<div class="sumbox"><h3>🔮 อัตราออกตู้สุ่มเศษฮีโร่</h3>${tb(['ได้','โอกาส'],GACHA.map(([[t,n],p])=>[`เศษ${TH[t]} ×${n}`,p+'%']))}
+        <div class="gdn">สะสมเศษให้ครบเพื่อปลดล็อกหรืออัปดาวฮีโร่</div></div>`;
+    } else {
+      const M=[['🗼','หอคอยไร้สิ้นสุด','ลงดันเจี้ยนให้ลึกที่สุด เก็บของ ใช้รูน สู้บอส ทำคะแนนขึ้นอันดับ'],['📅','ด่านท้าทายรายวัน','ด่านพิเศษเปลี่ยนทุกวัน แข่งกันว่าใครลงได้ลึกสุด'],['🏯','หอคอยร้อยชั้น',`ใช้ทีมฮีโร่สู้ทีละชั้น ${HT_MAX} ชั้น ใช้พลังงาน ⚡`],['🐾','รังวิญญาณ','สู้ผู้พิทักษ์ธาตุประจำวัน วันละ 3 ครั้ง'],['🐉','ล่ามังกร',`ทำดาเมจใส่มังกรให้มากที่สุด รับเกล็ดมังกร · วันละ ${DH_TRIES} ครั้ง`],['⚔️','สนามประลองวีรชน',`ต้องมีฮีโร่ ${AR_NEED} ตัว ตั้งทีมโจมตี/ป้องกัน ท้าวันละ ${AR_TRIES} ครั้ง ชนะได้ 🎖️ และคะแนนประลอง`]];
+      body=`<div class="sumbox"><h3>🗺️ โหมดเกม</h3>${M.map(([i,n,d])=>`<div class="sumr gdcl"><span>${i} <b>${n}</b></span><small>${d}</small></div>`).join('')}</div>`;
+    }
+    return `<div class="overlay hub">${hubHead(m,'📚 ข้อมูลเกม')}${tabs}${body}${nav()}</div>`;
+  }
+  function gdAct(act,b){ if (act==='gdtab'){ gdTab=b.dataset.k; render(); const o=document.querySelector('.overlay'); if (o) o.scrollTop=0; return true; }
+    if (act==='guideopen'){ setPop=false; hub='guide'; gdTab=b.dataset.k||'eq'; render(); window.scrollTo(0,0); return true; } return false; }
   function hubGacha(m){
     const sp = gTab==='sp', B = bannerOf(bannerSlot()), left = bannerEnds();
     const feat = id => `<div class="feat ${ALLCHARS[id].tier}"><div class="fi">${charArt(ALLCHARS[id].c)}</div><div class="fn">${ALLCHARS[id].c.name.split(' ')[0]}</div></div>`;
@@ -4669,7 +4710,7 @@ if (typeof document !== 'undefined') (function(){
       ${html}<button class="choice wide" data-act="rkviewc"><span>ปิด</span></button></div></div>`; }
   function hubView(){ const m=loadMeta();
     const W = wPop ? worldPop() : '';
-    if (hub==='adv') return hubAdv(m)+W; if (hub==='perm'){ hub='shop'; shTab='medal'; } if (hub==='shop') return hubShop(m)+W; if (hub==='troop') return hubTroop(m)+W; if (hub==='dragon') return hubDragon(m)+W; if (hub==='hundred') return hubHundred(m)+W; if (hub==='arena') return hubArena(m)+W; if (hub==='relicbag') return hubRelicBag(m)+W; if (hub==='bag') return hubBag(m)+W; if (hub==='rank') return hubRank(m)+W; if (hub==='chat') return hubChat(m)+W; if (hub==='spirits') return hubSpirits(m)+W; if (hub==='nest') return hubNest(m)+W; if (hub==='chars') return hubChars(m)+charPopup(m)+tryPopHtml(m)+W; if (hub==='gacha') return hubGacha(m)+W;
+    if (hub==='adv') return hubAdv(m)+W; if (hub==='perm'){ hub='shop'; shTab='medal'; } if (hub==='shop') return hubShop(m)+W; if (hub==='troop') return hubTroop(m)+W; if (hub==='dragon') return hubDragon(m)+W; if (hub==='hundred') return hubHundred(m)+W; if (hub==='arena') return hubArena(m)+W; if (hub==='guide') return hubGuide(m)+W; if (hub==='relicbag') return hubRelicBag(m)+W; if (hub==='bag') return hubBag(m)+W; if (hub==='rank') return hubRank(m)+W; if (hub==='chat') return hubChat(m)+W; if (hub==='spirits') return hubSpirits(m)+W; if (hub==='nest') return hubNest(m)+W; if (hub==='chars') return hubChars(m)+charPopup(m)+tryPopHtml(m)+W; if (hub==='gacha') return hubGacha(m)+W;
     return hubHome(m)+W; }
   function hubAct(act, b){
     const m = loadMeta();
@@ -4743,6 +4784,7 @@ if (typeof document !== 'undefined') (function(){
       if (act==='devchar'){ const id=document.getElementById('devc').value; put(id,+document.getElementById('devs').value,document.getElementById('devf').checked); hubMsg='เสก '+ALLCHARS[id].c.name+' แล้ว'; }
       else Object.keys(ALLCHARS).forEach(id=>put(id,act==='devmax'?5:1,act==='devmax'));
       storeMeta(m); render(); return true; }
+    if ((act==='gdtab'||act==='guideopen') && gdAct(act,b)) return true;
     if (act==='tutreset'){ const m=loadMeta(); m.tut={}; storeMeta(m); setPop=false; render(); return true; }
     if (act==='settings'){ setPop=true; resetAsk=false; savePop=null; saveMsg=''; render(); return true; }
     if (act==='vertap'){ if (/github\.io$/.test(location.hostname)) return true; if (++devTap>=7 && !DEV_ON){ DEV_ON=true; render(); } return true; }
