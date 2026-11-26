@@ -1042,7 +1042,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.8</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.9</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -2034,7 +2034,7 @@ const QUESTS = {
   knight:{name:'อัศวินบาดเจ็บ', steps:[
     q=>({title:'📜 อัศวินบาดเจ็บ (1/2)', icon:'🛡️', text:'อัศวินชุดเกราะเงินนอนพิงกำแพง แผลลึกที่ขา ดาบสวยงามวางอยู่ข้างตัว', choices:[
       {label:'แบ่งยารักษาให้', sub:'เสีย HP 15%', fn:()=>{ S.hp=Math.max(1,S.hp-stats().maxhp*0.15); q.flag='heal'; qNext('อัศวินพยักหน้าขอบคุณ "ข้าจะตอบแทนท่าน"'); }},
-      {label:'แอบหยิบดาบไป', sub:'ได้อุปกรณ์หายากทันที', fn:()=>{ q.flag='steal'; S.offer=makeItem(S.floor,'weapon',Math.min(3,rollRarity(S.floor,1)+1)); const back=S.ev; S.q.step++; S.q.next=S.floor+8+Math.floor(rng()*6); offerEvent(S.offer,'📜 ได้ดาบของอัศวิน'); }},
+      {label:'แอบหยิบดาบไป', sub:'ได้อุปกรณ์หายากทันที', fn:()=>{ q.flag='steal'; S.offer=makeItem(S.floor,'weapon',Math.min(3,rollRarity(S.floor,1)+1)); const back=S.ev; S.q.step++; S.q.next=S.floor+8+Math.floor(rng()*6); const it=S.offer; S.offer=null; addLog('📜 แอบหยิบดาบของอัศวินมา','bad'); S.ev=offerEvent(it,'📜 ได้ดาบของอัศวิน'); S.phase='event'; }},
       {label:'เดินผ่านไป', alt:true, fn:()=>qEnd('อัศวินมองตามหลังคุณเงียบๆ','bad')}]}),
     q=>{ const F=S.floor; if (q.flag==='heal') return {title:'📜 อัศวินบาดเจ็บ (2/2)', icon:'⚔️', text:'อัศวินคนเดิมยืนรออยู่ บาดแผลหายดีแล้ว "ถึงเวลาตอบแทนท่าน รับพรแห่งอัศวินไป"', choices:
         trainOptions(F,3).map(o=>({label:o.label, sub:'พรแห่งอัศวิน', fn:()=>{ applyTrain(o); qEnd(`ได้รับพร ${o.label}`); }}))};
@@ -2848,7 +2848,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.8</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.9</span>'}</div>`;
   }
   let runSet=false, runQuit=false;
   function runPop(){
@@ -3084,7 +3084,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="pbtns"><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.8<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.9<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
