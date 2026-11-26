@@ -980,6 +980,7 @@ h3 img.uiico{height:24px;width:auto;vertical-align:middle}
 .mailit{background:rgba(255,255,255,.06);border:1px solid rgba(255,214,140,.35);border-radius:12px;padding:10px;margin:8px 0;text-align:left}.mailit.got{opacity:.6}.mailrw{margin:6px 0;color:#ffd77a;font-weight:700;font-size:13px}.vilbox h3{text-align:center}
 #updpop{position:fixed;inset:0;z-index:99999;background:rgba(10,6,20,.72);display:flex;align-items:center;justify-content:center;padding:20px}#updpop .ub{max-width:340px;width:100%;background:linear-gradient(180deg,#3a2560,#1d1230);border:2px solid #ffd77a;border-radius:18px;padding:18px;text-align:center;color:#fff;box-shadow:0 10px 40px rgba(0,0,0,.6)}#updpop h2{margin:4px 0 6px;color:#ffd77a;font-size:20px}#updpop p{font-size:13.5px;color:#e6dcf5;margin:6px 0 12px;line-height:1.55}#updpop .uw{color:#ff9f9f;font-size:12.5px}#updpop button{display:block;width:100%;margin:8px 0 0;padding:12px;border-radius:12px;border:0;font-size:15px;font-weight:800;font-family:inherit;cursor:pointer}#updpop .u1{background:#ffc22e;color:#2a1500}#updpop .u2{background:rgba(255,255,255,.12);color:#fff}
 .hthelp{border-color:#5fe0b0!important;box-shadow:0 0 0 2px rgba(95,224,176,.35) inset}.hthtag{position:absolute;top:2px;left:2px;font-style:normal;font-size:10px;font-weight:800;background:#1fa37a;color:#fff;border-radius:6px;padding:1px 5px;z-index:2}.htslot{position:relative}.hthby{display:block;font-size:10px!important;color:#9fe8cf!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.cmsg.adm .cbub{background:linear-gradient(135deg,#5a3a08,#3a2406 60%,#5a3a08)!important;border:1.5px solid #ffd34d!important;box-shadow:0 0 10px rgba(255,211,77,.45)}.cmsg.adm .cnm b{background:linear-gradient(90deg,#ffe58a,#ffb300,#fff2b0,#ffb300);-webkit-background-clip:text;background-clip:text;color:transparent;background-size:200% 100%;animation:admsh 2.5s linear infinite;font-weight:900}.cmsg.adm .ctx{color:#fff4cf}@keyframes admsh{to{background-position:200% 0}}.admtag{display:inline-block;font-size:10px;font-weight:900;color:#3a2000;background:linear-gradient(90deg,#ffe066,#ffb300);border-radius:6px;padding:1px 6px;margin-right:5px;vertical-align:1px;box-shadow:0 0 6px rgba(255,200,60,.7)}.cav{position:relative}.cacrown{position:absolute;top:-9px;left:50%;transform:translateX(-50%);font-style:normal;font-size:14px;filter:drop-shadow(0 1px 2px #000)}.cmsg.adm .cav{overflow:visible;box-shadow:0 0 0 2px #ffd34d}
 .gdtw{overflow-x:auto;margin:4px 0}.gdt{width:100%;border-collapse:collapse;font-size:12.5px;color:#e9def7}.gdt th{background:rgba(255,214,140,.16);color:#ffd77a;font-weight:700;padding:6px 4px;white-space:nowrap}.gdt td{padding:6px 4px;text-align:center;border-bottom:1px dashed rgba(255,255,255,.12);white-space:nowrap}.gdn{font-size:12px;color:#cfc2e4;line-height:1.6;margin-top:6px}.gdcl{flex-direction:column;align-items:flex-start;gap:2px}.gdcl small{color:#cfc2e4;font-size:12px}.gdtabs button span{font-size:11px}
 .arlock{font-size:54px;text-align:center}.arbeta{font-size:11.5px;color:#ffd77a;background:rgba(255,190,80,.12);border:1px dashed rgba(255,200,100,.5);border-radius:10px;padding:3px 10px;text-align:center}
 .rkl{display:flex;flex-direction:column;gap:5px}.rkr{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:12px;background:rgba(20,15,40,.7);border:1px solid rgba(255,255,255,.08)}
@@ -1061,7 +1062,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.20</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.21</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -2884,7 +2885,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.20</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.21</span>'}</div>`;
   }
   let runSet=false, runQuit=false;
   function runPop(){
@@ -3099,7 +3100,7 @@ if (typeof document !== 'undefined') (function(){
     if (on && !shown){ el.innerHTML=tkInner(); el.classList.remove('tkhide'); }
     else if (!on && shown){ el.classList.add('tkhide'); setTimeout(()=>{ if (el.classList.contains('tkhide')) el.innerHTML=''; },450); } },1000);
   /* ---------- 🔔 แจ้งเตือนเกมมีอัปเดต ---------- */
-  const GAME_VER='v3.20'; let updSkip='', updT=0;
+  const GAME_VER='v3.21'; let updSkip='', updT=0;
   function updCheck(){ if (location.protocol==='file:' || document.getElementById('updpop')) return; if (Date.now()-updT<60000) return; updT=Date.now();
     fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{ if (!j||!j.v||j.v===GAME_VER||j.v===updSkip) return; updShow(j); }).catch(()=>{}); }
   function updShow(j){ const inRun=S&&S.phase&&S.phase!=='title'&&!S.over&&!hub, d=document.createElement('div'); d.id='updpop';
@@ -3172,7 +3173,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="pbtns"><button class="choice" data-act="guideopen"><span>📚 ข้อมูลเกม</span><small>ระดับอุปกรณ์ · ธาตุ · อาชีพ · อัตราสุ่ม · โหมดเกม</small></button><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.20<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.21<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
@@ -4703,7 +4704,7 @@ if (typeof document !== 'undefined') (function(){
       <button class="choice alt wide" data-act="rkreload"><span>🔄 รีเฟรช</span></button>${nav()}${view}</div>`; }
 
   /* ---------- แชทโลก ---------- */
-  const CHAT={msgs:[], last:0, err:'', timer:null, busy:false};
+  const CHAT={msgs:[], last:0, err:'', timer:null, busy:false, admin:false, admChk:''};
   const CHAT_BAD=['ควย','เหี้ย','เย็ด','สัส','ไอสัตว์','อีดอก','แม่ง','fuck','shit','bitch'];
   const chatClean=t=>{ let x=String(t||''); CHAT_BAD.forEach(w=>{ x=x.split(w).join('*'.repeat(w.length)); x=x.replace(new RegExp(w,'gi'),'*'.repeat(w.length)); }); return x; };
   const chatBlocked=()=>{ try{ return JSON.parse(localStorage.getItem('dq_chat_block')||'[]'); }catch(e){ return []; } };
@@ -4723,7 +4724,8 @@ if (typeof document !== 'undefined') (function(){
     else items=Object.keys(window.SPIRIT_IMG||{}).map(k=>`<button class="cps" data-act="chatstk" data-v="${STK('p',k)}"><img src="${window.SPIRIT_IMG[k]}" alt="" loading="lazy"></button>`).join('');
     return `<div class="cptabs">${[['emo','😊 อีโมจิ'],['c','🦸 วีรชน'],['m','👾 มอนสเตอร์'],['p','🐾 สัตว์วิญญาณ']].map(([k,n])=>`<button class="${chatTab===k?'on':''}" data-act="chattab" data-k="${k}">${n}</button>`).join('')}</div><div class="cpgrid ${chatTab==='emo'?'emo':''}">${items}</div>${chatTab==='emo'?'':'<div class="cphint">แตะสติกเกอร์เพื่อส่งทันที</div>'}`; }
   function chatRow(r, uid, bl){ if (bl.includes(r.user_id)) return ''; const a=r.hero&&ALLCHARS[r.hero], me=r.user_id===uid, t=new Date(r.created_at), hm=t.toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'});
-    return `<div class="cmsg ${me?'me':''}"><span class="cav">${a?charArt(a.c,false,true):'🙂'}</span><div class="cbub"><div class="cnm"><b>${rkEsc(r.name||'ผู้กล้า')}</b><small>${hm}</small>${me?'':`<button class="cblk" data-act="chatblock" data-u="${r.user_id}" data-n="${rkEsc(r.name||'')}" title="ซ่อนข้อความของผู้เล่นนี้">🚫</button>`}</div><div class="ctx">${chatBody(r.body)}</div></div></div>`; }
+    const adm=!!r.is_admin, del=CHAT.admin?`<button class="cblk" data-act="chatdel" data-id="${r.id}" title="ลบข้อความ (แอดมิน)">🗑️</button>`:'';
+    return `<div class="cmsg ${me?'me':''} ${adm?'adm':''}"><span class="cav">${a?charArt(a.c,false,true):'🙂'}${adm?'<i class="cacrown">👑</i>':''}</span><div class="cbub"><div class="cnm">${adm?'<span class="admtag">👑 ADMIN</span>':''}<b>${rkEsc(r.name||'ผู้กล้า')}</b><small>${hm}</small>${del}${me||adm?'':`<button class="cblk" data-act="chatblock" data-u="${r.user_id}" data-n="${rkEsc(r.name||'')}" title="ซ่อนข้อความของผู้เล่นนี้">🚫</button>`}</div><div class="ctx">${chatBody(r.body)}</div></div></div>`; }
   function chatListHtml(){ const C=window.__dqCloud, uid=C&&C.auth&&C.auth.user.id, bl=chatBlocked();
     return CHAT.msgs.length ? CHAT.msgs.map(r=>chatRow(r,uid,bl)).join('') : `<p class="csd" style="text-align:center;margin:30px 0">${CHAT.err?'':(CHAT.loaded?'ยังไม่มีข้อความ ทักทายเพื่อนๆ เป็นคนแรกเลย!':'กำลังโหลดข้อความ…')}</p>`; }
   function chatPaint(){ const el=document.getElementById('chatlist'); if (!el) return; const atB=el.scrollHeight-el.scrollTop-el.clientHeight<60;
@@ -4758,6 +4760,7 @@ if (typeof document !== 'undefined') (function(){
     C.chatFetch(chatSeenGet(),100).then(rows=>{ chatUnread=(rows||[]).filter(r=>r.user_id!==uid&&!bl.includes(r.user_id)).length; chatBadgePaint(); }).catch(()=>{}).then(()=>{ chatBgBusy=false; }); }
   setInterval(chatBgCheck,30000); setTimeout(chatBgCheck,2500); document.addEventListener('visibilitychange',()=>{ if (!document.hidden) chatBgCheck(); });
   function hubChat(m){ const C=window.__dqCloud, li=!!(C&&C.auth);
+    if (li && C.chatIsAdmin && CHAT.admChk!==C.auth.user.id){ CHAT.admChk=C.auth.user.id; C.chatIsAdmin().then(v=>{ CHAT.admin=v; if (v) chatPaint(); }); }
     if (!CHAT.timer&&!CHAT.busy) setTimeout(()=>chatPoll(true),0); else setTimeout(()=>{ const el=document.getElementById('chatlist'); if (el) el.scrollTop=el.scrollHeight; },0);
     return `<div class="overlay hub chatpg" ${pageBg('rank')}>${hubHead(m,'💬 แชทโลก')}
       <div class="sumbox chatwrap"><div id="chatlist" class="chatlist">${chatListHtml()}</div><div id="chaterr" class="rkst bad" style="${CHAT.err?'':'display:none'}">${rkEsc(CHAT.err||'')}</div>
@@ -4815,6 +4818,7 @@ if (typeof document !== 'undefined') (function(){
     if (act==='chattab'){ chatTab=b.dataset.k; const pk=document.getElementById('chatpick'); if (pk) pk.innerHTML=chatPickHtml(); return true; }
     if (act==='chatemo'){ const i=document.getElementById('chatin'); if (i&&i.value.length<198){ i.value+=b.dataset.v; } return true; }
     if (act==='chatstk'){ const pk=document.getElementById('chatpick'); if (pk) pk.style.display='none'; chatSendNow(b.dataset.v); return true; }
+    if (act==='chatdel'){ const id=+b.dataset.id, C=window.__dqCloud; if (!CHAT.admin||!C||!C.chatDel) return true; C.chatDel(id).then(()=>{ CHAT.msgs=CHAT.msgs.filter(x=>x.id!==id); chatPaint(); }).catch(e=>{ CHAT.err='ลบไม่สำเร็จ: '+(e.message||e); chatPaint(); }); return true; }
     if (act==='chatblock'){ const u=b.dataset.u; if (u&&confirm(`ซ่อนข้อความของ ${b.dataset.n||'ผู้เล่นนี้'} ทั้งหมด? (ยกเลิกได้โดยล้างข้อมูลเบราว์เซอร์)`)){ const bl=chatBlocked(); if (!bl.includes(u)) bl.push(u); try{ localStorage.setItem('dq_chat_block',JSON.stringify(bl.slice(-200))); }catch(e){} chatPaint(); } return true; }
     if (act==='rkview'){ rkSel=+b.dataset.i; render(); return true; }
     if (act==='rkviewc'){ rkSel=null; render(); return true; }
@@ -5431,7 +5435,12 @@ if (typeof document !== 'undefined') (function(){
     lbBusy=false; lbSet(fail?{state:'err',msg:lbErr(fail),ok}:{state:'ok',ok}); return LB; }
   const _push=push; push=async function(f){ await _push(f); lbSync(); };
   /* ---------- แชทโลก ---------- */
-  async function chatFetch(after,lim){ return await req(`/rest/v1/chat_messages?select=id,user_id,name,hero,body,created_at&channel=eq.world${after?'&id=gt.'+after:''}&order=id.desc&limit=${lim||60}`,{method:'GET'},!!auth); }
+  let chatAdmCol=true;
+  async function chatFetch(after,lim){ const q=c=>`/rest/v1/chat_messages?select=id,user_id,name,hero,body,created_at${c?',is_admin':''}&channel=eq.world${after?'&id=gt.'+after:''}&order=id.desc&limit=${lim||60}`;
+    if (chatAdmCol){ try{ return await req(q(true),{method:'GET'},!!auth); }catch(e){ if (e.status!==400) throw e; chatAdmCol=false; } }
+    return await req(q(false),{method:'GET'},!!auth); }
+  async function chatIsAdmin(){ if (!auth) return false; try{ return !!(await rpc('chat_is_admin',{})); }catch(e){ return false; } }
+  async function chatDel(id){ return await rpc('admin_chat_delete',{p_id:id}); }
   async function chatSend(body,name,hero){ return await rpc('send_chat',{p_body:body,p_name:name,p_hero:hero}); }
   const chatErr=e=>{ const s=(e&&e.message)||String(e); if (/Could not find|does not exist|schema cache/i.test(s)||(e&&e.status===404)) return 'ระบบแชทบนเซิร์ฟเวอร์ยังไม่ได้ติดตั้ง (ต้องรันไฟล์ chat.sql ใน Supabase)';
     if (/too fast/i.test(s)) return 'ส่งเร็วเกินไป รอสักครู่แล้วส่งใหม่'; if (/not logged in|หมดเวลาเข้าสู่ระบบ/i.test(s)) return 'เข้าสู่ระบบก่อนจึงจะส่งข้อความได้'; if (/empty/i.test(s)) return 'พิมพ์ข้อความก่อนส่ง'; return thErr(e); };
@@ -5446,7 +5455,7 @@ if (typeof document !== 'undefined') (function(){
   async function arDefLog(){ return await userReq(`/rest/v1/arena_log?select=att_name,win,delta,created_at&defender=eq.${auth.user.id}&order=id.desc&limit=10`,{method:'GET'}); }
   const arErr=e=>{ const s=(e&&e.message)||String(e); if (/Could not find|does not exist|schema cache/i.test(s)||(e&&e.status===404)) return 'สนามประลองบนเซิร์ฟเวอร์ยังไม่ได้ติดตั้ง (ต้องรันไฟล์ arena.sql ใน Supabase) ตอนนี้สู้กับบอทไปก่อน';
     if (/too fast/i.test(s)) return 'ประลองถี่เกินไป รอสักครู่'; if (/too many/i.test(s)) return 'วันนี้ส่งผลประลองครบโควตาแล้ว'; if (/set defense/i.test(s)) return 'ยังไม่ได้บันทึกทีมป้องกัน'; return thErr(e); };
-  window.__dqCloud={push,pull,lbTop,lbMine,lbSync,lbErr,chatFetch,chatSend,chatErr,arOpp,arSet,arReport,arTop,htHelp,arDefLog,arErr,get auth(){ return auth; }};
+  window.__dqCloud={push,pull,lbTop,lbMine,lbSync,lbErr,chatFetch,chatSend,chatErr,chatIsAdmin,chatDel,arOpp,arSet,arReport,arTop,htHelp,arDefLog,arErr,get auth(){ return auth; }};
 })();
 </script>
 </body>
