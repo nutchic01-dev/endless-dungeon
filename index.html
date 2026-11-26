@@ -22,6 +22,7 @@ button{font:inherit;cursor:pointer;border:0}
 .chip{background:var(--panel);border-radius:999px;padding:3px 10px;display:inline-flex;gap:5px;align-items:center;white-space:nowrap}
 .chip b{font-weight:700}
 .rune-dot{width:12px;height:12px;border-radius:50%;display:inline-block;border:1px solid rgba(255,255,255,.5)}
+.tbr{margin-left:auto;display:flex;gap:6px;align-items:center}.tbtn{display:inline-flex;align-items:center;justify-content:center;gap:4px;height:32px;min-width:34px;padding:0 9px;border-radius:10px;border:1px solid #5a4680;background:#231833;color:#f2e8ff;font:inherit;font-size:13px;font-weight:700;cursor:pointer}.tbtn img.uiico{height:22px}.tbtn.quit{background:linear-gradient(#ff8a5a,#c8392a);border-color:#ffd0a0;color:#fff}.tbtn:disabled{opacity:.45}
 .proto{margin-left:auto;font-size:11px;color:var(--muted)}
 
 /* scene */
@@ -2829,8 +2830,21 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      <span class="proto">v3.2</span></div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.3</span>'}</div>`;
   }
+  let runSet=false, runQuit=false;
+  function runPop(){
+    if (!S || S.phase==='title' || S.over) return '';
+    const v=k=>Math.round((SND.set[k]==null?1:SND.set[k])*100);
+    if (runSet) return `<div class="pop-bg" data-act="rsetc"><div class="pop cpop" data-act="noop"><div class="pop-h">⚙️ <b>ตั้งค่าเสียง</b></div>
+      <div class="sndset"><div class="pop-r"><span>🎵 เสียงเพลง</span><b id="sv_mus">${v('mus')}%</b></div><input type="range" min="0" max="100" value="${v('mus')}" oninput="sndVol('mus',this.value)">
+        <div class="pop-r"><span>🔊 เสียงเอฟเฟกต์</span><b id="sv_sfx">${v('sfx')}%</b></div><input type="range" min="0" max="100" value="${v('sfx')}" oninput="sndVol('sfx',this.value)">
+        <div class="pop-r"><span>🗣️ เสียงพากย์</span><b id="sv_voice">${SND.set.voice===0?'ปิด':v('voice')+'%'}</b></div><input type="range" min="0" max="100" value="${v('voice')}" oninput="sndVol('voice',this.value);var o=document.getElementById('sv_voice');if(o)o.textContent=this.value>0?this.value+'%':'ปิด'"></div>
+      <button class="choice wide" data-act="rsetc"><span>เสร็จ</span></button></div></div>`;
+    if (runQuit) return `<div class="pop-bg" data-act="rquitno"><div class="pop cpop" data-act="noop"><div class="pop-h">🚪 <b>ออกจากหอคอย?</b></div>
+      <p style="margin:6px 0 10px;font-size:14px;line-height:1.5">การลงดันเจี้ยนรอบนี้จะจบทันที (ชั้น ${S.floor} · Lv.${S.lv})<br>ได้เหรียญตราและคะแนนจัดอันดับตามที่ทำได้<br><span class="gs">แต่จะไม่ได้วีรชนถาวร เพราะยังไม่ได้ปราบบอส</span></p>
+      <div class="row2"><button class="choice danger" data-act="rquitok"><span>ออกหอคอย</span></button><button class="choice alt" data-act="rquitno"><span>เล่นต่อ</span></button></div></div></div>`;
+    return ''; }
   function partyHtml(){
     const hpOf = i => battleView ? battleView.hps[i]/battleView.maxs[i] : null;
     const mates = S.party.map((m,i)=>{
@@ -4635,7 +4649,7 @@ if (typeof document !== 'undefined') (function(){
     return '';
   }
   function render(){ const hk=e=>((e.querySelector('.pop-h,.hubhead')||{}).textContent||'').replace(/[^\u0E00-\u0E7F]/g,'').slice(0,30); const keep=['.pop','.overlay','.pagebox'].map(q=>{ const e=app.querySelector(q); return e&&e.scrollTop>0?[q,e.scrollTop,hk(e)]:null; }).filter(Boolean);
-    app.innerHTML = topbar() + scene() + eventPanel() + heroPanel() + overlay() + popup() + (acfgPop?acfgPopHtml():'');
+    app.innerHTML = topbar() + scene() + eventPanel() + heroPanel() + overlay() + popup() + (acfgPop?acfgPopHtml():'') + runPop();
     keep.forEach(([q,t,k])=>{ const e=app.querySelector(q); if (e&&hk(e)===k) e.scrollTop=t; });  afterRender(); }
   function floatAt(el, text, cls){
     if (!el) return; const f = document.createElement('div'); f.className='float '+(cls||''); f.textContent=text;
@@ -4851,6 +4865,11 @@ if (typeof document !== 'undefined') (function(){
     const act = b.dataset.act;
     if (hubAct(act, b)) return;
     if (act==='start') advPrep=false;
+    if (act==='rset'){ runSet=true; runQuit=false; render(); return; }
+    if (act==='rsetc'){ runSet=false; render(); return; }
+    if (act==='rquit'){ if (battleView) return; runQuit=true; runSet=false; if (auto) autoStop(); render(); return; }
+    if (act==='rquitno'){ runQuit=false; render(); return; }
+    if (act==='rquitok'){ runQuit=false; if (battleView||S.over) { render(); return; } if (auto) autoStop(); acfgPop=false; popSlot=null; endRun(false,'🚪 ออกจากหอคอย'); render(); window.scrollTo(0,0); return; }
     if (act==='start'){ rng = Math.random; newRun(true); hub=null; partySel=[]; popSlot=null; render(); window.scrollTo(0,0); if (!S.daily) setTimeout(voVillager,350); return; }
     if (act==='daily'){ startDaily(); hub=null; partySel=[]; popSlot=null; render(); window.scrollTo(0,0); return; }
     if (act==='walk'){ autoMsg=''; step(); render(); return; }
