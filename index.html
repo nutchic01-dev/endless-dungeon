@@ -1061,7 +1061,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.19</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.20</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -1565,7 +1565,7 @@ function stats(){
     def:Math.round(def*defMod), mdef:Math.round(mdef*defMod),
     cri:Math.min(75, b.cri + t.cri + g.cri + gb.cri + S.mods.cri + (S.passives.includes('lucky')?6:0) + P.cri + D.cri),
     cridmg:Math.min(300, b.cridmg + t.cridmg + g.cridmg + gb.cridmg + P.cridmg + D.cridmg), pen:Math.min(60,t.pen+g.pen+gb.pen+(b.type==='mag'?P.mpen:P.pen)), spd:b.spd+t.spd,
-    heal:b.heal*(1+gb.healP/100), type:b.type, steal:gb.steal, skillK:gb.skillK, bossK:gb.bossK, drK:gb.drK, revive:gb.revive };
+    heal:b.heal*(1+gb.healP/100), type:S.cls==='villager'?((b.matk+t.matk+g.matk+P.matk)>(b.atk+t.atk+g.atk+P.atk)?'mag':'phy'):b.type, steal:gb.steal, skillK:gb.skillK, bossK:gb.bossK, drK:gb.drK, revive:gb.revive };
 }
 function mateStats(m){
   const k = CONFIG.mateK*(m.char&&m.char.sp?1.08:1)*starK(m.char), q = CONFIG.mateTrain, g = gearTotals().f, P = S.meta.pm;
@@ -1586,7 +1586,7 @@ function awakenCandidates(){
   if (q.length) return q;
   const best=Math.max(...keys.map(k=>c[HIDDEN[k].by]/HIDDEN[k].need));
   return keys.filter(k=>c[HIDDEN[k].by]/HIDDEN[k].need===best); }
-function awaken(k){ S.cls=k; S.char=HIDDEN[k].char; adaptGear(); S.awakened=true; S.pendingAwaken=false; S.hp=stats().maxhp; S.reveal={awaken:true}; addLog(`ตื่นรู้เป็น ${S.char.name}!`,'good'); }
+function awaken(k){ S.cls=k; S.char=HIDDEN[k].char; mergeTrain(); adaptGear(); S.awakened=true; S.pendingAwaken=false; S.hp=stats().maxhp; S.reveal={awaken:true}; addLog(`ตื่นรู้เป็น ${S.char.name}!`,'good'); }
 function trainScore(){ const c=S.trainCount, size={atk:1,matk:1,hp:1,def:2,cri:2,pen:1}; const o={}; for(const k in c) o[k]=c[k]/size[k]; return o; }
 function unitName(cls, char){ return char ? char.name : (cls==='villager'?'ชาวบ้าน':CLASSES[cls].novice); }
 /* ---------- ภาพจริง (ทดลอง) : ยังไม่มีภาพ = ใช้อีโมจิเหมือนเดิม ---------- */
@@ -1702,7 +1702,9 @@ function itIco(it){ if (!it) return ''; let f=null; if (it.slot==='weapon' && ty
 const STAT_TH = {atk:'ATK',matk:'MATK',hp:'HP',def:'DEF',mdef:'MDEF',cri:'คริ',cridmg:'ความแรงคริ',pen:'เจาะเกราะ'};
 const PCT_STAT = {cri:1,cridmg:1,pen:1};
 let ITEM_ID = 1;
-function heroType(){ return CLASSES[S.cls].type; }
+function vilTy(){ const t=S.train||{}, g=(typeof gearTotals==='function'&&S.gear)?gearTotals().f:{atk:0,matk:0}; return ((t.matk||0)+(g.matk||0)) > ((t.atk||0)+(g.atk||0)) ? 'mag' : 'phy'; }   // ชาวบ้าน: ตามสายที่ฝึก (ATK/MATK ตัวไหนมากกว่า)
+function heroType(){ return S.cls==='villager' ? vilTy() : CLASSES[S.cls].type; }
+function mergeTrain(){ const t=S.train, ty=CLASSES[S.cls].type; if (S.cls==='villager'||!t) return; if (ty==='mag'){ t.matk+=t.atk; t.atk=0; } else { t.atk+=t.matk; t.matk=0; } }   // เปลี่ยนอาชีพ: ย้ายค่าที่ฝึกผิดสายมาเข้าสายหลัก
 function rollRarity(F, shift=0){ const t = F<=50?[70,25,5,0]:F<=100?[45,38,15,2]:F<=200?[25,42,27,6]:[10,40,38,12];
   return Math.min(3, +weighted(t.map((w,i)=>[String(i),w])) + shift); }
 function subStat(F, ty){ const o = pick([['atk',2+0.3*F],['hp',15+2*F],['def',1+0.2*F],['mdef',1+0.2*F],['cri',2],['cridmg',8],['pen',2]]);
@@ -1711,7 +1713,7 @@ function weaponBase(ty){ const c=S.cls; if (c==='villager') return ty==='mag'?['
   return ({tank:['ค้อนศึก','🔨'],warrior:['ดาบ','🗡️'],mage:['คทา','🪄'],support:['ไม้เท้า','🪄'],archer:['ธนู','🏹'],assassin:['มีดสั้น','🔪']})[c] || (ty==='mag'?['คทา','🪄']:['ดาบ','🗡️']); }
 function makeItem(F, slot, r){
   slot = slot || pick(['weapon','weapon','helm','armor','boots','acc']);
-  const ty = S.cls==='villager' ? pick(['phy','mag']) : heroType(), rk = RARITY[r].k;
+  const ty = heroType(), rk = RARITY[r].k;
   const it = {id:ITEM_ID++, slot, r, plus:0, F, ty, subs:[]};
   if (slot==='acc'){ const ids=Object.keys(ACCS).filter(k=>!(ACCS[k].minR>r)); it.acc=pick(ids); it.name=ACCS[it.acc].name; it.icon=ACCS[it.acc].icon; it.subs=[subStat(F,ty)]; return it; }
   it.main = slot==='weapon' ? {k:ty==='mag'?'matk':'atk', v:(6+0.9*F)*rk} : slot==='helm' ? {k:'mdef', v:(3+0.45*F)*rk} : slot==='armor' ? {k:'def', v:(3+0.45*F)*rk} : {k:'hp', v:(25+4*F)*rk};
@@ -2422,7 +2424,7 @@ function endRun(win, cause){
 }
 function victory(){ endRun(true,'ปราบบอส'); }
 function pickClass(k){ if (k==='villager'){ S.villagerPath=true; adaptGear(); S.pendingClass=false; S.pendingParty=true; addLog('เลือกเป็นชาวบ้านต่อไป! ฝึกได้ผล +25%','good'); return; }
-  S.cls=k; adaptGear(); S.pendingClass=false; S.pendingParty=true; S.hp=Math.min(S.hp*CLASSES[k].m.hp, stats().maxhp); addLog(`เปลี่ยนอาชีพเป็น ${CLASSES[k].name}!`,'good'); }
+  S.cls=k; mergeTrain(); adaptGear(); S.pendingClass=false; S.pendingParty=true; S.hp=Math.min(S.hp*CLASSES[k].m.hp, stats().maxhp); addLog(`เปลี่ยนอาชีพเป็น ${CLASSES[k].name}!`,'good'); }
 function pickParty(list){ S.party = list.map(cls=>({cls, char:null, hp:0, ko:0})); S.party.forEach(m=>m.hp=mateStats(m).maxhp); S.pendingParty=false; addLog(`${list.map(c=>CLASSES[c].novice).join(' และ ')} เข้าร่วมทีม!`,'good'); }
 function rollChars(pickId){
   S.partyRolled = true;
@@ -2882,7 +2884,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.19</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.20</span>'}</div>`;
   }
   let runSet=false, runQuit=false;
   function runPop(){
@@ -3097,7 +3099,7 @@ if (typeof document !== 'undefined') (function(){
     if (on && !shown){ el.innerHTML=tkInner(); el.classList.remove('tkhide'); }
     else if (!on && shown){ el.classList.add('tkhide'); setTimeout(()=>{ if (el.classList.contains('tkhide')) el.innerHTML=''; },450); } },1000);
   /* ---------- 🔔 แจ้งเตือนเกมมีอัปเดต ---------- */
-  const GAME_VER='v3.19'; let updSkip='', updT=0;
+  const GAME_VER='v3.20'; let updSkip='', updT=0;
   function updCheck(){ if (location.protocol==='file:' || document.getElementById('updpop')) return; if (Date.now()-updT<60000) return; updT=Date.now();
     fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{ if (!j||!j.v||j.v===GAME_VER||j.v===updSkip) return; updShow(j); }).catch(()=>{}); }
   function updShow(j){ const inRun=S&&S.phase&&S.phase!=='title'&&!S.over&&!hub, d=document.createElement('div'); d.id='updpop';
@@ -3170,7 +3172,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="pbtns"><button class="choice" data-act="guideopen"><span>📚 ข้อมูลเกม</span><small>ระดับอุปกรณ์ · ธาตุ · อาชีพ · อัตราสุ่ม · โหมดเกม</small></button><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.19<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.20<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
