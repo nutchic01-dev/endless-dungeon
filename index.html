@@ -971,6 +971,12 @@ h3 img.uiico{height:24px;width:auto;vertical-align:middle}
 .overlay.hub.home>.ticker{width:calc(100% - 20px);margin-top:4px}.overlay.hub.home .loreb{top:auto!important;left:auto!important;right:62px;bottom:6px}
 .ticker{transition:opacity .4s,transform .4s;min-height:40px}.ticker.tkhide{opacity:0;transform:translateY(-6px);pointer-events:none}
 @keyframes tkrun{from{transform:translateX(0)}to{transform:translateX(-100%)}}@keyframes tkpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+.arhd{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;text-align:center}.arhd small{display:block;font-size:11px;color:#cdbfe6}.arhd b{font-size:16px;color:#ffd77a}
+.arslots{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px}.arslots .dhslot{width:auto!important;min-width:0!important;margin:0!important}.arslots .dhslot{position:relative}.arslots em{position:absolute;top:2px;left:3px;font-style:normal;font-size:9px;color:#ffd77a;opacity:.8}
+.aropp{display:grid;grid-template-columns:1fr auto;gap:4px 8px;align-items:center;padding:8px;border-radius:12px;background:rgba(20,15,40,.7);border:1px solid rgba(255,255,255,.08);margin-bottom:6px}
+.arot b{font-size:14px}.arot small{display:block;font-size:11.5px;color:#cdbfe6}.arbot{font-style:normal;font-size:10px;margin-left:5px;padding:1px 6px;border-radius:8px;background:#3a2f55;color:#cdbfe6}
+.arteam{grid-column:1/2;display:flex;gap:3px}.arteam span{position:relative;width:38px;height:38px;border-radius:9px;background:rgba(255,255,255,.06);overflow:hidden;display:flex;align-items:center;justify-content:center}.arteam img{width:44px;height:44px;object-fit:cover;object-position:top}.arteam i{position:absolute;right:0;bottom:0;font-style:normal;font-size:10px}
+.arfight{grid-column:2/3;grid-row:1/3;width:auto!important;margin:0!important;padding:8px 12px!important}.arlock{font-size:54px;text-align:center}.arbeta{font-size:11.5px;color:#ffd77a;background:rgba(255,190,80,.12);border:1px dashed rgba(255,200,100,.5);border-radius:10px;padding:3px 10px;text-align:center}
 .rkl{display:flex;flex-direction:column;gap:5px}.rkr{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:12px;background:rgba(20,15,40,.7);border:1px solid rgba(255,255,255,.08)}
 .rkr.top{border-color:rgba(255,209,102,.5);background:linear-gradient(90deg,rgba(255,209,102,.18),rgba(20,15,40,.7))}.rkr.me{border-color:#7dffcf;box-shadow:0 0 0 1.5px #7dffcf inset}
 .rkn{width:30px;text-align:center;font-size:20px}.rkn b{font-size:14px;color:var(--muted)}.rka img.art{height:38px;width:38px;object-fit:contain}.rka{width:40px;text-align:center}
@@ -1050,7 +1056,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.13</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.14</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -2857,7 +2863,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.13</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.14</span>'}</div>`;
   }
   let runSet=false, runQuit=false;
   function runPop(){
@@ -3109,7 +3115,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="pbtns"><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.13<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.14<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
@@ -3820,7 +3826,7 @@ if (typeof document !== 'undefined') (function(){
       ['hundred','หอคอยร้อยชั้น','#c9a36a','🏯',`ผ่านแล้ว ${htState(m).best}/${HT_MAX} ชั้น · ⚡${htState(m).en}`,'htopen',''],
       ['nest','รังวิญญาณ','#c38bff','🐾',`ผู้พิทักษ์${ELEMENTS[NEST_EL()].name} · เหลือ ${spState(m).nest.left}/3`,'nestopen',''],
       ['boss','ล่ามังกร','#ff3b3b','🐉',`${dhDragon().name} · เหลือ ${DH_TRIES-dhState(m).tries.n} ครั้ง`,'dhopen',''],
-      ['pvp','สนามท้าทายวีรชน','#ff6b6b','⚔️','','',1],['element','หอคอยธาตุ','#7dffcf','💠','','',1]];
+      ['pvp','สนามประลองวีรชน','#ff6b6b','⚔️',arOwn(m).length>=AR_NEED?`🏅 ${fmt(arState(m).rating||1000)} · เหลือ ${AR_TRIES-arState(m).used}/${AR_TRIES}`:`🔒 ต้องมีวีรชน ${AR_NEED} ตัว (${arOwn(m).length}/${AR_NEED})`,'arnopen',''],['element','หอคอยธาตุ','#7dffcf','💠','','',1]];
     const node=([k,name,col,ic,sub,act,lock],i)=>{ const art=MODE_READY.has(`mode_${k}.webp`);
       return `<button class="tnode n${i} ${lock?'lock':''}" style="--tc:${col}" data-act="${lock?'modesoon':act}" data-k="${name}">
         <div class="tw">${art?`<img src="art/mode_${k}.webp" alt="">`:`<div class="twr"><div class="twt"></div><div class="twb"><span>${ic}</span></div></div>`}<div class="tglow"></div></div>
@@ -4038,7 +4044,8 @@ if (typeof document !== 'undefined') (function(){
     else if (k==='mini') W.push([mon(0,1),big(htMapOf(f).mini,1,5,1.8),mon(1,1)]);
     else W.push([mon(0,1.1),big(htMapOf(f).boss,2,9,2.2),mon(1,1.1)]);
     return W; }
-  function htHero(m,id){ const a=ALLCHARS[id], ch=m.chars[id]||{}, cls=heroIdleCls(id), pw=relicPower(m,id), st=1+0.25*((ch.star||1)-1), fm=ch.form?1.35:1;
+  function htHero(m,id){ const ch=m.chars[id]||{}; return heroStat(id, ch.star||1, ch.form, relicPower(m,id)); }
+  function heroStat(id,star,form,pw){ const a=ALLCHARS[id], cls=heroIdleCls(id), st=1+0.25*((star||1)-1), fm=form?1.35:1; pw=pw||{dps:1,hp:1,spd:1,res:0,heal:0};
     const b={tank:[0.55,1.8],warrior:[1,1.2],archer:[1.15,0.8],mage:[0.85,0.8],support:[0.55,0.95],assassin:[1.3,0.75]}[cls]||[1,1];
     const atk=({n:900,sp:1300,hid:1550})[a.tier]*st*fm*b[0]*pw.dps, hp=11000*st*fm*b[1]*pw.hp;
     return {id,cls,el:a.c.el,atk,hp,mx:hp,spd:pw.spd||1,res:Math.min(0.6,(pw.res||0)+(cls==='tank'?0.3:0)),heal:pw.heal||0,en:0,
@@ -4047,25 +4054,26 @@ if (typeof document !== 'undefined') (function(){
   function htPower(m){ const ids=htState(m).team.filter(Boolean), T=ids.map(id=>htHero(m,id)), r=htRel(ids); return {atk:T.reduce((s,h)=>s+h.atk,0)*r, hp:T.reduce((s,h)=>s+h.hp,0), rel:r}; }
   /* ตำแหน่งบนสนาม (สัดส่วนกว้าง/สูง ตรงเท้า) : วีรชน 0-1 แถวหน้า 2-4 แถวหลัง · ศัตรู 0-2 แถวหน้า 3-4 แถวหลัง */
   const HT_HPOS = [[0.42,0.62],[0.60,0.74],[0.13,0.70],[0.28,0.82],[0.46,0.93]];
+  const HT_EHPOS = [[0.60,0.44],[0.44,0.34],[0.88,0.38],[0.74,0.28],[0.58,0.20]];   // วีรชนฝ่ายตรงข้าม (สนามประลอง): 0-1 แถวหน้า 2-4 แถวหลัง
   const HT_EPOS = [[0.52,0.36],[0.68,0.44],[0.85,0.52],[0.66,0.22],[0.84,0.29]];
   let htFight = null, htPick = -1, htSel = 0;
-  function htStart(f,cus){ const m=loadMeta(), S0=htState(m); if (!S0.team.some(Boolean)) return; const cost=cus?0:htCost(f); if (!cus){ if (S0.en<cost){ hubMsg=`⚡ สายฟ้าไม่พอ (ต้องใช้ ${cost})`; if (htFight&&htFight.done) htFight=null; render(); return; } S0.en-=cost; storeMeta(m); } if (htFight&&htFight.iv) clearInterval(htFight.iv);
-    const T=S0.team.map((id,i)=>id?Object.assign(htHero(m,id),{slot:i,at:0.4+i*0.15,lg:0,hit:0}):null).filter(Boolean), relB=htRel(T.map(h=>h.id));
+  function htStart(f,cus){ const m=loadMeta(), S0=htState(m), TEAM=(cus&&cus.team)||S0.team; if (!TEAM.some(Boolean)) return; const cost=cus?0:htCost(f); if (!cus){ if (S0.en<cost){ hubMsg=`⚡ สายฟ้าไม่พอ (ต้องใช้ ${cost})`; if (htFight&&htFight.done) htFight=null; render(); return; } S0.en-=cost; storeMeta(m); } if (htFight&&htFight.iv) clearInterval(htFight.iv);
+    const T=TEAM.map((id,i)=>id&&m.chars[id]?Object.assign(htHero(m,id),{slot:i,at:0.4+i*0.15,lg:0,hit:0}):null).filter(Boolean), relB=htRel(T.map(h=>h.id));
     const spId=spEq(m,'ht'); if (spId){ const b=1+spBonus(m,spId)/100, k=SP[spId].k; T.forEach(h=>{ if (k==='atk') h.atk*=b; else if (k==='hp'){ h.hp*=b; h.mx*=b; } else h.spd*=b; }); }
     htFight={f, M:m, T, W:cus?cus.W:htWaves(f), wi:0, E:[], t:0, spd:(htFight&&htFight.spd)||1, fx:[], banner:{txt:cus?cus.title:`ชั้น ${f} · ${htMap(f).name}`,sub:cus?cus.sub:(HT_KIND_TXT[htKind(f)]||'ระลอก 1/3'),t:1.6}, pause:1.2, done:false, relB, sh:0, tau:0, cost, cus:cus||null, time:cus?cus.time:HT_TIME, sp:spId?{id:spId,mul:spSkillMul(m,spId),t:6,lg:0}:null};
-    htWave(); render(); htFight.iv=setInterval(htTick,50); }
-  function htWave(){ const F=htFight; F.E=F.W[F.wi].map((e,i)=>Object.assign({},e,{slot:i,at:1+i*0.3,lg:0,hit:0,cnt:0})); }
+    if (cus&&cus.pvp){ htFight.pvpD=AR_DMG; htFight.pvpH=AR_HEAL; T.forEach(h=>h.at+=Math.random()*0.4); } htWave(); render(); htFight.iv=setInterval(htTick,50); }
+  function htWave(){ const F=htFight; F.E=F.W[F.wi].map((e,i)=>Object.assign({},e,{slot:i,at:e.ehero?0.4+i*0.15+Math.random()*0.4:1+i*0.3,lg:0,hit:0,cnt:0})); }
   function htFx(o){ htFight.fx.push(Object.assign({t:0},o)); }
-  const htPos = (u,hero) => { const c=document.getElementById('htcv'); const W=c?c.clientWidth:375, H=c?c.clientHeight:560, p=(hero?HT_HPOS:HT_EPOS)[u.slot]; return [p[0]*W,p[1]*H,W,H]; };
-  function htDmgE(F,h,e,mul,crit){ if (e.hp<=0) return 0; const d=h.atk*F.relB*htElMul(h.el,e.el)*mul*(crit?2:1)*(0.9+Math.random()*0.2); e.hp-=d; e.hit=0.15; SND.sfx(crit?'crit':mul>=2?'heavy':({fire:'fire',water:'ice',wood:'slash',earth:'hit',light:'magic',dark:'dark'})[h.el]||'hit'); if (crit||mul>=2){ F.shk=Math.max(F.shk||0,0.18); htFx({k:'spark',x:htPos(e,false)[0],y:htPos(e,false)[1]-htPos(e,false)[3]*(e.boss?0.12:0.06),col:crit?'#ff7af0':'#ffe08a'}); }
+  const htPos = (u,hero) => { const c=document.getElementById('htcv'); const W=c?c.clientWidth:375, H=c?c.clientHeight:560, p=(hero?HT_HPOS:u.ehero?HT_EHPOS:HT_EPOS)[u.slot]; return [p[0]*W,p[1]*H,W,H]; };
+  function htDmgE(F,h,e,mul,crit){ if (e.hp<=0) return 0; const d=h.atk*F.relB*htElMul(h.el,e.el)*mul*(crit?2:1)*(0.9+Math.random()*0.2)*(1-(e.res||0))*(F.esh>0?0.5:1)*(F.pvpD||1); e.hp-=d; e.hit=0.15; if (e.ehero) e.en=Math.min(100,(e.en||0)+6); SND.sfx(crit?'crit':mul>=2?'heavy':({fire:'fire',water:'ice',wood:'slash',earth:'hit',light:'magic',dark:'dark'})[h.el]||'hit'); if (crit||mul>=2){ F.shk=Math.max(F.shk||0,0.18); htFx({k:'spark',x:htPos(e,false)[0],y:htPos(e,false)[1]-htPos(e,false)[3]*(e.boss?0.12:0.06),col:crit?'#ff7af0':'#ffe08a'}); }
     const [x,y,,H]=htPos(e,false); htFx({k:'n',x:x+(Math.random()-0.5)*20,y:y-H*(e.boss?0.3:0.12),txt:fmtN(d),col:crit?'#ff7af0':htElMul(h.el,e.el)>1?'#ffe066':'#fff',big:crit||mul>=2}); return d; }
-  function htDmgH(F,e,h,mul){ const d=e.atk*mul*htElMul(e.el,h.el)*(1-h.res)*(F.sh>0?0.5:1)*(0.9+Math.random()*0.2); h.hp-=d; h.hit=0.15; h.en=Math.min(100,h.en+6); SND.sfx('enemy');
+  function htDmgH(F,e,h,mul){ const d=e.atk*mul*htElMul(e.el,h.el)*(1-h.res)*(F.sh>0?0.5:1)*(0.9+Math.random()*0.2)*(F.pvpD||1); h.hp-=d; h.hit=0.15; h.en=Math.min(100,h.en+6); SND.sfx('enemy');
     const [x,y,,H]=htPos(h,true); htFx({k:'n',x:x+(Math.random()-0.5)*16,y:y-H*0.15,txt:'-'+fmtN(d),col:'#ff8a7a'}); }
-  function htHeal(h,v){ if (h.hp<=0) return; const a=Math.min(h.mx-h.hp,v); h.hp+=a; SND.sfx('heal'); const [x,y,,H]=htPos(h,true); if (a>1) htFx({k:'n',x,y:y-H*0.17,txt:'+'+fmtN(a),col:'#7dff9a'}); }
-  function htHeroAct(F,h){ const eA=F.E.filter(e=>e.hp>0); if (!eA.length) return; const fr=eA.filter(e=>e.slot<3), pool=fr.length?fr:eA, hA=F.T.filter(x=>x.hp>0);
-    const low=hA.reduce((a,b)=>a.hp/a.mx<b.hp/b.mx?a:b), tg0=pool[0];
+  function htHeal(h,v){ if (h.hp<=0) return; v*=(htFight&&htFight.pvpH)||1; const a=Math.min(h.mx-h.hp,v); h.hp+=a; SND.sfx('heal'); const [x,y,,H]=htPos(h,true); if (a>1) htFx({k:'n',x,y:y-H*0.17,txt:'+'+fmtN(a),col:'#7dff9a'}); }
+  function htHeroAct(F,h){ const eA=F.E.filter(e=>e.hp>0); if (!eA.length) return; const fr=eA.filter(e=>e.slot<(e.ehero?2:3)), pool=fr.length?fr:eA, hA=F.T.filter(x=>x.hp>0);
+    const low=hA.reduce((a,b)=>a.hp/a.mx<b.hp/b.mx?a:b), tg0=(F.etau>0&&eA.find(e=>e.cls==='tank'))||pool[0];
     if (h.en>=100){ h.en=0; h.lg=1; const [x,y,,H]=htPos(h,true); htFx({k:'ult',x,y:y-H*0.2,txt:'',col:heroCol(F.M,h.id)}); SND.sfx('charge'); speakUlt(h.id, h.ult); F.shk=0.35;
-      { const st=document.querySelector('.htstage'), [ex,ey,,H2]=htPos(tg0||eA[0],false); ultFX(st, h.id, h.el, h.cls==='support'?'healAll':h.cls==='tank'?'shieldAll':'dmg', ex, ey-H2*0.08, x, y, h.ult); }
+      if (!F.skip){ const st=document.querySelector('.htstage'), [ex,ey,,H2]=htPos(tg0||eA[0],false); ultFX(st, h.id, h.el, h.cls==='support'?'healAll':h.cls==='tank'?'shieldAll':'dmg', ex, ey-H2*0.08, x, y, h.ult); }
       if (h.cls==='warrior') pool.forEach(e=>htDmgE(F,h,e,3.2));
       else if (h.cls==='mage') eA.forEach(e=>htDmgE(F,h,e,2));
       else if (h.cls==='archer') htDmgE(F,h,eA.reduce((a,b)=>a.hp>b.hp?a:b),6);
@@ -4076,22 +4084,41 @@ if (typeof document !== 'undefined') (function(){
     h.lg=1; h.en=Math.min(100,h.en+(h.cls==='support'||h.cls==='tank'?18:22));
     if (h.cls==='support' && low.hp<low.mx*0.85){ htHeal(low,h.atk*1.6); return; }
     if (h.cls==='mage'){ eA.forEach(e=>htDmgE(F,h,e,0.45)); htFx({k:'bolt',a:h,b:tg0,col:'#c99bff'}); return; }
-    const tg = h.cls==='assassin' ? eA.reduce((a,b)=>a.hp<b.hp?a:b) : h.cls==='archer' ? (eA.find(e=>e.slot>=3)||tg0) : tg0;
+    const tg = h.cls==='assassin' ? eA.reduce((a,b)=>a.hp<b.hp?a:b) : h.cls==='archer' ? (eA.find(e=>e.slot>=(e.ehero?2:3))||tg0) : tg0;
     htDmgE(F,h,tg,1,h.cls==='assassin'&&Math.random()<0.3); htFx({k:h.cls==='archer'?'arrow':'slash',a:h,b:tg,col:'#fff'}); }
   function htEnemyAct(F,e){ const hA=F.T.filter(x=>x.hp>0); if (!hA.length) return; e.lg=1; e.cnt++;
     if (e.boss && e.cnt%3===0){ hA.forEach(h=>htDmgH(F,e,h,e.boss===2?0.55:0.4)); htFx({k:'ring',col:'#ff5a5a'}); htFx({k:'flash',col:'#ff3b3b'}); return; }
     const tank=hA.find(h=>h.cls==='tank'), fr=hA.filter(h=>h.slot<2);
     const tg = (F.tau>0&&tank) ? tank : (fr.length&&Math.random()<0.75) ? fr[(Math.random()*fr.length)|0] : hA[(Math.random()*hA.length)|0];
     htDmgH(F,e,tg,1); htFx({k:'slash',a:e,b:tg,col:'#ff9a8a',en:1}); }
+  function htEHeal(e,v){ if (e.hp<=0) return; v*=(htFight&&htFight.pvpH)||1; const a=Math.min(e.mx-e.hp,v); e.hp+=a; const [x,y,,H]=htPos(e,false); if (a>1) htFx({k:'n',x,y:y-H*0.17,txt:'+'+fmtN(a),col:'#7dff9a'}); }
+  function htEHeroAct(F,e){ const hA=F.T.filter(x=>x.hp>0); if (!hA.length) return; const eA=F.E.filter(x=>x.hp>0); e.lg=1;
+    const tank=hA.find(h=>h.cls==='tank'), fr=hA.filter(h=>h.slot<2), pickT=()=>(F.tau>0&&tank)?tank:(fr[0]||hA[0]);
+    if ((e.en||0)>=100){ e.en=0; const [x,y,,H]=htPos(e,false); htFx({k:'ult',x,y:y-H*0.2,txt:e.ult||'ท่าไม้ตาย',col:'#ffb0a0'}); F.shk=0.3; SND.sfx('charge');
+      if (e.cls==='warrior') (fr.length?fr:hA).forEach(h=>htDmgH(F,e,h,3.2));
+      else if (e.cls==='mage') hA.forEach(h=>htDmgH(F,e,h,2));
+      else if (e.cls==='archer') htDmgH(F,e,hA.reduce((a,b)=>a.hp>b.hp?a:b),6);
+      else if (e.cls==='assassin') htDmgH(F,e,hA.reduce((a,b)=>a.hp<b.hp?a:b),8);
+      else if (e.cls==='tank'){ F.esh=5; F.etau=5; htFx({k:'ring',col:'#ffb08f'}); }
+      else if (e.cls==='support'){ eA.forEach(x=>htEHeal(x,x.mx*0.3)); htFx({k:'ring',col:'#7dff9a'}); }
+      htFx({k:'flash',col:'#ff6a5a'}); return; }
+    e.en=Math.min(100,(e.en||0)+(e.cls==='support'||e.cls==='tank'?18:22));
+    const low=eA.reduce((a,b)=>a.hp/a.mx<b.hp/b.mx?a:b);
+    if (e.cls==='support' && low.hp<low.mx*0.85){ htEHeal(low,e.atk/(e.rel||1)*1.6); return; }
+    if (e.cls==='mage'){ hA.forEach(h=>htDmgH(F,e,h,0.45)); htFx({k:'bolt',a:e,b:hA[0],col:'#c99bff',en:1}); return; }
+    const tg = e.cls==='assassin' ? hA.reduce((a,b)=>a.hp<b.hp?a:b) : e.cls==='archer' ? (hA.find(h=>h.slot>=2)||pickT()) : pickT();
+    htDmgH(F,e,tg,(e.cls==='assassin'&&Math.random()<0.3)?2:1); htFx({k:e.cls==='archer'?'arrow':'slash',a:e,b:tg,col:'#ff9a8a',en:1}); }
   function htTick(){ const F=htFight; if (!F||F.done) return; const dt=0.05*F.spd;
     F.fx.forEach(o=>o.t+=dt); F.fx=F.fx.filter(o=>o.t<(o.k==='ult'?1.4:0.9));
     if (F.banner){ F.banner.t-=dt; if (F.banner.t<=0) F.banner=null; }
     [...F.T,...F.E].forEach(u=>{ u.lg=Math.max(0,u.lg-dt*4); u.hit=Math.max(0,u.hit-dt); });
     if (F.shk>0) F.shk=Math.max(0,F.shk-dt);
     if (F.pause>0){ F.pause-=dt; htDraw(); return; }
-    F.t+=dt; if (F.sh>0) F.sh-=dt; if (F.tau>0) F.tau-=dt;
-    F.T.forEach(h=>{ if (h.hp<=0) return; if (h.heal) h.hp=Math.min(h.mx,h.hp+h.mx*0.004*h.heal*dt); h.at-=dt; if (h.at<=0){ h.at=1.15/h.spd; htHeroAct(F,h); } });
-    F.E.forEach(e=>{ if (e.hp<=0) return; e.at-=dt; if (e.at<=0){ e.at=e.boss?2:1.6; htEnemyAct(F,e); } });
+    F.t+=dt; if (F.sh>0) F.sh-=dt; if (F.tau>0) F.tau-=dt; if (F.esh>0) F.esh-=dt; if (F.etau>0) F.etau-=dt;
+    const heroTurn=()=>F.T.forEach(h=>{ if (h.hp<=0) return; if (h.heal) h.hp=Math.min(h.mx,h.hp+h.mx*0.004*h.heal*dt); h.at-=dt; if (h.at<=0){ h.at=1.15/h.spd; htHeroAct(F,h); } });
+    F.pvpD&&(F.flip=!F.flip); if (!F.flip) heroTurn();
+    F.E.forEach(e=>{ if (e.hp<=0) return; if (e.heal) e.hp=Math.min(e.mx,e.hp+e.mx*0.004*e.heal*dt); e.at-=dt; if (e.at<=0){ if (e.ehero){ e.at=1.15/(e.spd||1); htEHeroAct(F,e); } else { e.at=e.boss?2:1.6; htEnemyAct(F,e); } } });
+    if (F.flip) heroTurn();
     if (!F.E.some(e=>e.hp>0)){ if (F.wi<F.W.length-1){ F.wi++; htWave(); F.pause=1; if (F.wi===2&&htKind(F.f)==='boss'&&!F.cus){ const MB=htMapOf(F.f); voBoss(MB.key, MB.boss[0]); } F.banner={txt:F.wi===2&&htKind(F.f)==='boss'?'👑 บอสประจำแมพปรากฏตัว!':F.wi===2&&htKind(F.f)==='mini'?'⚔️ มินิบอสปรากฏตัว!':`ระลอก ${F.wi+1}/${F.W.length}`,sub:'',t:1.3}; } else return htEnd(true); }
     if (!F.T.some(h=>h.hp>0)) return htEnd(false);
     if (F.sp){ F.sp.lg=Math.max(0,F.sp.lg-dt*2); F.sp.t-=dt; if (F.sp.t<=0){ F.sp.t=15; htSpirit(F); } }
@@ -4111,7 +4138,7 @@ if (typeof document !== 'undefined') (function(){
       if (F.stars===3&&old<3){ rw=htAdd(rw,htStar3Bonus(F.f)); F.s3new=true; }
       S0.st[F.f]=Math.max(old,F.stars); F.rw=rw; htGive(m,rw); }
     storeMeta(m); setTimeout(()=>render(),500); }
-  function htDraw(){ const F=htFight, c=document.getElementById('htcv'); if (!F||!c) return; const W=c.clientWidth, H=c.clientHeight, dpr=Math.min(2,window.devicePixelRatio||1);
+  function htDraw(){ const F=htFight, c=document.getElementById('htcv'); if (!F||!c||F.skip) return; const W=c.clientWidth, H=c.clientHeight, dpr=Math.min(2,window.devicePixelRatio||1);
     if (c.width!==Math.round(W*dpr)){ c.width=Math.round(W*dpr); c.height=Math.round(H*dpr); } const x=c.getContext('2d'); x.setTransform(dpr,0,0,dpr,0,0); x.clearRect(0,0,W,H); if (F.shk>0){ const k=F.shk*22; x.translate((Math.random()-0.5)*k,(Math.random()-0.5)*k); }
     const MP=F.cus?{bgSrc:F.cus.bgSrc}:htMap(F.f), bg=MP.bgSrc&&img(MP.bgSrc);
     if (bg&&bg.complete&&bg.naturalWidth){ const r=Math.max(W/bg.naturalWidth,H/bg.naturalHeight); x.drawImage(bg,(W-bg.naturalWidth*r)/2,(H-bg.naturalHeight*r)/2,bg.naturalWidth*r,bg.naturalHeight*r); }
@@ -4123,6 +4150,12 @@ if (typeof document !== 'undefined') (function(){
       if (hero){ const hh=H*0.16; x.globalAlpha=dead?0.35:1; if (dead) x.filter='grayscale(1)'; heroPaint(x,F.M,u.id,lx,ly,hh,u.slot); x.filter='none'; x.globalAlpha=1;
         if (u.hit>0 && !dead){ x.fillStyle=`rgba(255,80,80,${u.hit*2})`; x.beginPath(); x.ellipse(lx,ly-hh*0.5,hh*0.3,hh*0.45,0,0,Math.PI*2); x.fill(); }
         if (!dead){ bar(x,lx,ly+4,40,u.hp/u.mx,'#5be37a',4); bar(x,lx,ly+10,40,u.en/100,u.en>=100?'#fff27a':'#ffc94d',2); } }
+      else if (u.ehero){ const hh=H*0.16, im=u.src&&img(u.src); x.fillStyle='rgba(0,0,0,.3)'; x.beginPath(); x.ellipse(lx,ly,hh*0.3,hh*0.07,0,0,Math.PI*2); x.fill();
+        if (F.esh>0){ x.fillStyle='rgba(255,170,140,.18)'; x.beginPath(); x.ellipse(lx,ly-hh*0.45,hh*0.42,hh*0.55,0,0,Math.PI*2); x.fill(); }
+        if (im&&im.complete&&im.naturalWidth){ const ww=hh*im.naturalWidth/im.naturalHeight; x.save(); x.translate(lx,0); x.scale(-1,1); if (u.hit>0) x.filter='brightness(2.2)'; x.drawImage(im,-ww/2,ly-hh,ww,hh); x.restore(); x.filter='none'; }
+        else { x.font=`${Math.round(hh*0.6)}px sans-serif`; x.textAlign='center'; x.fillText(u.ic||'🛡️',lx,ly-hh*0.15); }
+        bar(x,lx,ly+4,40,u.hp/u.mx,'#ff6a5a',4); bar(x,lx,ly+10,40,(u.en||0)/100,(u.en||0)>=100?'#fff27a':'#ffc94d',2);
+        x.font='11px sans-serif'; x.textAlign='center'; x.fillText(elIconTxt(u.el),lx+26,ly+2); }
       else { const hh=H*(u.boss===2?0.3:u.boss?0.21:0.13), im=u.src&&img(u.src); x.fillStyle='rgba(0,0,0,.3)'; x.beginPath(); x.ellipse(lx,ly,hh*(u.boss===2?0.22:0.4),hh*0.08,0,0,Math.PI*2); x.fill();
         if (u.boss){ x.fillStyle=u.boss===2?'rgba(255,60,60,.16)':'rgba(255,170,60,.16)'; x.beginPath(); x.ellipse(lx,ly-hh*0.45,hh*0.45,hh*0.55,0,0,Math.PI*2); x.fill(); }
         if (im&&im.complete&&im.naturalWidth){ const ww=hh*im.naturalWidth/im.naturalHeight; if (u.hit>0) x.filter='brightness(2.2)'; x.drawImage(im,lx-ww/2,ly-hh,ww,hh); x.filter='none'; }
@@ -4157,7 +4190,7 @@ if (typeof document !== 'undefined') (function(){
           <div class="dhrs">${F.first?'รางวัลผ่านครั้งแรก':'ของที่ได้'}${F.s3new?' + โบนัส 3 ดาว':''}<br><b>${htRwTxt(F.rw)}</b></div>`
           :`<div class="csd">คืนสายฟ้า ⚡ ${F.refund} · ลองอัปดาววีรชน ใส่เรลิก หรือเลือกธาตุที่ชนะทางศัตรู</div>`}
         <div class="htbtns">${F.win&&F.f<HT_OPEN?`<button class="choice" data-act="htnext"><span>ชั้นต่อไป ▶</span></button>`:''}<button class="choice" data-act="htretry"><span>${F.win?'เล่นอีกครั้ง':'ลองอีกครั้ง'}</span></button><button class="choice" data-act="htclose"><span>กลับ</span></button></div></div>`:''}</div>`; }
-  function htCusHtml(m,F,MP){ const left=spState(m).nest.left;
+  function htCusHtml(m,F,MP){ if (F.cus.pvp) return arFightHtml(m,F); const left=spState(m).nest.left;
     return `<div class="htfight"><div class="httop"><div><b>🐾 ${F.cus.title}</b> <small>${MP.name}</small></div><div>⏱ <b id="httime">${Math.max(0,Math.ceil(F.time-F.t))}</b></div></div>
       <div class="htstage" style="background:${MP.css}"><canvas id="htcv"></canvas></div>${(setTimeout(htDraw,0),'')}
       <div class="htbot"><button class="mini" data-act="htspd">⏩ x${F.spd}</button><span class="gs">${F.sp?`🐾 ${SP[F.sp.id].name}`:''}</span><button class="mini off" data-act="htquit">ยอมแพ้</button></div>
@@ -4303,9 +4336,9 @@ if (typeof document !== 'undefined') (function(){
     if (act==='htmap'){ htMapSel=+b.dataset.i; const lo=htMapSel*10+1, m=loadMeta(), cur=Math.min(HT_OPEN,htState(m).best+1); htSel=Math.min(cur,Math.max(lo,Math.min(lo+9,cur))); htMapSel=-1; render(); return true; }
     if (act==='htswc'){ htSweepRes=null; render(); return true; }
     if (act==='htgo'){ hubMsg=''; htStart(htSel); return true; }
-    if (act==='htspd'){ if (htFight){ htFight.spd=htFight.spd===1?2:1; b.textContent=`⏩ x${htFight.spd}`; } return true; }
+    if (act==='htspd'){ if (htFight){ htFight.spd=htFight.spd>=3?1:htFight.spd+1; b.textContent=`⏩ x${htFight.spd}`; } return true; }
     if (act==='htquit'){ if (htFight&&!htFight.done) htEnd(false,false,true); return true; }
-    if (act==='htretry'){ if (htFight&&htFight.cus){ const t=htFight.cus.t; nestSel=t; nestStart(t); return true; } const f=htFight.f; htStart(f); return true; }
+    if (act==='htretry'){ if (htFight&&htFight.cus&&htFight.cus.pvp) return true; if (htFight&&htFight.cus){ const t=htFight.cus.t; nestSel=t; nestStart(t); return true; } const f=htFight.f; htStart(f); return true; }
     if (act==='htnext'){ const f=htFight.f+1; htSel=f; htStart(f); return true; }
     if (act==='htclose'){ if (htFight&&!htFight.done) return true; if (htFight&&htFight.cus){ htFight=null; render(); return true; } if (htFight) htSel=Math.min(HT_OPEN,htFight.win?htFight.f+1:htFight.f); htFight=null; render(); return true; }
     const m=loadMeta(), S0=htState(m);
@@ -4317,6 +4350,94 @@ if (typeof document !== 'undefined') (function(){
       const take=(fn,n)=>{ for (const o of own){ if (pickN.length>=n) break; if (!used.has(o.id)&&fn(o.h.cls)){ used.add(o.id); pickN.push(o.id); } } };
       take(c=>c==='tank',1); take(isF,2); take(()=>true,2); const fr=pickN.slice(0,2); const bk=[]; take(c=>c==='support',3); take(()=>true,5);
       const rest=pickN.slice(2); while (fr.length<2 && rest.length) fr.push(rest.shift()); S0.team=[fr[0]||null,fr[1]||null,rest[0]||null,rest[1]||null,rest[2]||null]; storeMeta(m); render(); return true; }
+    return false; }
+  /* ---------- สนามประลองวีรชน (PvP แบบไม่พร้อมกัน: ตีทีมป้องกันของผู้เล่นอื่น) ---------- */
+  const AR_TRIES = 5, AR_NEED = 5; let AR_DMG = 2, AR_HEAL = 0.6;   // สนามประลอง: ดาเมจแรงขึ้นและฮีลน้อยลง ให้จบทันเวลา
+  const AR_BOTN = ['ผู้ท้าชิงนิรนาม','นักดาบพเนจร','อัศวินฝึกหัด','จอมเวทสายลม','นักล่าเงา','ทหารรักษาเมือง','ผู้กล้าจากแดนไกล','นักสู้ลานประลอง'];
+  let AR = {opp:null, loading:false, top:null, topT:0, err:'', pick:null, res:null, defLog:null};
+  const arOwn = m => Object.keys(m.chars||{}).filter(id=>ALLCHARS[id]);
+  function arState(m){ if (!m.arena) m.arena={def:[],atk:[],day:'',used:0,fw:false,hist:[],rating:1000,w:0,l:0,synced:''}; const A=m.arena, ok=id=>id&&m.chars[id]&&ALLCHARS[id];
+    A.def=[0,1,2,3,4].map(i=>ok(A.def[i])?A.def[i]:null); A.atk=[0,1,2,3,4].map(i=>ok(A.atk[i])?A.atk[i]:null);
+    if (A.day!==dayKey()){ A.day=dayKey(); A.used=0; A.fw=false; } return A; }
+  function arSnap(m,ids){ return ids.filter(Boolean).map(id=>{ const ch=m.chars[id]||{}, pw=relicPower(m,id), r3=v=>Math.round(v*1000)/1000;
+    return {id, s:ch.star||1, f:ch.form?1:0, pw:{dps:r3(pw.dps),hp:r3(pw.hp),spd:r3(pw.spd||1),res:r3(pw.res||0),heal:r3(pw.heal||0)}}; }); }
+  function arPow(snaps){ const T=snaps.filter(s=>ALLCHARS[s.id]).map(s=>heroStat(s.id,s.s,s.f,s.pw)), r=htRel(T.map(h=>h.id)); return Math.round(T.reduce((a,h)=>a+h.atk*2+h.hp/10,0)*r); }
+  function arAutoTeam(m){ const own=arOwn(m).map(id=>({id,h:htHero(m,id)})).sort((a,b)=>(b.h.atk*2+b.h.hp/10)-(a.h.atk*2+a.h.hp/10)), used=new Set(), out=[];
+    const take=(fn,n)=>{ for (const o of own){ if (out.length>=n) break; if (!used.has(o.id)&&fn(o.h.cls)){ used.add(o.id); out.push(o.id); } } };
+    take(c=>c==='tank',1); take(c=>c==='tank'||c==='warrior',2); take(c=>c==='support',3); take(()=>true,5); return [0,1,2,3,4].map(i=>out[i]||null); }
+  function arBot(m,i){ const A=arState(m), mine=arSnap(m,A.atk.some(Boolean)?A.atk:arAutoTeam(m)), P=Math.max(1,arPow(mine)), fac=[0.7,0.85,1][i%3]*(0.95+Math.random()*0.1);
+    const ids=Object.keys(ALLCHARS).filter(id=>ALLCHARS[id].tier!=='hid'), by=c=>ids.filter(id=>heroIdleCls(id)===c), pk=a=>a[(Math.random()*a.length)|0];
+    const team=[]; const add=id=>{ if (id&&!team.includes(id)) team.push(id); }; add(pk(by('tank'))); add(pk(by('warrior'))); add(pk(by('support'))); while (team.length<5) add(pk(ids));
+    let sn=team.map(id=>({id,s:1+((Math.random()*3)|0),f:0,pw:{dps:1,hp:1,spd:1,res:0,heal:0}})); const k=P*fac/Math.max(1,arPow(sn)); sn.forEach(x=>{ x.pw.dps=k; x.pw.hp=k; });
+    return {bot:true, user_id:'bot:'+i+':'+Date.now(), name:pk(AR_BOTN), rating:Math.max(0,(A.rating||1000)+[-50,0,60][i%3]+(((Math.random()*30)|0)-15)), team:sn, power:arPow(sn)}; }
+  function arLoad(m,force){ const A=arState(m), C=window.__dqCloud; if (AR.loading||(AR.opp&&!force)) return; AR.loading=true; AR.err='';
+    const fin=list=>{ const me=C&&C.auth&&C.auth.user.id; list=(list||[]).filter(o=>o.user_id!==me&&Array.isArray(o.team)&&o.team.some(t=>ALLCHARS[t.id])).sort(()=>Math.random()-0.5).slice(0,3);
+      let i=0; while (list.length<3) list.push(arBot(m,i++)); list.sort((a,b)=>a.rating-b.rating); AR.opp=list; AR.loading=false; if (hub==='arena') render(); };
+    if (C&&C.arOpp&&C.auth) C.arOpp(A.rating||1000).then(fin).catch(e=>{ AR.err=C.arErr?C.arErr(e):'โหลดคู่ต่อสู้ไม่ได้'; fin([]); }); else fin([]);
+    if (C&&C.arTop&&Date.now()-AR.topT>60000){ AR.topT=Date.now(); C.arTop().then(r=>{ AR.top=r||[]; if (hub==='arena') render(); }).catch(()=>{}); }
+    if (C&&C.arDefLog&&C.auth) C.arDefLog().then(r=>{ AR.defLog=r||[]; if (hub==='arena') render(); }).catch(()=>{}); }
+  function arSync(m){ const A=arState(m), C=window.__dqCloud; if (!C||!C.arSet||!C.auth||!A.def.some(Boolean)) return Promise.resolve(false); const sn=arSnap(m,A.def), key=JSON.stringify(sn)+'|'+(m.name||'');
+    if (A.synced===key) return Promise.resolve(true);
+    return C.arSet((m.name||'ผู้กล้า').slice(0,20), sn, arPow(sn)).then(r=>{ const m2=loadMeta(), A2=arState(m2); A2.synced=key; if (r&&r.rating!=null) A2.rating=r.rating; storeMeta(m2); return true; }).catch(e=>{ AR.err=C.arErr?C.arErr(e):'บันทึกทีมป้องกันไม่ได้'; if (hub==='arena') render(); return false; }); }
+  function arStart(i){ const m=loadMeta(), A=arState(m), o=AR.opp&&AR.opp[i]; if (!o) return; if (A.used>=AR_TRIES){ hubMsg='วันนี้ท้าประลองครบแล้ว รอพรุ่งนี้นะ'; render(); return; }
+    if (A.atk.filter(Boolean).length<1){ hubMsg='จัดทีมโจมตีก่อน'; render(); return; }
+    const rel=htRel(o.team.map(t=>t.id)), W=[o.team.filter(t=>ALLCHARS[t.id]).slice(0,5).map(t=>{ const h=heroStat(t.id,t.s,t.f,t.pw), a=ALLCHARS[t.id];
+      return Object.assign(h,{ehero:1, rel, atk:h.atk*rel, name:a.c.name, ic:a.c.icon, src:(t.f&&ART.form[t.id])||ART.char[t.id], boss:0}); })];
+    A.used++; storeMeta(m); AR.res=null;
+    htStart(0,{pvp:1, opp:o, team:A.atk.slice(), title:'สนามประลอง', sub:'vs '+o.name, W, time:90, css:'linear-gradient(#3a1f2a,#6a2f3a 55%,#1f1020)', bgSrc:ART.bg&&Object.values(ART.bg)[5]||null, end:arEnd}); }
+  function arEnd(win,F,m){ const A=arState(m), o=F.cus.opp, C=window.__dqCloud, e=1/(1+Math.pow(10,((o.rating||1000)-(A.rating||1000))/400));
+    let d=Math.round(24*(win?1-e:-e)); if (o.bot) d=Math.round(d*0.5); const rw={medals:win?200:60}; if (win&&!A.fw){ A.fw=true; rw.tickets=2; }
+    Object.entries(rw).forEach(([k,v])=>m[k]=(m[k]||0)+v); if (win) A.w++; else A.l++;
+    A.rating=Math.max(0,(A.rating||1000)+d); A.hist=[{t:Date.now(),n:o.name,win,d,bot:!!o.bot}].concat(A.hist||[]).slice(0,12);
+    AR.res={win,d,rw,timeout:F.timeout}; AR.opp=null; storeMeta(m);
+    if (C&&C.arReport&&C.auth){ C.arReport(o.bot?null:o.user_id, win).then(r=>{ if (r&&r.rating!=null){ const m2=loadMeta(), A2=arState(m2); A2.rating=r.rating; if (AR.res) AR.res.d=r.delta; storeMeta(m2); if (hub==='arena') render(); } }).catch(e=>{ AR.err=C.arErr?C.arErr(e):'ส่งผลการประลองไม่สำเร็จ'; }); } }
+  function arSkip(){ const F=htFight; if (!F||F.done) return; F.skip=true; const sf=SND.sfx; SND.sfx=()=>{}; let g=0; try{ while (!F.done && g++<30000) htTick(); } finally { SND.sfx=sf; F.skip=false; } render(); }
+  function arFightHtml(m,F){ const o=F.cus.opp, R=AR.res;
+    return `<div class="htfight"><div class="httop"><div><b>⚔️ ประลอง</b> <small>vs ${rkEsc(o.name)}${o.bot?' (บอท)':''}</small></div><div>⏱ <b id="httime">${Math.max(0,Math.ceil(F.time-F.t))}</b></div></div>
+      <div class="htstage" style="background:${F.cus.css}"><canvas id="htcv"></canvas></div>${(setTimeout(htDraw,0),'')}
+      <div class="htbot"><button class="mini" data-act="htspd">⏩ x${F.spd}</button><button class="mini" data-act="arnskip" ${F.done?'disabled':''}>⏭ ข้ามการต่อสู้</button><button class="mini off" data-act="htquit">ยอมแพ้</button></div>
+      ${F.done&&R?`<div class="htres"><div class="dhrt">${R.win?'🏆 ชนะการประลอง!':R.timeout?'⏱ หมดเวลา · ฝ่ายป้องกันชนะ':'💀 พ่ายแพ้'}</div>
+        <div class="htbig" style="font-size:22px;color:${R.d>=0?'#7dffcf':'#ff9a8a'}">คะแนนประลอง ${R.d>=0?'+':''}${R.d}</div>
+        <div class="dhrs">ของที่ได้<br><b>🎖️ ${R.rw.medals}${R.rw.tickets?` · 🎟️ ${R.rw.tickets} (ชนะครั้งแรกของวัน)`:''}</b></div>
+        <div class="htbtns"><button class="choice" data-act="htclose"><span>กลับสนามประลอง</span></button></div></div>`:''}</div>`; }
+  function hubArena(m){ const A=arState(m), own=arOwn(m), C=window.__dqCloud, li=!!(C&&C.auth);
+    if (own.length<AR_NEED) return `<div class="overlay hub" ${pageBg('adv')}>${hubHead(m,'⚔️ สนามประลองวีรชน')}<div class="sumbox"><div class="arlock">🔒</div><h3 style="text-align:center">ต้องมีวีรชนอย่างน้อย ${AR_NEED} ตัว</h3><p class="csd" style="text-align:center">ตอนนี้มี ${own.length}/${AR_NEED} ตัว · ได้วีรชนจากการปราบบอสในหอคอยไร้สิ้นสุด</p></div>${nav()}</div>`;
+    { let ch=false; if (!A.atk.some(Boolean)){ A.atk=arAutoTeam(m); ch=true; } if (!A.def.some(Boolean)){ A.def=arAutoTeam(m); ch=true; } if (ch) storeMeta(m); }
+    arLoad(m); if (li) arSync(m);
+    const slots=(k)=>A[k].map((id,i)=>`<button class="dhslot htslot" data-act="arnslot" data-k="${k}" data-i="${i}">${id?charArt(ALLCHARS[id].c,m.chars[id].form)+`<small>${'★'.repeat(m.chars[id].star||1)}</small>`:'<span>➕</span><small>ว่าง</small>'}<em>${i<2?'หน้า':'หลัง'}</em></button>`).join('');
+    const pa=arPow(arSnap(m,A.atk)), pd=arPow(arSnap(m,A.def)), left=AR_TRIES-A.used;
+    const opp=AR.loading||!AR.opp?`<p class="csd" style="text-align:center">กำลังหาคู่ประลอง…</p>`:AR.opp.map((o,i)=>`<div class="aropp"><div class="arot"><b>${rkEsc(o.name)}</b>${o.bot?'<i class="arbot">บอท</i>':''}<small>🏅 ${fmt(o.rating)} · 💪 ${fmtN(o.power||arPow(o.team))}</small></div>
+      <div class="arteam">${o.team.slice(0,5).map(t=>ALLCHARS[t.id]?`<span>${charArt(ALLCHARS[t.id].c,!!t.f,true)}<i>${elIcon(ALLCHARS[t.id].c.el)}</i></span>`:'').join('')}</div>
+      <button class="choice arfight" data-act="arngo" data-i="${i}" ${left>0?'':'disabled'}><span>⚔️ ท้าประลอง</span></button></div>`).join('');
+    const hist=(A.hist||[]).slice(0,6).map(h=>`<div class="sumr"><span>${h.win?'🏆':'💀'} vs ${rkEsc(h.n)}${h.bot?' <small class="gs">(บอท)</small>':''}</span><b style="color:${h.d>=0?'#7dffcf':'#ff9a8a'}">${h.d>=0?'+':''}${h.d}</b></div>`).join('')||'<p class="csd">ยังไม่เคยประลอง</p>';
+    const dl=(AR.defLog||[]).slice(0,5).map(h=>`<div class="sumr"><span>🛡️ ${rkEsc(h.att_name||'ผู้ท้าชิง')} ${h.win?'ตีทีมป้องกันแตก':'ตีไม่ผ่าน'}</span><b style="color:${h.win?'#ff9a8a':'#7dffcf'}">${h.win?'-':'+'}${Math.abs(Math.round((h.delta||0)*0.5))}</b></div>`).join('');
+    const top=(AR.top||[]).slice(0,10).map((r,i)=>`<div class="rkr ${C&&C.auth&&r.user_id===C.auth.user.id?'me':''} ${i<3?'top':''}"><span class="rkn">${i<3?['🥇','🥈','🥉'][i]:`<b>${i+1}</b>`}</span><span class="rkm"><b>${rkEsc(r.name)}</b><small>ชนะ ${r.wins||0} · แพ้ ${r.losses||0}</small></span><span class="rks">${fmt(r.rating)}</span></div>`).join('');
+    const pickPop = AR.pick ? (()=>{ const {k,i}=AR.pick, T=A[k], cand=own.slice().sort((a,b)=>(m.chars[b].star||1)-(m.chars[a].star||1));
+      return `<div class="pop-bg" data-act="arnpickc"><div class="pop altpop" data-act="noop"><div class="pop-h"><b>${k==='atk'?'ทีมโจมตี':'ทีมป้องกัน'} · ช่อง ${i+1} (${i<2?'แถวหน้า':'แถวหลัง'})</b></div>
+        <div class="dhpgrid">${cand.map(id=>`<button class="hpick ${T[i]===id?'on':''}" data-act="arnset" data-k="${id}">${charArt(ALLCHARS[id].c,m.chars[id].form)}<small>${'★'.repeat(m.chars[id].star||1)}${T.includes(id)&&T[i]!==id?' ✓':''}</small></button>`).join('')}</div>
+        <div class="htbtns">${T[i]?'<button class="choice" data-act="arnrem"><span>ถอดออก</span></button>':''}<button class="choice" data-act="arnpickc"><span>เสร็จ</span></button></div></div></div>`; })() : '';
+    return `<div class="overlay hub" ${pageBg('adv')}>${hubHead(m,'⚔️ สนามประลองวีรชน')}<div class="arbeta">🧪 เบต้า · ช่วงทดสอบ ค่าความสมดุลอาจปรับเปลี่ยน</div>
+      <div class="sumbox arhd"><div><small>คะแนนประลอง</small><b>🏅 ${fmt(A.rating||1000)}</b></div><div><small>ชนะ / แพ้</small><b>${A.w||0} / ${A.l||0}</b></div><div><small>ท้าได้วันนี้</small><b>${left}/${AR_TRIES}</b></div></div>
+      ${!li?'<div class="rkst">🧪 โหมดทดสอบ: ยังไม่ได้เข้าสู่ระบบ จะสู้กับบอทเท่านั้น และคะแนนเก็บในเครื่องนี้</div>':''}${AR.err?`<div class="rkst bad">⚠️ ${rkEsc(AR.err)}</div>`:''}
+      <div class="sumbox"><h3>⚔️ ทีมโจมตี <small class="gs">💪 ${fmtN(pa)}</small><button class="mini" data-act="arnauto" data-k="atk" style="float:right">จัดอัตโนมัติ</button></h3><div class="arslots">${slots('atk')}</div></div>
+      <div class="sumbox"><h3>🛡️ ทีมป้องกัน <small class="gs">💪 ${fmtN(pd)}</small><button class="mini" data-act="arnauto" data-k="def" style="float:right">จัดอัตโนมัติ</button></h3><div class="arslots">${slots('def')}</div>
+        <div class="csd">${li?(A.synced?'✅ ผู้เล่นอื่นจะเห็นและท้าทีมนี้':'⏳ กำลังบันทึกทีมป้องกันขึ้นเซิร์ฟเวอร์…'):'เข้าสู่ระบบเพื่อให้ผู้เล่นอื่นมาท้าทีมนี้'}</div></div>
+      <div class="sumbox"><h3>🎯 เลือกคู่ประลอง <button class="mini" data-act="arnref" style="float:right">🔄 สุ่มใหม่</button></h3>${opp}
+        <div class="csd">ชนะ 🎖️200 · แพ้ 🎖️60 · ชนะครั้งแรกของวัน +🎟️2 · หมดเวลา 90 วินาทีถือว่าฝ่ายป้องกันชนะ</div></div>
+      <div class="sumbox"><h3>📜 ประวัติ</h3>${hist}${dl?'<div class="csd" style="margin-top:6px">ทีมป้องกันของคุณถูกท้า</div>'+dl:''}</div>
+      ${top?`<div class="sumbox"><h3>🏆 อันดับสนามประลอง</h3><div class="rkl">${top}</div></div>`:''}
+      ${pickPop}${nav()}${htFight?htFightHtml(m):''}</div>`; }
+  window.__ar={arState,arSnap,arBot,arStart,arPow,heroStat,AR,F:()=>htFight,clr:()=>{ htFight=null; },tick:()=>htTick()};
+  function arAct(act,b){ const m=loadMeta(), A=arState(m);
+    if (act==='arnopen'){ hub='arena'; hubMsg=''; AR.res=null; render(); window.scrollTo(0,0); return true; }
+    if (act==='arnslot'){ AR.pick={k:b.dataset.k,i:+b.dataset.i}; render(); return true; }
+    if (act==='arnpickc'){ AR.pick=null; render(); if (AR._defChanged){ AR._defChanged=false; arSync(loadMeta()).then(()=>{ if (hub==='arena') render(); }); } return true; }
+    if (act==='arnset'&&AR.pick){ const T=A[AR.pick.k], id=b.dataset.k, j=T.indexOf(id), old=T[AR.pick.i]; if (j>=0) T[j]=old; T[AR.pick.i]=id; if (AR.pick.k==='def'){ A.synced=''; AR._defChanged=true; } storeMeta(m); render(); return true; }
+    if (act==='arnrem'&&AR.pick){ const T=A[AR.pick.k]; if (T.filter(Boolean).length<=1){ hubMsg='ทีมต้องมีอย่างน้อย 1 ตัว'; render(); return true; } T[AR.pick.i]=null; if (AR.pick.k==='def'){ A.synced=''; AR._defChanged=true; } storeMeta(m); render(); return true; }
+    if (act==='arnauto'){ A[b.dataset.k]=arAutoTeam(m); if (b.dataset.k==='def'){ A.synced=''; } storeMeta(m); render(); if (b.dataset.k==='def') arSync(loadMeta()).then(()=>{ if (hub==='arena') render(); }); return true; }
+    if (act==='arnref'){ AR.opp=null; arLoad(m,true); render(); return true; }
+    if (act==='arngo'){ hubMsg=''; arStart(+b.dataset.i); return true; }
+    if (act==='arnskip'){ arSkip(); return true; }
     return false; }
   function hubGacha(m){
     const sp = gTab==='sp', B = bannerOf(bannerSlot()), left = bannerEnds();
@@ -4548,7 +4669,7 @@ if (typeof document !== 'undefined') (function(){
       ${html}<button class="choice wide" data-act="rkviewc"><span>ปิด</span></button></div></div>`; }
   function hubView(){ const m=loadMeta();
     const W = wPop ? worldPop() : '';
-    if (hub==='adv') return hubAdv(m)+W; if (hub==='perm'){ hub='shop'; shTab='medal'; } if (hub==='shop') return hubShop(m)+W; if (hub==='troop') return hubTroop(m)+W; if (hub==='dragon') return hubDragon(m)+W; if (hub==='hundred') return hubHundred(m)+W; if (hub==='relicbag') return hubRelicBag(m)+W; if (hub==='bag') return hubBag(m)+W; if (hub==='rank') return hubRank(m)+W; if (hub==='chat') return hubChat(m)+W; if (hub==='spirits') return hubSpirits(m)+W; if (hub==='nest') return hubNest(m)+W; if (hub==='chars') return hubChars(m)+charPopup(m)+tryPopHtml(m)+W; if (hub==='gacha') return hubGacha(m)+W;
+    if (hub==='adv') return hubAdv(m)+W; if (hub==='perm'){ hub='shop'; shTab='medal'; } if (hub==='shop') return hubShop(m)+W; if (hub==='troop') return hubTroop(m)+W; if (hub==='dragon') return hubDragon(m)+W; if (hub==='hundred') return hubHundred(m)+W; if (hub==='arena') return hubArena(m)+W; if (hub==='relicbag') return hubRelicBag(m)+W; if (hub==='bag') return hubBag(m)+W; if (hub==='rank') return hubRank(m)+W; if (hub==='chat') return hubChat(m)+W; if (hub==='spirits') return hubSpirits(m)+W; if (hub==='nest') return hubNest(m)+W; if (hub==='chars') return hubChars(m)+charPopup(m)+tryPopHtml(m)+W; if (hub==='gacha') return hubGacha(m)+W;
     return hubHome(m)+W; }
   function hubAct(act, b){
     const m = loadMeta();
@@ -4570,6 +4691,7 @@ if (typeof document !== 'undefined') (function(){
     if (/^(eq|fg)/.test(act) && eqAct(act,b)) return true;
     if (/^dh/.test(act) && dhAct(act,b)) return true;
     if (/^ht/.test(act) && htAct(act,b)) return true;
+    if (/^arn/.test(act) && arAct(act,b)) return true;
     if (/^rb/.test(act) && rbAct(act,b)) return true;
     if (/^bag/.test(act) && bagAct(act,b)) return true;
     if (act==='rktab'){ rkTab=b.dataset.k; rkSel=null; render(); return true; }
@@ -5196,7 +5318,17 @@ if (typeof document !== 'undefined') (function(){
   async function chatSend(body,name,hero){ return await rpc('send_chat',{p_body:body,p_name:name,p_hero:hero}); }
   const chatErr=e=>{ const s=(e&&e.message)||String(e); if (/Could not find|does not exist|schema cache/i.test(s)||(e&&e.status===404)) return 'ระบบแชทบนเซิร์ฟเวอร์ยังไม่ได้ติดตั้ง (ต้องรันไฟล์ chat.sql ใน Supabase)';
     if (/too fast/i.test(s)) return 'ส่งเร็วเกินไป รอสักครู่แล้วส่งใหม่'; if (/not logged in|หมดเวลาเข้าสู่ระบบ/i.test(s)) return 'เข้าสู่ระบบก่อนจึงจะส่งข้อความได้'; if (/empty/i.test(s)) return 'พิมพ์ข้อความก่อนส่ง'; return thErr(e); };
-  window.__dqCloud={push,pull,lbTop,lbMine,lbSync,lbErr,chatFetch,chatSend,chatErr,get auth(){ return auth; }};
+  /* ---------- สนามประลอง ---------- */
+  const AR_SEL='user_id,name,rating,power,team,wins,losses';
+  async function arOpp(r){ const near=await req(`/rest/v1/arena_teams?select=${AR_SEL}&rating=gte.${Math.round(r-250)}&rating=lte.${Math.round(r+250)}&order=updated_at.desc&limit=40`,{method:'GET'},true)||[];
+    if (near.length>=4) return near; const any=await req(`/rest/v1/arena_teams?select=${AR_SEL}&order=updated_at.desc&limit=40`,{method:'GET'},true)||[]; const seen=new Set(near.map(x=>x.user_id)); return near.concat(any.filter(x=>!seen.has(x.user_id))); }
+  async function arSet(name,team,power){ const r=await rpc('arena_set',{p_name:name,p_team:team,p_power:power}); return Array.isArray(r)?r[0]:r; }
+  async function arReport(opp,win){ const r=await rpc('arena_report',{p_opp:opp,p_win:win}); return Array.isArray(r)?r[0]:r; }
+  async function arTop(){ return await req(`/rest/v1/arena_teams?select=user_id,name,rating,wins,losses&order=rating.desc&limit=20`,{method:'GET'},!!auth); }
+  async function arDefLog(){ return await userReq(`/rest/v1/arena_log?select=att_name,win,delta,created_at&defender=eq.${auth.user.id}&order=id.desc&limit=10`,{method:'GET'}); }
+  const arErr=e=>{ const s=(e&&e.message)||String(e); if (/Could not find|does not exist|schema cache/i.test(s)||(e&&e.status===404)) return 'สนามประลองบนเซิร์ฟเวอร์ยังไม่ได้ติดตั้ง (ต้องรันไฟล์ arena.sql ใน Supabase) ตอนนี้สู้กับบอทไปก่อน';
+    if (/too fast/i.test(s)) return 'ประลองถี่เกินไป รอสักครู่'; if (/too many/i.test(s)) return 'วันนี้ส่งผลประลองครบโควตาแล้ว'; if (/set defense/i.test(s)) return 'ยังไม่ได้บันทึกทีมป้องกัน'; return thErr(e); };
+  window.__dqCloud={push,pull,lbTop,lbMine,lbSync,lbErr,chatFetch,chatSend,chatErr,arOpp,arSet,arReport,arTop,arDefLog,arErr,get auth(){ return auth; }};
 })();
 </script>
 </body>
