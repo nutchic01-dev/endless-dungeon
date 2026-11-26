@@ -1004,6 +1004,7 @@ h3 img.uiico{height:24px;width:auto;vertical-align:middle}
 .rfx-txt small{display:block;font-size:14px;font-weight:700;color:#f3e9ff;margin-top:4px}
 @keyframes rfxtx{0%,25%{opacity:0;transform:translateY(12px)}40%{opacity:1;transform:none}85%{opacity:1}100%{opacity:0}}
 .fishbar{position:relative;height:34px;margin:10px 4px 4px;border-radius:17px;background:linear-gradient(180deg,#1b3b6b,#0d2140);border:2px solid #7fc8ff;overflow:hidden;box-shadow:inset 0 2px 8px rgba(0,0,0,.6)}.fishbar .fz{position:absolute;top:0;bottom:0;background:linear-gradient(180deg,#5dff9a,#1fbf62);box-shadow:0 0 12px #5dff9a}.fishbar .fneedle{position:absolute;top:-2px;bottom:-2px;width:6px;margin-left:-3px;background:#fff;border-radius:3px;box-shadow:0 0 8px #fff,0 0 2px #000;animation:fneed linear infinite alternate;left:0}@keyframes fneed{from{left:0}to{left:100%}}
+.awpbox{background:rgba(255,255,255,.04);border:1px solid rgba(180,140,255,.25);border-radius:12px;padding:8px}.awp{margin:5px 0;padding:4px 6px;border-radius:9px}.awp.on{background:rgba(255,211,77,.12);box-shadow:0 0 0 1.5px #ffd34d}.awp.on .awpt span b::after{content:' ⭐'}.awpt{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:12.5px}.awpt span{display:flex;align-items:center;gap:6px}.awpt span img,.awpt span .heroimg{width:26px;height:26px;object-fit:contain}.awq{display:inline-flex;width:26px;height:26px;border-radius:50%;background:#3a2a5a;color:#c9b6ff;font-style:normal;font-weight:900;align-items:center;justify-content:center}.awpt small{color:#cfc2e4}.awpb{height:8px;border-radius:4px;background:rgba(255,255,255,.1);overflow:hidden;margin-top:3px}.awpb i{display:block;height:100%;background:linear-gradient(90deg,#9b6bff,#ff7bd5);border-radius:4px}.awp.full .awpb i{background:linear-gradient(90deg,#ffd34d,#ff9d2e)}
 .gdtw{overflow-x:auto;margin:4px 0}.gdt{width:100%;border-collapse:collapse;font-size:12.5px;color:#e9def7}.gdt th{background:rgba(255,214,140,.16);color:#ffd77a;font-weight:700;padding:6px 4px;white-space:nowrap}.gdt td{padding:6px 4px;text-align:center;border-bottom:1px dashed rgba(255,255,255,.12);white-space:nowrap}.gdn{font-size:12px;color:#cfc2e4;line-height:1.6;margin-top:6px}.gdcl{flex-direction:column;align-items:flex-start;gap:2px}.gdcl small{color:#cfc2e4;font-size:12px}.gdtabs button span{font-size:11px}
 .arlock{font-size:54px;text-align:center}.arbeta{font-size:11.5px;color:#ffd77a;background:rgba(255,190,80,.12);border:1px dashed rgba(255,200,100,.5);border-radius:10px;padding:3px 10px;text-align:center}
 .rkl{display:flex;flex-direction:column;gap:5px}.rkr{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:12px;background:rgba(20,15,40,.7);border:1px solid rgba(255,255,255,.08)}
@@ -1085,7 +1086,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.33</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.34</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -2986,7 +2987,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.33</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.34</span>'}</div>`;
   }
   let runSet=false, runQuit=false;
   function runPop(){
@@ -3022,6 +3023,13 @@ if (typeof document !== 'undefined') (function(){
     const bgi = ea.bg || ART.bg[bd.baseName||bd.name];
     return `<div class="scene ${bgi?'hasart':''} ${bd.deep&&!ea.bg?'deep':''}" id="scene" style="background:${bgi?`url(${bgi}) center 78%/cover no-repeat, `:''}${bd.bg}"><div class="floor-badge">${bd.name}</div><div class="ground"></div>${partyHtml()}${right}</div>`;
   }
+  /* แถบความคืบหน้าอาชีพลับ (เฉพาะสายชาวบ้านที่ยังไม่ตื่นรู้) */
+  function awakenProgHtml(){ if (!(S.villagerPath && S.cls==='villager' && !S.awakened)) return '';
+    const c=S.trainCount||{}, lead=awakenCandidates(), TH={atk:'ATK',matk:'MATK',hp:'HP',def:'DEF / MDEF',cri:'คริ / แรงคริ',pen:'เจาะเกราะ'}, any=Object.keys(HIDDEN).some(k=>(c[HIDDEN[k].by]||0)>0);
+    const rows=Object.keys(HIDDEN).map(k=>{ const H=HIDDEN[k], n=c[H.by]||0, pct=Math.min(100,100*n/H.need), known=!!S.meta.stars[H.char.id], on=any&&lead.includes(k);
+      return `<div class="awp ${on?'on':''} ${n>=H.need?'full':''}"><div class="awpt"><span>${known?charArt(H.char,false,true):'<i class="awq">?</i>'}<b>${known?H.cls.name:'อาชีพลับ ???'}</b></span><small>ฝึก ${TH[H.by]} <b>${n}/${H.need}</b></small></div><div class="awpb"><i style="width:${pct}%"></i></div></div>`; }).join('');
+    return `<div class="sec-title" style="margin-top:14px">🔮 เส้นทางอาชีพลับ</div><div class="awpbox">${rows}
+      <div class="gs" style="font-size:11.5px;margin-top:6px">${any?'⭐ = ถ้าตื่นรู้ตอนนี้จะได้สายนี้ (ถ้าเต็มหลายสาย ได้เลือกเอง) · ':''}นับค่าที่ได้จากทุกทาง: ฝึกฝน ยาพ่อค้า พรเควส หินสกิล · โอกาสตื่นรู้ ${awakenChance()}% (สุ่มตอน Lv.40 และ Lv.60) หรือเก็บลูกแก้วครบ 7 ลูก</div></div>`; }
   function eventPanel(){
     if (S.phase==='battle') return `<div class="event"><div class="ev-title">⚔️ ต่อสู้</div><div class="log-lines" id="blog"></div>
       <div class="choices battle-tools"><button class="choice alt" data-act="speed"><span>ความเร็ว x${speed}</span></button><button class="choice" data-act="skip"><span>ข้าม ⏭</span></button></div><div class="scroll-hint">▼ เลื่อนลงดูข้อมูลวีรชน</div></div>`;
@@ -3073,7 +3081,7 @@ if (typeof document !== 'undefined') (function(){
         ${statCard('💥','แรงคริติคอล',st.cridmg+'%',(g.cridmg+gb.cridmg)?(g.cridmg+gb.cridmg)+'%':'','#ff4d6d')}
         ${statCard('🗡️','เจาะเกราะ',st.pen+'%',(g.pen+gb.pen)?(g.pen+gb.pen)+'%':'','#c9a24a')}
         ${statCard('💨','ความเร็ว',st.spd,'','#06d6a0')}</div>
-        <div style="margin-top:10px">${tags}</div>`;
+        <div style="margin-top:10px">${tags}</div>${awakenProgHtml()}`;
     } else if (tab==='gear'){
       const sc = setCounts();
       pane = `<div class="sec-title">อุปกรณ์</div><div class="gear-grid">${['weapon','helm','armor','boots'].map(gearCard).join('')}</div>` +
@@ -3201,7 +3209,7 @@ if (typeof document !== 'undefined') (function(){
     if (on && !shown){ el.innerHTML=tkInner(); el.classList.remove('tkhide'); }
     else if (!on && shown){ el.classList.add('tkhide'); setTimeout(()=>{ if (el.classList.contains('tkhide')) el.innerHTML=''; },450); } },1000);
   /* ---------- 🔔 แจ้งเตือนเกมมีอัปเดต ---------- */
-  const GAME_VER='v3.33'; let updSkip='', updT=0;
+  const GAME_VER='v3.34'; let updSkip='', updT=0;
   function updCheck(){ if (location.protocol==='file:' || document.getElementById('updpop')) return; if (Date.now()-updT<60000) return; updT=Date.now();
     fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{ if (!j||!j.v||j.v===GAME_VER||j.v===updSkip) return; updShow(j); }).catch(()=>{}); }
   function updShow(j){ const inRun=S&&S.phase&&S.phase!=='title'&&!S.over&&!hub, d=document.createElement('div'); d.id='updpop';
@@ -3286,7 +3294,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="pbtns"><button class="choice" data-act="guideopen"><span>📚 ข้อมูลเกม</span><small>ระดับอุปกรณ์ · ธาตุ · อาชีพ · อัตราสุ่ม · โหมดเกม</small></button><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.33<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.34<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
