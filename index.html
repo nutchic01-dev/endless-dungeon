@@ -960,6 +960,8 @@ h3 img.uiico{height:24px;width:auto;vertical-align:middle}
 .cpgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;max-height:190px;overflow-y:auto}.cpgrid.emo{grid-template-columns:repeat(8,1fr)}.cpe{font-size:24px;background:none;border:0;padding:4px 0;cursor:pointer;border-radius:8px}.cpe:active{background:rgba(255,255,255,.1)}
 .cps{aspect-ratio:1;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:3px;cursor:pointer;overflow:hidden}.cps img{width:100%;height:100%;object-fit:contain}.cphint{font-size:11px;color:#a99cc8;text-align:center;margin-top:4px}
 .cstk{display:block;width:96px;height:96px;object-fit:contain;filter:drop-shadow(0 3px 5px rgba(0,0,0,.5))}.cbub:has(.cstk){background:none!important;border-color:transparent!important}.chatbar input{flex:1;min-width:0;padding:10px 12px;border-radius:12px;border:1px solid #5a4680;background:#140e1f;color:#fff;font:inherit;font-size:15px}.chatbar .choice{flex:0 0 auto;width:auto;min-width:64px;margin:0;padding:8px 14px}
+.chatbtn{position:relative}.cbadge{position:absolute;top:-6px;right:-6px;min-width:22px;height:22px;padding:0 6px;border-radius:11px;background:#ff2d4f;color:#fff;font-style:normal;font-size:12px;font-weight:800;line-height:22px;text-align:center;box-shadow:0 0 0 2px #fff,0 2px 6px rgba(0,0,0,.5);animation:cbpop 1.6s ease-in-out infinite;z-index:3}
+@keyframes cbpop{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}.hubnav button.home.chatdot{position:relative}.hubnav button.home.chatdot::after{content:'';position:absolute;top:4px;right:8px;width:11px;height:11px;border-radius:50%;background:#ff2d4f;box-shadow:0 0 0 2px #fff}
 .rkl{display:flex;flex-direction:column;gap:5px}.rkr{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:12px;background:rgba(20,15,40,.7);border:1px solid rgba(255,255,255,.08)}
 .rkr.top{border-color:rgba(255,209,102,.5);background:linear-gradient(90deg,rgba(255,209,102,.18),rgba(20,15,40,.7))}.rkr.me{border-color:#7dffcf;box-shadow:0 0 0 1.5px #7dffcf inset}
 .rkn{width:30px;text-align:center;font-size:20px}.rkn b{font-size:14px;color:var(--muted)}.rka img.art{height:38px;width:38px;object-fit:contain}.rka{width:40px;text-align:center}
@@ -2842,7 +2844,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.5</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.6</span>'}</div>`;
   }
   let runSet=false, runQuit=false;
   function runPop(){
@@ -3460,7 +3462,7 @@ if (typeof document !== 'undefined') (function(){
     setTimeout(()=>SND.sfx(st==='dome'?'heal':'boom'),st==='meteor'?450:250); }
   function speakUlt(){}   // เสียงพากย์ถูกยกเลิก: ใช้ข้อความชื่อท่าแทน (ดู ultFX)
   function relXY(layer, el, fy){ if (!layer||!el) return [0,0]; const a=layer.getBoundingClientRect(), r=el.getBoundingClientRect(); return [r.left-a.left+r.width/2, r.top-a.top+r.height*(fy==null?0.45:fy)]; }
-  function afterRender(){ document.querySelectorAll('.overlay.hub, .pop-bg').forEach(emoSwap); sndAuto(); try{ npcSpeak(); }catch(e){} { const el=document.getElementById('tut'); if (el&&tutKey&&tutCtx()!==tutKey){ el.remove(); tutKey=null; } } clearTimeout(afterRender.t); afterRender.t=setTimeout(tutCheck,350); }
+  function afterRender(){ try{ chatBadgePaint(); }catch(e){} document.querySelectorAll('.overlay.hub, .pop-bg').forEach(emoSwap); sndAuto(); try{ npcSpeak(); }catch(e){} { const el=document.getElementById('tut'); if (el&&tutKey&&tutCtx()!==tutKey){ el.remove(); tutKey=null; } } clearTimeout(afterRender.t); afterRender.t=setTimeout(tutCheck,350); }
   const SND_ACT = {pull:'pull',skpull:'pull',rlpull:'pull',altup:'upgrade',rlup:'upgrade',starup:'levelup',awaken:'levelup',class:'levelup',ichest:'coin',shbuy:'coin',rlbuy:'coin',skbuy:'coin',dustbuy:'coin',htswc:'coin',htsweep:'coin',
     start:'start',htgo:'start',dhgo:'start',ifight:'start',htnext:'start',htretry:'start',revealok:'open',hub:'click',gtab:'click',ctab:'click',trtab:'click',shtab:'click',htmap:'click',htsel:'click',htslot:'click',settings:'open',cpop:'open',rlbreak:'hit'};
   document.addEventListener('click', e=>{ const b=e.target.closest&&e.target.closest('[data-act]'); if (!b||b.disabled||b.dataset.act==='noop') return; const a=b.dataset.act, n=SND_ACT[a];
@@ -3474,7 +3476,7 @@ if (typeof document !== 'undefined') (function(){
         <div class="cbar"><i id="ichestb" style="width:${mins/CHEST_MAX*100}%"></i></div><b id="ichest">${ok?'กดรับได้':`อีก ${CHEST_MIN-mins} น.`}</b></button>
       <button class="sbtn" data-act="imission"><i>${uiIco('mission','🎯')}</i><span>ภารกิจ</span><b>${ms}</b></button>
       <button class="sbtn" data-act="hub" data-k="rank"><i>${uiIco('rank','🏆')}</i><span>อันดับ</span></button>
-      <button class="sbtn" data-act="hub" data-k="chat"><i>${uiIco('chat','💬')}</i><span>แชท</span></button></div>
+      <button class="sbtn chatbtn" data-act="hub" data-k="chat"><i>${uiIco('chat','💬')}</i><span>แชท</span><em class="cbadge" style="${chatUnread>0?'':'display:none'}">${chatBadgeTxt()}</em></button></div>
       <div class="iside r"><button class="sbtn ev" data-act="dhopen" style="--dc:${D.col}"><i>${DRAGON_READY.has(`dragon_${D.el}.webp`)?`<img class="uiico" src="art/dragon_${D.el}.webp" alt="">`:'🐲'}</i><span>ล่ามังกร</span><b>${dt>0?`เหลือ ${dt}`:'ครบแล้ว'}</b></button>
       ${d.farm?`<button class="sbtn fight" id="ifight" data-act="ifight"><i>${d.sub===9?uiIco('boss','👹'):'⚔️'}</i><span>${d.sub===9?'สู้บอส':'ลุยต่อ'}</span></button>`:''}</div>`; }
   function altPick(m,c,sl){ const d=m.idle, mine=Object.entries(ALLCHARS).filter(([id,x])=>heroIdleCls(id)===c&&m.chars[id]);
@@ -4462,7 +4464,7 @@ if (typeof document !== 'undefined') (function(){
     const go=()=>{ CHAT.timer=setTimeout(()=>chatPoll(),document.hidden?15000:4000); };
     if (CHAT.busy){ go(); return; } CHAT.busy=true;
     C.chatFetch(CHAT.last).then(rows=>{ rows=(rows||[]).slice().reverse(); if (rows.length){ CHAT.msgs=CHAT.msgs.concat(rows.filter(r=>r.id>CHAT.last)).slice(-150); CHAT.last=Math.max(CHAT.last,...rows.map(r=>r.id)); }
-      CHAT.loaded=true; if (CHAT.err&&!CHAT.sendErr) CHAT.err=''; chatPaint(); })
+      CHAT.loaded=true; if (CHAT.err&&!CHAT.sendErr) CHAT.err=''; chatSeenSet(CHAT.last); chatUnread=0; chatPaint(); })
       .catch(e=>{ CHAT.err=C.chatErr?C.chatErr(e):'โหลดแชทไม่ได้'; chatPaint(); })
       .then(()=>{ CHAT.busy=false; go(); }); }
   function chatSendNow(raw){ const inp=document.getElementById('chatin'), C=window.__dqCloud; if (!C||!C.chatSend) return; if (!raw&&!inp) return;
@@ -4473,6 +4475,18 @@ if (typeof document !== 'undefined') (function(){
       .catch(e=>{ CHAT.err=C.chatErr?C.chatErr(e):'ส่งไม่สำเร็จ'; CHAT.sendErr=true; setTimeout(()=>{ CHAT.sendErr=false; },4000); chatPaint(); })
       .then(()=>{ CHAT.sending=false; const b=document.getElementById('chatgo'); if (b) b.disabled=false; if (!raw){ const i=document.getElementById('chatin'); if (i) i.focus(); } }); }
   document.addEventListener('keydown',e=>{ if (e.key==='Enter'&&e.target&&e.target.id==='chatin'&&!e.isComposing){ e.preventDefault(); chatSendNow(); } });
+
+  /* แจ้งเตือนข้อความแชทใหม่ */
+  let chatUnread=0;
+  const chatSeenGet=()=>{ try{ return +localStorage.getItem('dq_chat_seen')||0; }catch(e){ return 0; } };
+  const chatSeenSet=v=>{ try{ if (v>chatSeenGet()) localStorage.setItem('dq_chat_seen',String(v)); }catch(e){} };
+  const chatBadgeTxt=()=>chatUnread>99?'99+':String(chatUnread);
+  function chatBadgePaint(){ document.querySelectorAll('.cbadge').forEach(e=>{ e.textContent=chatBadgeTxt(); e.style.display=chatUnread>0?'':'none'; }); document.querySelectorAll('.hubnav button.home').forEach(e=>e.classList.toggle('chatdot',chatUnread>0)); }
+  let chatBgBusy=false;
+  function chatBgCheck(){ const C=window.__dqCloud; if (!C||!C.chatFetch||chatBgBusy||document.hidden) return; if (hub==='chat'){ chatUnread=0; chatBadgePaint(); return; }
+    chatBgBusy=true; const uid=C.auth&&C.auth.user.id, bl=chatBlocked();
+    C.chatFetch(chatSeenGet(),100).then(rows=>{ chatUnread=(rows||[]).filter(r=>r.user_id!==uid&&!bl.includes(r.user_id)).length; chatBadgePaint(); }).catch(()=>{}).then(()=>{ chatBgBusy=false; }); }
+  setInterval(chatBgCheck,30000); setTimeout(chatBgCheck,2500); document.addEventListener('visibilitychange',()=>{ if (!document.hidden) chatBgCheck(); });
   function hubChat(m){ const C=window.__dqCloud, li=!!(C&&C.auth);
     if (!CHAT.timer&&!CHAT.busy) setTimeout(()=>chatPoll(true),0); else setTimeout(()=>{ const el=document.getElementById('chatlist'); if (el) el.scrollTop=el.scrollHeight; },0);
     return `<div class="overlay hub chatpg" ${pageBg('rank')}>${hubHead(m,'💬 แชทโลก')}
@@ -5139,7 +5153,7 @@ if (typeof document !== 'undefined') (function(){
     lbBusy=false; lbSet(fail?{state:'err',msg:lbErr(fail),ok}:{state:'ok',ok}); return LB; }
   const _push=push; push=async function(f){ await _push(f); lbSync(); };
   /* ---------- แชทโลก ---------- */
-  async function chatFetch(after){ return await req(`/rest/v1/chat_messages?select=id,user_id,name,hero,body,created_at&channel=eq.world${after?'&id=gt.'+after:''}&order=id.desc&limit=60`,{method:'GET'},!!auth); }
+  async function chatFetch(after,lim){ return await req(`/rest/v1/chat_messages?select=id,user_id,name,hero,body,created_at&channel=eq.world${after?'&id=gt.'+after:''}&order=id.desc&limit=${lim||60}`,{method:'GET'},!!auth); }
   async function chatSend(body,name,hero){ return await rpc('send_chat',{p_body:body,p_name:name,p_hero:hero}); }
   const chatErr=e=>{ const s=(e&&e.message)||String(e); if (/Could not find|does not exist|schema cache/i.test(s)||(e&&e.status===404)) return 'ระบบแชทบนเซิร์ฟเวอร์ยังไม่ได้ติดตั้ง (ต้องรันไฟล์ chat.sql ใน Supabase)';
     if (/too fast/i.test(s)) return 'ส่งเร็วเกินไป รอสักครู่แล้วส่งใหม่'; if (/not logged in|หมดเวลาเข้าสู่ระบบ/i.test(s)) return 'เข้าสู่ระบบก่อนจึงจะส่งข้อความได้'; if (/empty/i.test(s)) return 'พิมพ์ข้อความก่อนส่ง'; return thErr(e); };
