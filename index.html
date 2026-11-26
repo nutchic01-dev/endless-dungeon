@@ -1061,7 +1061,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.17</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.18</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -1230,7 +1230,7 @@ const HIDDEN = {
   smith:{need:8,by:'pen', cls:{name:'ช่างตีเหล็กตำนาน',icon:'🧑‍🏭',type:'phy',m:{hp:1.3,atk:1.3,def:1.2},skills:[{name:'ค้อนทุบเกราะ',cd:3,kind:'dmg',mult:2.0,shred:0.1},{name:'ตีดาบให้ทีม',cd:5,kind:'buff',atk:0.15,turns:3}]},
     char:{id:'smith',el:'fire',name:'ช่างตีเหล็กตำนาน',icon:'🧑‍🏭',sp:true,hidden:true,s:[{name:'ค้อนเพลิง',cd:4,kind:'dmg',mult:2.8,pen:40,dot:0.3},{name:'ค้อนแห่งตำนาน',cd:6,kind:'dmg',mult:5.0,pen:60,shred:0.25}]}},
 };
-Object.entries(HIDDEN).forEach(([k,h])=>{ CLASSES[k] = Object.assign({hidden:true, desc:'อาชีพลับ'}, h.cls); });
+Object.entries(HIDDEN).forEach(([k,h])=>{ const mm=h.cls.m; h.cls.m={hp:+(mm.hp*1.15).toFixed(3),atk:+(mm.atk*1.15).toFixed(3),def:+(mm.def*1.15).toFixed(3)}; CLASSES[k] = Object.assign({hidden:true, desc:'อาชีพลับ'}, h.cls); });   // อาชีพลับ: ค่าพลังพื้นฐาน +15%
 /* =========================================================
    สกิล v2: คลาส 1 = 2 สกิล (เลเวลเดียวกัน) · คลาส 2 = สกิลอาชีพรวม + พาสซีฟ + สกิล 3 + อัลติเมท
    ค่าในข้อมูลคือค่าที่ Lv.3 · tags: f=ไฟ h=หนัก t=สายฟ้า c=คริ
@@ -2787,6 +2787,7 @@ const permTotal = m => Object.keys(PERM_KEYS).reduce((s,k)=>s+m.perm[k],0);
 const PERM_MAX = Object.values(PERM_KEYS).reduce((s,x)=>s+x.max,0);
 /* ตัวละคร เศษ ดาว กลายร่าง */
 const owned = (m,id) => !!m.chars[id];
+function bestFl(m){ let f=Math.max(m.bestFloor||0,(m.rankInfo&&m.rankInfo.floor)||0); Object.values(m.chars||{}).forEach(c=>(c.recs||[]).forEach(r=>{ if (r&&r.floor>f) f=r.floor; })); return f; }
 function shardNeed(m,id){ const c=m.chars[id]; if (!c) return 0; return c.star<5 ? STAR_COST[c.star] : c.form ? 0 : FORM_COST; }
 function starUp(m,id){ const need=shardNeed(m,id); if (!need || (m.shards[id]||0)<need) return false; m.shards[id]-=need; const c=m.chars[id]; if (c.star<5) c.star++; else c.form=true; return true; }
 function shardLeft(m,id){ const c=m.chars[id]; if (!c) return Infinity; return (5-c.star)*50 + (c.form?0:FORM_COST); }
@@ -2830,7 +2831,7 @@ function dailyLogin(m){ const k=dayKey(); if (m.login.last===k) return 0;
 /* จบรอบ */
 function saveMeta(sc, medals, win){
   const m = loadMeta(), rw = {tickets:0, shards:0, newChar:null, char:null, mission:0, rec:null};
-  m.medals+=medals; m.best=Math.max(m.best,sc); m.runs++;
+  m.medals+=medals; m.best=Math.max(m.best,sc); m.runs++; if (!S.daily) m.bestFloor=Math.max(bestFl(m),S.floor||0);
   { const rk=S.over&&S.over.rank?S.over.rank.total:0; rw.rankPrev=m.rankBest||0; if (rk>(m.rankBest||0)){ m.rankBest=rk; m.rankInfo=rankDetail(win); rw.rankNew=true; } } if(win) m.wins++; if(win && S.cls==='villager') m.villagerWins=(m.villagerWins||0)+1;
   if (win && S.char){ const id=S.char.id, a=ALLCHARS[id]; rw.char=id; const snap=snapshot();
     if (!owned(m,id)){ m.chars[id]={star:1, form:false, recs:[snap], main:0}; rw.newChar=id; rw.tickets+=1; rw.rec={placed:true, first:true};
@@ -2870,7 +2871,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.17</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.18</span>'}</div>`;
   }
   let runSet=false, runQuit=false;
   function runPop(){
@@ -3036,9 +3037,9 @@ if (typeof document !== 'undefined') (function(){
   /* ---------- กรอบรูปโปรไฟล์ ---------- */
   const FRAMES = [
     {k:'basic',n:'กรอบเริ่มต้น',d:'มีตั้งแต่เริ่มเกม',ok:()=>true},
-    {k:'tower50',n:'กรอบทองแดงหอคอย',d:'ไต่หอคอยถึงชั้น 50',ok:m=>((m.best&&m.best.floor)||0)>=50},
-    {k:'tower150',n:'กรอบเงินหอคอย',d:'ไต่หอคอยถึงชั้น 150',ok:m=>((m.best&&m.best.floor)||0)>=150},
-    {k:'tower300',n:'กรอบทองหอคอย',d:'ไต่หอคอยถึงชั้น 300',ok:m=>((m.best&&m.best.floor)||0)>=300},
+    {k:'tower50',n:'กรอบทองแดงหอคอย',d:'ไต่หอคอยถึงชั้น 50',ok:m=>bestFl(m)>=50},
+    {k:'tower150',n:'กรอบเงินหอคอย',d:'ไต่หอคอยถึงชั้น 150',ok:m=>bestFl(m)>=150},
+    {k:'tower300',n:'กรอบทองหอคอย',d:'ไต่หอคอยถึงชั้น 300',ok:m=>bestFl(m)>=300},
     {k:'guard',n:'กรอบผู้พิทักษ์เมือง',d:'ผ่านเฝ้าเมืองด่าน 5-10',ok:m=>m.idle&&m.idle.best>=50},
     {k:'collector',n:'กรอบนักสะสม',d:'มีวีรชน 15 ตัว',ok:m=>Object.keys(m.chars).filter(id=>ALLCHARS[id]).length>=15},
     {k:'awaken',n:'กรอบปลุกพลัง',d:'ปลุกพลังวีรชน 1 ตัว',ok:m=>Object.values(m.chars).some(c=>c.form)},
@@ -3085,7 +3086,7 @@ if (typeof document !== 'undefined') (function(){
     if (on && !shown){ el.innerHTML=tkInner(); el.classList.remove('tkhide'); }
     else if (!on && shown){ el.classList.add('tkhide'); setTimeout(()=>{ if (el.classList.contains('tkhide')) el.innerHTML=''; },450); } },1000);
   /* ---------- 🔔 แจ้งเตือนเกมมีอัปเดต ---------- */
-  const GAME_VER='v3.17'; let updSkip='', updT=0;
+  const GAME_VER='v3.18'; let updSkip='', updT=0;
   function updCheck(){ if (location.protocol==='file:' || document.getElementById('updpop')) return; if (Date.now()-updT<60000) return; updT=Date.now();
     fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{ if (!j||!j.v||j.v===GAME_VER||j.v===updSkip) return; updShow(j); }).catch(()=>{}); }
   function updShow(j){ const inRun=S&&S.phase&&S.phase!=='title'&&!S.over&&!hub, d=document.createElement('div'); d.id='updpop';
@@ -3158,7 +3159,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="pbtns"><button class="choice" data-act="guideopen"><span>📚 ข้อมูลเกม</span><small>ระดับอุปกรณ์ · ธาตุ · อาชีพ · อัตราสุ่ม · โหมดเกม</small></button><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.17<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.18<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
@@ -3190,14 +3191,14 @@ if (typeof document !== 'undefined') (function(){
     const pm = runMeta(m).pm, p = m.prep;
     const bonus = [pm.startAcc?'เครื่องประดับ Rare':'', pm.startRune?'รูนขาว':'', pm.accSlot?'ช่องเครื่องประดับ 2':''].filter(Boolean);
     const pTxt = x => x.gold ? `💰 ทอง ${fmt(x.gold)}` : `🔷 ${RUNE[x.rune].name} (หลบบอส ${RUNE[x.rune].pct}%)`;
-    if (!advPrep){ const best=(m.best&&m.best.floor)||0;
+    if (!advPrep){ const best=bestFl(m);
       return `<div class="overlay hub" ${pageBg('adv')}>${hubHead(m,'⚔️ ผจญภัย')}
       <button class="endcard" data-act="advprep"><div class="eart"><img src="art/mode_endless.webp" alt=""></div>
         <div class="einfo"><small>โหมดหลัก</small><b>หอคอยไร้สิ้นสุด</b><span>ไต่หอคอยที่ไม่มีวันสิ้นสุด เก็บพลังวีรชนกลับมาปกป้องเมือง</span>
         <div class="erec">🏆 สถิติสูงสุด ชั้น ${fmt(best)}</div><div class="ego">เข้าสู่หอคอย ▶</div></div></button>
       ${advMap(m)}${nav()}</div>`; }
     return `<div class="overlay hub" ${pageBg('adv')}>${hubHead(m,'🗼 หอคอยไร้สิ้นสุด')}
-      <div class="prephead"><button class="back" data-act="advback">◀ แผนที่</button><img src="art/mode_endless.webp" alt=""><div><b>เตรียมตัวก่อนเข้าหอคอย</b><div class="gs">สถิติสูงสุด ชั้น ${fmt((m.best&&m.best.floor)||0)}</div></div></div>
+      <div class="prephead"><button class="back" data-act="advback">◀ แผนที่</button><img src="art/mode_endless.webp" alt=""><div><b>เตรียมตัวก่อนเข้าหอคอย</b><div class="gs">สถิติสูงสุด ชั้น ${fmt(bestFl(m))}</div></div></div>
       <div class="sumbox"><h3>${uiIco('prep','🎒')} ถุงเสบียง (รอบละ 1 ครั้ง)</h3>
         <p style="font-size:13px;text-align:left">จ่าย ${PREP_COST} เหรียญตรา สุ่มได้ทองหรือรูนติดตัวตอนเริ่มรอบ</p>
         ${p?`<div class="prep-res">ได้ ${pTxt(p)}<div class="gs">ใช้ในรอบถัดไป</div></div>`
@@ -3278,7 +3279,7 @@ if (typeof document !== 'undefined') (function(){
   const ROOKIE='_c1', ROOKIE_MUL=1.1;
   const altOn = (m,c) => !!m.idle.hero[c];
   function heroMulOne(m, id, c){ if (id===ROOKIE) return ROOKIE_MUL; const a=id&&ALLCHARS[id], ch=id&&m.chars[id]; if (!a||!ch||heroIdleCls(id)!==c) return 1;
-    const pw=relicPower(m,id); return (1.5+0.25*((ch.star||1)-1)+(ch.form?0.5:0)+(a.tier!=='n'?0.3:0))*(1+(Math.sqrt(pw.dps*pw.hp)-1)*0.5)*(pw.match?1.15:1); }
+    const pw=relicPower(m,id); return (1.5+0.25*((ch.star||1)-1)+(ch.form?0.5:0)+(a.tier==='hid'?0.6:a.tier!=='n'?0.3:0))*(1+(Math.sqrt(pw.dps*pw.hp)-1)*0.5)*(pw.match?1.15:1); }
   function idleHeroMul(m, c){ const m1=heroMulOne(m,m.idle.hero[c],c), m2=slot2On(m,c)?heroMulOne(m,m.idle.hero2[c],c):1; return m1+(m2>1?(m2-1)*0.6:0); }
   const idleUlts = (m,c) => (m.idle.hero[c]!==ROOKIE&&heroMulOne(m,m.idle.hero[c],c)>1?1:0)+(slot2On(m,c)&&heroMulOne(m,m.idle.hero2[c],c)>1?1:0);
   const idleCfgOf = m => idleCfgFrom(m.idle.alt, idleUnlocked(m).filter(c=>altOn(m,c)), c=>idleHeroMul(m,c), c=>idleUlts(m,c), c=>eqMul(m.eq,c));
@@ -3896,7 +3897,7 @@ if (typeof document !== 'undefined') (function(){
   function dhState(m){ const w=dhWeek(); if (!m.dh) m.dh={kills:{},scales:0,team:[]}; if (m.dh.wk!==w){ m.dh.wk=w; m.dh.dmg=0; m.dh.claimed=[]; m.dh.best=0; m.dh.slain=false; }
     const d=dayKey(); if (!m.dh.tries||m.dh.tries.d!==d) m.dh.tries={d,n:0}; m.dh.team=(m.dh.team||[]).filter(id=>m.chars[id]); return m.dh; }
   function dhHero(m,id,D){ const a=ALLCHARS[id], ch=m.chars[id], cls=heroIdleCls(id), el=a.c.el;
-    let dps=({n:1000,sp:1500,hid:1800})[a.tier]*(1+0.25*((ch.star||1)-1))*(ch.form?1.4:1);
+    let dps=({n:1000,sp:1500,hid:2150})[a.tier]*(1+0.25*((ch.star||1)-1))*(ch.form?1.4:1);
     const hp=12000*(1+0.25*((ch.star||1)-1))*(ch.form?1.3:1);
     const em = el===dhWeak(D.el) ? 1.5 : el===D.el ? 0.7 : 1, pw=relicPower(m,id);
     return {id,cls,el,dps:dps*em*pw.dps,hp:hp*pw.hp,em,spd:pw.spd,res:pw.res,heal:pw.heal,sig:pw.match?RELIC_CLS(id):null}; }
@@ -4091,7 +4092,7 @@ if (typeof document !== 'undefined') (function(){
   function htHero(m,id){ const ch=m.chars[id]||{}; return heroStat(id, ch.star||1, ch.form, relicPower(m,id)); }
   function heroStat(id,star,form,pw){ const a=ALLCHARS[id], cls=heroIdleCls(id), st=1+0.25*((star||1)-1), fm=form?1.35:1; pw=pw||{dps:1,hp:1,spd:1,res:0,heal:0};
     const b={tank:[0.55,1.8],warrior:[1,1.2],archer:[1.15,0.8],mage:[0.85,0.8],support:[0.55,0.95],assassin:[1.3,0.75]}[cls]||[1,1];
-    const atk=({n:900,sp:1300,hid:1550})[a.tier]*st*fm*b[0]*pw.dps, hp=11000*st*fm*b[1]*pw.hp;
+    const atk=({n:900,sp:1300,hid:1850})[a.tier]*st*fm*b[0]*pw.dps, hp=11000*({n:1,sp:1.05,hid:1.25})[a.tier]*st*fm*b[1]*pw.hp;
     return {id,cls,el:a.c.el,atk,hp,mx:hp,spd:pw.spd||1,res:Math.min(0.6,(pw.res||0)+(cls==='tank'?0.3:0)),heal:pw.heal||0,en:0,
       ult:(CHAR_KIT[id]&&CHAR_KIT[id].ult&&CHAR_KIT[id].ult.name)||'ท่าไม้ตาย'}; }
   function htRel(ids){ let rel=0; ids.forEach(id=>{ const L=CHAR_LORE[id]; if (L) L.rel.forEach(([r])=>{ if (ids.includes(r)) rel++; }); }); return 1+0.05*Math.min(6,rel); }
