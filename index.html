@@ -1085,7 +1085,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.32</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.33</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -2986,7 +2986,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.32</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.33</span>'}</div>`;
   }
   let runSet=false, runQuit=false;
   function runPop(){
@@ -3201,7 +3201,7 @@ if (typeof document !== 'undefined') (function(){
     if (on && !shown){ el.innerHTML=tkInner(); el.classList.remove('tkhide'); }
     else if (!on && shown){ el.classList.add('tkhide'); setTimeout(()=>{ if (el.classList.contains('tkhide')) el.innerHTML=''; },450); } },1000);
   /* ---------- 🔔 แจ้งเตือนเกมมีอัปเดต ---------- */
-  const GAME_VER='v3.32'; let updSkip='', updT=0;
+  const GAME_VER='v3.33'; let updSkip='', updT=0;
   function updCheck(){ if (location.protocol==='file:' || document.getElementById('updpop')) return; if (Date.now()-updT<60000) return; updT=Date.now();
     fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{ if (!j||!j.v||j.v===GAME_VER||j.v===updSkip) return; updShow(j); }).catch(()=>{}); }
   function updShow(j){ const inRun=S&&S.phase&&S.phase!=='title'&&!S.over&&!hub, d=document.createElement('div'); d.id='updpop';
@@ -3286,7 +3286,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="pbtns"><button class="choice" data-act="guideopen"><span>📚 ข้อมูลเกม</span><small>ระดับอุปกรณ์ · ธาตุ · อาชีพ · อัตราสุ่ม · โหมดเกม</small></button><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.32<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.33<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
@@ -5075,10 +5075,14 @@ if (typeof document !== 'undefined') (function(){
         <button class="choice" data-act="rollchar"><span>สุ่มตัวละครให้เพื่อน!</span></button>
         ${(()=>{ const own=Object.keys(HIDDEN).filter(k=>S.meta.stars[HIDDEN[k].char.id]); return own.length?`<p>หรือใช้อาชีพลับที่ปลดแล้ว (เพื่อนยังสุ่มตามปกติ)</p><div class="class-grid">${own.map(k=>`<button data-act="rollchar" data-k="${k}"><div class="ci">${charArt(HIDDEN[k].char,formOf(HIDDEN[k].char))}</div><div class="cn">${HIDDEN[k].char.name}</div><div class="cd">${elIcon(HIDDEN[k].char.el)} ธาตุ${ELEMENTS[HIDDEN[k].char.el].name} · ${'★'.repeat(S.meta.stars[HIDDEN[k].char.id])}</div></button>`).join('')}</div>`:''; })()}</div>`;
     }
+    if (S.pendingChar && S.char && !CHARS[S.cls]){   // ตื่นรู้เป็นอาชีพลับไปแล้วก่อน Lv.40: ตัวเราไม่ต้องสุ่ม สุ่มแค่เพื่อนร่วมทีม
+      return `<div class="overlay"><div class="big">🎴</div><h1>ถึง Lv.40!</h1><p>คุณเป็น <b>${S.char.name}</b> อยู่แล้ว<br>ถึงเวลาที่เพื่อนร่วมทีมจะสุ่มเป็นตัวละครในสายของตัวเอง</p>
+        <button class="choice" data-act="rollchar"><span>สุ่มตัวละครให้เพื่อน!</span></button></div>`;
+    }
     if (S.pendingChar){
       return `<div class="overlay"><div class="big">🎴</div><h1>ถึง Lv.40! ได้เวลาเปลี่ยนคลาส 2</h1><p>ทั้งทีมจะสุ่มเป็นตัวละครในสายของตัวเอง<br>ชนะบอสในรอบนี้ = ได้ตัวละครของคุณถาวร</p>
         <button class="choice" data-act="rollchar"><span>สุ่มตัวละคร!</span><small>ปกติ ${100-CONFIG.specialRate}% · พิเศษ ${CONFIG.specialRate}%</small></button>
-        ${(()=>{ const own=CHARS[S.cls].filter(c=>S.meta.stars[c.id]); return own.length?`<p>หรือใช้ตัวที่ปลดแล้ว (ชนะบอสได้ตั๋ว 3 ใบ + เศษตัวนั้น)</p><div class="class-grid">${own.map(c=>`<button data-act="rollchar" data-k="${c.id}" class="${c.sp?'spb':''}"><div class="ci">${charArt(c,formOf(c))}</div><div class="cn">${c.name}</div><div class="cd">${elIcon(c.el)} ธาตุ${ELEMENTS[c.el].name} · <span class="stars">${'★'.repeat(S.meta.stars[c.id])}</span></div></button>`).join('')}</div>`:''; })()}</div>`;
+        ${(()=>{ const own=(CHARS[S.cls]||[]).filter(c=>S.meta.stars[c.id]); return own.length?`<p>หรือใช้ตัวที่ปลดแล้ว (ชนะบอสได้ตั๋ว 3 ใบ + เศษตัวนั้น)</p><div class="class-grid">${own.map(c=>`<button data-act="rollchar" data-k="${c.id}" class="${c.sp?'spb':''}"><div class="ci">${charArt(c,formOf(c))}</div><div class="cn">${c.name}</div><div class="cd">${elIcon(c.el)} ธาตุ${ELEMENTS[c.el].name} · <span class="stars">${'★'.repeat(S.meta.stars[c.id])}</span></div></button>`).join('')}</div>`:''; })()}</div>`;
     }
     if (S.reveal && S.reveal.villager){
       return `<div class="overlay"><h1>ทีมของคุณ</h1><div class="reveal"><div class="rh"><div class="ri">🧑‍🌾</div><div><div class="rn">ชาวบ้านผู้ไม่ยอมแพ้</div><div style="font-size:12px;color:var(--muted)">สายชาวบ้าน</div></div></div>
