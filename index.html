@@ -1003,6 +1003,7 @@ h3 img.uiico{height:24px;width:auto;vertical-align:middle}
 .runefx.bad .rfx-txt{color:#ffb0a0}
 .rfx-txt small{display:block;font-size:14px;font-weight:700;color:#f3e9ff;margin-top:4px}
 @keyframes rfxtx{0%,25%{opacity:0;transform:translateY(12px)}40%{opacity:1;transform:none}85%{opacity:1}100%{opacity:0}}
+.fishbar{position:relative;height:34px;margin:10px 4px 4px;border-radius:17px;background:linear-gradient(180deg,#1b3b6b,#0d2140);border:2px solid #7fc8ff;overflow:hidden;box-shadow:inset 0 2px 8px rgba(0,0,0,.6)}.fishbar .fz{position:absolute;top:0;bottom:0;background:linear-gradient(180deg,#5dff9a,#1fbf62);box-shadow:0 0 12px #5dff9a}.fishbar .fneedle{position:absolute;top:-2px;bottom:-2px;width:6px;margin-left:-3px;background:#fff;border-radius:3px;box-shadow:0 0 8px #fff,0 0 2px #000;animation:fneed linear infinite alternate;left:0}@keyframes fneed{from{left:0}to{left:100%}}
 .gdtw{overflow-x:auto;margin:4px 0}.gdt{width:100%;border-collapse:collapse;font-size:12.5px;color:#e9def7}.gdt th{background:rgba(255,214,140,.16);color:#ffd77a;font-weight:700;padding:6px 4px;white-space:nowrap}.gdt td{padding:6px 4px;text-align:center;border-bottom:1px dashed rgba(255,255,255,.12);white-space:nowrap}.gdn{font-size:12px;color:#cfc2e4;line-height:1.6;margin-top:6px}.gdcl{flex-direction:column;align-items:flex-start;gap:2px}.gdcl small{color:#cfc2e4;font-size:12px}.gdtabs button span{font-size:11px}
 .arlock{font-size:54px;text-align:center}.arbeta{font-size:11.5px;color:#ffd77a;background:rgba(255,190,80,.12);border:1px dashed rgba(255,200,100,.5);border-radius:10px;padding:3px 10px;text-align:center}
 .rkl{display:flex;flex-direction:column;gap:5px}.rkr{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:12px;background:rgba(20,15,40,.7);border:1px solid rgba(255,255,255,.08)}
@@ -1084,7 +1085,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.31</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.32</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -2084,6 +2085,12 @@ function battle(mons){
 const Q_GAP = [6,12];   // จำนวนชั้นระหว่างแต่ละตอนของเควส
 function qNext(text, cls='good'){ const q=S.q; q.step++; q.next=S.floor+Q_GAP[0]+Math.floor(rng()*(Q_GAP[1]-Q_GAP[0]+1)); done(`📜 ${text}`, cls); }
 function qEnd(text, cls='good'){ S.qDone=(S.qDone||[]).concat(S.q.id); S.q=null; S.qCool=S.floor+15; done(`📜 ${text}`, cls); }
+const RIDDLES = [['อะไรเอ่ย ยิ่งขุดออก ยิ่งใหญ่ขึ้น','หลุม'],['อะไรเอ่ย มีเข็มแต่เย็บผ้าไม่ได้','นาฬิกา'],['อะไรเอ่ย มีฟันแต่กัดไม่ได้','หวี'],['อะไรเอ่ย ขึ้นแล้วไม่เคยลง','อายุ'],['อะไรเอ่ย มีตาแต่มองไม่เห็น','เข็ม'],['อะไรเอ่ย ยิ่งเช็ดตัวคนอื่นแห้ง ตัวเองยิ่งเปียก','ผ้าเช็ดตัว'],['อะไรเอ่ย มีสี่ขาแต่เดินไม่ได้','โต๊ะ'],['อะไรเอ่ย ยิ่งมีมาก ยิ่งมองไม่เห็น','ความมืด'],['อะไรเอ่ย เป็นของเรา แต่คนอื่นใช้มากกว่า','ชื่อ'],['อะไรเอ่ย ตัวเล็กนิดเดียว แต่ช้างยังกลัว','หนู'],['อะไรเอ่ย ยิ่งแบ่ง ยิ่งเพิ่มขึ้น','ความสุข'],['อะไรเอ่ย มีปีกแต่บินไม่ได้ มีหางแต่ไม่ใช่สัตว์','เครื่องบินกระดาษ']];
+/* มินิเกมตกปลา: เข็มวิ่งไปมา กดตอนอยู่ในช่องเขียว (ตำแหน่งคำนวณจากเวลา ไม่ต้องรอแอนิเมชัน) */
+function fishPos(e){ const t=((typeof performance!=='undefined'?performance.now():Date.now())-(e.t0||0))/1000/e.dur; const p=t%2; return (p<1?p:2-p)*100; }
+function fishEv(q,title,icon,text,dur,zw,after){ const z0=8+Math.floor(rng()*(84-zw)), e={title,icon,text:text+'\n<small class="gs">🎣 แตะ "ดึงเบ็ด!" ตอนเข็มอยู่ในช่องสีเขียว</small>', mini:'fish', dur, z0, zw};
+  e.choices=[{label:'🎣 ดึงเบ็ด!', wide:true, fn:()=>{ const x=e.t0?fishPos(e):z0+zw/2*(rng()<0.5?1:3), c=z0+zw/2, d=Math.abs(x-c); after(d<=zw/2?'perfect':d<=zw/2+10?'near':'miss'); }},
+    {label:'ไม่ตกปลา เดินต่อ', alt:true, fn:()=>qEnd('ชายแก่โบกมือลา "ไว้มาใหม่นะ"')}]; return e; }
 const QUESTS = {
   child:{name:'เด็กหลงทาง', steps:[
     q=>({title:'📜 เด็กหลงทาง (1/3)', icon:'🧒', text:'เด็กชายตัวเล็กนั่งร้องไห้อยู่มุมห้อง บอกว่าพลัดหลงกับพ่อที่เป็นพ่อค้าเร่ในหอคอย', choices:[
@@ -2115,6 +2122,52 @@ const QUESTS = {
       if (n<3) return qNext(`จุดไฟ${c}แล้ว เปลวไฟสั่นไหว...`);
       if (q.ok){ const o=pick(trainOptions(S.floor,4)); applyTrain(o); gainBook(1); qEnd(`ไฟทั้งสามสว่างพร้อมกัน! ได้ ${o.label} และตำราสกิล`); }
       else { S.goldCurse=Math.max(S.goldCurse,10); qEnd('ไฟดับวูบ... ลำดับผิด โดนคำสาปทองลด 10 ชั้น','bad'); } }}))}))]},
+  fish:{name:'บ่อตกปลาใต้ดิน', steps:[
+    q=>fishEv(q,'📜 บ่อตกปลาใต้ดิน (1/2)','👴','ชายแก่นั่งตกปลาอยู่ริมบ่อน้ำใต้ดิน "ลองดูไหมพ่อหนุ่ม? กดดึงเบ็ดตอนเข็มอยู่ในช่องสีเขียวนะ"',1.5,26,
+      r=> r==='perfect' ? (heal(0.4), healMates(0.4), qNext(`🐟 ได้ปลาตัวใหญ่! ทีมฟื้น HP 40% ทอง ${fmt(gainGold(base2(S.floor)*2))}`)) : r==='near' ? (heal(0.2), healMates(0.2), qNext('🐠 ได้ปลาตัวเล็ก ทีมฟื้น HP 20%')) : qNext('👢 ได้รองเท้าบูทเก่า… ชายแก่หัวเราะลั่น','bad')),
+    q=>fishEv(q,'📜 บ่อตกปลาใต้ดิน (2/2)','🐡','ชายแก่คนเดิมกระซิบ "ในบ่อนี้มีปลาทองในตำนาน มันว่ายเร็วมาก ช่องสีเขียวแคบนิดเดียว"',0.95,14,
+      r=> r==='perfect' ? (runeGain(1), (()=>{ const o=pick(trainOptions(S.floor,3)); applyTrain(o); qEnd(`🐉 จับปลาทองในตำนานได้! ได้รูน 1 ขั้น และ ${o.label}`); })()) : r==='near' ? qEnd(`เกือบได้! ปลาทองหลุดไป ได้ทองปลอบใจ ${fmt(gainGold(base2(S.floor)*2))}`) : qEnd('สายเบ็ดขาด… ปลาทองหายไปในความมืด','bad'))]},
+  cups:{name:'นักต้มตุ๋นถ้วยสามใบ', steps:[
+    q=>{ const bet=Math.round(base2(S.floor)*2), win=Math.floor(rng()*3), tell=rng()<0.7?win:Math.floor(rng()*3), names=['ซ้าย','กลาง','ขวา'];
+      return {title:'📜 นักต้มตุ๋นถ้วยสามใบ (1/2)', icon:'🎩', text:`ชายสวมหมวกทรงสูงสลับถ้วยสามใบไปมาอย่างรวดเร็ว "ทายถูกรับ 3 เท่า! วางเดิมพัน ${fmt(bet)} ทอง"\n👀 ดูเหมือนถ้วย<b>${names[tell]}</b>จะขยับแปลก ๆ… (แต่เขาอาจหลอกก็ได้)`, choices:[
+        ...names.map((n,i)=>({label:`🥤 ถ้วย${n}`, sub:`เดิมพัน ${fmt(bet)} ทอง`, disabled:S.gold<bet, fn:()=>{ S.gold-=bet; if (i===win){ q.flag='won'; S.gold+=bet*3; qNext(`🎉 ถูกต้อง! ได้ ${fmt(bet*3)} ทอง ชายหมวกสูงหน้าเสีย…`); } else { q.flag='lost'; qNext(`ผิด! ลูกแก้วอยู่ใต้ถ้วย${names[win]} เสีย ${fmt(bet)} ทอง`,'bad'); } }})),
+        {label:'ไม่เล่น', alt:true, fn:()=>{ q.flag='skip'; qNext('คุณเดินผ่านไป ชายหมวกสูงจุ๊ปาก'); }}]}; },
+    q=>{ const F=S.floor;
+      if (q.flag==='won'){ const m=makeMon(F); m.name='ลูกน้องนักต้มตุ๋น'; m.icon='🥷'; m.hp*=1.8; m.maxhp=m.hp;
+        return {title:'📜 นักต้มตุ๋นถ้วยสามใบ (2/2)', icon:'🎩', text:'ชายหมวกสูงพาลูกน้องมาดักรอ "เอาทองข้าคืนมา!"', choices:[
+          {label:'สู้!', fn:()=>{ S.q=null; S.qCool=S.floor+15; S.qDone=(S.qDone||[]).concat('cups'); fight([m], ()=>{ const v=gainGold(base2(F)*4); return `ไล่พวกนักต้มตุ๋นไปได้ ยึดทองมาอีก ${fmt(v)}`; }); }},
+          {label:'คืนทองครึ่งหนึ่ง', sub:`เสีย ${fmt(Math.floor(S.gold/2))} ทอง`, alt:true, fn:()=>{ S.gold-=Math.floor(S.gold/2); qEnd('นักต้มตุ๋นรับทองแล้วหายตัวไป','bad'); }}]}; }
+      return {title:'📜 นักต้มตุ๋นถ้วยสามใบ (2/2)', icon:'🎩', text:'ชายหมวกสูงคนเดิมถอดหมวกคำนับ "ท่านเป็นคนดี ข้าจะให้คำทำนายฟรี"', choices:
+        (()=>{ const all=trainOptions(F,2), lk=all.filter(o=>/คริ|เจาะ/.test(o.label)); return lk.concat(all.filter(o=>!lk.includes(o))).slice(0,2); })().map(o=>({label:`🔮 ${o.label}`, sub:'คำทำนายแห่งโชค', fn:()=>{ applyTrain(o); qEnd(`ได้รับคำทำนาย ${o.label}`); }}))}; }]},
+  sphinx:{name:'ปริศนาสฟิงซ์', steps:[0,1].map(n=>q=>{ if (!q.rd) q.rd=shuffle(RIDDLES.map((_,i)=>i)).slice(0,2); const R=RIDDLES[q.rd[n]], wrong=shuffle(RIDDLES.filter(x=>x[1]!==R[1]).map(x=>x[1])).slice(0,2), opts=shuffle([R[1],...wrong]);
+    return {title:`📜 ปริศนาสฟิงซ์ (${n+1}/2)`, icon:'🦁', text:`${n?'สฟิงซ์ตัวเดิมปรากฏขวางทางอีกครั้ง':'สฟิงซ์ตัวใหญ่นอนขวางประตู ดวงตาเป็นประกาย'} "ตอบปริศนาของข้าให้ถูก แล้วจะได้รางวัล ถ้าผิด… เจ็บตัว!"\n\n❓ <b>${R[0]}</b>`, choices: opts.map(o=>({label:o, fn:()=>{
+      if (o!==R[1]){ S.hp=Math.max(1,S.hp-stats().maxhp*0.2); return qEnd(`ผิด! คำตอบคือ "${R[1]}" สฟิงซ์ตะปบ HP -20%`,'bad'); }
+      if (!n) return qNext('ถูกต้อง! สฟิงซ์พยักหน้า "ข้าจะกลับมาพร้อมปริศนาข้อถัดไป"');
+      const a=trainOptions(S.floor,3); applyTrain(a[0]); applyTrain(a[1]); const b=gainBook(1); qEnd(`ถูกทั้ง 2 ข้อ! สฟิงซ์มอบพร ${a[0].label}, ${a[1].label} และตำราสกิล`); }}))}; })},
+  alchemist:{name:'นักปรุงยาเพี้ยน', steps:[
+    q=>{ if (!q.mix) q.mix=shuffle(['good','heal','bad']); const C=[['🔴','แดง'],['🔵','ฟ้า'],['🟢','เขียว']];
+      return {title:'📜 นักปรุงยาเพี้ยน (1/2)', icon:'🧪', text:'นักปรุงยาผมฟูยื่นขวดยาสามสีมาให้ "ช่วยทดลองยาหน่อย! ข้าก็จำไม่ได้ว่าขวดไหนเป็นอะไร ฮ่า ๆ"', choices:[
+        ...C.map(([ic,n],i)=>({label:`${ic} ดื่มขวดสี${n}`, fn:()=>{ const t=q.mix[i]; q.tried=i;
+          if (t==='good'){ S.mods.atk+=5; qNext(`💪 พลังพุ่งพล่าน! ทีม ATK/MATK +5% ตลอดรอบ (จำไว้ว่าสี${n}ดี!)`); }
+          else if (t==='heal'){ heal(0.35); healMates(0.35); qNext(`💚 สดชื่น! ทีมฟื้น HP 35% (สี${n}คือยาฟื้นฟู)`); }
+          else { S.hp=Math.max(1,S.hp-stats().maxhp*0.15); qNext(`🤢 ยาพิษ! HP -15% (สี${n}อันตราย!)`,'bad'); } }})),
+        {label:'ไม่ดื่ม', alt:true, fn:()=>qEnd('นักปรุงยาบ่นอุบอิบแล้วเดินจากไป')}]}; },
+    q=>{ const C=[['🔴','แดง'],['🔵','ฟ้า'],['🟢','เขียว']];
+      return {title:'📜 นักปรุงยาเพี้ยน (2/2)', icon:'⚗️', text:'นักปรุงยาคนเดิมกลับมาพร้อมยาสูตรเข้มข้น "สีเดิมสูตรเดิม แต่แรงขึ้นสามเท่า! เลือกให้ดีนะ"', choices: C.map(([ic,n],i)=>({label:`${ic} ยาเข้มข้นสี${n}`, fn:()=>{ const t=q.mix[i];
+        if (t==='good'){ S.mods.atk+=10; qEnd(`🔥 สุดยอด! ทีม ATK/MATK +10% ตลอดรอบ`); }
+        else if (t==='heal'){ heal(1); healMates(1); const o=pick(trainOptions(S.floor,2)); applyTrain(o); qEnd(`💚 ฟื้นเต็มหลอด และได้ ${o.label}`); }
+        else { S.hp=Math.max(1,S.hp-stats().maxhp*0.35); S.mods.def-=5; qEnd('☠️ ยาพิษเข้มข้น! HP -35% และ DEF -5% ตลอดรอบ','bad'); } }}))}; }]},
+  egg:{name:'ไข่มังกรปริศนา', steps:[
+    q=>({title:'📜 ไข่มังกรปริศนา (1/3)', icon:'🥚', text:'ไข่ลายเกล็ดใบใหญ่วางอยู่ในรังที่ถูกทิ้ง ยังอุ่นอยู่เลย…', choices:[
+      {label:'อุ้มไข่ไปด้วย', sub:'ระวังตัวมากขึ้น เสีย HP 8%', fn:()=>{ S.hp=Math.max(1,S.hp-stats().maxhp*0.08); qNext('ไข่ใบอุ่นเต้นตุบ ๆ อยู่ในอ้อมแขน'); }},
+      {label:'ปล่อยไว้ที่เดิม', alt:true, fn:()=>qEnd('คุณปล่อยไข่ไว้ให้แม่มังกรกลับมาหา')}]}),
+    q=>({title:'📜 ไข่มังกรปริศนา (2/3)', icon:'🐣', text:'เปลือกไข่แตกออก! มังกรน้อยหิวโหยร้องจี๊ด ๆ จะให้มันกินอะไรดี?', choices:[
+      {label:'🍖 ให้เนื้อ', sub:'เสีย HP 10% · มังกรไฟ (ATK)', fn:()=>{ S.hp=Math.max(1,S.hp-stats().maxhp*0.1); q.flag='fire'; S.mods.atk+=6; qNext('🐲 มังกรไฟน้อยพ่นไฟฟู่! ทีม ATK/MATK +6% ตลอดรอบ'); }},
+      {label:'💰 ให้ทอง', sub:`เสีย ${fmt(Math.round(base2(S.floor)*3))} ทอง · มังกรทอง (คริ)`, disabled:S.gold<Math.round(base2(S.floor)*3), fn:()=>{ S.gold-=Math.round(base2(S.floor)*3); q.flag='gold'; S.mods.cri+=4; qNext('🐉 มังกรทองน้อยตาเป็นประกาย! คริ +4% ตลอดรอบ'); }},
+      {label:'🪨 ให้หินแร่', sub:'ฟรี · มังกรหิน (DEF)', fn:()=>{ q.flag='rock'; S.mods.def+=7; qNext('🦎 มังกรหินน้อยเคี้ยวหินกร้วม ๆ! ทีม DEF +7% ตลอดรอบ'); }}]}),
+    q=>{ const F=S.floor, nm={fire:'มังกรไฟ',gold:'มังกรทอง',rock:'มังกรหิน'}[q.flag]||'มังกรน้อย';
+      return {title:'📜 ไข่มังกรปริศนา (3/3)', icon:'🐲', text:`${nm}ของคุณตัวโตขึ้นจนบินได้แล้ว มันคาบของบางอย่างมาวางตรงหน้า แล้วส่งเสียงลา…`, choices:[
+        {label:'รับของขวัญจากมังกร', fn:()=>{ const v=gainGold(base2(F)*(q.flag==='gold'?6:3)); gainBook(1); if (q.flag==='fire') S.mods.atk+=4; else if (q.flag==='rock') S.mods.def+=4; else S.mods.cri+=2; qEnd(`${nm}โบกปีกลา ได้ทอง ${fmt(v)} ตำราสกิล และพลังมังกรเพิ่มอีก`); }}]}; }]},
 };
 // เส้นทางแห่งโชคชะตา: เส้นเรื่องของตัวพิเศษ/ตัวลับ (ชนะบอสรอบนั้นแล้วได้ตัวถาวร)
 function destinyPick(){ const m=loadMeta(), ids=Object.keys(ALLCHARS).filter(id=>ALLCHARS[id].tier!=='n' && (!S.char || id!==S.char.id) && CHAR_LORE[id]);
@@ -2933,7 +2986,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.31</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.32</span>'}</div>`;
   }
   let runSet=false, runQuit=false;
   function runPop(){
@@ -2974,7 +3027,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="choices battle-tools"><button class="choice alt" data-act="speed"><span>ความเร็ว x${speed}</span></button><button class="choice" data-act="skip"><span>ข้าม ⏭</span></button></div><div class="scroll-hint">▼ เลื่อนลงดูข้อมูลวีรชน</div></div>`;
     if (S.phase==='event' && S.ev){
       const e = S.ev;
-      return `<div class="event">${autoMsg?`<div class="automsg">${autoMsg}</div>`:''}<div class="ev-title"><span>${e.icon}</span>${e.title}</div><div class="ev-text">${e.text}</div>
+      return `<div class="event">${autoMsg?`<div class="automsg">${autoMsg}</div>`:''}<div class="ev-title"><span>${e.icon}</span>${e.title}</div><div class="ev-text">${e.text}</div>${e.mini==='fish'?(()=>{ if (!e.t0) e.t0=performance.now(); return `<div class="fishbar"><div class="fz" style="left:${e.z0}%;width:${e.zw}%"></div><div class="fneedle" style="animation-duration:${e.dur}s;animation-delay:-${((performance.now()-e.t0)/1000).toFixed(2)}s"></div></div>`; })():''}
         <div class="choices ${e.grid?'grid':''}">${e.choices.map((c,i)=>`<button class="choice ${c.alt&&!c.enh?'alt':''} ${c.enh?'enhbtn':''} ${c.wide?'wide':''}" data-act="choose" data-i="${i}" ${c.disabled?'disabled':''}><span>${c.label}</span>${c.sub?`<small>${c.sub}</small>`:''}</button>`).join('')}</div><div class="scroll-hint">▼ เลื่อนลงดูข้อมูลวีรชน</div></div>`;
     }
     const res = S.result ? `<div class="ev-text">${S.result.text}</div>` : `<div class="ev-text">ทางเดินมืดสลัวทอดยาวลงไป… กดเดินต่อเพื่อลงชั้นถัดไป</div>`;
@@ -3148,7 +3201,7 @@ if (typeof document !== 'undefined') (function(){
     if (on && !shown){ el.innerHTML=tkInner(); el.classList.remove('tkhide'); }
     else if (!on && shown){ el.classList.add('tkhide'); setTimeout(()=>{ if (el.classList.contains('tkhide')) el.innerHTML=''; },450); } },1000);
   /* ---------- 🔔 แจ้งเตือนเกมมีอัปเดต ---------- */
-  const GAME_VER='v3.31'; let updSkip='', updT=0;
+  const GAME_VER='v3.32'; let updSkip='', updT=0;
   function updCheck(){ if (location.protocol==='file:' || document.getElementById('updpop')) return; if (Date.now()-updT<60000) return; updT=Date.now();
     fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{ if (!j||!j.v||j.v===GAME_VER||j.v===updSkip) return; updShow(j); }).catch(()=>{}); }
   function updShow(j){ const inRun=S&&S.phase&&S.phase!=='title'&&!S.over&&!hub, d=document.createElement('div'); d.id='updpop';
@@ -3233,7 +3286,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="pbtns"><button class="choice" data-act="guideopen"><span>📚 ข้อมูลเกม</span><small>ระดับอุปกรณ์ · ธาตุ · อาชีพ · อัตราสุ่ม · โหมดเกม</small></button><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.31<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.32<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
@@ -4647,7 +4700,7 @@ if (typeof document !== 'undefined') (function(){
         <div class="gdn">วงจร: 💧น้ำ → 🔥ไฟ → 🌿ไม้ → 🪨ดิน → 💧น้ำ<br>☀️แสง กับ 🌑มืด ชนะกันและกัน<br>เลือกฮีโร่ธาตุที่ชนะบอส จะตีแรงขึ้นมาก</div></div>`;
     } else if (gdTab==='cls'){
       body=`<div class="sumbox"><h3>🛡️ อาชีพ</h3>${Object.entries(CLASSES).filter(([k,c])=>c.desc&&!/^อาชีพลับ/.test(c.desc)).map(([k,c])=>`<div class="sumr gdcl"><span>${c.icon} <b>${c.name}</b></span><small>${c.desc}</small></div>`).join('')}
-        <div class="gdn">🌾 <b>สายชาวบ้าน</b>: ชนะบอสได้เหรียญตรา x1.5 + 🎟️3 แต่ไม่ได้ฮีโร่ (เพราะไม่มีตัวละครประจำตัว) ทุกครั้งที่ชนะ โอกาสตื่นรู้อาชีพลับรอบหน้า +3% (เริ่ม 6% สูงสุด 25%)<br>🌑 ยังมีอาชีพลับซ่อนอยู่ ลองค้นหาระหว่างผจญภัยดู<br>ทีมที่ดีควรมี แทงค์ไว้ยืนหน้า + ซัพพอตไว้ฮีล + ตัวตีแรง</div></div>`;
+        <div class="gdn">🔮 <b>คำใบ้อาชีพลับ</b>: ตอนเป็นชาวบ้าน "ค่าสถานะที่ฝึกบ่อยที่สุด" จะกำหนดว่าตื่นรู้เป็นอาชีพลับตัวไหน ฝึกต่างกัน → ได้อาชีพลับต่างกัน (มีทั้งสาย ATK · MATK · HP · DEF · คริ · เจาะเกราะ) ถ้าฝึกครบหลายสาย ตอนตื่นรู้จะได้เลือกเอง<br>🌾 <b>สายชาวบ้าน</b>: ชนะบอสได้เหรียญตรา x1.5 + 🎟️3 แต่ไม่ได้ฮีโร่ (เพราะไม่มีตัวละครประจำตัว) ทุกครั้งที่ชนะ โอกาสตื่นรู้อาชีพลับรอบหน้า +3% (เริ่ม 6% สูงสุด 25%)<br>🌑 ยังมีอาชีพลับซ่อนอยู่ ลองค้นหาระหว่างผจญภัยดู<br>ทีมที่ดีควรมี แทงค์ไว้ยืนหน้า + ซัพพอตไว้ฮีล + ตัวตีแรง</div></div>`;
     } else if (gdTab==='gc'){
       const TH={n:'ปกติ',sp:'ตัวพิเศษ',hid:'อาชีพลับ'};
       body=`<div class="sumbox"><h3>🔮 อัตราออกตู้สุ่มเศษฮีโร่</h3>${tb(['ได้','โอกาส'],GACHA.map(([[t,n],p])=>[`เศษ${TH[t]} ×${n}`,p+'%']))}
