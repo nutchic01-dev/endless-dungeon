@@ -948,6 +948,12 @@ h3 img.uiico{height:24px;width:auto;vertical-align:middle}
 .hsname{position:relative;font-size:22px;font-weight:900;color:#fff;text-shadow:0 2px 0 #000}.hsname small{font-size:12px;color:#ffd77a}.hssub{position:relative;font-size:12.5px;color:#d9cdf2;margin-top:2px}
 .sumbox.rwtop{border-color:#ffd34d;box-shadow:0 0 0 1.5px rgba(255,211,77,.35) inset}
 @keyframes hsspin{to{transform:rotate(360deg)}}@keyframes hsbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}@keyframes hspulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.chatwrap{flex-shrink:0;display:flex;flex-direction:column;gap:8px}.chatlist{height:calc(100vh - 330px);min-height:240px;overflow-y:auto;display:flex;flex-direction:column;gap:7px;padding:4px 2px;overscroll-behavior:contain}
+.cmsg{display:flex;gap:7px;align-items:flex-end}.cmsg.me{flex-direction:row-reverse}.cav{flex:0 0 34px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;overflow:hidden;font-size:20px}.cav img{width:40px;height:40px;object-fit:cover;object-position:top}
+.cbub{max-width:78%;background:rgba(40,30,70,.9);border:1px solid rgba(255,255,255,.1);border-radius:14px 14px 14px 4px;padding:5px 10px 7px}.cmsg.me .cbub{background:linear-gradient(#5b3fa0,#46307e);border-color:#8e6fe0;border-radius:14px 14px 4px 14px}
+.cnm{display:flex;align-items:center;gap:6px;font-size:11.5px;color:#ffd77a}.cnm small{color:#a99cc8;font-size:10px}.cblk{margin-left:auto;background:none;border:0;font-size:11px;opacity:.5;cursor:pointer;padding:0 2px}.cblk:hover{opacity:1}
+.ctx{font-size:14px;line-height:1.4;color:#fff;word-break:break-word;white-space:pre-wrap}
+.chatbar{display:flex;gap:6px}.chatbar input{flex:1;min-width:0;padding:10px 12px;border-radius:12px;border:1px solid #5a4680;background:#140e1f;color:#fff;font:inherit;font-size:15px}.chatbar .choice{flex:0 0 auto;width:auto;min-width:64px;margin:0;padding:8px 14px}
 .rkl{display:flex;flex-direction:column;gap:5px}.rkr{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:12px;background:rgba(20,15,40,.7);border:1px solid rgba(255,255,255,.08)}
 .rkr.top{border-color:rgba(255,209,102,.5);background:linear-gradient(90deg,rgba(255,209,102,.18),rgba(20,15,40,.7))}.rkr.me{border-color:#7dffcf;box-shadow:0 0 0 1.5px #7dffcf inset}
 .rkn{width:30px;text-align:center;font-size:20px}.rkn b{font-size:14px;color:var(--muted)}.rka img.art{height:38px;width:38px;object-fit:contain}.rka{width:40px;text-align:center}
@@ -2830,7 +2836,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.3</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.4</span>'}</div>`;
   }
   let runSet=false, runQuit=false;
   function runPop(){
@@ -3461,7 +3467,8 @@ if (typeof document !== 'undefined') (function(){
     return `<div class="iside l"><button class="sbtn chest ${ok?'ready':''}" data-act="ichest"><i>${uiIco('chest','🎁')}</i><span id="ichestt">${hm(mins)}</span>
         <div class="cbar"><i id="ichestb" style="width:${mins/CHEST_MAX*100}%"></i></div><b id="ichest">${ok?'กดรับได้':`อีก ${CHEST_MIN-mins} น.`}</b></button>
       <button class="sbtn" data-act="imission"><i>${uiIco('mission','🎯')}</i><span>ภารกิจ</span><b>${ms}</b></button>
-      <button class="sbtn" data-act="hub" data-k="rank"><i>${uiIco('rank','🏆')}</i><span>อันดับ</span></button></div>
+      <button class="sbtn" data-act="hub" data-k="rank"><i>${uiIco('rank','🏆')}</i><span>อันดับ</span></button>
+      <button class="sbtn" data-act="hub" data-k="chat"><i>${uiIco('chat','💬')}</i><span>แชท</span></button></div>
       <div class="iside r"><button class="sbtn ev" data-act="dhopen" style="--dc:${D.col}"><i>${DRAGON_READY.has(`dragon_${D.el}.webp`)?`<img class="uiico" src="art/dragon_${D.el}.webp" alt="">`:'🐲'}</i><span>ล่ามังกร</span><b>${dt>0?`เหลือ ${dt}`:'ครบแล้ว'}</b></button>
       ${d.farm?`<button class="sbtn fight" id="ifight" data-act="ifight"><i>${d.sub===9?uiIco('boss','👹'):'⚔️'}</i><span>${d.sub===9?'สู้บอส':'ลุยต่อ'}</span></button>`:''}</div>`; }
   function altPick(m,c,sl){ const d=m.idle, mine=Object.entries(ALLCHARS).filter(([id,x])=>heroIdleCls(id)===c&&m.chars[id]);
@@ -4416,6 +4423,42 @@ if (typeof document !== 'undefined') (function(){
     const view = rkSel!=null && D.top && D.top[rkSel] ? rkViewPop(D.top[rkSel], rkSel) : '';
     return `<div class="overlay hub" ${pageBg('rank')}>${hubHead(m,'🏆 ตารางอันดับ')}${tabs}<div class="sumbox"><div class="csd">${note}</div>${mine}${lbst}</div>${rwTable}<div class="sumbox"><div class="csd" style="text-align:center;margin-bottom:6px">แตะชื่อผู้เล่นเพื่อดูวีรชน อุปกรณ์ และค่าสถานะ</div>${body}</div>
       <button class="choice alt wide" data-act="rkreload"><span>🔄 รีเฟรช</span></button>${nav()}${view}</div>`; }
+
+  /* ---------- แชทโลก ---------- */
+  const CHAT={msgs:[], last:0, err:'', timer:null, busy:false};
+  const CHAT_BAD=['ควย','เหี้ย','เย็ด','สัส','ไอสัตว์','อีดอก','แม่ง','fuck','shit','bitch'];
+  const chatClean=t=>{ let x=String(t||''); CHAT_BAD.forEach(w=>{ x=x.split(w).join('*'.repeat(w.length)); x=x.replace(new RegExp(w,'gi'),'*'.repeat(w.length)); }); return x; };
+  const chatBlocked=()=>{ try{ return JSON.parse(localStorage.getItem('dq_chat_block')||'[]'); }catch(e){ return []; } };
+  function chatRow(r, uid, bl){ if (bl.includes(r.user_id)) return ''; const a=r.hero&&ALLCHARS[r.hero], me=r.user_id===uid, t=new Date(r.created_at), hm=t.toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'});
+    return `<div class="cmsg ${me?'me':''}"><span class="cav">${a?charArt(a.c,false,true):'🙂'}</span><div class="cbub"><div class="cnm"><b>${rkEsc(r.name||'ผู้กล้า')}</b><small>${hm}</small>${me?'':`<button class="cblk" data-act="chatblock" data-u="${r.user_id}" data-n="${rkEsc(r.name||'')}" title="ซ่อนข้อความของผู้เล่นนี้">🚫</button>`}</div><div class="ctx">${rkEsc(chatClean(r.body))}</div></div></div>`; }
+  function chatListHtml(){ const C=window.__dqCloud, uid=C&&C.auth&&C.auth.user.id, bl=chatBlocked();
+    return CHAT.msgs.length ? CHAT.msgs.map(r=>chatRow(r,uid,bl)).join('') : `<p class="csd" style="text-align:center;margin:30px 0">${CHAT.err?'':(CHAT.loaded?'ยังไม่มีข้อความ ทักทายเพื่อนๆ เป็นคนแรกเลย!':'กำลังโหลดข้อความ…')}</p>`; }
+  function chatPaint(){ const el=document.getElementById('chatlist'); if (!el) return; const atB=el.scrollHeight-el.scrollTop-el.clientHeight<60;
+    el.innerHTML=chatListHtml(); if (atB||CHAT.jump){ el.scrollTop=el.scrollHeight; CHAT.jump=false; }
+    const er=document.getElementById('chaterr'); if (er){ er.textContent=CHAT.err||''; er.style.display=CHAT.err?'':'none'; } }
+  function chatPoll(now){ clearTimeout(CHAT.timer); CHAT.timer=null; if (hub!=='chat') return; const C=window.__dqCloud;
+    if (!C||!C.chatFetch){ CHAT.err='แชทใช้ได้บนเว็บเกมเท่านั้น'; chatPaint(); return; }
+    const go=()=>{ CHAT.timer=setTimeout(()=>chatPoll(),document.hidden?15000:4000); };
+    if (CHAT.busy){ go(); return; } CHAT.busy=true;
+    C.chatFetch(CHAT.last).then(rows=>{ rows=(rows||[]).slice().reverse(); if (rows.length){ CHAT.msgs=CHAT.msgs.concat(rows.filter(r=>r.id>CHAT.last)).slice(-150); CHAT.last=Math.max(CHAT.last,...rows.map(r=>r.id)); }
+      CHAT.loaded=true; if (CHAT.err&&!CHAT.sendErr) CHAT.err=''; chatPaint(); })
+      .catch(e=>{ CHAT.err=C.chatErr?C.chatErr(e):'โหลดแชทไม่ได้'; chatPaint(); })
+      .then(()=>{ CHAT.busy=false; go(); }); }
+  function chatSendNow(){ const inp=document.getElementById('chatin'), C=window.__dqCloud; if (!inp||!C||!C.chatSend) return;
+    const txt=chatClean(inp.value.trim()).slice(0,200); if (!txt) return; if (!C.auth){ CHAT.err='เข้าสู่ระบบก่อนจึงจะส่งข้อความได้'; chatPaint(); return; }
+    if (CHAT.sending) return; CHAT.sending=true; const m=loadMeta(), btn=document.getElementById('chatgo'); if (btn) btn.disabled=true;
+    C.chatSend(txt,(m.name||'ผู้กล้า').slice(0,20),(m.show&&m.show.main)||null)
+      .then(()=>{ inp.value=''; CHAT.err=''; CHAT.sendErr=false; CHAT.jump=true; chatPoll(true); })
+      .catch(e=>{ CHAT.err=C.chatErr?C.chatErr(e):'ส่งไม่สำเร็จ'; CHAT.sendErr=true; setTimeout(()=>{ CHAT.sendErr=false; },4000); chatPaint(); })
+      .then(()=>{ CHAT.sending=false; const b=document.getElementById('chatgo'); if (b) b.disabled=false; const i=document.getElementById('chatin'); if (i) i.focus(); }); }
+  document.addEventListener('keydown',e=>{ if (e.key==='Enter'&&e.target&&e.target.id==='chatin'&&!e.isComposing){ e.preventDefault(); chatSendNow(); } });
+  function hubChat(m){ const C=window.__dqCloud, li=!!(C&&C.auth);
+    if (!CHAT.timer&&!CHAT.busy) setTimeout(()=>chatPoll(true),0); else setTimeout(()=>{ const el=document.getElementById('chatlist'); if (el) el.scrollTop=el.scrollHeight; },0);
+    return `<div class="overlay hub chatpg" ${pageBg('rank')}>${hubHead(m,'💬 แชทโลก')}
+      <div class="sumbox chatwrap"><div class="csd" style="text-align:center">คุยกับผู้เล่นทุกคน · เก็บข้อความ 3 วัน · กด 🚫 เพื่อซ่อนข้อความของคนที่ไม่อยากเห็น</div>
+        <div id="chatlist" class="chatlist">${chatListHtml()}</div><div id="chaterr" class="rkst bad" style="${CHAT.err?'':'display:none'}">${rkEsc(CHAT.err||'')}</div>
+        ${li?`<div class="chatbar"><input id="chatin" maxlength="200" placeholder="พิมพ์ข้อความ… (Enter เพื่อส่ง)" autocomplete="off"><button id="chatgo" class="choice" data-act="chatsend"><span>ส่ง</span></button></div>`
+          :`<div class="rkme">เข้าสู่ระบบเพื่อพิมพ์แชท (อ่านได้โดยไม่ต้องเข้าสู่ระบบ) <button class="mini" data-cloud="login">เข้าสู่ระบบ</button></div>`}</div>${nav()}</div>`; }
   let rkSel=null;
   function rkViewPop(r,i){ const d=r.detail||{}, a=d.char&&ALLCHARS[d.char]||(r.hero&&ALLCHARS[r.hero]), row=(ic,l,v)=>`<div class="sumr"><span>${ic} ${l}</span><b>${v}</b></div>`;
     const heroName = a ? a.c.name : (d.cls==='villager'||rkTab==='endless'||rkTab==='daily') ? (d.cls&&d.cls!=='villager'&&CLASSES[d.cls]?CLASSES[d.cls].name:'ชาวบ้าน') : '—';
@@ -4434,7 +4477,7 @@ if (typeof document !== 'undefined') (function(){
       ${html}<button class="choice wide" data-act="rkviewc"><span>ปิด</span></button></div></div>`; }
   function hubView(){ const m=loadMeta();
     const W = wPop ? worldPop() : '';
-    if (hub==='adv') return hubAdv(m)+W; if (hub==='perm'){ hub='shop'; shTab='medal'; } if (hub==='shop') return hubShop(m)+W; if (hub==='troop') return hubTroop(m)+W; if (hub==='dragon') return hubDragon(m)+W; if (hub==='hundred') return hubHundred(m)+W; if (hub==='relicbag') return hubRelicBag(m)+W; if (hub==='bag') return hubBag(m)+W; if (hub==='rank') return hubRank(m)+W; if (hub==='spirits') return hubSpirits(m)+W; if (hub==='nest') return hubNest(m)+W; if (hub==='chars') return hubChars(m)+charPopup(m)+tryPopHtml(m)+W; if (hub==='gacha') return hubGacha(m)+W;
+    if (hub==='adv') return hubAdv(m)+W; if (hub==='perm'){ hub='shop'; shTab='medal'; } if (hub==='shop') return hubShop(m)+W; if (hub==='troop') return hubTroop(m)+W; if (hub==='dragon') return hubDragon(m)+W; if (hub==='hundred') return hubHundred(m)+W; if (hub==='relicbag') return hubRelicBag(m)+W; if (hub==='bag') return hubBag(m)+W; if (hub==='rank') return hubRank(m)+W; if (hub==='chat') return hubChat(m)+W; if (hub==='spirits') return hubSpirits(m)+W; if (hub==='nest') return hubNest(m)+W; if (hub==='chars') return hubChars(m)+charPopup(m)+tryPopHtml(m)+W; if (hub==='gacha') return hubGacha(m)+W;
     return hubHome(m)+W; }
   function hubAct(act, b){
     const m = loadMeta();
@@ -4459,6 +4502,8 @@ if (typeof document !== 'undefined') (function(){
     if (/^rb/.test(act) && rbAct(act,b)) return true;
     if (/^bag/.test(act) && bagAct(act,b)) return true;
     if (act==='rktab'){ rkTab=b.dataset.k; rkSel=null; render(); return true; }
+    if (act==='chatsend'){ chatSendNow(); return true; }
+    if (act==='chatblock'){ const u=b.dataset.u; if (u&&confirm(`ซ่อนข้อความของ ${b.dataset.n||'ผู้เล่นนี้'} ทั้งหมด? (ยกเลิกได้โดยล้างข้อมูลเบราว์เซอร์)`)){ const bl=chatBlocked(); if (!bl.includes(u)) bl.push(u); try{ localStorage.setItem('dq_chat_block',JSON.stringify(bl.slice(-200))); }catch(e){} chatPaint(); } return true; }
     if (act==='rkview'){ rkSel=+b.dataset.i; render(); return true; }
     if (act==='rkviewc'){ rkSel=null; render(); return true; }
     if (act==='rksend'){ const C=window.__dqCloud; if (C&&C.lbSync) C.lbSync(true).then(()=>rkLoad(rkTab,true)); render(); return true; }
@@ -5066,7 +5111,12 @@ if (typeof document !== 'undefined') (function(){
     }catch(e){ fail=e; }
     lbBusy=false; lbSet(fail?{state:'err',msg:lbErr(fail),ok}:{state:'ok',ok}); return LB; }
   const _push=push; push=async function(f){ await _push(f); lbSync(); };
-  window.__dqCloud={push,pull,lbTop,lbMine,lbSync,lbErr,get auth(){ return auth; }};
+  /* ---------- แชทโลก ---------- */
+  async function chatFetch(after){ return await req(`/rest/v1/chat_messages?select=id,user_id,name,hero,body,created_at&channel=eq.world${after?'&id=gt.'+after:''}&order=id.desc&limit=60`,{method:'GET'},!!auth); }
+  async function chatSend(body,name,hero){ return await rpc('send_chat',{p_body:body,p_name:name,p_hero:hero}); }
+  const chatErr=e=>{ const s=(e&&e.message)||String(e); if (/Could not find|does not exist|schema cache/i.test(s)||(e&&e.status===404)) return 'ระบบแชทบนเซิร์ฟเวอร์ยังไม่ได้ติดตั้ง (ต้องรันไฟล์ chat.sql ใน Supabase)';
+    if (/too fast/i.test(s)) return 'ส่งเร็วเกินไป รอสักครู่แล้วส่งใหม่'; if (/not logged in|หมดเวลาเข้าสู่ระบบ/i.test(s)) return 'เข้าสู่ระบบก่อนจึงจะส่งข้อความได้'; if (/empty/i.test(s)) return 'พิมพ์ข้อความก่อนส่ง'; return thErr(e); };
+  window.__dqCloud={push,pull,lbTop,lbMine,lbSync,lbErr,chatFetch,chatSend,chatErr,get auth(){ return auth; }};
 })();
 </script>
 </body>
