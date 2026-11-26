@@ -1086,7 +1086,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.34</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.35</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -1560,6 +1560,7 @@ function newRun(consume){
     log:[], phase:'walk', ev:null, result:null, over:null, meta:null,
   };
   applyRunStart(loadMeta(), consume);
+  S.route=routePick();
 }
 /* ---------- 💾 บันทึกรอบที่กำลังเล่น (รีเฟรช/อัปเดตแล้วเล่นต่อได้) ---------- */
 const RUN_KEY='dq_run';
@@ -1625,7 +1626,7 @@ const ART = (()=>{ const A='art/', cls={villager:A+'char_villager.webp'}, char={
   FORM_READY.forEach(id=>form[id]=A+`char_${id}_form.webp`);
   const M={'สไลม์':'puddle','เห็ดพิษ':'shroom','หมาป่า':'leafwolf','ก็อบลิน':'goblin','ค้างคาวคริสตัล':'crystalbat','แมงมุมยักษ์':'rockspider','โกเลมหิน':'golem','งูผลึก':'crystalsnake',
     'อัศวินโครงกระดูก':'skelknight','ผีเสื้อราตรี':'moonmoth','หุ่นเกราะ':'armor','หนูยักษ์':'rat','ซาลาแมนเดอร์':'salamander','ปีศาจไฟ':'imp','มังกรน้อย':'babydragon','แมงป่องเพลิง':'scorpion',
-    'เงามืด':'faceless','ตาปีศาจ':'eye','วิญญาณหลงทาง':'lantern','หนวดห้วงลึก':'tentacle','สไลม์ทองคำ':'goldslime','อัศวินต้องสาป':'cursedknight','แม่มดหนอง':'swampwitch','โจรดักปล้น':'thief','หีบมิมิค':'mimic','ผู้พิทักษ์ลูกแก้ว':'orbguard','ภูตเมฆฟู':'cloudsprite','นกอัสนี':'thunderbird','เทวดูตไขลาน':'clockangel','กริฟฟอนน้อย':'griffin','เยติตัวจิ๋ว':'yeti','อัศวินน้ำแข็ง':'iceknight','หมาป่าหิมะจันทร์':'frostwolf','ดวงไฟเยือกแข็ง':'icewisp'};
+    'เงามืด':'faceless','ตาปีศาจ':'eye','วิญญาณหลงทาง':'lantern','หนวดห้วงลึก':'tentacle','สไลม์ทองคำ':'goldslime','อัศวินต้องสาป':'cursedknight','แม่มดหนอง':'swampwitch','โจรดักปล้น':'thief','ลูกน้องนักต้มตุ๋น':'thief','วิญญาณอัศวินแค้น':'cursedknight','ผู้ท้าประลองเร่':'skelknight','วิญญาณเร่ร่อน':'lantern','หีบมิมิค':'mimic','ผู้พิทักษ์ลูกแก้ว':'orbguard','ภูตเมฆฟู':'cloudsprite','นกอัสนี':'thunderbird','เทวดูตไขลาน':'clockangel','กริฟฟอนน้อย':'griffin','เยติตัวจิ๋ว':'yeti','อัศวินน้ำแข็ง':'iceknight','หมาป่าหิมะจันทร์':'frostwolf','ดวงไฟเยือกแข็ง':'icewisp'};
   Object.assign(M,{'ปูเกราะปะการัง':'coralcrab','แมงกะพรุนเรืองแสง':'jelly','ทหารฉลาม':'sharkguard','นางเงือกเงามืด':'darkmermaid','มัมมี่น้อย':'mummy','ด้วงสคารับทอง':'scarab','หนอนทราย':'sandworm','จิ้งจอกเพลิงทราย':'firefox','ทหารเทวะศิลา':'holystatue','เทวดาน้อยหลงผิด':'lostangel','สิงโตทองศักดิ์สิทธิ์':'goldlion','ภูตแสงคลั่ง':'madwisp'});
   const mon={}; Object.entries(M).forEach(([n,f])=>mon[n]=A+`mon_${f}.webp`);
   const bg={'ป่าเวทมนตร์':A+'bg_forest.jpg','ถ้ำคริสตัล':A+'bg_cave.jpg','ปราสาทร้าง':A+'bg_castle.jpg','เมืองลาวา':A+'bg_lava.jpg','ห้วงเหว':A+'bg_abyss.jpg','เกาะลอยฟ้า':A+'bg_sky.jpg','ปราสาทน้ำแข็ง':A+'bg_ice.jpg','วิหารใต้สมุทร':A+'bg_sea.webp','สุสานทะเลทราย':A+'bg_desert.webp','วิหารเทพล่มสลาย':A+'bg_heaven.webp'};
@@ -1671,7 +1672,7 @@ function addLog(text, cls=''){ S.log.unshift({text,cls,f:S.floor}); if(S.log.len
 function heal(pct){ const m=stats().maxhp; const before=S.hp; S.hp=Math.min(m, S.hp + m*pct); return Math.round(S.hp-before); }
 function healMates(pct){ S.party.forEach(m=>{ if(!m.ko){ const mx=mateStats(m).maxhp; m.hp=Math.min(mx, m.hp+mx*pct); } }); }
 function addExp(n){
-  S.exp += Math.round(n*(1+accVal('tome')/100)*(1+S.meta.pm.exp/100)); let ups=0;
+  S.exp += Math.round(n*((routeOf()||{}).exp||1)*(1+accVal('tome')/100)*(1+S.meta.pm.exp/100)); let ups=0;
   while (S.lv < LV_CAP && S.exp >= needExp(S.lv)) { S.exp -= needExp(S.lv); S.lv++; ups++; heal(CONFIG.levelUpHeal); healMates(CONFIG.levelUpHeal); }
   if (S.lv>=LV_CAP) S.exp = 0;
   if (ups){ addLog(`เลเวลอัป! Lv.${S.lv}`,'good'); SND.sfx('levelup'); }
@@ -1680,7 +1681,7 @@ function addExp(n){
   if (S.villagerPath && S.cls==='villager' && S.lv>=60 && !S.aw60){ S.aw60=true; if (chance(awakenChance())) S.pendingAwaken=true; }
   return ups;
 }
-function gainGold(n){ n = Math.round(n*(S.goldCurse>0?0.8:1)*(1+accVal('purse')/100)*(1+S.meta.pm.gold/100)); S.gold += n; S.st.goldIn += n; return n; }
+function gainGold(n){ n = Math.round(n*((routeOf()||{}).gold||1)*(S.goldCurse>0?0.8:1)*(1+accVal('purse')/100)*(1+S.meta.pm.gold/100)); S.gold += n; S.st.goldIn += n; return n; }
 function sellGold(n){ S.gold += n; S.st.goldIn += n; }
 function mergeBS(b, win){ const t=S.st; t.battles++; if(win) t.wins++;
   ['dodges','revives','dot','steal','heal','ult','dealt','taken','bossTurns','combos'].forEach(k=>t[k]=(t[k]||0)+(b[k]||0));
@@ -2203,13 +2204,73 @@ function questEvent(){ const q=S.q, fnq = q.id==='destiny' ? null : (QUESTS[q.id
 function maybeQuest(){ if (S.q || (S.qCool||0)>S.floor || S.floor<12 || S.daily) return false;
   const done=S.qDone||[];
   if (S.char && !done.includes('destiny') && chance(4)){ S.q={id:'destiny',step:0,hero:destinyPick(),next:S.floor}; return true; }
-  const pool=Object.keys(QUESTS).filter(k=>!done.includes(k)); if (pool.length && chance(5)){ S.q={id:pick(pool),step:0,next:S.floor}; return true; }
+  const R=routeOf(), pool=Object.keys(QUESTS).filter(k=>!done.includes(k) && (!R || R.q.includes(k))); if (pool.length && chance(5)){ S.q={id:pick(pool),step:0,next:S.floor}; return true; }
   return false; }
+/* ---------- 🧭 เส้นทางการเดินทาง: แต่ละรอบสุ่ม 1 ใน 5 เส้นทาง (ไม่ซ้ำรอบก่อน) เปลี่ยนสัดส่วนเหตุการณ์ เควส และเหตุการณ์เฉพาะเส้นทาง ---------- */
+const ROUTES = {
+  caravan:{name:'เส้นทางคาราวาน', icon:'🐫', desc:'เส้นทางการค้า พ่อค้าเยอะ ทองไหลมาเทมา', w:{mStat:1.8,mSkill:1.6,mPotion:1.8,mEquip:1.8,gold:1.5,monster:0.85,bad:0.8}, gold:1.15, q:['cups','alchemist','child','fish'], ev:['caravan','auction']},
+  sacred:{name:'เส้นทางศักดิ์สิทธิ์', icon:'⛪', desc:'ศาลเจ้าและพรศักดิ์สิทธิ์ เหตุร้ายน้อยลง พักฟื้นบ่อย', w:{rest:1.6,rune:1.3,altar:3,bad:0.6,badMon:0.7,stone:1.3}, q:['shrine','sphinx','knight','egg'], ev:['fountain','priest']},
+  cursed:{name:'เส้นทางต้องสาป', icon:'💀', desc:'อันตรายรอบด้าน แต่ทอง +30% และ EXP +20%', w:{bad:1.7,badMon:2,chest:1.5,rest:0.7}, gold:1.3, exp:1.2, q:['knight','alchemist','sphinx','cups'], ev:['spirit','cursedChest']},
+  wild:{name:'เส้นทางป่าลึก', icon:'🌿', desc:'สัตว์ใจดี สมุนไพรวิเศษ และที่พักผ่อนตามธรรมชาติ', w:{goodMon:2.2,rest:1.5,gold:0.9,training:1.2}, q:['egg','fish','child','shrine'], ev:['herb','beast']},
+  warrior:{name:'เส้นทางนักรบ', icon:'⚔️', desc:'การต่อสู้และการฝึกฝนเข้มข้น EXP +15%', w:{monster:1.25,training:1.6,stone:1.2,mEquip:1.3,rest:0.8}, exp:1.15, q:['knight','shrine','fish','sphinx'], ev:['arena','swordStone']},
+};
+const RT_EV_W = 6;   // น้ำหนักเหตุการณ์เฉพาะเส้นทาง (เทียบกับเหตุการณ์อื่นรวม ~103)
+function routePick(){ let last=''; try{ last=localStorage.getItem('dq_lastRoute')||''; }catch(e){}
+  const ks=Object.keys(ROUTES).filter(k=>k!==last), k=ks[Math.floor(rng()*ks.length)]; try{ localStorage.setItem('dq_lastRoute',k); }catch(e){} return k; }
+const routeOf = () => ROUTES[S&&S.route] || null;
+function routeIntroEv(){ const R=routeOf(); if (!R) return null;
+  return {type:'routeIntro', title:`🧭 ${R.name}`, icon:R.icon, text:`การเดินทางรอบนี้พาคุณสู่ <b>${R.name}</b>\n${R.desc}\n\n<small class="gs">แต่ละรอบสุ่มเส้นทางใหม่ เหตุการณ์ เควส และสิ่งที่พบระหว่างทางจะไม่เหมือนกัน</small>`, choices:[{label:'ออกเดินทาง! ▶', wide:true, fn:()=>done(`${R.icon} เริ่มต้น${R.name}`,'good')}]}; }
+function routeEvent(F){ const R=routeOf(), k=pick(R.ev), ev=(title,icon,text,choices)=>({type:'route',title,icon,text,choices}), b2=base2(F);
+  const giveItem=(r,msg,slot)=>{ S.ev=offerEvent(makeItem(F,slot||null,Math.min(3,r)), msg); };
+  switch(k){
+    case 'caravan': { const p1=Math.round(b2*4), p2=Math.round(b2*3);
+      return ev('กองคาราวานพเนจร','🐫','ขบวนอูฐบรรทุกสินค้าแวะพักกลางหอคอย พ่อค้าเรียกให้เข้ามาดูของแปลก ๆ',[
+        {label:'📦 ซื้อหีบปริศนา', sub:`${fmt(p1)} ทอง · อุปกรณ์ระดับสูงขึ้น`, disabled:S.gold<p1, fn:()=>{ S.gold-=p1; giveItem(rollRarity(F,1),'📦 เปิดหีบปริศนา'); }},
+        {label:'🧴 ซื้อยาบำรุงชั้นดี', sub:`${fmt(p2)} ทอง · ค่าสถานะถาวร`, disabled:S.gold<p2, fn:()=>{ S.gold-=p2; const o=pick(trainOptions(F,2)); applyTrain(o); done(`ดื่มยาบำรุง ได้ ${o.label}`,'good'); }},
+        {label:'เดินผ่าน', alt:true, fn:()=>done('โบกมือลาคาราวาน')}]); }
+    case 'auction': { const r=Math.min(3,rollRarity(F,1)+1), pr=Math.round(b2*(4+r*2));
+      return ev('งานประมูลใต้ดิน','🔨',`ห้องลับเต็มไปด้วยนักผจญภัย กำลังประมูล<b class="r${r}">อุปกรณ์${RARITY[r].th}</b>! จะเสนอราคาเท่าไหร่? (จ่ายเฉพาะตอนชนะ)`,
+        [[0.6,30,'เสนอต่ำ'],[1,60,'เสนอกลาง'],[1.6,92,'เสนอสูง']].map(([m,pc,l])=>({label:`💰 ${l}`, sub:`${fmt(Math.round(pr*m))} ทอง · ชนะ ${pc}%`, disabled:S.gold<Math.round(pr*m), fn:()=>{ if (chance(pc)){ S.gold-=Math.round(pr*m); giveItem(r,`🔨 ชนะการประมูล! จ่าย ${fmt(Math.round(pr*m))} ทอง`); } else done('มีคนเสนอสูงกว่า… พลาดของชิ้นนี้ไป','bad'); }})).concat([{label:'แค่มาดูเฉย ๆ', alt:true, fn:()=>done('เดินออกจากห้องประมูล')}])); }
+    case 'fountain': { const c=Math.round(b2);
+      return ev('น้ำพุอธิษฐาน','⛲','น้ำพุใสแจ๋วส่องแสงระยิบระยับ ตำนานว่าโยนเหรียญแล้วคำอธิษฐานจะเป็นจริง',[
+        {label:'🪙 โยนเหรียญอธิษฐาน', sub:`${fmt(c)} ทอง · สุ่มพร`, disabled:S.gold<c, fn:()=>{ S.gold-=c; const x=rng(); if (x<0.3){ heal(1); healMates(1); done('✨ น้ำพุเปล่งแสง ทีมฟื้น HP เต็ม!','good'); } else if (x<0.55){ runeGain(1); done('🔷 รูนลอยขึ้นมาจากน้ำ!','good'); } else if (x<0.85){ const o=pick(trainOptions(F,2)); applyTrain(o); done(`🌟 ได้รับพร ${o.label}`,'good'); } else done('เหรียญจมหายไปเงียบ ๆ… ไม่มีอะไรเกิดขึ้น'); }},
+        {label:'💧 ดื่มน้ำ', sub:'ฟื้น HP 25%', fn:()=>{ heal(0.25); healMates(0.25); done('น้ำเย็นชื่นใจ ทีมฟื้น HP 25%','good'); }}]); }
+    case 'priest': { const c=Math.round(b2*2.5), bad=S.poison||S.goldCurse||S.mods.atk<0||S.mods.def<0||S.mods.cri<0;
+      return ev('นักบวชพเนจร','🧙‍♂️','นักบวชชราถือคทาส่องแสง "ข้าช่วยชำระสิ่งชั่วร้ายให้ได้ หรือจะรับพรก็ได้"',[
+        {label:'✨ ชำระคำสาป', sub:bad?`${fmt(c)} ทอง · ล้างพิษ/คำสาปลดพลัง`:'ไม่มีคำสาปให้ล้าง', disabled:!bad||S.gold<c, fn:()=>{ S.gold-=c; S.poison=0; S.goldCurse=0; ['atk','def','cri'].forEach(k=>{ if (S.mods[k]<0) S.mods[k]=0; }); done('แสงศักดิ์สิทธิ์ล้างคำสาปออกจนหมด!','good'); }},
+        {label:'🙏 รับพรป้องกัน', sub:`${fmt(c)} ทอง · ทีม DEF +5% ตลอดรอบ`, disabled:S.gold<c, fn:()=>{ S.gold-=c; S.mods.def+=5; done('ได้รับพรป้องกัน ทีม DEF +5%','good'); }},
+        {label:'ขอบคุณแล้วเดินต่อ', alt:true, fn:()=>done('นักบวชอวยพรให้เดินทางปลอดภัย')}]); }
+    case 'spirit': { const m=makeMon(F); m.name='วิญญาณเร่ร่อน'; m.icon='👻'; m.hp*=1.6; m.maxhp=m.hp; m.el='dark';
+      return ev('วิญญาณขอความช่วยเหลือ','👻','วิญญาณสาวร่ำไห้ "ช่วยปลดปล่อยข้าจากวิญญาณร้ายที่สิงอยู่ที…" เงาดำวนรอบตัวนาง',[
+        {label:'⚔️ ปลดปล่อยวิญญาณ', sub:'สู้ ได้ EXP ×3 และอุปกรณ์', fn:()=>fight([m], ()=>{ addExp(monExp(F)*3); S.offer=makeItem(F,null,Math.min(3,rollRarity(F,1))); return 'วิญญาณสาวยิ้มแล้วจางหายไป ทิ้งของขวัญไว้ให้'; })},
+        {label:'เดินหนี', alt:true, sub:'40% โดนคำสาป', fn:()=> chance(40) ? done(`วิญญาณร้ายตามติด! ${applyCurse()}`,'bad') : done('รีบเดินจากมาได้')}]); }
+    case 'cursedChest': return ev('หีบต้องสาป','🧰','หีบสีดำมีโซ่พันรอบ ส่งเสียงกระซิบเรียกชื่อคุณ…',[
+        {label:'🔓 เปิดหีบ', sub:'60% อุปกรณ์ดีมาก / 40% คำสาป', fn:()=>{ if (chance(60)) giveItem(Math.min(3,rollRarity(F,2)),'🧰 หีบต้องสาปเปิดออก…'); else done(`โซ่ดีดใส่! ${applyCurse()}`,'bad'); }},
+        {label:'ปล่อยไว้', alt:true, fn:()=>done('เสียงกระซิบเงียบลงเมื่อคุณเดินห่างออกมา')}]);
+    case 'herb': return ev('ทุ่งสมุนไพรวิเศษ','🌸','ทุ่งดอกไม้เรืองแสงสามสี ชาวป่าว่าแต่ละสีมีพลังต่างกัน',[
+        {label:'🌹 ดอกแดง', sub:'ฟื้น HP 45%', fn:()=>{ heal(0.45); healMates(0.45); done('ทีมฟื้น HP 45%','good'); }},
+        {label:'💠 ดอกฟ้า', sub:'ล้างพิษ + ฟื้น 20%', fn:()=>{ S.poison=0; heal(0.2); healMates(0.2); done('พิษหายไป สดชื่นขึ้น','good'); }},
+        {label:'🌼 ดอกทองหายาก', sub:'50% ค่าสถานะ ×2 / 50% ติดพิษ', fn:()=>{ if (chance(50)){ const o=pick(trainOptions(F,2.5)); applyTrain(o); done(`ดอกทองมอบพลัง ${o.label}!`,'good'); } else { S.poison=Math.max(S.poison,8); done('ดอกทองมีพิษ! ติดพิษ 8 ชั้น','bad'); } }}]);
+    case 'beast': return ev('สัตว์ป่าบาดเจ็บ','🦌','กวางเขาเงินติดกับดักนายพราน ขาเจ็บจนลุกไม่ไหว',[
+        {label:'🩹 ช่วยรักษา', sub:'เสีย HP 10% · ได้เพื่อนสัตว์ป่า', fn:()=>{ S.hp=Math.max(1,S.hp-stats().maxhp*0.1); healMates(0.3); S.mods.atk+=3; done('กวางเขาเงินเลียมือขอบคุณ แล้วนำทางพาทีมไปที่ปลอดภัย ทีม ATK/MATK +3% ตลอดรอบ','good'); }},
+        {label:'🏹 ล่าเป็นอาหาร', sub:'ได้ทองและ EXP', fn:()=>{ addExp(monExp(F)*2); const v=gainGold(b2*2); done(`ได้เนื้อกวางไปขาย ${fmt(v)} ทอง`); }},
+        {label:'ปล่อยไป', alt:true, fn:()=>{ done('คุณแกะกับดักแล้วปล่อยกวางไป'); }}]);
+    case 'arena': { const m=makeMon(F); m.name='ผู้ท้าประลองเร่'; m.icon='🤺'; m.hp*=2.2; m.maxhp=m.hp; m.atk*=1.25;
+      return ev('ลานประลองเร่','🏟️','นักสู้ร่างยักษ์ยืนกลางลานทราย "ใครกล้าสู้กับข้า? ชนะได้รางวัลงาม!"',[
+        {label:'⚔️ รับคำท้า', sub:'มอนแกร่ง · ชนะได้อุปกรณ์หายาก', fn:()=>fight([m], ()=>{ addExp(monExp(F)*2.5); S.offer=makeItem(F,null,Math.min(3,rollRarity(F,1)+1)); return 'ชนะการประลอง! ได้รับรางวัลจากผู้ชม'; })},
+        {label:'👀 นั่งดูเฉย ๆ', sub:'ได้ EXP เล็กน้อย', fn:()=>{ addExp(monExp(F)); done('เรียนรู้ท่วงท่าจากการดูประลอง'); }}]); }
+    case 'swordStone': { const pc=Math.min(60, 25+Math.round((stats().atk+stats().matk)/40));
+      return ev('ดาบปักหิน','🗡️','ดาบส่องแสงปักอยู่ในก้อนหินโบราณ ว่ากันว่ามีแต่ผู้คู่ควรเท่านั้นที่ดึงออกได้',[
+        {label:'💪 ลองดึงดาบ', sub:`โอกาสสำเร็จ ${pc}% · พลาดเสีย HP 12%`, fn:()=>{ if (chance(pc)) giveItem(3,'⚔️ ดาบหลุดออกจากหิน! คุณคือผู้ถูกเลือก','weapon'); else { S.hp=Math.max(1,S.hp-stats().maxhp*0.12); done('ดาบไม่ขยับเลย… มือเจ็บไปหมด HP -12%','bad'); } }},
+        {label:'เดินผ่าน', alt:true, fn:()=>done('ดาบยังคงรอผู้คู่ควรคนต่อไป')}]); }
+  } }
 function rollEvent(){
   if (S.sinceMerchant >= 25) return pick(['mStat','mSkill','mPotion','mEquip']);
   let e;
   for (let i=0;i<10;i++){
-    e = weighted(CONFIG.events);
+    { const R=routeOf(), tot=CONFIG.events.reduce((a,x)=>a+x[1],0), bw=(CONFIG.events.find(x=>x[0]==='boss')||[0,0])[1];
+      if (chance(100*bw/tot)) e='boss';   // บอส: โอกาสเท่าเดิมทุกชั้น ไม่ขึ้นกับเส้นทาง
+      else e = weighted(CONFIG.events.filter(x=>x[0]!=='boss').map(([k,w])=>[k, w*((R&&R.w[k])||1)]).concat(R&&S.floor>=5&&!S.daily?[['route',RT_EV_W]]:[])); }
     if (e==='boss' && (S.lv < CONFIG.bossMinLevel || !(S.char || S.villagerPath))) e='monster';
     if (e==='monster' && S.villagerPath && S.cls==='villager' && S.floor>10 && chance(100*CONFIG.orbRate/33)) e='orb';
     if ((e==='bad'||e==='badMon') && S.badStreak>=2) continue;
@@ -2340,6 +2401,7 @@ function buildEvent(type){
       return ev('ลูกแก้วกับผู้พิทักษ์','🔮',`ผู้พิทักษ์หินเฝ้าลูกแก้วเรืองแสงอยู่\nสะสมแล้ว ${n}/${CONFIG.orbNeed}`,[
         {label:'สู้เพื่อลูกแก้ว', fn:()=>fight([g], ()=>{ addExp(monExp(F)); return get(); })},
         {label:'เดินผ่าน', alt:true, fn:()=>done('ปล่อยลูกแก้วไว้ก่อน')}]); }
+    case 'route': return routeEvent(F);
     case 'boss': { const bosses=makeBosses(), bl=bossLevel(), rp=Math.min(75, RUNE[S.rune.lv].pct + (S.rune.lv?accVal('cloak'):0)), est=estimateWin(bosses);
       const lvl = est>=60?'สูง':est>=30?'ปานกลาง':'ต่ำ';
       const extra = bosses.length>1?`\nบอสมาทั้งหมด ${bosses.length} ตัว!`:'';
@@ -2864,7 +2926,7 @@ function adaptGear(){
   ['weapon','helm','armor','boots','acc','acc2'].forEach(s=>{ const it=S.gear[s]; if (!it || !it.adapt || it.ty===ty) return;
     it.ty = ty; it.subs.forEach(x=>{ if (x.k==='atk'&&ty==='mag') x.k='matk'; else if (x.k==='matk'&&ty==='phy') x.k='atk'; }); });
 }
-function startDaily(){ runClear(); const day=dayKey(); rng = seedRng('daily-'+day); newRun(false); S.daily = day;
+function startDaily(){ runClear(); const day=dayKey(); rng = seedRng('daily-'+day); newRun(false); S.daily = day; S.route=null;
   Object.keys(S.meta.pm).forEach(k=>S.meta.pm[k]= typeof S.meta.pm[k]==='number'?0:false); S.meta.stars={}; S.meta.forms={};
   S.gear.acc=null; S.acc2=false; S.rune={lv:0,timer:0}; S.gold=0; S.hp=stats().maxhp; }
 function applyRunStart(m, consume){
@@ -2987,7 +3049,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.34</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.35</span>'}</div>`;
   }
   let runSet=false, runQuit=false;
   function runPop(){
@@ -3062,7 +3124,7 @@ if (typeof document !== 'undefined') (function(){
     const head = `<div class="sh-head"><div class="sh-av ${sp?'sp':''}">${unitIcon(S.cls,S.char)}<div class="sh-lv">Lv.${S.lv}</div></div>
       <div class="sh-meta"><div class="sh-sub">${clsName}${S.char?` · ${elIcon(S.char.el)} ธาตุ${ELEMENTS[S.char.el].name}`:''}</div>
         <div class="sh-name">${unitName(S.cls,S.char)}${sp?' ✨':''}</div>
-        <div class="sh-chips"><span class="sh-chip">🪙 ${fmt(S.gold)}</span><span class="sh-chip">🧭 ${S.floor} ชั้น</span></div>
+        <div class="sh-chips"><span class="sh-chip">🪙 ${fmt(S.gold)}</span><span class="sh-chip">🧭 ${S.floor} ชั้น</span>${routeOf()?`<span class="sh-chip">${routeOf().icon} ${routeOf().name}</span>`:''}</div>
         <div class="sh-exp"><i style="width:${exP}%"></i></div><div class="sh-exptxt">EXP ${fmt(S.exp)} / ${S.lv>=LV_CAP?'MAX':fmt(need)}</div></div></div>
       <div class="sh-hp"><div class="bigbar"><i id="heroBar" style="width:${100*S.hp/st.maxhp}%;background:linear-gradient(90deg,var(--hp),var(--hp2))"></i><span id="heroHpTxt">HP ${fmt(S.hp)} / ${fmt(st.maxhp)}</span></div></div>`;
     const rune = S.rune.lv
@@ -3209,7 +3271,7 @@ if (typeof document !== 'undefined') (function(){
     if (on && !shown){ el.innerHTML=tkInner(); el.classList.remove('tkhide'); }
     else if (!on && shown){ el.classList.add('tkhide'); setTimeout(()=>{ if (el.classList.contains('tkhide')) el.innerHTML=''; },450); } },1000);
   /* ---------- 🔔 แจ้งเตือนเกมมีอัปเดต ---------- */
-  const GAME_VER='v3.34'; let updSkip='', updT=0;
+  const GAME_VER='v3.35'; let updSkip='', updT=0;
   function updCheck(){ if (location.protocol==='file:' || document.getElementById('updpop')) return; if (Date.now()-updT<60000) return; updT=Date.now();
     fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{ if (!j||!j.v||j.v===GAME_VER||j.v===updSkip) return; updShow(j); }).catch(()=>{}); }
   function updShow(j){ const inRun=S&&S.phase&&S.phase!=='title'&&!S.over&&!hub, d=document.createElement('div'); d.id='updpop';
@@ -3294,7 +3356,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="pbtns"><button class="choice" data-act="guideopen"><span>📚 ข้อมูลเกม</span><small>ระดับอุปกรณ์ · ธาตุ · อาชีพ · อัตราสุ่ม · โหมดเกม</small></button><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.34<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.35<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
@@ -5415,7 +5477,7 @@ if (typeof document !== 'undefined') (function(){
     if (act==='rquit'){ if (battleView) return; runQuit=true; runSet=false; if (auto) autoStop(); render(); return; }
     if (act==='rquitno'){ runQuit=false; render(); return; }
     if (act==='rquitok'){ runQuit=false; if (battleView||S.over) { render(); return; } if (auto) autoStop(); acfgPop=false; popSlot=null; endRun(false,'🚪 ออกจากหอคอย'); render(); window.scrollTo(0,0); return; }
-    if (act==='start'){ runClear(); rng = Math.random; newRun(true); hub=null; partySel=[]; popSlot=null; render(); window.scrollTo(0,0); if (!S.daily) setTimeout(voVillager,350); return; }
+    if (act==='start'){ runClear(); rng = Math.random; newRun(true); { const ie=routeIntroEv(); if (ie){ S.ev=ie; S.phase='event'; } } hub=null; partySel=[]; popSlot=null; render(); window.scrollTo(0,0); if (!S.daily) setTimeout(voVillager,350); return; }
     if (act==='daily'){ startDaily(); hub=null; partySel=[]; popSlot=null; render(); window.scrollTo(0,0); return; }
     if (act==='walk'){ autoMsg=''; try{ step(); }catch(err){ console.error(err); if (S && !S.over){ S.phase='walk'; S.ev=null; if (S.q && S.floor>=S.q.next){ S.q=null; S.qCool=S.floor+15; } } setTimeout(()=>{ throw err; },0); autoMsg='⚠️ เกิดข้อผิดพลาด ลองกดเดินต่ออีกครั้ง ('+String(err&&err.message||err).slice(0,80)+')'; } render(); return; }
     if (act==='acfgopen'){ acfgPop = true; render(); return; }
