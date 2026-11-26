@@ -1084,7 +1084,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.30</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.31</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -1686,6 +1686,8 @@ function mergeBS(b, win){ const t=S.st; t.battles++; if(win) t.wins++;
   ['heroMin','bossMin'].forEach(k=>{ if(b[k]) t[k]=t[k]?Math.min(t[k],b[k]):b[k]; });
   if (b.bossHp) t.bossHp=b.bossHp; }
 /* เอฟเฟกต์ใช้รูนหนีบอส: สำเร็จ = รูนเปล่งแสงแล้วสลาย · ล้มเหลว = รูนแตกกระจาย */
+/* โอกาสเหตุการณ์รูน (% ของปกติ): ชั้น 60→250 ลดจาก 100 เหลือ 20 · ชั้น 250–300 คงที่ 20 · หลังชั้น 300 ค่อย ๆ ลดจนเหลือ 6 ที่ชั้น 450 */
+function runeRate(F){ if (F<=60) return 100; if (F<=250) return 100-(F-60)*80/190; if (F<=300) return 20; return Math.max(6, 20-(F-300)*14/150); }
 function runeFx(ok, lv){ try{ if (typeof document==='undefined' || (S&&S.skip)) return; const r=RUNE[lv]||RUNE[1], d=document.createElement('div'); d.className='runefx '+(ok?'ok':'bad'); d.style.setProperty('--rc', r.color==='transparent'?'#fff':r.color);
     let sh=''; for (let i=0;i<14;i++){ const a=i*360/14+Math.random()*20, dist=90+Math.random()*90; sh+=`<i style="--a:${a}deg;--d:${dist}px;animation-delay:${ok?0.75:0.45}s"></i>`; }
     d.innerHTML=`<div class="rfx-core"><div class="rfx-rune">ᚱ</div>${ok?'':'<div class="rfx-crack"></div>'}<div class="rfx-sh">${sh}</div></div><div class="rfx-txt">${ok?`✨ ${r.name}เปล่งแสง!<small>หนีจากบอสสำเร็จ · รูนสลายไป</small>`:`💥 ${r.name}แตกสลาย!<small>หนีไม่สำเร็จ ต้องสู้!</small>`}</div>`;
@@ -2159,7 +2161,7 @@ function rollEvent(){
     if ((e==='bad'||e==='badMon') && S.badStreak>=2) continue;
     if ((e==='bad'||e==='badMon') && chance(accVal('luck'))) e='gold';
     if (e==='altar' && (S.acc2 || S.floor<50)) continue;
-    if (e==='rune' && S.floor>60 && !chance(Math.max(6, 100-(S.floor-60)*0.42))) e='gold';   // ยิ่งลึก รูนยิ่งหายาก: ชั้น 150≈62% · 200≈41% · 250≈20% · 285+ เหลือ 6% ของเดิม
+    if (e==='rune' && S.floor>60 && !chance(runeRate(S.floor))) e='gold';   // ยิ่งลึก รูนยิ่งหายาก (ดู runeRate)
     if (e==='mSkill' && booksUseless()) e='mStat';   // สกิลเต็มแล้ว ร้านตำรากลายเป็นร้านยาสเตตัส
     break;
   }
@@ -2931,7 +2933,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.30</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.31</span>'}</div>`;
   }
   let runSet=false, runQuit=false;
   function runPop(){
@@ -3146,7 +3148,7 @@ if (typeof document !== 'undefined') (function(){
     if (on && !shown){ el.innerHTML=tkInner(); el.classList.remove('tkhide'); }
     else if (!on && shown){ el.classList.add('tkhide'); setTimeout(()=>{ if (el.classList.contains('tkhide')) el.innerHTML=''; },450); } },1000);
   /* ---------- 🔔 แจ้งเตือนเกมมีอัปเดต ---------- */
-  const GAME_VER='v3.30'; let updSkip='', updT=0;
+  const GAME_VER='v3.31'; let updSkip='', updT=0;
   function updCheck(){ if (location.protocol==='file:' || document.getElementById('updpop')) return; if (Date.now()-updT<60000) return; updT=Date.now();
     fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{ if (!j||!j.v||j.v===GAME_VER||j.v===updSkip) return; updShow(j); }).catch(()=>{}); }
   function updShow(j){ const inRun=S&&S.phase&&S.phase!=='title'&&!S.over&&!hub, d=document.createElement('div'); d.id='updpop';
@@ -3231,7 +3233,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="pbtns"><button class="choice" data-act="guideopen"><span>📚 ข้อมูลเกม</span><small>ระดับอุปกรณ์ · ธาตุ · อาชีพ · อัตราสุ่ม · โหมดเกม</small></button><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.30<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.31<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
