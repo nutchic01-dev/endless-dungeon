@@ -949,12 +949,17 @@ h3 img.uiico{height:24px;width:auto;vertical-align:middle}
 .hsname{position:relative;font-size:22px;font-weight:900;color:#fff;text-shadow:0 2px 0 #000}.hsname small{font-size:12px;color:#ffd77a}.hssub{position:relative;font-size:12.5px;color:#d9cdf2;margin-top:2px}
 .sumbox.rwtop{border-color:#ffd34d;box-shadow:0 0 0 1.5px rgba(255,211,77,.35) inset}
 @keyframes hsspin{to{transform:rotate(360deg)}}@keyframes hsbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}@keyframes hspulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
-.chatwrap{flex-shrink:0;display:flex;flex-direction:column;gap:8px}.chatlist{height:calc(100vh - 330px);min-height:240px;overflow-y:auto;display:flex;flex-direction:column;gap:7px;padding:4px 2px;overscroll-behavior:contain}
+.overlay.chatpg{overflow:hidden;padding-bottom:20px}.chatpg:focus-within .hubnav{display:none}.chatpg .hubhead,.chatpg .wallet{flex-shrink:0}.chatwrap{flex:1 1 auto;min-height:0;width:100%;display:flex;flex-direction:column;gap:7px;padding:8px!important}.chatlist{flex:1 1 auto;min-height:0;overflow-y:auto;display:flex;flex-direction:column;gap:7px;padding:4px 2px;overscroll-behavior:contain}
 .cmsg{display:flex;gap:7px;align-items:flex-end}.cmsg.me{flex-direction:row-reverse}.cav{flex:0 0 34px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;overflow:hidden;font-size:20px}.cav img{width:40px;height:40px;object-fit:cover;object-position:top}
 .cbub{max-width:78%;background:rgba(40,30,70,.9);border:1px solid rgba(255,255,255,.1);border-radius:14px 14px 14px 4px;padding:5px 10px 7px}.cmsg.me .cbub{background:linear-gradient(#5b3fa0,#46307e);border-color:#8e6fe0;border-radius:14px 14px 4px 14px}
 .cnm{display:flex;align-items:center;gap:6px;font-size:11.5px;color:#ffd77a}.cnm small{color:#a99cc8;font-size:10px}.cblk{margin-left:auto;background:none;border:0;font-size:11px;opacity:.5;cursor:pointer;padding:0 2px}.cblk:hover{opacity:1}
 .ctx{font-size:14px;line-height:1.4;color:#fff;word-break:break-word;white-space:pre-wrap}
-.chatbar{display:flex;gap:6px}.chatbar input{flex:1;min-width:0;padding:10px 12px;border-radius:12px;border:1px solid #5a4680;background:#140e1f;color:#fff;font:inherit;font-size:15px}.chatbar .choice{flex:0 0 auto;width:auto;min-width:64px;margin:0;padding:8px 14px}
+.chatbar{display:flex;gap:6px;flex-shrink:0;align-items:center}.cemo{flex:0 0 42px;height:42px;border-radius:12px;border:1px solid #5a4680;background:#231833;font-size:22px;cursor:pointer}
+.chatnote{flex-shrink:0;font-size:11px;color:#a99cc8;text-align:center}
+.chatpick{flex-shrink:0;background:rgba(15,10,30,.95);border:1px solid #5a4680;border-radius:14px;padding:6px}.cptabs{display:flex;gap:4px;margin-bottom:6px}.cptabs button{flex:1;padding:6px 2px;border-radius:9px;border:1px solid #3d2f5c;background:#1d1530;color:#d9cdf2;font:inherit;font-size:12px;cursor:pointer;white-space:nowrap}.cptabs button.on{background:linear-gradient(#ffd34d,#e3a51f);color:#3a2600;border-color:#ffd34d;font-weight:700}
+.cpgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;max-height:190px;overflow-y:auto}.cpgrid.emo{grid-template-columns:repeat(8,1fr)}.cpe{font-size:24px;background:none;border:0;padding:4px 0;cursor:pointer;border-radius:8px}.cpe:active{background:rgba(255,255,255,.1)}
+.cps{aspect-ratio:1;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:3px;cursor:pointer;overflow:hidden}.cps img{width:100%;height:100%;object-fit:contain}.cphint{font-size:11px;color:#a99cc8;text-align:center;margin-top:4px}
+.cstk{display:block;width:96px;height:96px;object-fit:contain;filter:drop-shadow(0 3px 5px rgba(0,0,0,.5))}.cbub:has(.cstk){background:none!important;border-color:transparent!important}.chatbar input{flex:1;min-width:0;padding:10px 12px;border-radius:12px;border:1px solid #5a4680;background:#140e1f;color:#fff;font:inherit;font-size:15px}.chatbar .choice{flex:0 0 auto;width:auto;min-width:64px;margin:0;padding:8px 14px}
 .rkl{display:flex;flex-direction:column;gap:5px}.rkr{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:12px;background:rgba(20,15,40,.7);border:1px solid rgba(255,255,255,.08)}
 .rkr.top{border-color:rgba(255,209,102,.5);background:linear-gradient(90deg,rgba(255,209,102,.18),rgba(20,15,40,.7))}.rkr.me{border-color:#7dffcf;box-shadow:0 0 0 1.5px #7dffcf inset}
 .rkn{width:30px;text-align:center;font-size:20px}.rkn b{font-size:14px;color:var(--muted)}.rka img.art{height:38px;width:38px;object-fit:contain}.rka{width:40px;text-align:center}
@@ -2837,7 +2842,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.4</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.5</span>'}</div>`;
   }
   let runSet=false, runQuit=false;
   function runPop(){
@@ -4430,8 +4435,23 @@ if (typeof document !== 'undefined') (function(){
   const CHAT_BAD=['ควย','เหี้ย','เย็ด','สัส','ไอสัตว์','อีดอก','แม่ง','fuck','shit','bitch'];
   const chatClean=t=>{ let x=String(t||''); CHAT_BAD.forEach(w=>{ x=x.split(w).join('*'.repeat(w.length)); x=x.replace(new RegExp(w,'gi'),'*'.repeat(w.length)); }); return x; };
   const chatBlocked=()=>{ try{ return JSON.parse(localStorage.getItem('dq_chat_block')||'[]'); }catch(e){ return []; } };
+
+  const CHAT_EMO='😀 😁 😂 🤣 😊 😇 🥰 😍 😘 😋 😜 🤪 😎 🤩 🥳 😏 🥺 😭 😢 😤 😡 🤯 😱 🤔 🤫 😴 🤗 🙄 😅 😆 👍 👎 👏 🙌 🙏 💪 ✌️ 🤞 👋 ❤️ 💖 💕 💔 ✨ ⭐ 🌟 🔥 💥 💯 🎉 🎁 🏆 🥇 👑 💎 ⚔️ 🛡️ 🏹 🔮 🧪 📜 🗝️ 💰 🐉 🐲 👻 💀 🐱 🐶 🐰 🦊 🐼 🐥 🐧 🦄 🍀 🍰 🍙 ☕'.split(' ');
+  const CHAT_MON=["mon_armor", "mon_babydragon", "mon_clockangel", "mon_cloudsprite", "mon_coralcrab", "mon_crystalbat", "mon_crystalsnake", "mon_cursedknight", "mon_darkmermaid", "mon_eye", "mon_faceless", "mon_firefox", "mon_frostwolf", "mon_goblin", "mon_goldlion", "mon_goldslime", "mon_golem", "mon_griffin", "mon_holystatue", "mon_iceknight", "mon_icewisp", "mon_imp", "mon_jelly", "mon_lantern", "mon_leafwolf", "mon_lostangel", "mon_madwisp", "mon_mimic", "mon_moonmoth", "mon_mummy", "mon_orbguard", "mon_puddle", "mon_rat", "mon_rockspider", "mon_salamander", "mon_sandworm", "mon_scarab", "mon_scorpion", "mon_sharkguard", "mon_shroom", "mon_skelknight", "mon_swampwitch", "mon_tentacle", "mon_thief", "mon_thunderbird", "mon_yeti", "mb_abyss", "mb_castle", "mb_crystal", "mb_desert", "mb_forest", "mb_heaven", "mb_ice", "mb_lava", "mb_sea", "mb_sky", "bs_abyss", "bs_castle", "bs_crystal", "bs_desert", "bs_forest", "bs_heaven", "bs_ice", "bs_lava", "bs_sea", "bs_sky"];
+  const STK=(k,v)=>`[[s:${k}:${v}]]`;
+  function stkSrc(k,v){ if (k==='c'){ const a=ALLCHARS[v]; return a&&ART.char[v]?ART.char[v]:null; } if (k==='m') return CHAT_MON.includes(v)?`art/${v}.webp`:null; if (k==='p') return window.SPIRIT_IMG&&window.SPIRIT_IMG[v]?window.SPIRIT_IMG[v]:null; return null; }
+  function chatBody(t){ const mm=/^\[\[s:([cmp]):([a-z0-9_]+)\]\]$/.exec(String(t||'').trim()); if (mm){ const src=stkSrc(mm[1],mm[2]); if (src) return `<img class="cstk" src="${src}" alt="" loading="lazy">`; }
+    return rkEsc(chatClean(t)); }
+  let chatTab='emo';
+  function chatPickHtml(){ const C=window.__dqCloud, m=loadMeta();
+    let items='';
+    if (chatTab==='emo') items=CHAT_EMO.map(e=>`<button class="cpe" data-act="chatemo" data-v="${e}">${e}</button>`).join('');
+    else if (chatTab==='c') items=Object.keys(ALLCHARS).filter(id=>ART.char[id]&&(ALLCHARS[id].tier!=='hid'||m.chars[id])).map(id=>`<button class="cps" data-act="chatstk" data-v="${STK('c',id)}"><img src="${ART.char[id]}" alt="" loading="lazy"></button>`).join('');
+    else if (chatTab==='m') items=CHAT_MON.map(f=>`<button class="cps" data-act="chatstk" data-v="${STK('m',f)}"><img src="art/${f}.webp" alt="" loading="lazy"></button>`).join('');
+    else items=Object.keys(window.SPIRIT_IMG||{}).map(k=>`<button class="cps" data-act="chatstk" data-v="${STK('p',k)}"><img src="${window.SPIRIT_IMG[k]}" alt="" loading="lazy"></button>`).join('');
+    return `<div class="cptabs">${[['emo','😊 อีโมจิ'],['c','🦸 วีรชน'],['m','👾 มอนสเตอร์'],['p','🐾 สัตว์วิญญาณ']].map(([k,n])=>`<button class="${chatTab===k?'on':''}" data-act="chattab" data-k="${k}">${n}</button>`).join('')}</div><div class="cpgrid ${chatTab==='emo'?'emo':''}">${items}</div>${chatTab==='emo'?'':'<div class="cphint">แตะสติกเกอร์เพื่อส่งทันที</div>'}`; }
   function chatRow(r, uid, bl){ if (bl.includes(r.user_id)) return ''; const a=r.hero&&ALLCHARS[r.hero], me=r.user_id===uid, t=new Date(r.created_at), hm=t.toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'});
-    return `<div class="cmsg ${me?'me':''}"><span class="cav">${a?charArt(a.c,false,true):'🙂'}</span><div class="cbub"><div class="cnm"><b>${rkEsc(r.name||'ผู้กล้า')}</b><small>${hm}</small>${me?'':`<button class="cblk" data-act="chatblock" data-u="${r.user_id}" data-n="${rkEsc(r.name||'')}" title="ซ่อนข้อความของผู้เล่นนี้">🚫</button>`}</div><div class="ctx">${rkEsc(chatClean(r.body))}</div></div></div>`; }
+    return `<div class="cmsg ${me?'me':''}"><span class="cav">${a?charArt(a.c,false,true):'🙂'}</span><div class="cbub"><div class="cnm"><b>${rkEsc(r.name||'ผู้กล้า')}</b><small>${hm}</small>${me?'':`<button class="cblk" data-act="chatblock" data-u="${r.user_id}" data-n="${rkEsc(r.name||'')}" title="ซ่อนข้อความของผู้เล่นนี้">🚫</button>`}</div><div class="ctx">${chatBody(r.body)}</div></div></div>`; }
   function chatListHtml(){ const C=window.__dqCloud, uid=C&&C.auth&&C.auth.user.id, bl=chatBlocked();
     return CHAT.msgs.length ? CHAT.msgs.map(r=>chatRow(r,uid,bl)).join('') : `<p class="csd" style="text-align:center;margin:30px 0">${CHAT.err?'':(CHAT.loaded?'ยังไม่มีข้อความ ทักทายเพื่อนๆ เป็นคนแรกเลย!':'กำลังโหลดข้อความ…')}</p>`; }
   function chatPaint(){ const el=document.getElementById('chatlist'); if (!el) return; const atB=el.scrollHeight-el.scrollTop-el.clientHeight<60;
@@ -4445,21 +4465,23 @@ if (typeof document !== 'undefined') (function(){
       CHAT.loaded=true; if (CHAT.err&&!CHAT.sendErr) CHAT.err=''; chatPaint(); })
       .catch(e=>{ CHAT.err=C.chatErr?C.chatErr(e):'โหลดแชทไม่ได้'; chatPaint(); })
       .then(()=>{ CHAT.busy=false; go(); }); }
-  function chatSendNow(){ const inp=document.getElementById('chatin'), C=window.__dqCloud; if (!inp||!C||!C.chatSend) return;
-    const txt=chatClean(inp.value.trim()).slice(0,200); if (!txt) return; if (!C.auth){ CHAT.err='เข้าสู่ระบบก่อนจึงจะส่งข้อความได้'; chatPaint(); return; }
+  function chatSendNow(raw){ const inp=document.getElementById('chatin'), C=window.__dqCloud; if (!C||!C.chatSend) return; if (!raw&&!inp) return;
+    const txt=raw||chatClean(inp.value.trim()).slice(0,200); if (!txt) return; if (!C.auth){ CHAT.err='เข้าสู่ระบบก่อนจึงจะส่งข้อความได้'; chatPaint(); return; }
     if (CHAT.sending) return; CHAT.sending=true; const m=loadMeta(), btn=document.getElementById('chatgo'); if (btn) btn.disabled=true;
     C.chatSend(txt,(m.name||'ผู้กล้า').slice(0,20),(m.show&&m.show.main)||null)
-      .then(()=>{ inp.value=''; CHAT.err=''; CHAT.sendErr=false; CHAT.jump=true; chatPoll(true); })
+      .then(()=>{ if (!raw&&inp) inp.value=''; CHAT.err=''; CHAT.sendErr=false; CHAT.jump=true; chatPoll(true); })
       .catch(e=>{ CHAT.err=C.chatErr?C.chatErr(e):'ส่งไม่สำเร็จ'; CHAT.sendErr=true; setTimeout(()=>{ CHAT.sendErr=false; },4000); chatPaint(); })
-      .then(()=>{ CHAT.sending=false; const b=document.getElementById('chatgo'); if (b) b.disabled=false; const i=document.getElementById('chatin'); if (i) i.focus(); }); }
+      .then(()=>{ CHAT.sending=false; const b=document.getElementById('chatgo'); if (b) b.disabled=false; if (!raw){ const i=document.getElementById('chatin'); if (i) i.focus(); } }); }
   document.addEventListener('keydown',e=>{ if (e.key==='Enter'&&e.target&&e.target.id==='chatin'&&!e.isComposing){ e.preventDefault(); chatSendNow(); } });
   function hubChat(m){ const C=window.__dqCloud, li=!!(C&&C.auth);
     if (!CHAT.timer&&!CHAT.busy) setTimeout(()=>chatPoll(true),0); else setTimeout(()=>{ const el=document.getElementById('chatlist'); if (el) el.scrollTop=el.scrollHeight; },0);
     return `<div class="overlay hub chatpg" ${pageBg('rank')}>${hubHead(m,'💬 แชทโลก')}
-      <div class="sumbox chatwrap"><div class="csd" style="text-align:center">คุยกับผู้เล่นทุกคน · เก็บข้อความ 3 วัน · กด 🚫 เพื่อซ่อนข้อความของคนที่ไม่อยากเห็น</div>
-        <div id="chatlist" class="chatlist">${chatListHtml()}</div><div id="chaterr" class="rkst bad" style="${CHAT.err?'':'display:none'}">${rkEsc(CHAT.err||'')}</div>
-        ${li?`<div class="chatbar"><input id="chatin" maxlength="200" placeholder="พิมพ์ข้อความ… (Enter เพื่อส่ง)" autocomplete="off"><button id="chatgo" class="choice" data-act="chatsend"><span>ส่ง</span></button></div>`
-          :`<div class="rkme">เข้าสู่ระบบเพื่อพิมพ์แชท (อ่านได้โดยไม่ต้องเข้าสู่ระบบ) <button class="mini" data-cloud="login">เข้าสู่ระบบ</button></div>`}</div>${nav()}</div>`; }
+      <div class="sumbox chatwrap"><div id="chatlist" class="chatlist">${chatListHtml()}</div><div id="chaterr" class="rkst bad" style="${CHAT.err?'':'display:none'}">${rkEsc(CHAT.err||'')}</div>
+        ${li?`<div id="chatpick" class="chatpick" style="display:none">${chatPickHtml()}</div>
+          <div class="chatbar"><button class="cemo" data-act="chatpick" title="อีโมจิ / สติกเกอร์">😊</button><input id="chatin" maxlength="200" placeholder="พิมพ์ข้อความ…" autocomplete="off" enterkeyhint="send"><button id="chatgo" class="choice" data-act="chatsend"><span>ส่ง</span></button></div>`
+          :`<div class="rkme">เข้าสู่ระบบเพื่อพิมพ์แชท (อ่านได้โดยไม่ต้องเข้าสู่ระบบ) <button class="mini" data-cloud="login">เข้าสู่ระบบ</button></div>`}
+        <div class="chatnote">เก็บข้อความ 3 วัน · กด 🚫 เพื่อซ่อนข้อความของคนที่ไม่อยากเห็น</div></div>${nav()}</div>`; }
+  document.addEventListener('focusin',e=>{ if (e.target&&e.target.id==='chatin'){ const pk=document.getElementById('chatpick'); if (pk) pk.style.display='none'; setTimeout(()=>{ const el=document.getElementById('chatlist'); if (el) el.scrollTop=el.scrollHeight; e.target.scrollIntoView({block:'nearest'}); },350); } });
   let rkSel=null;
   function rkViewPop(r,i){ const d=r.detail||{}, a=d.char&&ALLCHARS[d.char]||(r.hero&&ALLCHARS[r.hero]), row=(ic,l,v)=>`<div class="sumr"><span>${ic} ${l}</span><b>${v}</b></div>`;
     const heroName = a ? a.c.name : (d.cls==='villager'||rkTab==='endless'||rkTab==='daily') ? (d.cls&&d.cls!=='villager'&&CLASSES[d.cls]?CLASSES[d.cls].name:'ชาวบ้าน') : '—';
@@ -4504,6 +4526,10 @@ if (typeof document !== 'undefined') (function(){
     if (/^bag/.test(act) && bagAct(act,b)) return true;
     if (act==='rktab'){ rkTab=b.dataset.k; rkSel=null; render(); return true; }
     if (act==='chatsend'){ chatSendNow(); return true; }
+    if (act==='chatpick'){ const pk=document.getElementById('chatpick'); if (pk){ const show=pk.style.display==='none'; pk.style.display=show?'':'none'; if (show){ const i=document.getElementById('chatin'); if (i) i.blur(); const el=document.getElementById('chatlist'); setTimeout(()=>{ if (el) el.scrollTop=el.scrollHeight; },30); } } return true; }
+    if (act==='chattab'){ chatTab=b.dataset.k; const pk=document.getElementById('chatpick'); if (pk) pk.innerHTML=chatPickHtml(); return true; }
+    if (act==='chatemo'){ const i=document.getElementById('chatin'); if (i&&i.value.length<198){ i.value+=b.dataset.v; } return true; }
+    if (act==='chatstk'){ const pk=document.getElementById('chatpick'); if (pk) pk.style.display='none'; chatSendNow(b.dataset.v); return true; }
     if (act==='chatblock'){ const u=b.dataset.u; if (u&&confirm(`ซ่อนข้อความของ ${b.dataset.n||'ผู้เล่นนี้'} ทั้งหมด? (ยกเลิกได้โดยล้างข้อมูลเบราว์เซอร์)`)){ const bl=chatBlocked(); if (!bl.includes(u)) bl.push(u); try{ localStorage.setItem('dq_chat_block',JSON.stringify(bl.slice(-200))); }catch(e){} chatPaint(); } return true; }
     if (act==='rkview'){ rkSel=+b.dataset.i; render(); return true; }
     if (act==='rkviewc'){ rkSel=null; render(); return true; }
