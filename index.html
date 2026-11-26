@@ -934,6 +934,19 @@ img.gico{width:1.4em;height:1.4em;object-fit:contain;vertical-align:-0.35em;filt
 .bsp .spimg,.bsp .spemo{height:42px;width:auto;font-size:30px}.bsp small{font-size:9.5px;line-height:1.1;text-align:center}.bsp em{font-style:normal;font-size:9.5px;color:#ffd166}.bsp.no{opacity:.4;filter:grayscale(.8)}
 .bagEq{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:6px}
 h3 img.uiico{height:24px;width:auto;vertical-align:middle}
+.rkr{cursor:pointer}.rkst{margin-top:6px;font-size:12.5px;padding:6px 9px;border-radius:10px;background:rgba(255,255,255,.06)}.rkst.ok{color:#7dffcf}.rkst.bad{color:#ffb4a8}.rkst .mini{margin-left:6px}
+.rkclaim{margin-top:8px}.rkstat{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}.rkstat div{background:rgba(255,255,255,.06);border-radius:9px;padding:5px;text-align:center}.rkstat small{display:block;font-size:10.5px;color:#cdbfe6}.rkstat b{font-size:13px}
+.rkteam{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}.rkteam div{display:flex;flex-direction:column;align-items:center;width:62px}.rkteam img{width:52px;height:52px}.rkteam small{font-size:10.5px;text-align:center}
+.rkpop .sumr span.r1{color:#6ecbff}.rkpop .sumr span.r2{color:#d58cff}.rkpop .sumr span.r3{color:#ffc64d}
+.herospot{position:relative;flex-shrink:0;width:100%;margin:6px auto 10px;max-width:340px;padding:14px 12px 12px;border-radius:18px;text-align:center;overflow:hidden;background:linear-gradient(180deg,rgba(60,40,110,.9),rgba(25,16,45,.95));border:2px solid #c9a34a;box-shadow:0 6px 24px rgba(0,0,0,.5)}
+.herospot.new{border-color:#ffd34d;box-shadow:0 0 0 2px rgba(255,211,77,.35),0 0 30px rgba(255,211,77,.45)}.herospot.miss{filter:saturate(.75);border-color:#6b5a8a}
+.hsglow{position:absolute;left:50%;top:38%;width:240px;height:240px;margin:-120px 0 0 -120px;border-radius:50%;background:radial-gradient(circle,rgba(255,215,120,.55),rgba(255,215,120,0) 65%);animation:hsspin 6s linear infinite}
+.herospot.miss .hsglow{opacity:.35}
+.hsart{position:relative;display:flex;justify-content:center}.hsart img,.hsart .chart{width:150px!important;height:150px!important;max-width:none;animation:hsbob 2.4s ease-in-out infinite;filter:drop-shadow(0 6px 10px rgba(0,0,0,.6))}
+.hstag{position:relative;margin-top:4px;font-size:13px;font-weight:800;color:#ffd77a;letter-spacing:.3px}.herospot.new .hstag{font-size:16px;animation:hspulse 1.2s ease-in-out infinite}
+.hsname{position:relative;font-size:22px;font-weight:900;color:#fff;text-shadow:0 2px 0 #000}.hsname small{font-size:12px;color:#ffd77a}.hssub{position:relative;font-size:12.5px;color:#d9cdf2;margin-top:2px}
+.sumbox.rwtop{border-color:#ffd34d;box-shadow:0 0 0 1.5px rgba(255,211,77,.35) inset}
+@keyframes hsspin{to{transform:rotate(360deg)}}@keyframes hsbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}@keyframes hspulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
 .rkl{display:flex;flex-direction:column;gap:5px}.rkr{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:12px;background:rgba(20,15,40,.7);border:1px solid rgba(255,255,255,.08)}
 .rkr.top{border-color:rgba(255,209,102,.5);background:linear-gradient(90deg,rgba(255,209,102,.18),rgba(20,15,40,.7))}.rkr.me{border-color:#7dffcf;box-shadow:0 0 0 1.5px #7dffcf inset}
 .rkn{width:30px;text-align:center;font-size:20px}.rkn b{font-size:14px;color:var(--muted)}.rka img.art{height:38px;width:38px;object-fit:contain}.rka{width:40px;text-align:center}
@@ -2331,6 +2344,23 @@ function rankScore(win){ const st=stats(), t=S.st||{}, bl=bossLevel(), sk=(S.ski
   if (S.curses){ mults.push(['☠️',`โบนัสคำสาป ${S.curses} ครั้ง`,1+0.1*S.curses]); }
   if (win && S.cls==='villager'){ mults.push(['🌾','โบนัสชาวบ้านปราบบอส',1.3]); }
   mults.forEach(x=>total*=x[2]); return {total:Math.round(total), parts, mults}; }
+
+const LB_CAP = {endless:50000000, daily:50000000, hundred:100, dragon:1000000000000};
+function gearMini(g){ return Object.entries(g||{}).filter(([k,v])=>v&&v.name).map(([k,v])=>[k, v.name, v.r||0, v.plus||0, v.icon||'', v.set&&SETS[v.set]?SETS[v.set].name:'']); }
+function rankDetail(win){ const st=stats(), t=S.st||{}; let sk=[]; try{ sk=heroSkills().map(x=>[x.name,x.lv]); }catch(e){}
+  return {v:2, floor:S.floor, lv:S.lv, win:!!win, char:S.char?S.char.id:null, cls:S.cls, t:Date.now(), boss:bossLevel(), power:powerOf(st), gold:S.gold, items:t.items||0, kills:S.kills||0, curses:S.curses||0,
+    st:{hp:st.maxhp, atk:st.atk, matk:st.matk, def:st.def, mdef:st.mdef, cri:Math.round(st.cri*10)/10, cridmg:st.cridmg, pen:Math.round((st.pen||0)*10)/10, spd:st.spd, type:st.type},
+    gear:gearMini(S.gear), sk, party:(S.party||[]).map(p=>[p.char?p.char.id:null, unitName(p.cls,p.char), !!p.ko])}; }
+/* รายการคะแนนที่จะส่งขึ้นตารางอันดับ (ใช้โดยระบบคลาวด์) — เติมข้อมูลจากบันทึกวีรชนให้รอบเก่าที่ยังไม่มีรายละเอียด */
+function lbList(m){ const d=new Date(Date.now()-5*3600e3), today=d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate(), out=[];
+  const fill=det=>{ if (det.gear || !det.char || !m.chars || !m.chars[det.char]) return det; const c=m.chars[det.char], rec=c.recs&&(c.recs[c.main]||c.recs[0]); if (!rec) return det;
+    const st=rec.st||{}; return Object.assign({}, det, {v:2, fromRec:1, power:rec.power, boss:rec.boss, st:{hp:st.maxhp, atk:st.atk, matk:st.matk, def:st.def, mdef:st.mdef, cri:st.cri, cridmg:st.cridmg, pen:st.pen, spd:st.spd, type:st.type}, gear:gearMini(rec.gear), sk:(rec.skills||[]).map(x=>[x.name,x.lv])}); };
+  const cap=(b,v)=>Math.max(0,Math.min(LB_CAP[b],Math.round(v||0)));
+  if (m.rankBest){ const det=fill(Object.assign({}, m.rankInfo||{})); out.push(['endless','all',cap('endless',m.rankBest),det,det.char||null]); }
+  if (m.dailyBest&&m.dailyBest.day===today&&m.dailyBest.rank){ const det=fill(Object.assign({floor:m.dailyBest.floor,win:m.dailyBest.win}, m.dailyBest.info||{})); out.push(['daily',today,cap('daily',m.dailyBest.rank),det,det.char||null]); }
+  if (m.ht&&m.ht.best){ const team=(m.ht.team||[]).filter(Boolean); out.push(['hundred','all',cap('hundred',m.ht.best),{team},team[0]||null]); }
+  if (m.dh&&m.dh.best&&m.dh.wk!=null){ const team=(m.dh.team||[]).filter(Boolean); out.push(['dragon',String(m.dh.wk),cap('dragon',m.dh.best),{slain:!!m.dh.slain,team},team[0]||null]); }
+  return out; }
 function endRun(win, cause){
   if (S.over) return;
   S.over = {win, cause: cause||''}; if (S.daily) rng = Math.random;
@@ -2761,7 +2791,7 @@ function dailyLogin(m){ const k=dayKey(); if (m.login.last===k) return 0;
 function saveMeta(sc, medals, win){
   const m = loadMeta(), rw = {tickets:0, shards:0, newChar:null, char:null, mission:0, rec:null};
   m.medals+=medals; m.best=Math.max(m.best,sc); m.runs++;
-  { const rk=S.over&&S.over.rank?S.over.rank.total:0; rw.rankPrev=m.rankBest||0; if (rk>(m.rankBest||0)){ m.rankBest=rk; m.rankInfo={floor:S.floor,lv:S.lv,win:!!win,char:S.char?S.char.id:null,cls:S.cls,t:Date.now()}; rw.rankNew=true; } } if(win) m.wins++; if(win && S.cls==='villager') m.villagerWins=(m.villagerWins||0)+1;
+  { const rk=S.over&&S.over.rank?S.over.rank.total:0; rw.rankPrev=m.rankBest||0; if (rk>(m.rankBest||0)){ m.rankBest=rk; m.rankInfo=rankDetail(win); rw.rankNew=true; } } if(win) m.wins++; if(win && S.cls==='villager') m.villagerWins=(m.villagerWins||0)+1;
   if (win && S.char){ const id=S.char.id, a=ALLCHARS[id]; rw.char=id; const snap=snapshot();
     if (!owned(m,id)){ m.chars[id]={star:1, form:false, recs:[snap], main:0}; rw.newChar=id; rw.tickets+=1; rw.rec={placed:true, first:true};
       if (!m.show.main) m.show.main=id; }
@@ -2778,9 +2808,10 @@ function saveMeta(sc, medals, win){
   if (S.daily){ const b=m.dailyBest&&m.dailyBest.day===S.daily ? m.dailyBest : null; rw.daily={floor:S.floor, win, prev:b?b.floor:0};
     if (!b){ rw.tickets+=2; rw.dailyFirst=2; }
     const rk=S.over&&S.over.rank?S.over.rank.total:0;
-    if (!b || S.floor>b.floor || (win&&!b.win) || rk>(b.rank||0)) m.dailyBest={day:S.daily, floor:Math.max(S.floor,b?b.floor:0), win:win||!!(b&&b.win), score:Math.max(sc,b?b.score:0), rank:Math.max(rk,b&&b.rank||0)}; }
+    if (!b || S.floor>b.floor || (win&&!b.win) || rk>(b.rank||0)) m.dailyBest={day:S.daily, floor:Math.max(S.floor,b?b.floor:0), win:win||!!(b&&b.win), score:Math.max(sc,b?b.score:0), rank:Math.max(rk,b&&b.rank||0), info:rk>(b&&b.rank||0)?rankDetail(win):(b&&b.info)}; }
   m.tickets += rw.tickets; storeMeta(m);
   if (S.over) S.over.rw = rw;
+  try{ const C=window.__dqCloud; if (C&&C.lbSync) setTimeout(()=>C.lbSync(),300); }catch(e){}
 }
 function setMainRec(id, idx){ const m=loadMeta(), c=m.chars[id]; if (c && c.recs[idx]){ c.main=idx; storeMeta(m); } }
 
@@ -2798,7 +2829,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      <span class="proto">v3.1</span></div>`;
+      <span class="proto">v3.2</span></div>`;
   }
   function partyHtml(){
     const hpOf = i => battleView ? battleView.hps[i]/battleView.maxs[i] : null;
@@ -4326,20 +4357,32 @@ if (typeof document !== 'undefined') (function(){
       render(); window.scrollTo(0,0); const o=document.querySelector('.overlay'); if (o) o.scrollTop=0; return true; }
     return false; }
   /* ---------- ตารางอันดับ ---------- */
+  document.addEventListener('dqlb',()=>{ try{ const L=window.__dqLB||{}; if (L.state==='ok') Object.keys(RK_CACHE).forEach(k=>{ if (RK_CACHE[k]) RK_CACHE[k].t=0; }); if (hub==='rank'||(S&&S.over&&!hub)) render(); }catch(e){} });
   let rkTab='endless'; const RK_CACHE={}, RK_TABS=[['endless','mode_endless','หอคอยไร้สิ้นสุด'],['daily','ic_calendar','รายวัน'],['hundred','mode_hundred','ร้อยชั้น'],['dragon','boss','ล่ามังกร']];
   const rkPeriod=(k,m)=>k==='daily'?dayKey():k==='dragon'?String((m.dh&&m.dh.wk)||'-'):'all';
-  function rkLoad(k,force){ const m=loadMeta(), per=rkPeriod(k,m), key=k+'|'+per, C=window.__dqCloud;
+  const RK_RW_BIG=[[1,1,{t:30,md:3000,du:300}],[2,3,{t:20,md:2000,du:200}],[4,10,{t:12,md:1200,du:120}],[11,50,{t:6,md:600,du:60}],[51,100,{t:3,md:300,du:30}],[101,1e9,{t:1,md:100,du:0}]];
+  const RK_RW_SM=RK_RW_BIG.map(([a,b,r])=>[a,b,{t:Math.max(1,Math.ceil(r.t/2)),md:Math.round(r.md/2),du:Math.round(r.du/2)}]);
+  const RK_RW={endless:RK_RW_BIG, dragon:RK_RW_BIG, daily:RK_RW_SM, hundred:RK_RW_SM};
+  const rkTier=(k,rank)=>RK_RW[k].find(([a,b])=>rank>=a&&rank<=b);
+  const rkRwTxt=r=>[r.t?`🎟️ ${r.t}`:'', r.md?`🎖️ ${fmt(r.md)}`:'', r.du?`✨ ${r.du}`:''].filter(Boolean).join(' ');
+  function rkClaimInfo(k){ const w=dhWeek();
+    if (k==='daily'){ const per=dayKey(Date.now()-864e5); return {per, key:'daily|'+per, label:'รางวัลอันดับรายวันของเมื่อวาน'}; }
+    if (k==='dragon') return {per:String(w-1), key:'dragon|'+(w-1), label:'รางวัลอันดับล่ามังกรสัปดาห์ที่แล้ว'};
+    return {per:'all', key:k+'|w'+w, label:'รางวัลประจำสัปดาห์ (ตามอันดับตอนกดรับ)'}; }
+  function rkLoad(k,force){ const m=loadMeta(), per=rkPeriod(k,m), key=k+'|'+per, C=window.__dqCloud, ci=rkClaimInfo(k);
     if (!C||!C.lbTop){ RK_CACHE[key]={err:'ระบบอันดับใช้ได้บนเว็บเกมเท่านั้น'}; return; }
     if (RK_CACHE[key]&&!force&&(RK_CACHE[key].loading||Date.now()-RK_CACHE[key].t<30000)) return;
     RK_CACHE[key]=Object.assign(RK_CACHE[key]||{},{loading:true});
-    Promise.all([C.lbTop(k,per), C.auth?C.lbMine(k,per).catch(()=>null):Promise.resolve(null)])
-      .then(([top,mine])=>{ RK_CACHE[key]={top,mine,t:Date.now()}; }).catch(e=>{ RK_CACHE[key]={err:'โหลดอันดับไม่ได้ ตรวจอินเทอร์เน็ตแล้วลองใหม่',t:0}; })
+    const mineP = C.auth?C.lbMine(k,per).catch(()=>null):Promise.resolve(null);
+    const claimP = C.auth&&!(m.rkClaim&&m.rkClaim[ci.key]) ? (ci.per===per?mineP:C.lbMine(k,ci.per).catch(()=>null)) : Promise.resolve(null);
+    Promise.all([C.lbTop(k,per), mineP, claimP])
+      .then(([top,mine,claim])=>{ RK_CACHE[key]={top,mine,claim,t:Date.now()}; }).catch(e=>{ RK_CACHE[key]={err:(C.lbErr?C.lbErr(e):'โหลดอันดับไม่ได้ ตรวจอินเทอร์เน็ตแล้วลองใหม่'),t:0}; })
       .then(()=>{ if (hub==='rank') render(); }); }
   function rkIco(k){ const t=RK_TABS.find(x=>x[0]===k); return t[1].startsWith('mode_')?`<img class="uiico" src="art/${t[1]}.webp" alt="">`:uiIco(t[1],'🏆'); }
   const rkEsc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]);
   function rkRow(r,i,me){ const a=r.hero&&ALLCHARS[r.hero], d=r.detail||{}, sub=rkTab==='endless'||rkTab==='daily'?`ชั้น ${d.floor||'-'} · Lv.${d.lv||'-'}${d.win?' · ปราบบอส':''}`:'';
     const medal=i<3?['🥇','🥈','🥉'][i]:`<b>${i+1}</b>`;
-    return `<div class="rkr ${me?'me':''} ${i<3?'top':''}"><span class="rkn">${medal}</span><span class="rka">${a?charArt(a.c,false,true):'🙂'}</span><span class="rkm"><b>${rkEsc(r.name||'ผู้กล้า')}</b>${sub?`<small>${sub}</small>`:''}</span><span class="rks">${fmt(r.score)}${rkTab==='hundred'?' ชั้น':''}</span></div>`; }
+    return `<div class="rkr ${me?'me':''} ${i<3?'top':''}" data-act="rkview" data-i="${i}"><span class="rkn">${medal}</span><span class="rka">${a?charArt(a.c,false,true):'🙂'}</span><span class="rkm"><b>${rkEsc(r.name||'ผู้กล้า')}</b>${sub?`<small>${sub}</small>`:''}</span><span class="rks">${fmt(r.score)}${rkTab==='hundred'?' ชั้น':''}</span></div>`; }
   function hubRank(m){ rkLoad(rkTab); const per=rkPeriod(rkTab,m), D=RK_CACHE[rkTab+'|'+per]||{}, C=window.__dqCloud, uid=C&&C.auth&&C.auth.user.id;
     const tabs=`<div class="gtabs btabs">${RK_TABS.map(([k,ic,n])=>`<button class="${rkTab===k?'on':''}" data-act="rktab" data-k="${k}"><i>${rkIco(k)}</i><span>${n}</span></button>`).join('')}</div>`;
     const note={endless:'คะแนนสูงสุดตลอดกาล คิดจากชั้น เลเวล บอส อุปกรณ์ สกิล ค่าสถานะ และอื่นๆ',daily:'คะแนนสูงสุดของด่านท้าทายวันนี้ รีเซ็ตทุกวันตอนตี 5',hundred:'จำนวนชั้นที่ผ่านในหอคอยร้อยชั้น',dragon:'ดาเมจสูงสุดใน 1 การต่อสู้ของสัปดาห์นี้ รีเซ็ตทุกสัปดาห์'}[rkTab];
@@ -4350,8 +4393,31 @@ if (typeof document !== 'undefined') (function(){
     const mine = !uid ? `<div class="rkme">เข้าสู่ระบบเพื่อติดอันดับ <button class="mini" data-cloud="login">เข้าสู่ระบบ</button></div>`
       : D.mine&&D.mine.rank ? `<div class="rkme">อันดับของคุณ <b>#${fmt(D.mine.rank)}</b> จาก ${fmt(D.mine.total)} คน · ${fmt(D.mine.score)}${rkTab==='hundred'?' ชั้น':''}</div>`
       : D.top ? `<div class="rkme">คุณยังไม่ติดอันดับในหมวดนี้</div>` : '';
-    return `<div class="overlay hub" ${pageBg('rank')}>${hubHead(m,'🏆 ตารางอันดับ')}${tabs}<div class="sumbox"><div class="csd">${note}</div>${mine}</div><div class="sumbox">${body}</div>
-      <button class="choice alt wide" data-act="rkreload"><span>🔄 รีเฟรช</span></button>${nav()}</div>`; }
+    const L=window.__dqLB||{}, lbst = !uid ? '' : L.state==='sending' ? `<div class="rkst">⏳ กำลังส่งคะแนนขึ้นอันดับ…</div>` : L.state==='err' ? `<div class="rkst bad">⚠️ ส่งคะแนนไม่สำเร็จ: ${rkEsc(L.msg||'')} <button class="mini" data-act="rksend">ลองส่งใหม่</button></div>` : L.state==='ok' ? `<div class="rkst ok">✅ ส่งคะแนนล่าสุดขึ้นอันดับแล้ว</div>` : '';
+    const ci=rkClaimInfo(rkTab), got=m.rkClaim&&m.rkClaim[ci.key], cl=D.claim, tier=cl&&cl.rank?rkTier(rkTab,cl.rank):null;
+    const claimBtn = !uid ? `<div class="csd">เข้าสู่ระบบเพื่อรับรางวัลอันดับ</div>` : got ? `<div class="rkst ok">✅ รับ${ci.label}แล้ว</div>`
+      : tier ? `<button class="choice wide rkclaim" data-act="rkclaim"><span>🎁 รับ${ci.label}</span><small>อันดับ #${fmt(cl.rank)} · ${rkRwTxt(tier[2])}</small></button>`
+      : D.top ? `<div class="csd">${rkTab==='daily'?'เมื่อวานคุณยังไม่ได้ติดอันดับ':rkTab==='dragon'?'สัปดาห์ที่แล้วคุณยังไม่ได้ติดอันดับ':'ติดอันดับก่อนเพื่อรับรางวัลประจำสัปดาห์'}</div>` : '';
+    const rwTable = `<div class="sumbox"><h3>🎁 รางวัลอันดับ</h3><div class="rkrw">${RK_RW[rkTab].map(([a,b,r])=>`<div class="sumr"><span>${a===b?`อันดับ ${a}`:b>=1e9?`อันดับ ${a} ขึ้นไป`:`อันดับ ${a}-${b}`}</span><b>${rkRwTxt(r)}</b></div>`).join('')}</div>${claimBtn}</div>`;
+    const view = rkSel!=null && D.top && D.top[rkSel] ? rkViewPop(D.top[rkSel], rkSel) : '';
+    return `<div class="overlay hub" ${pageBg('rank')}>${hubHead(m,'🏆 ตารางอันดับ')}${tabs}<div class="sumbox"><div class="csd">${note}</div>${mine}${lbst}</div>${rwTable}<div class="sumbox"><div class="csd" style="text-align:center;margin-bottom:6px">แตะชื่อผู้เล่นเพื่อดูวีรชน อุปกรณ์ และค่าสถานะ</div>${body}</div>
+      <button class="choice alt wide" data-act="rkreload"><span>🔄 รีเฟรช</span></button>${nav()}${view}</div>`; }
+  let rkSel=null;
+  function rkViewPop(r,i){ const d=r.detail||{}, a=d.char&&ALLCHARS[d.char]||(r.hero&&ALLCHARS[r.hero]), row=(ic,l,v)=>`<div class="sumr"><span>${ic} ${l}</span><b>${v}</b></div>`;
+    const heroName = a ? a.c.name : (d.cls==='villager'||rkTab==='endless'||rkTab==='daily') ? (d.cls&&d.cls!=='villager'&&CLASSES[d.cls]?CLASSES[d.cls].name:'ชาวบ้าน') : '—';
+    let html='';
+    if (rkTab==='endless'||rkTab==='daily'){
+      html += `<div class="sumbox">${row('🧭','ชั้นที่ไปถึง',d.floor!=null?fmt(d.floor):'-')}${row('⭐','เลเวล',d.lv||'-')}${d.boss?row('😈',d.win?'ปราบบอส':'บอสที่เจอ',`Lv.${d.boss}${d.win?' ✓':''}`):''}${d.power?row('💪','พลังรวม',fmt(d.power)):''}${d.items!=null?row('🎁','อุปกรณ์ที่ได้ระหว่างทาง',`${fmt(d.items)} ชิ้น`):''}${d.kills?row('👾','มอนที่กำจัด',fmt(d.kills)):''}${d.gold!=null?row('💰','เงินคงเหลือ',fmt(d.gold)):''}${d.curses?row('☠️','คำสาป',d.curses):''}</div>`;
+      if (d.st){ const t=d.st, mg=t.type==='mag'; html += `<div class="sumbox"><h3>📊 ค่าสถานะ</h3><div class="rkstat">${[['❤️','HP',fmt(t.hp)],[mg?'🔮':'⚔️',mg?'MATK':'ATK',fmt(mg?t.matk:t.atk)],['🛡️','DEF',fmt(t.def)],['🔰','MDEF',fmt(t.mdef)],['🎯','คริ',(t.cri||0)+'%'],['💥','แรงคริ',(t.cridmg||0)+'%'],['🗡️','เจาะเกราะ',(t.pen||0)+'%'],['💨','SPD',fmt(t.spd||0)]].map(([ic,l,v])=>`<div><small>${ic} ${l}</small><b>${v}</b></div>`).join('')}</div></div>`; }
+      if (d.gear&&d.gear.length) html += `<div class="sumbox"><h3>⚒️ อุปกรณ์ที่ใส่ (${d.gear.length} ชิ้น)</h3>${d.gear.map(([sl,n,rr,pl,ic,setn])=>`<div class="sumr"><span class="r${rr}">${ic||'▫️'} ${rkEsc(n)}${pl?` +${pl}`:''}</span><b class="gs">${RARITY[rr]?RARITY[rr].th:''}${setn?` · เซ็ต${rkEsc(setn)}`:''}</b></div>`).join('')}</div>`;
+      if (d.sk&&d.sk.length) html += `<div class="sumbox"><h3>📘 สกิล</h3>${d.sk.map(([n,l])=>row('▫️',rkEsc(n),'Lv.'+l)).join('')}</div>`;
+      if (d.party&&d.party.length) html += `<div class="sumbox"><h3>🤝 เพื่อนร่วมทีม</h3>${d.party.map(([id,n,ko])=>row(id&&ALLCHARS[id]?charArt(ALLCHARS[id].c,false,true):'🙂',rkEsc(n),ko?'ล้ม':'รอด')).join('')}</div>`;
+      if (d.fromRec) html += `<p class="csd">รอบนี้เล่นก่อนมีระบบเก็บรายละเอียด จึงแสดงสถานะจากบันทึกวีรชนที่ดีที่สุดแทน</p>`;
+      else if (!d.st) html += `<p class="csd">รอบนี้บันทึกไว้ก่อนมีระบบเก็บรายละเอียด เล่นทำสถิติใหม่เพื่ออัปเดตข้อมูล</p>`;
+    } else { const team=(d.team||[]).filter(id=>ALLCHARS[id]);
+      html += `<div class="sumbox"><h3>👥 ทีมที่ใช้</h3>${team.length?`<div class="rkteam">${team.map(id=>`<div>${charArt(ALLCHARS[id].c,false,true)}<small>${ALLCHARS[id].c.name}</small></div>`).join('')}</div>`:'<p class="csd">ไม่มีข้อมูลทีม</p>'}${rkTab==='dragon'&&d.slain?row('🐲','ปราบมังกรสำเร็จ','✓'):''}</div>`; }
+    return `<div class="pop-bg" data-act="rkviewc"><div class="pop altpop rkpop" data-act="noop"><div class="pop-h"><span class="cbig">${a?charArt(a.c,false,true):'🙂'}</span><div><b>${i<3?['🥇','🥈','🥉'][i]:'#'+(i+1)} ${rkEsc(r.name||'ผู้กล้า')}</b><div class="gs">${rkTab==='hundred'?'':'ใช้ '+rkEsc(heroName)+' · '}คะแนน ${fmt(r.score)}${rkTab==='hundred'?' ชั้น':''}</div></div></div>
+      ${html}<button class="choice wide" data-act="rkviewc"><span>ปิด</span></button></div></div>`; }
   function hubView(){ const m=loadMeta();
     const W = wPop ? worldPop() : '';
     if (hub==='adv') return hubAdv(m)+W; if (hub==='perm'){ hub='shop'; shTab='medal'; } if (hub==='shop') return hubShop(m)+W; if (hub==='troop') return hubTroop(m)+W; if (hub==='dragon') return hubDragon(m)+W; if (hub==='hundred') return hubHundred(m)+W; if (hub==='relicbag') return hubRelicBag(m)+W; if (hub==='bag') return hubBag(m)+W; if (hub==='rank') return hubRank(m)+W; if (hub==='spirits') return hubSpirits(m)+W; if (hub==='nest') return hubNest(m)+W; if (hub==='chars') return hubChars(m)+charPopup(m)+tryPopHtml(m)+W; if (hub==='gacha') return hubGacha(m)+W;
@@ -4378,7 +4444,15 @@ if (typeof document !== 'undefined') (function(){
     if (/^ht/.test(act) && htAct(act,b)) return true;
     if (/^rb/.test(act) && rbAct(act,b)) return true;
     if (/^bag/.test(act) && bagAct(act,b)) return true;
-    if (act==='rktab'){ rkTab=b.dataset.k; render(); return true; }
+    if (act==='rktab'){ rkTab=b.dataset.k; rkSel=null; render(); return true; }
+    if (act==='rkview'){ rkSel=+b.dataset.i; render(); return true; }
+    if (act==='rkviewc'){ rkSel=null; render(); return true; }
+    if (act==='rksend'){ const C=window.__dqCloud; if (C&&C.lbSync) C.lbSync(true).then(()=>rkLoad(rkTab,true)); render(); return true; }
+    if (act==='rkclaim'){ const per=rkPeriod(rkTab,m), D=RK_CACHE[rkTab+'|'+per]||{}, ci=rkClaimInfo(rkTab), cl=D.claim, tier=cl&&cl.rank?rkTier(rkTab,cl.rank):null;
+      if (!tier) return true; m.rkClaim=m.rkClaim||{}; if (m.rkClaim[ci.key]) return true;
+      Object.keys(m.rkClaim).forEach(k=>{ if (Object.keys(m.rkClaim).length>40) delete m.rkClaim[k]; });
+      m.rkClaim[ci.key]=1; const r=tier[2]; m.tickets=(m.tickets||0)+r.t; m.medals=(m.medals||0)+r.md; m.dust=(m.dust||0)+r.du;
+      SND.sfx&&SND.sfx('open'); return done(`🎁 รับ${ci.label}แล้ว (อันดับ #${fmt(cl.rank)}): ${rkRwTxt(r)}`); }
     if (act==='rkreload'){ const C=window.__dqCloud; Promise.resolve(C&&C.lbSync?C.lbSync():0).then(()=>rkLoad(rkTab,true)); render(); return true; }
     if (/^(sp|nest)/.test(act) && spAct(act,b)) return true;
     if (/^rl/.test(act) && relicAct(act,b)) return true;
@@ -4496,6 +4570,26 @@ if (typeof document !== 'undefined') (function(){
       const mm = (a,b)=> (a||b) ? `${fmt(a)} / ${fmt(b)}` : '-';
       const mag = st.type==='mag';
       return `<div class="overlay sum"><div class="big">${win?'🏆':'🪦'}</div><h1>${win?'ปราบบอสสำเร็จ!':'การผจญภัยจบลง'}</h1><p>${o.cause} · ชั้น ${S.floor} · Lv.${S.lv}</p>
+        ${(()=>{ const rw=o.rw||{}, rows=[], r=rw.rec;
+          rows.push(row('🎖️','เหรียญตรา',`<span style="color:var(--gold)">+${fmt(o.medals)}</span>`));
+          if (rw.char && !rw.newChar) rows.push(row(charArt(S.char),`เศษ ${S.char.name}`,`+${rw.shards}`));
+          if (rw.daily) rows.push(row('📅','ด่านท้าทายวันนี้',`ชั้น ${rw.daily.floor}${rw.daily.win?' · ปราบบอส!':''}${rw.daily.prev?` <span class="gs">(ดีสุดเดิม ${rw.daily.prev})</span>`:''}${rw.dailyFirst?` <span class="gs">(เล่นครั้งแรกของวัน +${rw.dailyFirst} 🎟️)</span>`:''}`));
+          if (rw.tickets) rows.push(row('🎟️','ตั๋วสุ่มเศษ',`+${rw.tickets}${rw.mission?` <span class="gs">(ภารกิจรายวัน +${rw.mission})</span>`:''}`));
+          if (o.rank){ const L=window.__dqLB||{}, C=window.__dqCloud, li=!!(C&&C.auth); rows.push(row(uiIco('rank','🏅'),'คะแนนจัดอันดับ',`${fmt(o.rank.total)}${rw.rankNew?' <span style="color:var(--exp)">สถิติใหม่!</span>':` <span class="gs">(ดีสุด ${fmt(m.rankBest||0)})</span>`}`));
+            rows.push(row('📡','ตารางอันดับ', !li?'<span class="gs">เข้าสู่ระบบเพื่อส่งคะแนน</span>' : L.state==='sending'?'<span class="gs">กำลังส่ง…</span>' : L.state==='err'?`<span style="color:var(--hp2)">ส่งไม่สำเร็จ</span>` : L.state==='ok'?'<span style="color:var(--exp)">ส่งแล้ว ✓</span>':'<span class="gs">รอส่ง…</span>')); }
+          if (!win) rows.push(row('💡','ชนะบอสเพื่อรับตัวละครและตั๋ว','—'));
+          let rec='';
+          if (r && r.first) rec = `<p class="recnote">📜 บันทึกสถานะ ${S.char.name} แล้ว (พลัง ${fmt(r.now)}) ทั้งสเตตัส อุปกรณ์ ค่าตีบวก และเลเวลสกิล</p>`;
+          else if (r && r.placed && r.old!=null){ const m=loadMeta(), c=m.chars[rw.char], oi=c.recs.findIndex(x=>x.power===r.old), ni=r.idx, cur=c.main;
+            rec = `<div class="recpick"><b>📜 สถานะรอบนี้ติดอันดับ ${r.rank} ของ ${S.char.name}</b><p>เลือกบันทึกหลักของตัวนี้ (อีกอันยังเก็บไว้ใน 3 อันดับ)</p>
+              <div class="row2"><button class="choice ${cur===ni?'':'alt'}" data-act="recmain" data-k="${rw.char}" data-i="${ni}"><span>${cur===ni?'✓ ':''}ใช้สถานะปัจจุบัน</span><small>พลัง ${fmt(r.now)}</small></button>
+              <button class="choice ${cur===oi?'':'alt'}" data-act="recmain" data-k="${rw.char}" data-i="${oi}"><span>${cur===oi?'✓ ':''}ใช้สถานะเดิม</span><small>พลัง ${fmt(r.old)}</small></button></div></div>`; }
+          else if (r && r.placed) rec = `<p class="recnote">📜 บันทึกสถานะรอบนี้แล้ว (อันดับ ${r.rank}, พลัง ${fmt(r.now)})</p>`;
+          else if (r) rec = `<p class="recnote">📜 สถานะรอบนี้ (พลัง ${fmt(r.now)}) ไม่ติด 3 อันดับ บันทึกเดิมยังอยู่</p>`;
+          const hs = S.char ? `<div class="herospot ${rw.newChar?'new':win?'got':'miss'} ${S.char.sp?'sp':''}"><div class="hsglow"></div><div class="hsart">${charArt(S.char)}</div>
+            <div class="hstag">${rw.newChar?`🎉 ได้วีรชนใหม่ถาวร!`:win?`✨ วีรชนของคุณแข็งแกร่งขึ้น`:`วีรชนรอบนี้`}</div><div class="hsname">${S.char.name}${S.char.hidden?' <small>(อาชีพลับ!)</small>':''}</div>
+            <div class="hssub">${elIcon(S.char.el)} ${unitName(S.cls,S.char)!==S.char.name?unitName(S.cls,S.char):''}${rw.newChar?' · ไปดูได้ที่หน้าวีรชน':rw.char?` · เศษ +${rw.shards}`:' · ต้องปราบบอสถึงจะได้วีรชนถาวร'}</div></div>` : '';
+          return `${hs}<div class="sumbox rwtop"><h3>🎁 รางวัลถาวร</h3>${rows.join('')}${rec}</div>`; })()}
         <div class="sumgrid">${card('❤️','HP',fmt(st.maxhp),'#ef476f')}${card(mag?'🔮':'⚔️',mag?'MATK':'ATK',fmt(mag?st.matk:st.atk),'#ff9f43')}${card('🛡️','DEF',fmt(st.def),'#4cc9f0')}
           ${card('🎯','คริ',st.cri+'%','#c77dff')}${card('💥','แรงคริ',st.cridmg+'%','#ff4d6d')}${card('💰','เงินสะสม',fmt(t.goldIn),'#ffd166')}</div>
         <div class="sumbox"><h3>⚔️ ผลงานการต่อสู้</h3>
@@ -4534,21 +4628,6 @@ if (typeof document !== 'undefined') (function(){
           ${o.rank.mults.map(x=>row(x[0],x[1],'x'+x[2].toFixed(1))).join('')}
           ${row('🏅','<b>คะแนนจัดอันดับรอบนี้</b>',`<span style="color:var(--gold);font-size:18px">${fmt(o.rank.total)}</span>`)}
           ${row('📈','สถิติสูงสุดของคุณ',(o.rw&&o.rw.rankNew)?`<span style="color:var(--exp)">${fmt(m.rankBest)} สถิติใหม่!</span>`:fmt(m.rankBest||0))}</div>`:''}
-        ${(()=>{ const rw=o.rw||{}, rows=[], r=rw.rec;
-          if (rw.newChar) rows.push(row(charArt(S.char),'ตัวละครใหม่ถาวร!',`<span style="color:var(--gold)">${S.char.name}</span>${S.char.hidden?' (อาชีพลับ!)':''}`));
-          else if (rw.char) rows.push(row(charArt(S.char),`เศษ ${S.char.name}`,`+${rw.shards}`));
-          if (rw.daily) rows.push(row('📅','ด่านท้าทายวันนี้',`ชั้น ${rw.daily.floor}${rw.daily.win?' · ปราบบอส!':''}${rw.daily.prev?` <span class="gs">(ดีสุดเดิม ${rw.daily.prev})</span>`:''}${rw.dailyFirst?` <span class="gs">(เล่นครั้งแรกของวัน +${rw.dailyFirst} 🎟️)</span>`:''}`));
-          if (rw.tickets) rows.push(row('🎟️','ตั๋วสุ่มเศษ',`+${rw.tickets}${rw.mission?` <span class="gs">(ภารกิจรายวัน +${rw.mission})</span>`:''}`));
-          if (!win) rows.push(row('💡','ชนะบอสเพื่อรับตัวละครและตั๋ว','—'));
-          let rec='';
-          if (r && r.first) rec = `<p class="recnote">📜 บันทึกสถานะ ${S.char.name} แล้ว (พลัง ${fmt(r.now)}) ทั้งสเตตัส อุปกรณ์ ค่าตีบวก และเลเวลสกิล</p>`;
-          else if (r && r.placed && r.old!=null){ const m=loadMeta(), c=m.chars[rw.char], oi=c.recs.findIndex(x=>x.power===r.old), ni=r.idx, cur=c.main;
-            rec = `<div class="recpick"><b>📜 สถานะรอบนี้ติดอันดับ ${r.rank} ของ ${S.char.name}</b><p>เลือกบันทึกหลักของตัวนี้ (อีกอันยังเก็บไว้ใน 3 อันดับ)</p>
-              <div class="row2"><button class="choice ${cur===ni?'':'alt'}" data-act="recmain" data-k="${rw.char}" data-i="${ni}"><span>${cur===ni?'✓ ':''}ใช้สถานะปัจจุบัน</span><small>พลัง ${fmt(r.now)}</small></button>
-              <button class="choice ${cur===oi?'':'alt'}" data-act="recmain" data-k="${rw.char}" data-i="${oi}"><span>${cur===oi?'✓ ':''}ใช้สถานะเดิม</span><small>พลัง ${fmt(r.old)}</small></button></div></div>`; }
-          else if (r && r.placed) rec = `<p class="recnote">📜 บันทึกสถานะรอบนี้แล้ว (อันดับ ${r.rank}, พลัง ${fmt(r.now)})</p>`;
-          else if (r) rec = `<p class="recnote">📜 สถานะรอบนี้ (พลัง ${fmt(r.now)}) ไม่ติด 3 อันดับ บันทึกเดิมยังอยู่</p>`;
-          return `<div class="sumbox"><h3>🎁 รางวัลถาวร</h3>${rows.join('')}${rec}</div>`; })()}
         ${o.villagerWin?'<p style="text-align:center">🌾 ชาวบ้านธรรมดาปราบบอสได้! เหรียญตรา x1.5</p>':''}
         <button class="choice" data-act="start"><span>เล่นอีกรอบ</span></button><button class="choice alt" data-act="home"><span>🏠 กลับหน้าหลัก</span><small>ใช้เหรียญตรา · ร้าน · ตัวละคร</small></button></div>`;
     }
@@ -4624,7 +4703,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="acsec">🏪 ร้านอื่นๆ (ตำรา ยา อุปกรณ์)</div>${seg('shop',[['stop','หยุดให้เลือก'],['skip','เดินผ่าน']])}
       <div class="acsec">🥷 เจอโจรดักปล้น</div>${seg('thief',[['ask','ให้ฉันเลือก'],['pay','จ่ายค่าผ่านทาง'],['fight','สู้ตลอด']])}
       <div class="gs" style="font-size:11px;text-align:left">ทองไม่พอซื้ออะไรเลย จะเดินผ่านร้านเอง · ไม่มีทองจ่ายโจร จะสู้เอง</div>
-      <div class="acsec">🎁 หีบสมบัติ</div>${seg('chest',[['ask','ให้ฉันเลือก'],['small','หีบเล็กเสมอ'],['mid','หีบกลางเสมอ']])}
+      <div class="acsec">🎁 หีบสมบัติ</div>${seg('chest',[['ask','ให้ฉันเลือก'],['small','หีบเล็กเสมอ'],['mid','หีบกลางเสมอ'],['big','หีบใหญ่เสมอ']])}
       <div class="acsec">👿 มอนสเตอร์ต้องสาป</div>${seg('badMon',[['stop','หยุดให้เลือก'],['flee','พยายามหนี'],['fight','สู้เลย']])}
       <div class="gs" style="font-size:11px;margin-top:8px">บอส เหตุร้ายอื่นๆ (นอกจากโจร) และการเลือกอาชีพ/ตัวละคร จะหยุดให้คุณเลือกเองเสมอ</div>
       <button class="choice wide" data-act="acfgclose" style="margin-top:10px"><span>บันทึก</span></button></div></div>`;
@@ -4641,7 +4720,7 @@ if (typeof document !== 'undefined') (function(){
       case 'rune': case 'orb': return ch.length===1 ? 0 : null;
       case 'stone': { if (c.stone==='book') return find(x=>/ตำรา/.test(x.label)); if (c.stone==='passive') { const i=find(x=>/^เรียน/.test(x.label)); return i!=null?i:find(()=>true); }
         if (c.stone==='random'){ const ok=ch.map((x,i)=>x.disabled?-1:i).filter(i=>i>=0); return ok.length?ok[Math.floor(Math.random()*ok.length)]:null; } return null; }
-      case 'chest': return c.chest==='small' ? find(x=>x.label==='หีบเล็ก') : c.chest==='mid' ? find(x=>x.label==='หีบกลาง') : null;
+      case 'chest': return c.chest==='small' ? find(x=>x.label==='หีบเล็ก') : c.chest==='mid' ? find(x=>x.label==='หีบกลาง') : c.chest==='big' ? find(x=>x.label==='หีบใหญ่') : null;
       case 'badMon': return c.badMon==='flee' ? find(x=>x.label==='หนี') : c.badMon==='fight' ? (hp>=c.hp/100 ? find(x=>x.label==='สู้') : null) : null;
       case 'mStat': { const buys=ch.filter(x=>!x.leave && !/ไม่ซื้อ/.test(x.label)); if (!buys.some(x=>!x.disabled)) return leave();
         if (c.mstat==='skip') return leave(); if (c.mstat!=='buy') return null;
@@ -4952,22 +5031,23 @@ if (typeof document !== 'undefined') (function(){
   const rpc=(fn,args)=>userReq('/rest/v1/rpc/'+fn,{method:'POST',body:JSON.stringify(args)});
   async function lbTop(board,period){ return await req(`/rest/v1/leaderboard?select=user_id,score,name,hero,detail&board=eq.${board}&period=eq.${encodeURIComponent(period)}&order=score.desc,updated_at.asc&limit=100`,{method:'GET'},!!auth); }
   async function lbMine(board,period){ const r=await rpc('my_rank',{p_board:board,p_period:period}); return r&&r[0]||null; }
-  let lbBusy=false;
-  async function lbSync(){ if (!auth||lbBusy) return; lbBusy=true;
-    try{ let m; try{ m=JSON.parse(get('dq_meta')||'null'); }catch(e){} if (!m){ lbBusy=false; return; }
+  let lbBusy=false, LB={state:'idle'};
+  const lbErr=e=>{ const s=(e&&e.message)||String(e); if (/Could not find|does not exist|schema cache/i.test(s)||(e&&e.status===404)) return 'ระบบอันดับบนเซิร์ฟเวอร์ยังไม่ได้ติดตั้ง (ต้องรันไฟล์ leaderboard.sql ใน Supabase)';
+    if (/not logged in/i.test(s)) return 'ยังไม่ได้เข้าสู่ระบบ'; if (/too fast/i.test(s)) return 'ส่งถี่เกินไป จะลองใหม่อัตโนมัติ'; if (/out of range/i.test(s)) return 'คะแนนเกินช่วงที่เซิร์ฟเวอร์รับ'; return thErr(e); };
+  const lbSet=v=>{ LB=Object.assign({t:Date.now()},v); window.__dqLB=LB; try{ document.dispatchEvent(new CustomEvent('dqlb')); }catch(e){} };
+  async function lbSync(force){ if (!auth){ lbSet({state:'guest'}); return LB; } if (lbBusy) return LB; lbBusy=true; lbSet({state:'sending'});
+    let ok=0, fail=null;
+    try{ let m; try{ m=JSON.parse(get('dq_meta')||'null'); }catch(e){} if (!m){ lbBusy=false; lbSet({state:'idle'}); return LB; }
       let sent={}; try{ sent=JSON.parse(get('dq_lb_sent')||'{}'); }catch(e){}
-      const name=(m.name||'ผู้กล้า').slice(0,20), hero=(m.show&&m.show.main)||null, d=new Date(Date.now()-5*3600e3), today=d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
-      const list=[];
-      if (m.rankBest) list.push(['endless','all',m.rankBest,m.rankInfo||{}]);
-      if (m.dailyBest&&m.dailyBest.day===today&&m.dailyBest.rank) list.push(['daily',today,m.dailyBest.rank,{floor:m.dailyBest.floor,win:m.dailyBest.win}]);
-      if (m.ht&&m.ht.best) list.push(['hundred','all',m.ht.best,{}]);
-      if (m.dh&&m.dh.best&&m.dh.wk!=null) list.push(['dragon',String(m.dh.wk),Math.round(m.dh.best),{slain:!!m.dh.slain}]);
-      for (const [b,per,sc,det] of list){ const k=b+'|'+per; if (sent[k]&&sent[k].s>=sc&&sent[k].n===name&&sent[k].h===hero) continue;
-        try{ await rpc('submit_score',{p_board:b,p_period:per,p_score:sc,p_name:name,p_hero:hero,p_detail:det}); sent[k]={s:sc,n:name,h:hero}; }catch(e){} }
+      const name=(m.name||'ผู้กล้า').slice(0,20), d=new Date(Date.now()-5*3600e3), today=d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
+      const list=typeof lbList==='function'?lbList(m):[];
+      for (const [b,per,sc,det,hero] of list){ const k=b+'|'+per; if (!sc) continue; if (!force&&sent[k]&&sent[k].s>=sc&&sent[k].n===name&&sent[k].h===hero&&sent[k].v===2) { ok++; continue; }
+        try{ await rpc('submit_score',{p_board:b,p_period:per,p_score:sc,p_name:name,p_hero:hero,p_detail:det}); sent[k]={s:sc,n:name,h:hero,v:2}; ok++; }catch(e){ fail=e; } }
       const keep={}; Object.keys(sent).forEach(k=>{ if (/^(endless|hundred)\|/.test(k)||k==='daily|'+today||k.startsWith('dragon|')) keep[k]=sent[k]; }); set('dq_lb_sent',JSON.stringify(keep));
-    }catch(e){} lbBusy=false; }
+    }catch(e){ fail=e; }
+    lbBusy=false; lbSet(fail?{state:'err',msg:lbErr(fail),ok}:{state:'ok',ok}); return LB; }
   const _push=push; push=async function(f){ await _push(f); lbSync(); };
-  window.__dqCloud={push,pull,lbTop,lbMine,lbSync,get auth(){ return auth; }};
+  window.__dqCloud={push,pull,lbTop,lbMine,lbSync,lbErr,get auth(){ return auth; }};
 })();
 </script>
 </body>
