@@ -1061,7 +1061,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.18</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.19</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -1536,6 +1536,15 @@ function newRun(consume){
   };
   applyRunStart(loadMeta(), consume);
 }
+/* ---------- 💾 บันทึกรอบที่กำลังเล่น (รีเฟรช/อัปเดตแล้วเล่นต่อได้) ---------- */
+const RUN_KEY='dq_run';
+function runSaveNow(){ try{ if (!S || S.over || !S.floor || S.phase==='title') return; const o=JSON.parse(JSON.stringify(S,(k,v)=>(k==='ev'||k==='result'||k==='meta'||k==='bossFight')?undefined:v)); o.phase='walk'; localStorage.setItem(RUN_KEY, JSON.stringify({t:Date.now(), S:o})); }catch(e){} }
+function runClear(){ try{ localStorage.removeItem(RUN_KEY); }catch(e){} }
+function runLoad(){ try{ const raw=localStorage.getItem(RUN_KEY); if (!raw) return false; const d=JSON.parse(raw), o=d&&d.S;
+    if (!o || !o.floor || Date.now()-(d.t||0)>7*86400e3 || (o.daily && o.daily!==dayKey())){ runClear(); return false; }
+    const fresh=S; S=Object.assign({}, fresh, o, {phase:'walk', ev:null, result:null, over:null, meta:fresh&&fresh.meta});
+    rng = S.daily ? seedRng('daily-'+S.daily+'-r'+S.floor) : Math.random;
+    addLog(`▶ กลับมาเล่นต่อที่ชั้น ${S.floor}`,'good'); return true; }catch(e){ runClear(); return false; } }
 function needExp(L){ return L<40 ? 3*L : Math.round(3*L*(1+((L-40)/12)**2)); }
 function baseLine(cls, L, k){
   const c = CLASSES[cls], prim = c.m.atk, vil = cls==='villager';
@@ -2344,11 +2353,11 @@ function step(){
   if (S.poison>0){ const d=Math.round(stats().maxhp*0.03); S.hp=Math.max(1,S.hp-d); S.poison--; }
   if (S.goldCurse>0) S.goldCurse--;
   if (S.rune.lv){ S.rune.timer--; if (S.rune.timer<=0){ S.rune.lv--; S.rune.timer = S.rune.lv?CONFIG.runeLife+accVal('compass'):0; addLog(S.rune.lv?`รูนอ่อนลงเป็น${RUNE[S.rune.lv].name}`:'รูนแตกสลาย','bad'); } }
-  if ((S.q && S.floor>=S.q.next) || maybeQuest()){ const qe=questEvent(); if (qe){ S.ev = qe; S.result=null; S.phase='event'; return; } }
+  if ((S.q && S.floor>=S.q.next) || maybeQuest()){ const qe=questEvent(); if (qe){ S.ev = qe; S.result=null; S.phase='event'; runSaveNow(); return; } }
   const type = rollEvent();
   if (type.startsWith('m') && type!=='monster') S.sinceMerchant=0;
   S.badStreak = (type==='bad'||type==='badMon') ? S.badStreak+1 : 0;
-  S.ev = buildEvent(type); S.result=null; S.phase='event';
+  S.ev = buildEvent(type); S.result=null; S.phase='event'; runSaveNow();
 }
 function done(text, cls=''){ S.result={text,cls}; addLog(text,cls); S.phase='walk'; S.ev=null; }
 function checkDead(cause){ if (S.hp<=0){ S.hp=0; endRun(false, cause); } }
@@ -2368,6 +2377,7 @@ function fight(mons, onWin){
     else done(txt, 'good');
   };
   S.bossFight=mons.some(x=>x.kind==='boss');
+  if (!res.win && S.bossFight) runClear();
   if (UI) { S.phase='battle'; UI.playBattle(res, mons, finish); } else finish();
 }
 function score(){ const boss = S.over && S.over.win ? bossLevel()*300 : 0; return S.floor*10 + S.lv*20 + boss + aliveMates()*100 + gearScore(); }
@@ -2402,6 +2412,7 @@ function lbList(m){ const d=new Date(Date.now()-5*3600e3), today=d.getFullYear()
   return out; }
 function endRun(win, cause){
   if (S.over) return;
+  runClear();
   S.over = {win, cause: cause||''}; if (S.daily) rng = Math.random;
   const sc = score(); let medals = Math.floor(sc/100);
   if (win && S.cls==='villager'){ medals = Math.floor(medals*1.5); S.over.villagerWin = true; }
@@ -2754,7 +2765,7 @@ function adaptGear(){
   ['weapon','helm','armor','boots','acc','acc2'].forEach(s=>{ const it=S.gear[s]; if (!it || !it.adapt || it.ty===ty) return;
     it.ty = ty; it.subs.forEach(x=>{ if (x.k==='atk'&&ty==='mag') x.k='matk'; else if (x.k==='matk'&&ty==='phy') x.k='atk'; }); });
 }
-function startDaily(){ const day=dayKey(); rng = seedRng('daily-'+day); newRun(false); S.daily = day;
+function startDaily(){ runClear(); const day=dayKey(); rng = seedRng('daily-'+day); newRun(false); S.daily = day;
   Object.keys(S.meta.pm).forEach(k=>S.meta.pm[k]= typeof S.meta.pm[k]==='number'?0:false); S.meta.stars={}; S.meta.forms={};
   S.gear.acc=null; S.acc2=false; S.rune={lv:0,timer:0}; S.gold=0; S.hp=stats().maxhp; }
 function applyRunStart(m, consume){
@@ -2871,7 +2882,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.18</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.19</span>'}</div>`;
   }
   let runSet=false, runQuit=false;
   function runPop(){
@@ -3086,11 +3097,11 @@ if (typeof document !== 'undefined') (function(){
     if (on && !shown){ el.innerHTML=tkInner(); el.classList.remove('tkhide'); }
     else if (!on && shown){ el.classList.add('tkhide'); setTimeout(()=>{ if (el.classList.contains('tkhide')) el.innerHTML=''; },450); } },1000);
   /* ---------- 🔔 แจ้งเตือนเกมมีอัปเดต ---------- */
-  const GAME_VER='v3.18'; let updSkip='', updT=0;
+  const GAME_VER='v3.19'; let updSkip='', updT=0;
   function updCheck(){ if (location.protocol==='file:' || document.getElementById('updpop')) return; if (Date.now()-updT<60000) return; updT=Date.now();
     fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{ if (!j||!j.v||j.v===GAME_VER||j.v===updSkip) return; updShow(j); }).catch(()=>{}); }
   function updShow(j){ const inRun=S&&S.phase&&S.phase!=='title'&&!S.over&&!hub, d=document.createElement('div'); d.id='updpop';
-    d.innerHTML=`<div class="ub"><div style="font-size:42px">🎉</div><h2>เกมมีอัปเดตใหม่!</h2><p>เวอร์ชัน <b>${j.v}</b> พร้อมแล้ว${j.note?`<br>${String(j.note).replace(/[<>]/g,'')}`:''}</p>${inRun?'<p class="uw">⚠️ ถ้าอัปเดตตอนนี้ รอบที่กำลังเล่นอยู่จะหายไป</p>':''}<button class="u1">🔄 อัปเดตเลย</button><button class="u2">▶ เล่นต่อก่อน</button></div>`;
+    d.innerHTML=`<div class="ub"><div style="font-size:42px">🎉</div><h2>เกมมีอัปเดตใหม่!</h2><p>เวอร์ชัน <b>${j.v}</b> พร้อมแล้ว${j.note?`<br>${String(j.note).replace(/[<>]/g,'')}`:''}</p>${inRun?'<p class="uw">💾 รอบที่กำลังเล่นถูกบันทึกไว้ อัปเดตแล้วเล่นต่อได้ (เหตุการณ์ที่ค้างอยู่จะถูกข้าม)</p>':''}<button class="u1">🔄 อัปเดตเลย</button><button class="u2">▶ เล่นต่อก่อน</button></div>`;
     d.querySelector('.u1').onclick=()=>{ try{ if (typeof idleFlush==='function') idleFlush(); }catch(e){} location.replace(location.pathname+'?v='+encodeURIComponent(j.v)); };
     d.querySelector('.u2').onclick=()=>{ updSkip=j.v; d.remove(); setTimeout(()=>{ updSkip=''; },30*60*1000); };
     document.body.appendChild(d); }
@@ -3159,7 +3170,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="pbtns"><button class="choice" data-act="guideopen"><span>📚 ข้อมูลเกม</span><small>ระดับอุปกรณ์ · ธาตุ · อาชีพ · อัตราสุ่ม · โหมดเกม</small></button><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.18<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.19<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
@@ -4864,7 +4875,7 @@ if (typeof document !== 'undefined') (function(){
     if (act==='savename'){ const v=(document.getElementById('pname').value||'').trim().slice(0,16); if (v) m.name=v; setPop=false; return done(); }
     if (act==='resetask'){ resetAsk=true; render(); return true; }
     if (act==='resetno'){ resetAsk=false; render(); return true; }
-    if (act==='resetdo'){ storeMeta(normMeta(null)); setPop=false; resetAsk=false; hub=null; render(); return true; }
+    if (act==='resetdo'){ runClear(); storeMeta(normMeta(null)); setPop=false; resetAsk=false; hub=null; render(); return true; }
     if (act==='recmain'){ setMainRec(b.dataset.k, +b.dataset.i); if (S.over && S.over.rw && S.over.rw.rec) S.over.rw.rec.chosen = +b.dataset.i; render(); return true; }
     if (act==='home'){ S.phase='title'; hub=null; render(); window.scrollTo(0,0); return true; }
     return false;
@@ -4996,7 +5007,7 @@ if (typeof document !== 'undefined') (function(){
   }
   function render(){ const hk=e=>((e.querySelector('.pop-h,.hubhead')||{}).textContent||'').replace(/[^\u0E00-\u0E7F]/g,'').slice(0,30); const keep=['.pop','.overlay','.pagebox'].map(q=>{ const e=app.querySelector(q); return e&&e.scrollTop>0?[q,e.scrollTop,hk(e)]:null; }).filter(Boolean);
     app.innerHTML = topbar() + scene() + eventPanel() + heroPanel() + overlay() + popup() + (acfgPop?acfgPopHtml():'') + runPop();
-    keep.forEach(([q,t,k])=>{ const e=app.querySelector(q); if (e&&hk(e)===k) e.scrollTop=t; });  afterRender(); }
+    keep.forEach(([q,t,k])=>{ const e=app.querySelector(q); if (e&&hk(e)===k) e.scrollTop=t; });  afterRender(); if (S && !S.over && S.phase==='walk' && !S.ev && S.floor>0) runSaveNow(); }
   function floatAt(el, text, cls){
     if (!el) return; const f = document.createElement('div'); f.className='float '+(cls||''); f.textContent=text;
     const r = el.getBoundingClientRect(), a = app.getBoundingClientRect();
@@ -5221,7 +5232,7 @@ if (typeof document !== 'undefined') (function(){
     if (act==='rquit'){ if (battleView) return; runQuit=true; runSet=false; if (auto) autoStop(); render(); return; }
     if (act==='rquitno'){ runQuit=false; render(); return; }
     if (act==='rquitok'){ runQuit=false; if (battleView||S.over) { render(); return; } if (auto) autoStop(); acfgPop=false; popSlot=null; endRun(false,'🚪 ออกจากหอคอย'); render(); window.scrollTo(0,0); return; }
-    if (act==='start'){ rng = Math.random; newRun(true); hub=null; partySel=[]; popSlot=null; render(); window.scrollTo(0,0); if (!S.daily) setTimeout(voVillager,350); return; }
+    if (act==='start'){ runClear(); rng = Math.random; newRun(true); hub=null; partySel=[]; popSlot=null; render(); window.scrollTo(0,0); if (!S.daily) setTimeout(voVillager,350); return; }
     if (act==='daily'){ startDaily(); hub=null; partySel=[]; popSlot=null; render(); window.scrollTo(0,0); return; }
     if (act==='walk'){ autoMsg=''; try{ step(); }catch(err){ console.error(err); if (S && !S.over){ S.phase='walk'; S.ev=null; if (S.q && S.floor>=S.q.next){ S.q=null; S.qCool=S.floor+15; } } setTimeout(()=>{ throw err; },0); autoMsg='⚠️ เกิดข้อผิดพลาด ลองกดเดินต่ออีกครั้ง ('+String(err&&err.message||err).slice(0,80)+')'; } render(); return; }
     if (act==='acfgopen'){ acfgPop = true; render(); return; }
@@ -5250,7 +5261,7 @@ if (typeof document !== 'undefined') (function(){
     if (act==='skip'){ skipping = true; return; }
   });
   { const m=loadMeta(); loginGift=dailyLogin(m); storeMeta(m); }
-  newRun(); S.phase='title'; render();
+  newRun(); S.phase='title'; if (runLoad()){ hub=null; } render();
 })();
 </script>
 <script>
