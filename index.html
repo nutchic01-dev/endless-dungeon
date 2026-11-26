@@ -1065,7 +1065,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.28</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.29</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -1571,8 +1571,9 @@ function stats(){
     cridmg:Math.min(300, b.cridmg + t.cridmg + g.cridmg + gb.cridmg + P.cridmg + D.cridmg), pen:Math.min(60,t.pen+g.pen+gb.pen+(b.type==='mag'?P.mpen:P.pen)), spd:b.spd+t.spd,
     heal:b.heal*(1+gb.healP/100), type:S.cls==='villager'?((b.matk+t.matk+g.matk+P.matk)>(b.atk+t.atk+g.atk+P.atk)?'mag':'phy'):b.type, steal:gb.steal, skillK:gb.skillK, bossK:gb.bossK, drK:gb.drK, revive:gb.revive };
 }
+function mateFloorK(){ return 1 + Math.min(2.5, Math.max(0, (S.floor||0)-80)/120); }   // เพื่อนร่วมทีมแกร่งขึ้นตามชั้น (ชั้น 200 = x2, ชั้น 380+ = x3.5)
 function mateStats(m){
-  const k = CONFIG.mateK*(m.char&&m.char.sp?1.08:1)*starK(m.char), q = CONFIG.mateTrain, g = gearTotals().f, P = S.meta.pm;
+  const k = CONFIG.mateK*(m.char&&m.char.sp?1.08:1)*starK(m.char)*mateFloorK(), q = CONFIG.mateTrain, g = gearTotals().f, P = S.meta.pm;
   const t = {hp:S.train.hp+g.hp+P.hp, atk:S.train.atk+P.atk, matk:S.train.matk+P.matk, def:S.train.def+g.def+P.def, mdef:S.train.mdef+g.mdef+P.mdef, cri:S.train.cri+P.cri, cridmg:S.train.cridmg+P.cridmg, pen:S.train.pen+(CLASSES[m.cls].type==='mag'?P.mpen:P.pen)};
   const b = baseLine(m.cls, S.lv, k), ga = (g.atk+g.matk)*q;
   const atkMod = 1 + S.mods.atk/100, defMod = 1 + S.mods.def/100;
@@ -1650,8 +1651,8 @@ function heal(pct){ const m=stats().maxhp; const before=S.hp; S.hp=Math.min(m, S
 function healMates(pct){ S.party.forEach(m=>{ if(!m.ko){ const mx=mateStats(m).maxhp; m.hp=Math.min(mx, m.hp+mx*pct); } }); }
 function addExp(n){
   S.exp += Math.round(n*(1+accVal('tome')/100)*(1+S.meta.pm.exp/100)); let ups=0;
-  while (S.lv < 80 && S.exp >= needExp(S.lv)) { S.exp -= needExp(S.lv); S.lv++; ups++; heal(CONFIG.levelUpHeal); healMates(CONFIG.levelUpHeal); }
-  if (S.lv>=80) S.exp = 0;
+  while (S.lv < LV_CAP && S.exp >= needExp(S.lv)) { S.exp -= needExp(S.lv); S.lv++; ups++; heal(CONFIG.levelUpHeal); healMates(CONFIG.levelUpHeal); }
+  if (S.lv>=LV_CAP) S.exp = 0;
   if (ups){ addLog(`เลเวลอัป! Lv.${S.lv}`,'good'); SND.sfx('levelup'); }
   if (S.lv>=10 && S.cls==='villager' && !S.villagerPath) S.pendingClass = true;
   if (S.lv>=40 && !S.partyRolled && S.cls!=='villager'||S.lv>=40 && !S.partyRolled && S.villagerPath) S.pendingChar = true;
@@ -1731,8 +1732,9 @@ function makeItem(F, slot, r){
   it.name = base + SETS[it.set].name;
   return it;
 }
+const LV_CAP = 100;
 const mainVal = it => Math.round(it.main.v*(1+0.08*it.plus));
-const subK = it => 1 + (it.plus>=5?0.1:0) + (it.plus>=10?0.1:0);
+const subK = it => it.acc ? 1 + 0.08*it.plus : 1 + (it.plus>=5?0.1:0) + (it.plus>=10?0.1:0);   // เครื่องประดับ: ค่ารองโต +8% ทุกขั้น
 const itemScore = it => it ? RARITY[it.r].pts*(1+0.1*it.plus) + it.F*0.6 : -1;
 const sellVal = it => Math.round((10+1.5*it.F)*RARITY[it.r].sell*(1+0.15*it.plus));
 const buyVal = it => Math.round((30+4*S.floor)*[1,2,4,8][it.r]);
@@ -1742,12 +1744,12 @@ function itemHtml(it, withName=true){
   if (!it) return '<span class="gs">ว่าง</span>';
   const nm = withName ? `<b class="${it.set&&SETS[it.set].sp?'rs':'r'+it.r}">${itIco(it)} ${it.name}${it.plus?` +${it.plus}`:''}</b> ` : '';
   const parts = [];
-  if (it.acc) parts.push(ACCS[it.acc].d(ACCS[it.acc].v[it.r]));
+  if (it.acc) parts.push(ACCS[it.acc].d(Math.round(ACCS[it.acc].v[it.r]*(1+0.04*(it.plus||0)))));
   if (it.main) parts.push(statLine(it.main.k, mainVal(it)));
   it.subs.forEach(x=>parts.push(statLine(x.k, Math.round(x.v*subK(it)))));
   return `${nm}${it.set?setTag(it.set)+' ':''}<span class="gs">${RARITY[it.r].th} · ${parts.join(' · ')}</span>`;
 }
-function accVal(id){ let m=0; if (!S.gear) return 0; ['acc','acc2'].forEach(s=>{ const it=S.gear[s]; if (it && it.acc===id) m=Math.max(m, ACCS[id].v[it.r]); }); return m; }
+function accVal(id){ let m=0; if (!S.gear) return 0; ['acc','acc2'].forEach(s=>{ const it=S.gear[s]; if (it && it.acc===id) m=Math.max(m, Math.round(ACCS[id].v[it.r]*(1+0.04*(it.plus||0)))); }); return m; }
 const SET_TIER = [0.45,0.65,0.85,1];   // พลังเซ็ตตามระดับของชิ้นที่ใส่ (เฉลี่ย)
 function setPow(k){ const a=['weapon','helm','armor','boots'].map(s=>S.gear[s]).filter(it=>it&&it.set===k); return a.length ? a.reduce((t,it)=>t+SET_TIER[it.r],0)/a.length : 1; }
 const SETB_TH = {atkP:['ATK','%'],matkP:['MATK','%'],pen:['เจาะเกราะ','%'],defP:['DEF/MDEF','%'],drK:['รับดาเมจ -','%'],healP:['พลังรักษา','%'],cri:['คริ','%'],cridmg:['ความแรงคริ','%'],steal:['ดูดเลือด','%'],allP:['ทุกสเตตัส','%'],hpP:['HP','%'],revive:['ฟื้นคืนชีพ HP ','% ครั้งละการต่อสู้'],skillK:['ดาเมจสกิล','%'],bossK:['ดาเมจต่อบอส','%']};
@@ -2327,7 +2329,7 @@ function enhanceItem(slot, msg){
     else if (protect){ S.st.enhSaved++; S.ev = enhanceItem(slot, `💢 ตีไม่สำเร็จ แต่การกันแตกช่วยไว้`); }
     else { S.st.enhFail++; S.gear[slot]=null; S.hp=Math.max(1,Math.min(S.hp, stats().maxhp)); S.ev = enhanceMenu(`💥 ${it.name} แตกสลายไปแล้ว…`); } };
   return {type:'mEquip', title:`ตีบวก +${it.plus} → +${it.plus+1}`, icon:itIco(it), enhancing:slot, rate, cost:c,
-    text:`${msg?msg+'\n':''}${itemHtml(it)}\n<b>สำเร็จ ${rate}%</b>${rate<100?` · แตก ${100-rate}%`:''}`,
+    text:`${msg?msg+'\n':''}${itemHtml(it)}${it.acc?`\n<small class="gs">ถ้าสำเร็จ → ${itemHtml(Object.assign({},it,{plus:it.plus+1}),false)}</small>`:''}\n<b>สำเร็จ ${rate}%</b>${rate<100?` · แตก ${100-rate}%`:''}`,
     choices:[
       {label:'ตีบวก', sub:`${fmt(c)} ทอง`, disabled:S.gold<c, fn:()=>go(false)},
       {label:'ตีบวกแบบกันแตก', sub:`${fmt(cp)} ทอง (ไม่แตกแน่นอน)`, disabled:S.gold<cp||rate>=100, fn:()=>go(true)},
@@ -2727,6 +2729,13 @@ function normMeta(m){
   Object.keys(PERM_KEYS).forEach(k=>{ if (m.perm[k]==null) m.perm[k]=0; });
   if (!m.daily || m.daily.key!==dayKey()) m.daily = {key:dayKey(), runs:0, mission:false};
   Object.values(m.chars).forEach(c=>{ if (!c.recs) c.recs=[]; if (c.main==null) c.main=0; });
+  if (!m.lv100){ m.lv100=1;   // เลเวลตันเปลี่ยน 80 → 100: ปรับบันทึกเก่าให้เข้ากับเพดานใหม่
+    const up=L0=>L0>=80?100:Math.min(100,Math.round(L0*1.25)), bk=(L,a,b)=>a+b*(L-1), mul=(L0,L1,a,b)=>1+0.5*(bk(L1,a,b)/bk(L0,a,b)-1);
+    const fix=(o,st)=>{ if (!o||!o.lv||o.lv>=100) return 0; const L0=o.lv, L1=up(L0); if (L1<=L0) return 0; o.lv=L1;
+      if (st){ const kh=mul(L0,L1,200,40), ka=mul(L0,L1,20,5), kd=mul(L0,L1,10,3); ['maxhp','hp'].forEach(k=>{ if (st[k]!=null) st[k]=Math.round(st[k]*kh); }); ['atk','matk'].forEach(k=>{ if (st[k]!=null) st[k]=Math.round(st[k]*ka); }); ['def','mdef'].forEach(k=>{ if (st[k]!=null) st[k]=Math.round(st[k]*kd); }); }
+      return L1-L0; };
+    Object.values(m.chars).forEach(c=>(c.recs||[]).forEach(r=>{ if (fix(r,r.st) && r.st && r.st.maxhp!=null) r.power=powerOf(Object.assign({cri:0,cridmg:150,pen:0},r.st)); }));
+    if (m.rankInfo){ const d=fix(m.rankInfo,m.rankInfo.st); if (d){ m.rankBest=(m.rankBest||0)+d*40; if (m.rankInfo.st&&m.rankInfo.power) m.rankInfo.power=Math.round(m.rankInfo.power*1.12); } } }
   if (!m.idle) m.idle={st:1,sub:1,best:0,farm:false,gold:0,chestT:Date.now(),alt:{},hero:{}};
   if (!m.idle.hero2) m.idle.hero2={}; if (!m.eq) m.eq=eqDefault(); if (!m.skin) m.skin={}; if (!m.skins) m.skins={}; if (m.skinSh==null) m.skinSh=0; if (m.sktix==null) m.sktix=10; SKIN_EQ=m.skin;
   if (m.reroll){ m.medals+=20; m.reroll=false; }   // หินสุ่มวีรชนแบบเก่า (ซื้อล่วงหน้า) → คืนเหรียญตรา
@@ -2896,7 +2905,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.28</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.29</span>'}</div>`;
   }
   let runSet=false, runQuit=false;
   function runPop(){
@@ -2959,13 +2968,13 @@ if (typeof document !== 'undefined') (function(){
     return `<button class="accrow a${it.r}" data-act="gearpop" data-s="${slot}"><div class="ai">${itIco(it)}</div><div class="am"><b class="r${it.r}">${it.name}${it.plus?' +'+it.plus:''}</b> <span class="gs">${RARITY[it.r].th} · ${SLOT_NAME[slot]}</span><div class="ad">${ACCS[it.acc].d(ACCS[it.acc].v[it.r])}</div></div></button>`;
   }
   function heroPanel(){
-    const st = stats(), G = gearTotals(), g = G.f, gb = G.b, need = needExp(S.lv), exP = S.lv>=80?100:100*S.exp/need, sp = S.char&&S.char.sp, r = RUNE[S.rune.lv];
+    const st = stats(), G = gearTotals(), g = G.f, gb = G.b, need = needExp(S.lv), exP = S.lv>=LV_CAP?100:100*S.exp/need, sp = S.char&&S.char.sp, r = RUNE[S.rune.lv];
     const clsName = CLASSES[S.cls].hidden?'อาชีพลับ':S.cls==='villager'?(S.villagerPath?'สายชาวบ้าน':'ยังไม่มีอาชีพ'):CLASSES[S.cls].name;
     const head = `<div class="sh-head"><div class="sh-av ${sp?'sp':''}">${unitIcon(S.cls,S.char)}<div class="sh-lv">Lv.${S.lv}</div></div>
       <div class="sh-meta"><div class="sh-sub">${clsName}${S.char?` · ${elIcon(S.char.el)} ธาตุ${ELEMENTS[S.char.el].name}`:''}</div>
         <div class="sh-name">${unitName(S.cls,S.char)}${sp?' ✨':''}</div>
         <div class="sh-chips"><span class="sh-chip">🪙 ${fmt(S.gold)}</span><span class="sh-chip">🧭 ${S.floor} ชั้น</span></div>
-        <div class="sh-exp"><i style="width:${exP}%"></i></div><div class="sh-exptxt">EXP ${fmt(S.exp)} / ${S.lv>=80?'MAX':fmt(need)}</div></div></div>
+        <div class="sh-exp"><i style="width:${exP}%"></i></div><div class="sh-exptxt">EXP ${fmt(S.exp)} / ${S.lv>=LV_CAP?'MAX':fmt(need)}</div></div></div>
       <div class="sh-hp"><div class="bigbar"><i id="heroBar" style="width:${100*S.hp/st.maxhp}%;background:linear-gradient(90deg,var(--hp),var(--hp2))"></i><span id="heroHpTxt">HP ${fmt(S.hp)} / ${fmt(st.maxhp)}</span></div></div>`;
     const rune = S.rune.lv
       ? `<div class="runecard" style="--rc:${r.color}"><div class="ri2">🔷</div><div class="rmeta"><b>${r.name}</b><div>โอกาสหลบบอส: <span class="gold">${Math.min(75,r.pct+accVal('cloak'))}%</span></div></div><div class="rtimer"><small>${S.rune.lv>1?'ลดระดับใน':'แตกใน'}</small><div class="rbox">${S.rune.timer}<small> ชั้น</small></div></div></div>`
@@ -3111,7 +3120,7 @@ if (typeof document !== 'undefined') (function(){
     if (on && !shown){ el.innerHTML=tkInner(); el.classList.remove('tkhide'); }
     else if (!on && shown){ el.classList.add('tkhide'); setTimeout(()=>{ if (el.classList.contains('tkhide')) el.innerHTML=''; },450); } },1000);
   /* ---------- 🔔 แจ้งเตือนเกมมีอัปเดต ---------- */
-  const GAME_VER='v3.28'; let updSkip='', updT=0;
+  const GAME_VER='v3.29'; let updSkip='', updT=0;
   function updCheck(){ if (location.protocol==='file:' || document.getElementById('updpop')) return; if (Date.now()-updT<60000) return; updT=Date.now();
     fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{ if (!j||!j.v||j.v===GAME_VER||j.v===updSkip) return; updShow(j); }).catch(()=>{}); }
   function updShow(j){ const inRun=S&&S.phase&&S.phase!=='title'&&!S.over&&!hub, d=document.createElement('div'); d.id='updpop';
@@ -3196,7 +3205,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="pbtns"><button class="choice" data-act="guideopen"><span>📚 ข้อมูลเกม</span><small>ระดับอุปกรณ์ · ธาตุ · อาชีพ · อัตราสุ่ม · โหมดเกม</small></button><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.28<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.29<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
