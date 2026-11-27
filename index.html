@@ -1027,6 +1027,13 @@ h3 img.uiico{height:24px;width:auto;vertical-align:middle}
 .pbg-royal{background:linear-gradient(135deg,rgba(255,215,90,.25),rgba(120,70,0,.2)),repeating-linear-gradient(45deg,rgba(255,220,120,.12) 0 6px,transparent 6px 14px),linear-gradient(135deg,#3a2400,#7a4a00)!important;box-shadow:inset 0 0 0 1.5px #ffd34d,0 0 12px rgba(255,200,60,.4)!important}
 @keyframes pbgmv{50%{background-position:100% 50%}}@keyframes pbgst{to{background-position:380px 340px,520px 460px,0 0,0 0}}
 .avatar.mini{width:38px!important;min-width:38px;max-width:38px;height:38px!important;flex:0 0 38px;border-radius:10px;border-width:2px;font-size:20px;cursor:default}.avatar.mini img.art,.avatar.mini img{height:32px!important;width:32px!important;object-fit:contain}
+.avatar.fr-dragonk,.avatar.fr-cosmic,.avatar.fr-champ2,.avatar.fr-hellfire,.avatar.fr-demon,.avatar.fr-angel,.avatar.fr-kranok,.avatar.fr-icecrown,.avatar.fr-thunder{border-color:transparent!important;box-shadow:none!important;border-radius:50%!important;background:radial-gradient(circle,#3a2d5c,#1a1230)!important;overflow:visible!important;position:relative;animation:none!important}
+.avatar.fr-dragonk::after,.avatar.fr-cosmic::after,.avatar.fr-champ2::after,.avatar.fr-hellfire::after,.avatar.fr-demon::after,.avatar.fr-angel::after,.avatar.fr-kranok::after,.avatar.fr-icecrown::after,.avatar.fr-thunder::after{content:'';position:absolute;inset:-72%;background:center/contain no-repeat;pointer-events:none;z-index:3;animation:frimg 2.6s ease-in-out infinite}
+.avatar.fr-dragonk::before,.avatar.fr-cosmic::before,.avatar.fr-champ2::before,.avatar.fr-hellfire::before,.avatar.fr-demon::before,.avatar.fr-angel::before,.avatar.fr-kranok::before,.avatar.fr-icecrown::before,.avatar.fr-thunder::before{content:none!important}
+.avatar.fr-dragonk>*,.avatar.fr-cosmic>*,.avatar.fr-champ2>*,.avatar.fr-hellfire>*,.avatar.fr-demon>*,.avatar.fr-angel>*,.avatar.fr-kranok>*,.avatar.fr-icecrown>*,.avatar.fr-thunder>*{clip-path:circle(48%);border-radius:50%}
+.avatar.fr-dragonk::after{background-image:url(art/frm_dragonk.webp)}.avatar.fr-cosmic::after{background-image:url(art/frm_cosmic.webp)}.avatar.fr-champ2::after{background-image:url(art/frm_champ2.webp)}.avatar.fr-hellfire::after{background-image:url(art/frm_hellfire.webp)}.avatar.fr-demon::after{background-image:url(art/frm_demon.webp)}.avatar.fr-angel::after{background-image:url(art/frm_angel.webp)}.avatar.fr-kranok::after{background-image:url(art/frm_kranok.webp)}.avatar.fr-icecrown::after{background-image:url(art/frm_icecrown.webp)}.avatar.fr-thunder::after{background-image:url(art/frm_thunder.webp)}
+.avatar.mini.fr-dragonk::after,.avatar.mini.fr-cosmic::after,.avatar.mini.fr-champ2::after,.avatar.mini.fr-hellfire::after,.avatar.mini.fr-demon::after,.avatar.mini.fr-angel::after,.avatar.mini.fr-kranok::after,.avatar.mini.fr-icecrown::after,.avatar.mini.fr-thunder::after{inset:-60%}.rka:has(.fr-dragonk,.fr-cosmic,.fr-champ2,.fr-hellfire,.fr-demon,.fr-angel,.fr-kranok,.fr-icecrown,.fr-thunder){width:64px;margin-right:6px}
+@keyframes frimg{0%,100%{filter:brightness(1) drop-shadow(0 0 2px rgba(255,220,140,.35))}50%{filter:brightness(1.18) drop-shadow(0 0 6px rgba(255,220,140,.7))}}
 .avatar.fr-wood{border-color:#a8763e;box-shadow:0 0 0 2px #5a3a17,inset 0 0 0 2px #7a5228}
 .avatar.fr-jade{border-color:#5fe0a0;box-shadow:0 0 0 2px #0d5a3a,0 0 10px rgba(95,224,160,.6)}
 .avatar.fr-neon{border-color:#ff3bd4;box-shadow:0 0 0 2px #2bf2ff,0 0 12px #ff3bd4,0 0 18px #2bf2ff;animation:frneon 1.5s ease-in-out infinite alternate}
@@ -1185,7 +1192,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.47</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.48</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -2764,6 +2771,10 @@ const COS = {
     {k:'loykrathong',n:'สายน้ำคืนลอยกระทง',t:'f',free:1,d:'ชุดเทศกาลลอยกระทง (ฟรี)'},
   ],
   frame:[
+    {k:'dragonk',n:'ราชามังกรทอง',t:'l',rk:1,img:1,d:'ติดอันดับ 1 ตารางใดก็ได้'},{k:'cosmic',n:'ห้วงจักรวาล',t:'l',rk:3,img:1,d:'ติดอันดับ 1–3 ตารางใดก็ได้'},
+    {k:'champ2',n:'ดาบไขว้แชมป์',t:'l',ar_r:1400,img:1,d:'คะแนนประลองถึง 1,400'},{k:'hellfire',n:'เพลิงนรกกะโหลก',t:'l',fl:350,img:1,d:'ไต่หอคอยไร้สิ้นสุดถึงชั้น 350'},
+    {k:'demon',n:'ปีกจอมมาร',t:'l',md:60000,img:1},{k:'angel',n:'ปีกเทวทูต',t:'l',md:60000,img:1},
+    {k:'kranok',n:'กนกไทยทองคำ',t:'e',md:40000,img:1},{k:'icecrown',n:'มงกุฎน้ำแข็ง',t:'e',md:35000,img:1},{k:'thunder',n:'อัสนีบาต',t:'e',ar:1200,img:1},
     {k:'wood',n:'ไม้แกะสลัก',t:'c',md:2500},{k:'jade',n:'หยกมรกต',t:'r',md:9000},{k:'neon',n:'นีออนไซเบอร์',t:'r',ar:300},
     {k:'sakuraf',n:'ซากุระบาน',t:'e',md:25000},{k:'flamef',n:'เพลิงนรก',t:'e',md:32000},{k:'voidf',n:'ห้วงมิติ',t:'e',ar:900},
     {k:'crown',n:'มงกุฎราชัน',t:'l',rk:1,d:'ติดอันดับ 1 ตารางใดก็ได้'},{k:'champ',n:'แชมป์สนามประลอง',t:'l',ar_r:1300,d:'คะแนนประลองถึง 1,300'},
@@ -3328,7 +3339,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.47</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.48</span>'}</div>`;
   }
   let runSet=false, runQuit=false;
   function runPop(){
@@ -3584,7 +3595,7 @@ if (typeof document !== 'undefined') (function(){
     if (on && !shown){ el.innerHTML=tkInner(); el.classList.remove('tkhide'); }
     else if (!on && shown){ el.classList.add('tkhide'); setTimeout(()=>{ if (el.classList.contains('tkhide')) el.innerHTML=''; },450); } },1000);
   /* ---------- 🔔 แจ้งเตือนเกมมีอัปเดต ---------- */
-  const GAME_VER='v3.47'; let updSkip='', updT=0;
+  const GAME_VER='v3.48'; let updSkip='', updT=0;
   function updCheck(){ if (location.protocol==='file:' || document.getElementById('updpop')) return; if (Date.now()-updT<60000) return; updT=Date.now();
     fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{ if (!j||!j.v||j.v===GAME_VER||j.v===updSkip) return; updShow(j); }).catch(()=>{}); }
   function updShow(j){ const inRun=S&&S.phase&&S.phase!=='title'&&!S.over&&!hub, d=document.createElement('div'); d.id='updpop';
@@ -3671,7 +3682,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="pbtns"><button class="choice" data-act="guideopen"><span>📚 ข้อมูลเกม</span><small>ระดับอุปกรณ์ · ธาตุ · อาชีพ · อัตราสุ่ม · โหมดเกม</small></button><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.47<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.48<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
