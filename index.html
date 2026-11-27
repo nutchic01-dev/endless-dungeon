@@ -1216,7 +1216,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.54</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.55</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -3540,7 +3540,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.54</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.55</span>'}</div>`;
   }
   let runSet=false, runQuit=false;
   function runPop(){
@@ -3799,7 +3799,7 @@ if (typeof document !== 'undefined') (function(){
     if (on && !shown){ el.innerHTML=tkInner(); el.classList.remove('tkhide'); }
     else if (!on && shown){ el.classList.add('tkhide'); setTimeout(()=>{ if (el.classList.contains('tkhide')) el.innerHTML=''; },450); } },1000);
   /* ---------- 🔔 แจ้งเตือนเกมมีอัปเดต ---------- */
-  const GAME_VER='v3.54'; let updSkip='', updT=0;
+  const GAME_VER='v3.55'; let updSkip='', updT=0;
   function updCheck(){ if (location.protocol==='file:' || document.getElementById('updpop')) return; if (Date.now()-updT<60000) return; updT=Date.now();
     fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{ if (!j||!j.v||j.v===GAME_VER||j.v===updSkip) return; updShow(j); }).catch(()=>{}); }
   function updShow(j){ const inRun=S&&S.phase&&S.phase!=='title'&&!S.over&&!hub, d=document.createElement('div'); d.id='updpop';
@@ -3886,7 +3886,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="pbtns"><button class="choice" data-act="guideopen"><span>📚 ข้อมูลเกม</span><small>ระดับอุปกรณ์ · ธาตุ · อาชีพ · อัตราสุ่ม · โหมดเกม</small></button><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.54<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.55<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
@@ -4909,7 +4909,7 @@ if (typeof document !== 'undefined') (function(){
   function htDmgH(F,e,h,mul){ if (htDodge(F,h,true)) return; const ef=e.fx||FX0(), hf=h.fx||FX0();
     const d=e.atk*mul*htElMul(e.el,h.el)*(1-h.res)*(F.sh>0?0.5:1)*(0.9+Math.random()*0.2)*(F.pvpD||1)*(1-hf.dr/100)*(e.ehero?(1+ef.dmg/100)*(e.ulting?1+ef.ult/100:1):1);
     const real=Math.min(d,Math.max(0,h.hp)); h.tk=(h.tk||0)+real; if (e.ehero){ e.dd=(e.dd||0)+real; if (ef.steal>0) htEHeal(e,real*ef.steal/100); }
-    h.hp-=d; htRevive(F,h,true); h.hit=0.15; h.en=Math.min(100,h.en+6*(1+hf.en/100)); SND.sfx('enemy');
+    h.hp-=d; if (F.undy>0 && h.hp<1){ h.hp=1; } htRevive(F,h,true); h.hit=0.15; h.en=Math.min(100,h.en+6*(1+hf.en/100)); SND.sfx('enemy');
     const [x,y,,H]=htPos(h,true); htFx({k:'n',x:x+(Math.random()-0.5)*16,y:y-H*0.15,txt:'-'+fmtN(d),col:'#ff8a7a'}); }
   function htHeal(h,v,src){ if (h.hp<=0) return; v*=(htFight&&htFight.pvpH)||1; if (src&&src.fx) v*=1+src.fx.heal/100; const a=Math.min(h.mx-h.hp,v); h.hp+=a; if (src) src.hl=(src.hl||0)+a; else if (htFight) htFight.spHl=(htFight.spHl||0)+a; SND.sfx('heal'); const [x,y,,H]=htPos(h,true); if (a>1) htFx({k:'n',x,y:y-H*0.17,txt:'+'+fmtN(a),col:'#7dff9a'}); }
   function htHeroAct(F,h){ const eA=F.E.filter(e=>e.hp>0); if (!eA.length) return; const fr=eA.filter(e=>e.slot<(e.ehero?2:3)), pool=fr.length?fr:eA, hA=F.T.filter(x=>x.hp>0);
@@ -4917,13 +4917,20 @@ if (typeof document !== 'undefined') (function(){
     if (h.en>=100){ h.en=0; h.lg=1; h.ulting=true; h.uc=(h.uc||0)+1; F.chain = F.t-(F.lastUlt==null?-99:F.lastUlt)<=1 && F.lastUid!==h.id ? (F.chain||0)+1 : 1; F.lastUlt=F.t; F.lastUid=h.id; h.cbK=1+0.05*Math.min(3,F.chain-1);
       if (F.chain>=2){ h.cb=(h.cb||0)+1; F.maxChain=Math.max(F.maxChain||0,F.chain); const [cx,cy,,cH]=htPos(h,true); htFx({k:'n',x:cx,y:cy-cH*0.32,txt:`🔗 คอมโบ x${F.chain}!`,col:'#ffb3ff',big:true}); { const cv=document.getElementById('htcv'); comboBurst(cv&&cv.parentElement, F.chain, (ALLCHARS[h.id]?ALLCHARS[h.id].c.name.split(' ')[0]+' · ':'')+'ท่าไม้ตายต่อเนื่อง'); } }
       const [x,y,,H]=htPos(h,true); htFx({k:'ult',x,y:y-H*0.2,txt:'',col:heroCol(F.M,h.id)}); SND.sfx('charge'); speakUlt(h.id, h.ult); F.shk=0.35;
-      if (!F.skip){ const st=document.querySelector('.htstage'), [ex,ey,,H2]=htPos(tg0||eA[0],false); ultFX(st, h.id, h.el, h.cls==='support'?'healAll':h.cls==='tank'?'shieldAll':'dmg', ex, ey-H2*0.08, x, y, h.ult); }
+      if (!F.skip){ const st=document.querySelector('.htstage'), [ex,ey,,H2]=htPos(tg0||eA[0],false); const UK=(CHAR_KIT[h.id]&&CHAR_KIT[h.id].ult||{}).kind; ultFX(st, h.id, h.el, UK==='revive'||UK==='healAll'?'healAll':UK==='shieldAll'||UK==='teamDR'||UK==='undying'?'shieldAll':h.cls==='support'?'healAll':h.cls==='tank'?'shieldAll':'dmg', ex, ey-H2*0.08, x, y, h.ult); }
       if (h.cls==='warrior') pool.forEach(e=>htDmgE(F,h,e,3.2));
       else if (h.cls==='mage') eA.forEach(e=>htDmgE(F,h,e,2));
       else if (h.cls==='archer') htDmgE(F,h,eA.reduce((a,b)=>a.hp>b.hp?a:b),6);
       else if (h.cls==='assassin') htDmgE(F,h,eA.reduce((a,b)=>a.hp<b.hp?a:b),4,true);
-      else if (h.cls==='tank'){ F.sh=5; F.tau=5; htFx({k:'ring',col:'#8fd3ff'}); }
-      else if (h.cls==='support'){ hA.forEach(x=>htHeal(x,x.mx*0.3,h)); htFx({k:'ring',col:'#7dff9a'}); }
+      else if (h.cls==='tank'||h.cls==='support'){ const U=(CHAR_KIT[h.id]&&CHAR_KIT[h.id].ult)||{};
+        // อัลติเมทตามชุดสกิลจริงของวีรชน (เดิมใช้แบบเหมารวมตามสาย ทำให้ท่าชุบชีวิตไม่ทำงาน)
+        if (U.kind==='revive'){ const dead=F.T.filter(u=>u.hp<=0&&!u.rvU); dead.forEach(u=>{ u.rvU=1; u.hp=u.mx*(U.pct||0.3); htHeal(u,0,h); h.hl=(h.hl||0)+u.hp; h.rvd=(h.rvd||0)+1; const [rx,ry,,rH]=htPos(u,true); htFx({k:'n',x:rx,y:ry-rH*0.22,txt:'✨ คืนชีพ!',col:'#ffe08a',big:true}); });
+          if (dead.length) SND.sfx('revive'); F.T.filter(u=>u.hp>0&&!dead.includes(u)).forEach(u=>htHeal(u,u.mx*(U.healAll||(dead.length?0.15:0.35)),h)); htFx({k:'ring',col:'#ffe9a0'}); }
+        else if (U.kind==='healAll'){ hA.forEach(x=>htHeal(x,x.mx*0.4,h)); htFx({k:'ring',col:'#7dff9a'}); }
+        else if (U.kind==='teamDR'){ F.sh=Math.max(F.sh,5); if (U.healAll) hA.forEach(x=>htHeal(x,x.mx*U.healAll*0.6,h)); htFx({k:'ring',col:'#b7f0a0'}); }
+        else if (U.kind==='undying'){ F.undy=4; F.tau=4; htFx({k:'ring',col:'#d6b27a'}); }
+        else if (h.cls==='tank'){ F.sh=5; F.tau=5; htFx({k:'ring',col:'#8fd3ff'}); }
+        else { hA.forEach(x=>htHeal(x,x.mx*0.3,h)); htFx({k:'ring',col:'#7dff9a'}); } }
       h.ulting=false; htFx({k:'flash',col:heroCol(F.M,h.id)}); return; }
     h.lg=1; h.en=Math.min(100,h.en+(h.cls==='support'||h.cls==='tank'?18:22)*(1+((h.fx&&h.fx.en)||0)/100));
     if (h.cls==='support' && low.hp<low.mx*0.85){ htHeal(low,h.atk*1.6,h); return; }
@@ -4944,7 +4951,9 @@ if (typeof document !== 'undefined') (function(){
       else if (e.cls==='archer') htDmgH(F,e,hA.reduce((a,b)=>a.hp>b.hp?a:b),6);
       else if (e.cls==='assassin') htDmgH(F,e,hA.reduce((a,b)=>a.hp<b.hp?a:b),8);
       else if (e.cls==='tank'){ F.esh=5; F.etau=5; htFx({k:'ring',col:'#ffb08f'}); }
-      else if (e.cls==='support'){ eA.forEach(x=>htEHeal(x,x.mx*0.3*(1+((e.fx&&e.fx.heal)||0)/100),e)); htFx({k:'ring',col:'#7dff9a'}); }
+      else if (e.cls==='support'){ const U=(CHAR_KIT[e.id]&&CHAR_KIT[e.id].ult)||{}, hk=1+((e.fx&&e.fx.heal)||0)/100;
+        if (U.kind==='revive'){ const dead=F.E.filter(u=>u.ehero&&u.hp<=0&&!u.rvU); dead.forEach(u=>{ u.rvU=1; u.hp=u.mx*(U.pct||0.3); e.hl=(e.hl||0)+u.hp; const [rx,ry,,rH]=htPos(u,false); htFx({k:'n',x:rx,y:ry-rH*0.22,txt:'✨ คืนชีพ!',col:'#ffe08a',big:true}); }); eA.forEach(x=>htEHeal(x,x.mx*(dead.length?0.15:0.35)*hk,e)); }
+        else eA.forEach(x=>htEHeal(x,x.mx*0.3*hk,e)); htFx({k:'ring',col:'#7dff9a'}); }
       e.ulting=false; htFx({k:'flash',col:'#ff6a5a'}); return; }
     e.en=Math.min(100,(e.en||0)+(e.cls==='support'||e.cls==='tank'?18:22)*(1+((e.fx&&e.fx.en)||0)/100));
     const low=eA.reduce((a,b)=>a.hp/a.mx<b.hp/b.mx?a:b);
@@ -4958,7 +4967,7 @@ if (typeof document !== 'undefined') (function(){
     [...F.T,...F.E].forEach(u=>{ u.lg=Math.max(0,u.lg-dt*4); u.hit=Math.max(0,u.hit-dt); });
     if (F.shk>0) F.shk=Math.max(0,F.shk-dt);
     if (F.pause>0){ F.pause-=dt; htDraw(); return; }
-    F.t+=dt; if (F.sh>0) F.sh-=dt; if (F.tau>0) F.tau-=dt; if (F.esh>0) F.esh-=dt; if (F.etau>0) F.etau-=dt;
+    F.t+=dt; if (F.undy>0) F.undy-=dt; if (F.sh>0) F.sh-=dt; if (F.tau>0) F.tau-=dt; if (F.esh>0) F.esh-=dt; if (F.etau>0) F.etau-=dt;
     const heroTurn=()=>F.T.forEach(h=>{ if (h.hp<=0) return; if (h.heal){ const a=Math.min(h.mx-h.hp,h.mx*0.004*h.heal*dt); h.hp+=a; h.hl=(h.hl||0)+a; } h.at-=dt; if (h.at<=0){ h.at=1.15/h.spd; htHeroAct(F,h); } });
     F.pvpD&&(F.flip=!F.flip); if (!F.flip) heroTurn();
     F.E.forEach(e=>{ if (e.hp<=0) return; if (e.heal) e.hp=Math.min(e.mx,e.hp+e.mx*0.004*e.heal*dt); e.at-=dt; if (e.at<=0){ if (e.ehero){ e.at=1.15/(e.spd||1); htEHeroAct(F,e); } else { e.at=e.boss?2:1.6; htEnemyAct(F,e); } } });
