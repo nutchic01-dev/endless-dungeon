@@ -949,7 +949,7 @@ h3 img.uiico{height:24px;width:auto;vertical-align:middle}
 .hsname{position:relative;font-size:22px;font-weight:900;color:#fff;text-shadow:0 2px 0 #000}.hsname small{font-size:12px;color:#ffd77a}.hssub{position:relative;font-size:12.5px;color:#d9cdf2;margin-top:2px}
 .sumbox.rwtop{border-color:#ffd34d;box-shadow:0 0 0 1.5px rgba(255,211,77,.35) inset}
 @keyframes hsspin{to{transform:rotate(360deg)}}@keyframes hsbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}@keyframes hspulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
-.overlay.chatpg{overflow:hidden;padding-bottom:20px}.chatpg:focus-within .hubnav{display:none}.chatpg .hubhead,.chatpg .wallet{flex-shrink:0}.chatwrap{flex:1 1 auto;min-height:0;width:100%;display:flex;flex-direction:column;gap:7px;padding:8px!important}.chatlist{flex:1 1 auto;min-height:0;overflow-y:auto;display:flex;flex-direction:column;gap:7px;padding:4px 2px;overscroll-behavior:contain}
+.overlay.chatpg{overflow:hidden;padding-bottom:20px}.chatpg:has(input:focus) .hubnav,.chatpg:has(textarea:focus) .hubnav{display:none}.chatpg .hubhead,.chatpg .wallet{flex-shrink:0}.chatwrap{flex:1 1 auto;min-height:0;width:100%;display:flex;flex-direction:column;gap:7px;padding:8px!important}.chatlist{flex:1 1 auto;min-height:0;overflow-y:auto;display:flex;flex-direction:column;gap:7px;padding:4px 2px;overscroll-behavior:contain}
 .cmsg{display:flex;gap:7px;align-items:flex-end}.cmsg.me{flex-direction:row-reverse}.cav{flex:0 0 34px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;overflow:hidden;font-size:20px}.cav img{width:40px;height:40px;object-fit:cover;object-position:top}
 .cbub{max-width:78%;background:rgba(40,30,70,.9);border:1px solid rgba(255,255,255,.1);border-radius:14px 14px 14px 4px;padding:5px 10px 7px}.cmsg.me .cbub{background:linear-gradient(#5b3fa0,#46307e);border-color:#8e6fe0;border-radius:14px 14px 4px 14px}
 .cnm{display:flex;align-items:center;gap:6px;font-size:11.5px;color:#ffd77a}.cnm small{color:#a99cc8;font-size:10px}.cblk{margin-left:auto;background:none;border:0;font-size:11px;opacity:.5;cursor:pointer;padding:0 2px}.cblk:hover{opacity:1}
@@ -1086,7 +1086,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.36</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.37</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -3132,7 +3132,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.36</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.37</span>'}</div>`;
   }
   let runSet=false, runQuit=false;
   function runPop(){
@@ -3354,7 +3354,7 @@ if (typeof document !== 'undefined') (function(){
     if (on && !shown){ el.innerHTML=tkInner(); el.classList.remove('tkhide'); }
     else if (!on && shown){ el.classList.add('tkhide'); setTimeout(()=>{ if (el.classList.contains('tkhide')) el.innerHTML=''; },450); } },1000);
   /* ---------- 🔔 แจ้งเตือนเกมมีอัปเดต ---------- */
-  const GAME_VER='v3.36'; let updSkip='', updT=0;
+  const GAME_VER='v3.37'; let updSkip='', updT=0;
   function updCheck(){ if (location.protocol==='file:' || document.getElementById('updpop')) return; if (Date.now()-updT<60000) return; updT=Date.now();
     fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{ if (!j||!j.v||j.v===GAME_VER||j.v===updSkip) return; updShow(j); }).catch(()=>{}); }
   function updShow(j){ const inRun=S&&S.phase&&S.phase!=='title'&&!S.over&&!hub, d=document.createElement('div'); d.id='updpop';
@@ -3439,7 +3439,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="pbtns"><button class="choice" data-act="guideopen"><span>📚 ข้อมูลเกม</span><small>ระดับอุปกรณ์ · ธาตุ · อาชีพ · อัตราสุ่ม · โหมดเกม</small></button><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.36<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.37<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
