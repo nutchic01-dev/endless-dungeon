@@ -1086,7 +1086,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.35</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.36</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -1379,6 +1379,7 @@ function trackOpen(i){ if (S.cls==='villager') return i===0 || (S.villagerPath &
 function trackCap(i){ return i===1 && S.char ? passiveCap(S.char) : SK_MAX; }
 function spendBook(i){ if (S.books<1 || !trackOpen(i) || S.skillLv[i]>=trackCap(i)) return false; S.books--; S.skillLv[i]++; return true; }
 function allMaxed(){ return [0,1,2,3].every(i=>!trackOpenEver(i) || S.skillLv[i]>=trackCap(i)); }
+function bookSpare(){ if (!S.char) return 0; const need=[0,1,2,3].reduce((a,i)=>a+Math.max(0,trackCap(i)-S.skillLv[i]),0); return Math.max(0,S.books-need); }
 function booksUseless(){ return !!S.char && [0,1,2,3].reduce((a,i)=>a+Math.max(0,trackCap(i)-S.skillLv[i]),0) <= S.books; }
 function trackOpenEver(i){ return S.cls==='villager' ? (i===0 || S.villagerPath) : (i===0 || true); }
 function gainBook(n=1){ if (S.char && [0,1,2,3].every(i=>S.skillLv[i]>=trackCap(i))){ const g=gainGold((40+3*S.floor)*n); return `ตำราสกิลเกินตัน แปลงเป็น ${fmt(g)} ทอง`; }
@@ -1560,7 +1561,7 @@ function newRun(consume){
     log:[], phase:'walk', ev:null, result:null, over:null, meta:null,
   };
   applyRunStart(loadMeta(), consume);
-  S.route=routePick();
+  S.route=routePick(); rqStart();
 }
 /* ---------- 💾 บันทึกรอบที่กำลังเล่น (รีเฟรช/อัปเดตแล้วเล่นต่อได้) ---------- */
 const RUN_KEY='dq_run';
@@ -1626,7 +1627,7 @@ const ART = (()=>{ const A='art/', cls={villager:A+'char_villager.webp'}, char={
   FORM_READY.forEach(id=>form[id]=A+`char_${id}_form.webp`);
   const M={'สไลม์':'puddle','เห็ดพิษ':'shroom','หมาป่า':'leafwolf','ก็อบลิน':'goblin','ค้างคาวคริสตัล':'crystalbat','แมงมุมยักษ์':'rockspider','โกเลมหิน':'golem','งูผลึก':'crystalsnake',
     'อัศวินโครงกระดูก':'skelknight','ผีเสื้อราตรี':'moonmoth','หุ่นเกราะ':'armor','หนูยักษ์':'rat','ซาลาแมนเดอร์':'salamander','ปีศาจไฟ':'imp','มังกรน้อย':'babydragon','แมงป่องเพลิง':'scorpion',
-    'เงามืด':'faceless','ตาปีศาจ':'eye','วิญญาณหลงทาง':'lantern','หนวดห้วงลึก':'tentacle','สไลม์ทองคำ':'goldslime','อัศวินต้องสาป':'cursedknight','แม่มดหนอง':'swampwitch','โจรดักปล้น':'thief','ลูกน้องนักต้มตุ๋น':'thief','วิญญาณอัศวินแค้น':'cursedknight','ผู้ท้าประลองเร่':'skelknight','วิญญาณเร่ร่อน':'lantern','หีบมิมิค':'mimic','ผู้พิทักษ์ลูกแก้ว':'orbguard','ภูตเมฆฟู':'cloudsprite','นกอัสนี':'thunderbird','เทวดูตไขลาน':'clockangel','กริฟฟอนน้อย':'griffin','เยติตัวจิ๋ว':'yeti','อัศวินน้ำแข็ง':'iceknight','หมาป่าหิมะจันทร์':'frostwolf','ดวงไฟเยือกแข็ง':'icewisp'};
+    'เงามืด':'faceless','ตาปีศาจ':'eye','วิญญาณหลงทาง':'lantern','หนวดห้วงลึก':'tentacle','สไลม์ทองคำ':'goldslime','อัศวินต้องสาป':'cursedknight','แม่มดหนอง':'swampwitch','โจรดักปล้น':'thief','ลูกน้องนักต้มตุ๋น':'thief','หัวหน้าโจรทะเลทราย':'thief','จอมโจรเงาทอง':'faceless','ปีศาจกลืนแสง':'faceless','หุ่นผู้พิทักษ์ศาล':'holystatue','เทวดาตกสวรรค์':'lostangel','อัศวินมงกุฎดำ':'cursedknight','แม่มดคำสาป':'swampwitch','หมาป่าเงาจันทร์':'leafwolf','ราชาก็อบลินป่า':'goblin','ราชันย์ภูตไม้':'golem','แชมป์ลานทราย':'skelknight','ขุนพลเกราะเหล็ก':'armor','หมาป่าน้ำแข็ง':'leafwolf','โกเลมน้ำแข็ง':'golem','ราชินีหิมะ':'darkmermaid','ภูตเวทคลั่ง':'imp','ดวงตาจักรวาล':'eye','จอมเวทหลงยุค':'swampwitch','วิญญาณอัศวินแค้น':'cursedknight','ผู้ท้าประลองเร่':'skelknight','วิญญาณเร่ร่อน':'lantern','หีบมิมิค':'mimic','ผู้พิทักษ์ลูกแก้ว':'orbguard','ภูตเมฆฟู':'cloudsprite','นกอัสนี':'thunderbird','เทวดูตไขลาน':'clockangel','กริฟฟอนน้อย':'griffin','เยติตัวจิ๋ว':'yeti','อัศวินน้ำแข็ง':'iceknight','หมาป่าหิมะจันทร์':'frostwolf','ดวงไฟเยือกแข็ง':'icewisp'};
   Object.assign(M,{'ปูเกราะปะการัง':'coralcrab','แมงกะพรุนเรืองแสง':'jelly','ทหารฉลาม':'sharkguard','นางเงือกเงามืด':'darkmermaid','มัมมี่น้อย':'mummy','ด้วงสคารับทอง':'scarab','หนอนทราย':'sandworm','จิ้งจอกเพลิงทราย':'firefox','ทหารเทวะศิลา':'holystatue','เทวดาน้อยหลงผิด':'lostangel','สิงโตทองศักดิ์สิทธิ์':'goldlion','ภูตแสงคลั่ง':'madwisp'});
   const mon={}; Object.entries(M).forEach(([n,f])=>mon[n]=A+`mon_${f}.webp`);
   const bg={'ป่าเวทมนตร์':A+'bg_forest.jpg','ถ้ำคริสตัล':A+'bg_cave.jpg','ปราสาทร้าง':A+'bg_castle.jpg','เมืองลาวา':A+'bg_lava.jpg','ห้วงเหว':A+'bg_abyss.jpg','เกาะลอยฟ้า':A+'bg_sky.jpg','ปราสาทน้ำแข็ง':A+'bg_ice.jpg','วิหารใต้สมุทร':A+'bg_sea.webp','สุสานทะเลทราย':A+'bg_desert.webp','วิหารเทพล่มสลาย':A+'bg_heaven.webp'};
@@ -2090,9 +2091,9 @@ function qEnd(text, cls='good'){ S.qDone=(S.qDone||[]).concat(S.q.id); S.q=null;
 const RIDDLES = [['อะไรเอ่ย ยิ่งขุดออก ยิ่งใหญ่ขึ้น','หลุม'],['อะไรเอ่ย มีเข็มแต่เย็บผ้าไม่ได้','นาฬิกา'],['อะไรเอ่ย มีฟันแต่กัดไม่ได้','หวี'],['อะไรเอ่ย ขึ้นแล้วไม่เคยลง','อายุ'],['อะไรเอ่ย มีตาแต่มองไม่เห็น','เข็ม'],['อะไรเอ่ย ยิ่งเช็ดตัวคนอื่นแห้ง ตัวเองยิ่งเปียก','ผ้าเช็ดตัว'],['อะไรเอ่ย มีสี่ขาแต่เดินไม่ได้','โต๊ะ'],['อะไรเอ่ย ยิ่งมีมาก ยิ่งมองไม่เห็น','ความมืด'],['อะไรเอ่ย เป็นของเรา แต่คนอื่นใช้มากกว่า','ชื่อ'],['อะไรเอ่ย ตัวเล็กนิดเดียว แต่ช้างยังกลัว','หนู'],['อะไรเอ่ย ยิ่งแบ่ง ยิ่งเพิ่มขึ้น','ความสุข'],['อะไรเอ่ย มีปีกแต่บินไม่ได้ มีหางแต่ไม่ใช่สัตว์','เครื่องบินกระดาษ']];
 /* มินิเกมตกปลา: เข็มวิ่งไปมา กดตอนอยู่ในช่องเขียว (ตำแหน่งคำนวณจากเวลา ไม่ต้องรอแอนิเมชัน) */
 function fishPos(e){ const t=((typeof performance!=='undefined'?performance.now():Date.now())-(e.t0||0))/1000/e.dur; const p=t%2; return (p<1?p:2-p)*100; }
-function fishEv(q,title,icon,text,dur,zw,after){ const z0=8+Math.floor(rng()*(84-zw)), e={title,icon,text:text+'\n<small class="gs">🎣 แตะ "ดึงเบ็ด!" ตอนเข็มอยู่ในช่องสีเขียว</small>', mini:'fish', dur, z0, zw};
+function fishEv(q,title,icon,text,dur,zw,after,leave){ const z0=8+Math.floor(rng()*(84-zw)), e={title,icon,text:text+'\n<small class="gs">🎣 แตะ "ดึงเบ็ด!" ตอนเข็มอยู่ในช่องสีเขียว</small>', mini:'fish', dur, z0, zw};
   e.choices=[{label:'🎣 ดึงเบ็ด!', wide:true, fn:()=>{ const x=e.t0?fishPos(e):z0+zw/2*(rng()<0.5?1:3), c=z0+zw/2, d=Math.abs(x-c); after(d<=zw/2?'perfect':d<=zw/2+10?'near':'miss'); }},
-    {label:'ไม่ตกปลา เดินต่อ', alt:true, fn:()=>qEnd('ชายแก่โบกมือลา "ไว้มาใหม่นะ"')}]; return e; }
+    {label:'ไม่ตกปลา เดินต่อ', alt:true, fn:()=>leave?leave():qEnd('ชายแก่โบกมือลา "ไว้มาใหม่นะ"')}]; return e; }
 const QUESTS = {
   child:{name:'เด็กหลงทาง', steps:[
     q=>({title:'📜 เด็กหลงทาง (1/3)', icon:'🧒', text:'เด็กชายตัวเล็กนั่งร้องไห้อยู่มุมห้อง บอกว่าพลัดหลงกับพ่อที่เป็นพ่อค้าเร่ในหอคอย', choices:[
@@ -2212,6 +2213,8 @@ const ROUTES = {
   sacred:{name:'เส้นทางศักดิ์สิทธิ์', icon:'⛪', desc:'ศาลเจ้าและพรศักดิ์สิทธิ์ เหตุร้ายน้อยลง พักฟื้นบ่อย', w:{rest:1.6,rune:1.3,altar:3,bad:0.6,badMon:0.7,stone:1.3}, q:['shrine','sphinx','knight','egg'], ev:['fountain','priest']},
   cursed:{name:'เส้นทางต้องสาป', icon:'💀', desc:'อันตรายรอบด้าน แต่ทอง +30% และ EXP +20%', w:{bad:1.7,badMon:2,chest:1.5,rest:0.7}, gold:1.3, exp:1.2, q:['knight','alchemist','sphinx','cups'], ev:['spirit','cursedChest']},
   wild:{name:'เส้นทางป่าลึก', icon:'🌿', desc:'สัตว์ใจดี สมุนไพรวิเศษ และที่พักผ่อนตามธรรมชาติ', w:{goodMon:2.2,rest:1.5,gold:0.9,training:1.2}, q:['egg','fish','child','shrine'], ev:['herb','beast']},
+  frost:{name:'เส้นทางน้ำแข็ง', icon:'❄️', desc:'ดินแดนหิมะ หีบสมบัติซ่อนใต้น้ำแข็ง การฝึกในความหนาว', w:{chest:1.5,training:1.25,rest:0.8,goodMon:1.2}, q:['fish','sphinx','egg','child'], ev:['iceLake','frozenHero']},
+  arcane:{name:'เส้นทางเวทมนตร์', icon:'🔮', desc:'พลังเวทไหลวน หินสกิล รูน และร้านตำราเยอะ', w:{stone:1.7,mSkill:1.5,rune:1.4,monster:0.9}, q:['alchemist','sphinx','shrine','cups'], ev:['magicDoor','genie']},
   warrior:{name:'เส้นทางนักรบ', icon:'⚔️', desc:'การต่อสู้และการฝึกฝนเข้มข้น EXP +15%', w:{monster:1.25,training:1.6,stone:1.2,mEquip:1.3,rest:0.8}, exp:1.15, q:['knight','shrine','fish','sphinx'], ev:['arena','swordStone']},
 };
 const RT_EV_W = 6;   // น้ำหนักเหตุการณ์เฉพาะเส้นทาง (เทียบกับเหตุการณ์อื่นรวม ~103)
@@ -2219,7 +2222,7 @@ function routePick(){ let last=''; try{ last=localStorage.getItem('dq_lastRoute'
   const ks=Object.keys(ROUTES).filter(k=>k!==last), k=ks[Math.floor(rng()*ks.length)]; try{ localStorage.setItem('dq_lastRoute',k); }catch(e){} return k; }
 const routeOf = () => ROUTES[S&&S.route] || null;
 function routeIntroEv(){ const R=routeOf(); if (!R) return null;
-  return {type:'routeIntro', title:`🧭 ${R.name}`, icon:R.icon, text:`การเดินทางรอบนี้พาคุณสู่ <b>${R.name}</b>\n${R.desc}\n\n<small class="gs">แต่ละรอบสุ่มเส้นทางใหม่ เหตุการณ์ เควส และสิ่งที่พบระหว่างทางจะไม่เหมือนกัน</small>`, choices:[{label:'ออกเดินทาง! ▶', wide:true, fn:()=>done(`${R.icon} เริ่มต้น${R.name}`,'good')}]}; }
+  return {type:'routeIntro', title:`🧭 ${R.name}`, icon:R.icon, text:`การเดินทางรอบนี้พาคุณสู่ <b>${R.name}</b>\n${R.desc}\n👑 เควสหลัก: <b>${(MAINQ[S.route]||{}).name||'-'}</b> (5 ตอน ผ่านครบได้รางวัลพิเศษ)\n\n<small class="gs">แต่ละรอบสุ่มเส้นทางใหม่ เหตุการณ์ เควส และสิ่งที่พบระหว่างทางจะไม่เหมือนกัน</small>`, choices:[{label:'ออกเดินทาง! ▶', wide:true, fn:()=>done(`${R.icon} เริ่มต้น${R.name}`,'good')}]}; }
 function routeEvent(F){ const R=routeOf(), k=pick(R.ev), ev=(title,icon,text,choices)=>({type:'route',title,icon,text,choices}), b2=base2(F);
   const giveItem=(r,msg,slot)=>{ S.ev=offerEvent(makeItem(F,slot||null,Math.min(3,r)), msg); };
   switch(k){
@@ -2259,11 +2262,84 @@ function routeEvent(F){ const R=routeOf(), k=pick(R.ev), ev=(title,icon,text,cho
       return ev('ลานประลองเร่','🏟️','นักสู้ร่างยักษ์ยืนกลางลานทราย "ใครกล้าสู้กับข้า? ชนะได้รางวัลงาม!"',[
         {label:'⚔️ รับคำท้า', sub:'มอนแกร่ง · ชนะได้อุปกรณ์หายาก', fn:()=>fight([m], ()=>{ addExp(monExp(F)*2.5); S.offer=makeItem(F,null,Math.min(3,rollRarity(F,1)+1)); return 'ชนะการประลอง! ได้รับรางวัลจากผู้ชม'; })},
         {label:'👀 นั่งดูเฉย ๆ', sub:'ได้ EXP เล็กน้อย', fn:()=>{ addExp(monExp(F)); done('เรียนรู้ท่วงท่าจากการดูประลอง'); }}]); }
+    case 'iceLake': return fishEv({}, 'ทะเลสาบน้ำแข็ง','🧊','เจาะรูบนทะเลสาบน้ำแข็งตกปลา ใต้น้ำมีอะไรบางอย่างเรืองแสง…',1.3,22,
+      r=> r==='perfect' ? giveItem(Math.min(3,rollRarity(F,1)+1),'🧊 ตกได้หีบน้ำแข็ง! ข้างในมีอุปกรณ์') : r==='near' ? done(`ได้ปลาน้ำแข็งไปขาย ${fmt(gainGold(b2*2))} ทอง`,'good') : done('สายเบ็ดแข็งตัวจนขาด…','bad'), ()=>done('คุณเดินผ่านทะเลสาบไป'));
+    case 'frozenHero': { const c=Math.round(b2*3);
+      return ev('นักผจญภัยถูกแช่แข็ง','🥶','นักผจญภัยคนหนึ่งติดอยู่ในก้อนน้ำแข็ง ยังหายใจรวยริน…',[
+        {label:'🔥 ใช้ไฟละลาย', sub:'เสีย HP 15%', fn:()=>{ S.hp=Math.max(1,S.hp-stats().maxhp*0.15); const o=pick(trainOptions(F,2)); applyTrain(o); done(`นักผจญภัยรอดชีวิต! สอนเคล็ดวิชาให้ ${o.label}`,'good'); }},
+        {label:'💰 จ้างคนมาช่วย', sub:`${fmt(c)} ทอง`, disabled:S.gold<c, fn:()=>{ S.gold-=c; healMates(0.5); runeGain(1); done('นักผจญภัยมอบรูนให้เป็นการตอบแทน และช่วยรักษาเพื่อน','good'); }},
+        {label:'เดินผ่าน', alt:true, fn:()=>done('ลมหนาวพัดผ่าน…')}]); }
+    case 'magicDoor': { const ok=Math.floor(rng()*3), R=[['🔺','สามเหลี่ยม'],['🔵','วงกลม'],['🟪','สี่เหลี่ยม']], hint=rng()<0.6?ok:Math.floor(rng()*3);
+      return ev('ประตูอักขระเวท','🚪',`ประตูหินสลักอักขระสามแบบ ต้องกดให้ถูกอันเดียว\n📜 จารึกเลือนราง: "…ผู้ใดเลือก<b>${R[hint][1]}</b>…" (จารึกอาจถูกบิดเบือน)`,
+        R.map(([ic,n],i)=>({label:`${ic} กดอักขระ${n}`, fn:()=>{ if (i===ok){ S.mods.atk+=3; runeGain(1); done('ประตูเปิดออก! ได้รูนและพลังเวท ATK/MATK +3%','good'); } else { S.hp=Math.max(1,S.hp-stats().maxhp*0.12); done('อักขระระเบิด! HP -12%','bad'); } }})).concat([{label:'ไม่แตะประตู', alt:true, fn:()=>done('เดินอ้อมไปทางอื่น')}])); }
+    case 'genie': return ev('ตะเกียงวิเศษ','🧞','จินนี่ปรากฏตัว "ข้าให้พรเจ้า 1 ข้อ… แต่ทุกพรมีราคา ฮ่า ๆ"',[
+        {label:'💰 ขอความร่ำรวย', sub:'ทองจำนวนมาก · แต่ทองรั่ว 8 ชั้น', fn:()=>{ const v=gainGold(b2*10); S.goldCurse=Math.max(S.goldCurse||0,8); done(`ได้ทอง ${fmt(v)}! แต่กระเป๋ารั่ว 8 ชั้น`,'good'); }},
+        {label:'💪 ขอพลัง', sub:'ATK/MATK +8% · แต่ DEF -4%', fn:()=>{ S.mods.atk+=8; S.mods.def-=4; done('พลังพุ่งพล่าน! ATK/MATK +8% แต่ร่างกายเปราะลง DEF -4%','good'); }},
+        {label:'❤️ ขอสุขภาพ', sub:'ฟื้นเต็ม + ล้างคำสาปทั้งหมด', fn:()=>{ heal(1); healMates(1); S.poison=0; S.goldCurse=0; ['atk','def','cri'].forEach(k=>{ if (S.mods[k]<0) S.mods[k]=0; }); done('แสงทองโอบล้อม ร่างกายสดชื่นเหมือนใหม่','good'); }}]);
     case 'swordStone': { const pc=Math.min(60, 25+Math.round((stats().atk+stats().matk)/40));
       return ev('ดาบปักหิน','🗡️','ดาบส่องแสงปักอยู่ในก้อนหินโบราณ ว่ากันว่ามีแต่ผู้คู่ควรเท่านั้นที่ดึงออกได้',[
         {label:'💪 ลองดึงดาบ', sub:`โอกาสสำเร็จ ${pc}% · พลาดเสีย HP 12%`, fn:()=>{ if (chance(pc)) giveItem(3,'⚔️ ดาบหลุดออกจากหิน! คุณคือผู้ถูกเลือก','weapon'); else { S.hp=Math.max(1,S.hp-stats().maxhp*0.12); done('ดาบไม่ขยับเลย… มือเจ็บไปหมด HP -12%','bad'); } }},
         {label:'เดินผ่าน', alt:true, fn:()=>done('ดาบยังคงรอผู้คู่ควรคนต่อไป')}]); }
   } }
+/* ---------- 📜 เควสหลักประจำเส้นทาง: 5 ตอนต่อเนื่อง ผ่านครบได้รางวัลพิเศษของเส้นทางนั้น ---------- */
+function rqStart(){ if (S.daily || !routeOf()) return; S.rq={step:0, next:14+Math.floor(rng()*8), done:false}; }
+function rqAdv(text,tone){ const R=routeOf(), M=MAINQ[S.route]; S.rq.step++; if (S.rq.step>=5){ S.rq.done=true; } else S.rq.next=S.floor+16+Math.floor(rng()*10); done(text,tone||'good'); }
+function rqMon(F,name,icon,hpK,atkK,el){ const m=makeMon(F); m.name=name; m.icon=icon; m.hp*=hpK; m.maxhp=m.hp; m.atk*=atkK; if (el) m.el=el; return m; }
+function rqFight(mons,winFn){ S.rq.next=S.floor+8; return fight(mons, ()=>{ const t=winFn(); S.rq.step++; if (S.rq.step>=5) S.rq.done=true; else S.rq.next=S.floor+16+Math.floor(rng()*10); return t; }); }   // แพ้ = ลองใหม่อีก 8 ชั้น
+function rqEv(n,title,icon,text,choices){ const M=MAINQ[S.route]; return {type:'mainq', title:`👑 ${M.name} (${n}/5) · ${title}`, icon, text, choices}; }
+function rqFinal(F){ const M=MAINQ[S.route]; const t=M.reward(F); S.offer=makeItem(F, M.slot, 3); return `🏆 ผ่านเควสหลัก "${M.name}" ครบ 5 ตอน! ${t}`; }
+const MAINQ = {
+  caravan:{name:'กองคาราวานทองคำ', slot:'acc', steps:[
+    F=>rqEv(1,'เสียงร้องขอ','🐫','หัวหน้ากองคาราวานวิ่งมาหา "โจรทะเลทรายปล้นขบวนของข้า! ช่วยตามสินค้าคืนด้วย ข้าจะตอบแทนอย่างงาม"',[{label:'รับปาก!', fn:()=>rqAdv('รับภารกิจตามสินค้าคืน หัวหน้าคาราวานมอบแผนที่ให้')},{label:'ขอค่าจ้างล่วงหน้า', sub:`ได้ทอง ${fmt(Math.round(base2(F)*2))}`, alt:true, fn:()=>{ S.gold+=Math.round(base2(F)*2); rqAdv('รับเงินมัดจำแล้วออกตามรอยโจร'); }}]),
+    F=>rqEv(2,'รอยเท้าบนผืนทราย','👣','รอยเท้าแยกเป็นสามทาง บนพื้นมีเหรียญทองตกอยู่ทางหนึ่ง…',[...['ซ้าย','กลาง','ขวา'].map((d,i)=>({label:`ตามทาง${d}`, fn:()=>{ if (rng()<0.5){ rqAdv(`ทาง${d}ถูกต้อง! เจอค่ายโจรอยู่ข้างหน้า`); } else { S.hp=Math.max(1,S.hp-stats().maxhp*0.1); rqAdv(`ทาง${d}มีกับดักทราย HP -10% แต่ก็ยังตามรอยจนเจอค่ายโจร`,'bad'); } }}))]),
+    F=>rqEv(3,'ค่ายโจร','⛺','ลูกน้องโจรเฝ้ายามอยู่หน้าค่าย',[{label:'⚔️ บุกตรงๆ', fn:()=>rqFight([rqMon(F,'ลูกน้องนักต้มตุ๋น','🥷',1.6,1.1),rqMon(F,'ลูกน้องนักต้มตุ๋น','🥷',1.6,1.1)], ()=>'ฝ่าด่านยามเข้าไปได้!')},{label:'💰 ติดสินบนยาม', sub:`${fmt(Math.round(base2(F)*4))} ทอง`, disabled:S.gold<Math.round(base2(F)*4), fn:()=>{ S.gold-=Math.round(base2(F)*4); rqAdv('ยามรับเงินแล้วแกล้งหลับ'); }}]),
+    F=>rqEv(4,'หัวหน้าโจรทะเลทราย','🏜️','หัวหน้าโจรนั่งบนกองสมบัติ "กล้าดียังไงบุกมาถึงนี่!"',[{label:'⚔️ สู้!', fn:()=>rqFight([rqMon(F,'หัวหน้าโจรทะเลทราย','🗡️',3,1.25,'earth')], ()=>{ const v=gainGold(base2(F)*5); return `ปราบหัวหน้าโจรได้! ได้ทอง ${fmt(v)} แต่สินค้าชิ้นสำคัญถูกจอมโจรตัวจริงชิงไป`; })}]),
+    F=>rqEv(5,'จอมโจรเงาทอง','👤','ชายสวมหน้ากากทองปรากฏ "สินค้านี้ของข้าแล้ว!" — เขาคือผู้บงการตัวจริง',[{label:'⚔️ ศึกตัดสิน!', fn:()=>rqFight([rqMon(F,'จอมโจรเงาทอง','👤',4.2,1.4,'dark')], ()=>rqFinal(F))}]),
+  ], reward:F=>{ const v=gainGold(base2(F)*20); S.mods.cri+=5; return `หัวหน้าคาราวานมอบทอง ${fmt(v)} คริ +5% ตลอดรอบ และเครื่องประดับตำนาน!`; }},
+  sacred:{name:'ระฆังศักดิ์สิทธิ์', slot:'armor', steps:[
+    F=>rqEv(1,'ระฆังที่เงียบงัน','🔔','นักบวชเฒ่าเล่าว่า "ระฆังศักดิ์สิทธิ์ถูกขโมยชิ้นส่วนไป 3 ชิ้น หากรวมครบ แสงจะกลับคืนสู่หอคอย"',[{label:'ช่วยตามหา', fn:()=>rqAdv('รับพรจากนักบวช ออกตามหาชิ้นส่วนระฆัง')}]),
+    F=>rqEv(2,'ชิ้นที่ 1: บททดสอบใจ','🕯️','เทียนสองเล่มลอยอยู่ "เลือกช่วยคนแปลกหน้าที่บาดเจ็บ หรือรีบเก็บชิ้นส่วนก่อนมันหายไป?"',[{label:'🩹 ช่วยคนบาดเจ็บก่อน', fn:()=>{ healMates(0.3); rqAdv('จิตใจงดงามของคุณทำให้ชิ้นส่วนลอยมาหาเอง! ได้ชิ้นที่ 1'); }},{label:'🏃 รีบเก็บชิ้นส่วน', fn:()=>{ S.hp=Math.max(1,S.hp-stats().maxhp*0.15); rqAdv('ได้ชิ้นที่ 1 แต่ใจหนักอึ้ง HP -15%','bad'); }}]),
+    F=>rqEv(3,'ชิ้นที่ 2: ผู้พิทักษ์ศาล','🗿','หุ่นหินโบราณขยับตัว "พิสูจน์ความแข็งแกร่งของเจ้า!"',[{label:'⚔️ รับการทดสอบ', fn:()=>rqFight([rqMon(F,'หุ่นผู้พิทักษ์ศาล','🗿',2.8,1.15,'light')], ()=>'หุ่นหินคุกเข่า มอบชิ้นที่ 2 ให้')}]),
+    F=>rqEv(4,'ชิ้นที่ 3: ปริศนาแห่งแสง','✨', (()=>{ const R=RIDDLES[Math.floor(rng()*RIDDLES.length)]; S.rq.r=R; return `เสียงก้องจากเพดาน "ตอบให้ถูก แล้วชิ้นสุดท้ายจะเป็นของเจ้า"\n\n❓ <b>${R[0]}</b>`; })(), shuffle([S.rq.r[1], ...shuffle(RIDDLES.filter(x=>x[1]!==S.rq.r[1]).map(x=>x[1])).slice(0,2)]).map(o=>({label:o, fn:()=>{ if (o===S.rq.r[1]) rqAdv('ถูกต้อง! ชิ้นที่ 3 ส่องแสงลงมาในมือ'); else { S.hp=Math.max(1,S.hp-stats().maxhp*0.2); rqAdv(`ผิด (คำตอบ: ${S.rq.r[1]}) แสงลงโทษ HP -20% แต่ชิ้นส่วนยังตกลงมา`,'bad'); } }}))),
+    F=>rqEv(5,'เทวดาตกสวรรค์','😇','ขณะรวมระฆัง เทวดาปีกดำโผล่มา "แสงนั่นต้องเป็นของข้า!"',[{label:'⚔️ ปกป้องระฆัง!', fn:()=>rqFight([rqMon(F,'เทวดาตกสวรรค์','😈',4.2,1.4,'dark')], ()=>rqFinal(F))}]),
+  ], reward:F=>{ heal(1); healMates(1); runeGain(2); S.mods.def+=10; return 'ระฆังดังกังวาน! ทีมฟื้นเต็ม รูน +2 ขั้น ทีม DEF +10% ตลอดรอบ และเกราะตำนาน!'; }},
+  cursed:{name:'มงกุฎต้องสาป', slot:'weapon', steps:[
+    F=>rqEv(1,'เสียงกระซิบ','👑','มงกุฎดำลอยอยู่กลางอากาศ "สวมข้า… แล้วเจ้าจะได้พลัง…" มงกุฎพยายามสิงคุณ!',[{label:'ต่อต้านมัน', fn:()=>rqAdv('คุณสะบัดคำสาปออก มงกุฎหายไปในความมืด ต้องตามไปทำลายมัน')},{label:'แตะมงกุฎ', sub:'ได้ ATK +5% แต่โดนคำสาป', alt:true, fn:()=>{ S.mods.atk+=5; const c=applyCurse(); rqAdv(`พลังไหลเข้า ATK/MATK +5% แต่ ${c}`,'bad'); }}]),
+    F=>rqEv(2,'แม่มดคำสาป','🧙‍♀️','แม่มดหัวเราะ "อยากทำลายมงกุฎ? ต้องผ่านข้าก่อน!"',[{label:'⚔️ สู้', fn:()=>rqFight([rqMon(F,'แม่มดคำสาป','🧙‍♀️',2.6,1.2,'dark')], ()=>'แม่มดสลายไป ทิ้งแผนที่สุสานไว้')}]),
+    F=>{ const a=shuffle(['good','bad','bad']); S.rq.tomb=a; return rqEv(3,'สุสานสามโลง','⚰️','มีโลงศพ 3 ใบ ใบหนึ่งซ่อนกุญแจสุสาน อีกสองใบมีวิญญาณร้าย',a.map((t,i)=>({label:`⚰️ เปิดโลงที่ ${i+1}`, fn:()=>{ if (t==='good') rqAdv('เจอกุญแจสุสาน!'); else { S.hp=Math.max(1,S.hp-stats().maxhp*0.18); rqAdv('วิญญาณร้ายพุ่งออกมา HP -18% แต่ระหว่างหนีก็เจอกุญแจตกอยู่','bad'); } }}))); },
+    F=>rqEv(4,'ราชองครักษ์','🛡️','อัศวินโครงกระดูกยืนเฝ้าประตูห้องบัลลังก์',[{label:'⚔️ ฝ่าเข้าไป', fn:()=>rqFight([rqMon(F,'อัศวินโครงกระดูก','💀',2,1.15),rqMon(F,'อัศวินโครงกระดูก','💀',2,1.15)], ()=>'ประตูห้องบัลลังก์เปิดออก…')}]),
+    F=>rqEv(5,'อัศวินมงกุฎดำ','👑','ผู้ที่สวมมงกุฎลุกจากบัลลังก์ ดวงตาลุกโชนสีแดง',[{label:'⚔️ ทำลายมงกุฎ!', fn:()=>rqFight([rqMon(F,'อัศวินมงกุฎดำ','👑',4.5,1.45,'dark')], ()=>rqFinal(F))}]),
+  ], reward:F=>{ S.poison=0; S.goldCurse=0; ['atk','def','cri'].forEach(k=>{ if (S.mods[k]<0) S.mods[k]=0; }); S.mods.atk+=12; return 'มงกุฎแตกสลาย! คำสาปลดพลังหายหมด ATK/MATK +12% ตลอดรอบ และอาวุธตำนาน!'; }},
+  wild:{name:'เขากวางเงินพันปี', slot:'boots', steps:[
+    F=>rqEv(1,'ป่าที่ป่วยไข้','🍂','ต้นไม้เหี่ยวเฉา ภูตป่าตัวน้อยร้องไห้ "ราชันย์ภูตไม้ถูกความมืดครอบงำ ช่วยด้วย!"',[{label:'ช่วยภูตป่า', fn:()=>rqAdv('ภูตป่าน้อยนำทางเข้าป่าลึก')}]),
+    F=>rqEv(2,'หมาป่าเงาจันทร์','🐺','ฝูงหมาป่าตาแดงล้อมไว้',[{label:'⚔️ สู้', fn:()=>rqFight([rqMon(F,'หมาป่าเงาจันทร์','🐺',1.8,1.15),rqMon(F,'หมาป่าเงาจันทร์','🐺',1.8,1.15)], ()=>'ฝูงหมาป่าแตกหนี')},{label:'🍖 โยนเนื้อล่อ', sub:'เสีย HP 10%', alt:true, fn:()=>{ S.hp=Math.max(1,S.hp-stats().maxhp*0.1); rqAdv('หมาป่าวิ่งตามเนื้อไป รีบผ่านไปได้'); }}]),
+    F=>rqEv(3,'น้ำค้างแห่งชีวิต','💧','ต้องเก็บน้ำค้างจากดอกไม้วิเศษ แต่ดอกไหนล่ะ?',['🌹','🌻','🌷'].map((f,i)=>({label:`${f} เก็บจากดอกนี้`, fn:()=>{ if (rng()<0.55){ healMates(0.4); rqAdv('ได้น้ำค้างแห่งชีวิต! เพื่อนร่วมทีมสดชื่นขึ้น'); } else { S.poison=Math.max(S.poison,5); rqAdv('ดอกมีพิษ! ติดพิษ 5 ชั้น แต่ก็เก็บน้ำค้างได้สำเร็จ','bad'); } }}))),
+    F=>rqEv(4,'ราชาก็อบลินป่า','👺','ราชาก็อบลินตัดต้นไม้ศักดิ์สิทธิ์อยู่!',[{label:'⚔️ หยุดมัน!', fn:()=>rqFight([rqMon(F,'ราชาก็อบลินป่า','👺',3,1.25,'wood')], ()=>'ราชาก็อบลินหนีไป ต้นไม้ศักดิ์สิทธิ์รอดแล้ว')}]),
+    F=>rqEv(5,'ราชันย์ภูตไม้','🌳','ราชันย์ภูตไม้ที่ถูกความมืดครอบงำ คำรามจนป่าสั่น',[{label:'⚔️ ปลดปล่อยราชันย์!', fn:()=>rqFight([rqMon(F,'ราชันย์ภูตไม้','🌳',4.4,1.35,'wood')], ()=>rqFinal(F))}]),
+  ], reward:F=>{ healMates(1); S.mods.atk+=6; S.mods.def+=6; return 'ราชันย์ภูตไม้ฟื้นคืนสติ มอบเขากวางเงินพันปี! ทีม ATK/MATK +6% DEF +6% ตลอดรอบ และรองเท้าตำนาน!'; }},
+  warrior:{name:'ตำแหน่งแชมป์', slot:'weapon', steps:[
+    F=>rqEv(1,'ใบประกาศ','📜','ใบประกาศติดบนกำแพง "การแข่งขันชิงแชมป์หอคอย! ผู้ชนะ 4 ด่านจะได้รับตำแหน่งแชมป์"',[{label:'สมัครแข่ง!', fn:()=>rqAdv('ลงชื่อสมัครแข่งเรียบร้อย')}]),
+    F=>rqEv(2,'รอบคัดเลือก','🥊','คู่ต่อสู้รอบแรกเป็นนักสู้ฝีมือดี',[{label:'⚔️ ลงสนาม', fn:()=>rqFight([rqMon(F,'ผู้ท้าประลองเร่','🤺',2.2,1.15)], ()=>'ผ่านรอบคัดเลือก!')}]),
+    F=>rqEv(3,'ฝึกพิเศษ','🏋️','ปรมาจารย์เสนอการฝึกพิเศษก่อนรอบรอง เลือกได้ 1 แบบ',trainOptions(F,2.5).slice(0,3).map(o=>({label:o.label, sub:'ฝึกเข้มข้น', fn:()=>{ applyTrain(o); rqAdv(`ฝึกหนักจนได้ ${o.label}`); }}))),
+    F=>rqEv(4,'รอบรองชนะเลิศ','🛡️','ขุนพลเกราะเหล็กผู้ไม่เคยแพ้',[{label:'⚔️ ลงสนาม', fn:()=>rqFight([rqMon(F,'ขุนพลเกราะเหล็ก','🛡️',3.2,1.25)], ()=>'เข้าชิงชนะเลิศ!')}]),
+    F=>rqEv(5,'รอบชิงชนะเลิศ','🏆','แชมป์เก่าแห่งลานทรายรออยู่ เสียงผู้ชมดังกระหึ่ม!',[{label:'⚔️ ชิงตำแหน่งแชมป์!', fn:()=>rqFight([rqMon(F,'แชมป์ลานทราย','🏆',4.4,1.45)], ()=>rqFinal(F))}]),
+  ], reward:F=>{ const a=trainOptions(F,3); a.slice(0,3).forEach(o=>applyTrain(o)); S.mods.atk+=8; return `ได้ตำแหน่งแชมป์! ${a.slice(0,3).map(o=>o.label).join(', ')} ATK/MATK +8% ตลอดรอบ และอาวุธตำนาน!`; }},
+  frost:{name:'หัวใจน้ำแข็งนิรันดร์', slot:'helm', steps:[
+    F=>rqEv(1,'พายุหิมะไม่หยุด','🌨️','ชาวบ้านหนาวสั่น "พายุหิมะไม่หยุดมาร้อยปีแล้ว เพราะราชินีหิมะขังหัวใจน้ำแข็งไว้"',[{label:'จะหยุดพายุให้!', fn:()=>rqAdv('ชาวบ้านมอบเสื้อขนสัตว์ให้ อุ่นขึ้นเยอะ')}]),
+    F=>rqEv(2,'หมาป่าน้ำแข็ง','🐺','หมาป่าขนขาวกระโจนออกจากพายุ',[{label:'⚔️ สู้', fn:()=>rqFight([rqMon(F,'หมาป่าน้ำแข็ง','🐺',2.3,1.15,'water')], ()=>'หมาป่าน้ำแข็งแตกเป็นเกล็ด')}]),
+    F=>fishEv({}, `👑 หัวใจน้ำแข็งนิรันดร์ (3/5) · ทะเลสาบผนึก`,'🧊','กุญแจน้ำแข็งจมอยู่ใต้ทะเลสาบ ต้องตกขึ้นมาให้ได้!',1.1,20, r=>{ if (r==='miss'){ S.hp=Math.max(1,S.hp-stats().maxhp*0.1); rqAdv('ดึงพลาด ต้องดำน้ำเย็นจัดลงไปเก็บเอง HP -10%','bad'); } else rqAdv('ตกกุญแจน้ำแข็งขึ้นมาได้!'); }, ()=>{ S.hp=Math.max(1,S.hp-stats().maxhp*0.1); rqAdv('ดำน้ำลงไปเก็บกุญแจเอง HP -10%','bad'); }),
+    F=>rqEv(4,'ผู้เฝ้าประตู','🗿','โกเลมน้ำแข็งยักษ์ขวางประตูวัง',[{label:'⚔️ ทุบให้แตก', fn:()=>rqFight([rqMon(F,'โกเลมน้ำแข็ง','🧊',3.2,1.2,'water')], ()=>'โกเลมแตกกระจาย ประตูวังเปิดออก')}]),
+    F=>rqEv(5,'ราชินีหิมะ','👸','ราชินีหิมะลอยอยู่กลางท้องพระโรง "ไม่มีใครเอาหัวใจไปจากข้าได้!"',[{label:'⚔️ ชิงหัวใจคืน!', fn:()=>rqFight([rqMon(F,'ราชินีหิมะ','👸',4.4,1.4,'water')], ()=>rqFinal(F))}]),
+  ], reward:F=>{ S.mods.cri+=6; S.mods.def+=6; heal(1); return 'พายุหิมะสงบลง! คริ +6% DEF +6% ตลอดรอบ ฟื้น HP เต็ม และหมวกตำนาน!'; }},
+  arcane:{name:'คทาจักรวาล', slot:'acc', steps:[
+    F=>rqEv(1,'จอมเวทหลงยุค','🧙','จอมเวทชราพูดพึมพำ "คทาจักรวาลแตกเป็นสี่ชิ้น ถ้าตกถึงมือผิดคน หอคอยจะพังทลาย!"',[{label:'ช่วยรวบรวม', fn:()=>rqAdv('จอมเวทมอบเข็มทิศเวทให้')}]),
+    F=>rqEv(2,'ภูตเวทคลั่ง','👹','ภูตเวทกินพลังเศษคทาจนคลั่ง',[{label:'⚔️ สู้', fn:()=>rqFight([rqMon(F,'ภูตเวทคลั่ง','👹',2.4,1.2,'fire')], ()=>'ได้เศษคทาชิ้นที่ 1 และ 2!')}]),
+    F=>{ const ok=Math.floor(rng()*3), R=[['🔺','สามเหลี่ยม'],['🔵','วงกลม'],['🟪','สี่เหลี่ยม']]; return rqEv(3,'ห้องอักขระ','🔣',`ผนังสลักอักขระ 3 แบบ เข็มทิศเวทสั่นแรงที่สุดตอนชี้ไปทาง<b>${R[rng()<0.75?ok:Math.floor(rng()*3)][1]}</b>`,R.map(([ic,n],i)=>({label:`${ic} ${n}`, fn:()=>{ if (i===ok) rqAdv('อักขระเปล่งแสง! ได้เศษคทาชิ้นที่ 3'); else { S.hp=Math.max(1,S.hp-stats().maxhp*0.15); rqAdv('อักขระระเบิด HP -15% แต่เศษคทาก็หลุดออกมา','bad'); } }}))); },
+    F=>rqEv(4,'ดวงตาจักรวาล','👁️','ดวงตายักษ์ลอยอยู่ ห่อหุ้มเศษชิ้นสุดท้ายไว้',[{label:'⚔️ สู้', fn:()=>rqFight([rqMon(F,'ดวงตาจักรวาล','👁️',3.2,1.25,'dark')], ()=>'ได้เศษคทาครบ 4 ชิ้น!')}]),
+    F=>rqEv(5,'การทรยศ','🧙','จอมเวทหลงยุคเผยโฉมจริง "ขอบใจที่หามาให้ คทานี้เป็นของข้าแล้ว!"',[{label:'⚔️ ชิงคทาคืน!', fn:()=>rqFight([rqMon(F,'จอมเวทหลงยุค','🧙',4.4,1.45,'dark')], ()=>rqFinal(F))}]),
+  ], reward:F=>{ S.mods.atk+=10; let t=''; if (S.passives.length<4){ const free=Object.keys(PASSIVES).filter(k=>!S.passives.includes(k)); if (free.length){ const k=pick(free); S.passives.push(k); if (k==='vital') S.hp*=1.12; t=` ได้สกิลติดตัว ${PASSIVES[k].name}`; } } return `คทาจักรวาลเรืองแสง! ATK/MATK +10% ตลอดรอบ${t} และเครื่องประดับตำนาน!`; }},
+};
+function rqEvent(F){ const M=MAINQ[S.route]; if (!M||!S.rq||S.rq.done) return null; const e=M.steps[S.rq.step](F); if (e&&!e.type) e.type='mainq'; return e; }
 function rollEvent(){
   if (S.sinceMerchant >= 25) return pick(['mStat','mSkill','mPotion','mEquip']);
   let e;
@@ -2277,7 +2353,7 @@ function rollEvent(){
     if ((e==='bad'||e==='badMon') && chance(accVal('luck'))) e='gold';
     if (e==='altar' && (S.acc2 || S.floor<50)) continue;
     if (e==='rune' && S.floor>60 && !chance(runeRate(S.floor))) e='gold';   // ยิ่งลึก รูนยิ่งหายาก (ดู runeRate)
-    if (e==='mSkill' && booksUseless()) e='mStat';   // สกิลเต็มแล้ว ร้านตำรากลายเป็นร้านยาสเตตัส
+    if (e==='mSkill' && booksUseless() && (bookSpare()<2 || !chance(35))) e='mStat';   // ตำราพอแล้ว: ส่วนใหญ่เป็นร้านยา บางครั้งเป็นหอสมุดลับ (ใช้ตำราเกิน)
     break;
   }
   return e;
@@ -2315,6 +2391,12 @@ function buildEvent(type){
         [...opts.map(o=>({label:o.label, sub:`${fmt(price)} ทอง`, disabled:S.gold<price, fn:()=>{ S.gold-=price; applyTrain(o); done(`ดื่มยา ${o.label}`,'good'); }})),
          {label:'ไม่ซื้อ', alt:true, fn:()=>done('เดินผ่านไป')}]); }
     case 'mSkill': { const price=Math.round(60+5*F);
+      if (booksUseless()){ const sp=bookSpare(), free=Object.keys(PASSIVES).filter(k=>!S.passives.includes(k)), canP=S.passives.length<4&&free.length, pp=shuffle(free).slice(0,2), sell=Math.round((40+3*F)*1.5);
+        return ev('หอสมุดลับ','📚',`บรรณารักษ์ชรายิ้ม "ตำราที่เกินมา ข้าแลกเป็นวิชาลับให้ได้นะ"\nตำราที่ใช้แลกได้: <b>${sp}</b> เล่ม · สกิลติดตัว ${S.passives.length}/4`,[
+          ...(canP?pp.map(k=>({label:`📖 เรียน ${PASSIVES[k].name}`, sub:`${PASSIVES[k].desc} · ใช้ตำรา 3 เล่ม`, disabled:sp<3, fn:()=>{ S.books-=3; S.passives.push(k); if (k==='vital') S.hp*=1.12; done(`เรียนสกิลติดตัว ${PASSIVES[k].name} สำเร็จ!`,'good'); }})):[]),
+          {label:'📚 แลกเป็นค่าสถานะ', sub:'ใช้ตำรา 2 เล่ม · สุ่มค่าสถานะถาวร', disabled:sp<2, fn:()=>{ S.books-=2; const o=pick(trainOptions(F,1.6)); applyTrain(o); done(`ศึกษาตำราจนได้ ${o.label}`,'good'); }},
+          {label:'💰 ขายตำรา 1 เล่ม', sub:`${fmt(sell)} ทอง`, disabled:sp<1, fn:()=>{ S.books-=1; const v=gainGold(sell); done(`ขายตำราได้ ${fmt(v)} ทอง`); }},
+          {label:'ออกจากหอสมุด', alt:true, leave:true, fn:()=>done('บรรณารักษ์โบกมือลา')}]); }
       return ev('พ่อค้าตำราสกิล','📜',`ขายตำราสกิล ใช้อัปเลเวลสกิลได้ทุกช่อง (ตันที่ Lv.5)\nมีตำราอยู่ ${S.books} เล่ม`,[
         {label:'ซื้อ 1 เล่ม', sub:`${fmt(price)} ทอง`, disabled:S.gold<price, fn:()=>{ S.gold-=price; done(gainBook(1),'good'); }},
         {label:'ซื้อ 2 เล่ม', sub:`${fmt(price*3)} ทอง`, disabled:S.gold<price*3, fn:()=>{ S.gold-=price*3; done(gainBook(2),'good'); }},
@@ -2401,7 +2483,7 @@ function buildEvent(type){
       return ev('ลูกแก้วกับผู้พิทักษ์','🔮',`ผู้พิทักษ์หินเฝ้าลูกแก้วเรืองแสงอยู่\nสะสมแล้ว ${n}/${CONFIG.orbNeed}`,[
         {label:'สู้เพื่อลูกแก้ว', fn:()=>fight([g], ()=>{ addExp(monExp(F)); return get(); })},
         {label:'เดินผ่าน', alt:true, fn:()=>done('ปล่อยลูกแก้วไว้ก่อน')}]); }
-    case 'route': return routeEvent(F);
+    case 'route': { const e=routeEvent(F); if (e&&!e.type) e.type='route'; return e; }
     case 'boss': { const bosses=makeBosses(), bl=bossLevel(), rp=Math.min(75, RUNE[S.rune.lv].pct + (S.rune.lv?accVal('cloak'):0)), est=estimateWin(bosses);
       const lvl = est>=60?'สูง':est>=30?'ปานกลาง':'ต่ำ';
       const extra = bosses.length>1?`\nบอสมาทั้งหมด ${bosses.length} ตัว!`:'';
@@ -2507,6 +2589,7 @@ function step(){
   if (S.poison>0){ const d=Math.round(stats().maxhp*0.03); S.hp=Math.max(1,S.hp-d); S.poison--; }
   if (S.goldCurse>0) S.goldCurse--;
   if (S.rune.lv){ S.rune.timer--; if (S.rune.timer<=0){ S.rune.lv--; S.rune.timer = S.rune.lv?CONFIG.runeLife+accVal('compass'):0; addLog(S.rune.lv?`รูนอ่อนลงเป็น${RUNE[S.rune.lv].name}`:'รูนแตกสลาย','bad'); } }
+  if (S.rq && !S.rq.done && S.floor>=S.rq.next){ const me=rqEvent(S.floor); if (me){ S.ev=me; S.result=null; S.phase='event'; runSaveNow(); return; } }
   if ((S.q && S.floor>=S.q.next) || maybeQuest()){ const qe=questEvent(); if (qe){ S.ev = qe; S.result=null; S.phase='event'; runSaveNow(); return; } }
   const type = rollEvent();
   if (type.startsWith('m') && type!=='monster') S.sinceMerchant=0;
@@ -2926,7 +3009,7 @@ function adaptGear(){
   ['weapon','helm','armor','boots','acc','acc2'].forEach(s=>{ const it=S.gear[s]; if (!it || !it.adapt || it.ty===ty) return;
     it.ty = ty; it.subs.forEach(x=>{ if (x.k==='atk'&&ty==='mag') x.k='matk'; else if (x.k==='matk'&&ty==='phy') x.k='atk'; }); });
 }
-function startDaily(){ runClear(); const day=dayKey(); rng = seedRng('daily-'+day); newRun(false); S.daily = day; S.route=null;
+function startDaily(){ runClear(); const day=dayKey(); rng = seedRng('daily-'+day); newRun(false); S.daily = day; S.route=null; S.rq=null;
   Object.keys(S.meta.pm).forEach(k=>S.meta.pm[k]= typeof S.meta.pm[k]==='number'?0:false); S.meta.stars={}; S.meta.forms={};
   S.gear.acc=null; S.acc2=false; S.rune={lv:0,timer:0}; S.gold=0; S.hp=stats().maxhp; }
 function applyRunStart(m, consume){
@@ -3049,7 +3132,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.35</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.36</span>'}</div>`;
   }
   let runSet=false, runQuit=false;
   function runPop(){
@@ -3124,7 +3207,7 @@ if (typeof document !== 'undefined') (function(){
     const head = `<div class="sh-head"><div class="sh-av ${sp?'sp':''}">${unitIcon(S.cls,S.char)}<div class="sh-lv">Lv.${S.lv}</div></div>
       <div class="sh-meta"><div class="sh-sub">${clsName}${S.char?` · ${elIcon(S.char.el)} ธาตุ${ELEMENTS[S.char.el].name}`:''}</div>
         <div class="sh-name">${unitName(S.cls,S.char)}${sp?' ✨':''}</div>
-        <div class="sh-chips"><span class="sh-chip">🪙 ${fmt(S.gold)}</span><span class="sh-chip">🧭 ${S.floor} ชั้น</span>${routeOf()?`<span class="sh-chip">${routeOf().icon} ${routeOf().name}</span>`:''}</div>
+        <div class="sh-chips"><span class="sh-chip">🪙 ${fmt(S.gold)}</span><span class="sh-chip">🧭 ${S.floor} ชั้น</span>${routeOf()?`<span class="sh-chip">${routeOf().icon} ${routeOf().name}</span>`:''}${S.rq&&MAINQ[S.route]?`<span class="sh-chip">👑 ${S.rq.done?'เควสหลักสำเร็จ ✔':'เควสหลัก '+S.rq.step+'/5'}</span>`:''}</div>
         <div class="sh-exp"><i style="width:${exP}%"></i></div><div class="sh-exptxt">EXP ${fmt(S.exp)} / ${S.lv>=LV_CAP?'MAX':fmt(need)}</div></div></div>
       <div class="sh-hp"><div class="bigbar"><i id="heroBar" style="width:${100*S.hp/st.maxhp}%;background:linear-gradient(90deg,var(--hp),var(--hp2))"></i><span id="heroHpTxt">HP ${fmt(S.hp)} / ${fmt(st.maxhp)}</span></div></div>`;
     const rune = S.rune.lv
@@ -3271,7 +3354,7 @@ if (typeof document !== 'undefined') (function(){
     if (on && !shown){ el.innerHTML=tkInner(); el.classList.remove('tkhide'); }
     else if (!on && shown){ el.classList.add('tkhide'); setTimeout(()=>{ if (el.classList.contains('tkhide')) el.innerHTML=''; },450); } },1000);
   /* ---------- 🔔 แจ้งเตือนเกมมีอัปเดต ---------- */
-  const GAME_VER='v3.35'; let updSkip='', updT=0;
+  const GAME_VER='v3.36'; let updSkip='', updT=0;
   function updCheck(){ if (location.protocol==='file:' || document.getElementById('updpop')) return; if (Date.now()-updT<60000) return; updT=Date.now();
     fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{ if (!j||!j.v||j.v===GAME_VER||j.v===updSkip) return; updShow(j); }).catch(()=>{}); }
   function updShow(j){ const inRun=S&&S.phase&&S.phase!=='title'&&!S.over&&!hub, d=document.createElement('div'); d.id='updpop';
@@ -3356,7 +3439,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="pbtns"><button class="choice" data-act="guideopen"><span>📚 ข้อมูลเกม</span><small>ระดับอุปกรณ์ · ธาตุ · อาชีพ · อัตราสุ่ม · โหมดเกม</small></button><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.35<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.36<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
