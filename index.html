@@ -1087,7 +1087,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.38</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.39</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -3133,7 +3133,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.38</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.39</span>'}</div>`;
   }
   let runSet=false, runQuit=false;
   function runPop(){
@@ -3355,7 +3355,7 @@ if (typeof document !== 'undefined') (function(){
     if (on && !shown){ el.innerHTML=tkInner(); el.classList.remove('tkhide'); }
     else if (!on && shown){ el.classList.add('tkhide'); setTimeout(()=>{ if (el.classList.contains('tkhide')) el.innerHTML=''; },450); } },1000);
   /* ---------- 🔔 แจ้งเตือนเกมมีอัปเดต ---------- */
-  const GAME_VER='v3.38'; let updSkip='', updT=0;
+  const GAME_VER='v3.39'; let updSkip='', updT=0;
   function updCheck(){ if (location.protocol==='file:' || document.getElementById('updpop')) return; if (Date.now()-updT<60000) return; updT=Date.now();
     fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{ if (!j||!j.v||j.v===GAME_VER||j.v===updSkip) return; updShow(j); }).catch(()=>{}); }
   function updShow(j){ const inRun=S&&S.phase&&S.phase!=='title'&&!S.over&&!hub, d=document.createElement('div'); d.id='updpop';
@@ -3407,25 +3407,27 @@ if (typeof document !== 'undefined') (function(){
   ];
   let mailPop=false;
   const mailGot = m => (m.mail=m.mail||{got:[]}).got;
-  const mailUnread = m => MAIL.filter(x=>!mailGot(m).includes(x.id)).length;
+  const mailAll = m => MAIL.concat(((m.mail||{}).dyn)||[]);
+  const mailUnread = m => mailAll(m).filter(x=>!mailGot(m).includes(x.id)).length;
   function mailRwTxt(r){ const a=[]; if (r.skin){ const [sid,st]=r.skin.split('_'); a.push(`👗 สกิน${SKIN_T[st].name} ${skinsOf(sid)[st].name} (${ALLCHARS[sid].c.name.split(' ')[0]})`); } if (r.char) a.push(`${ALLCHARS[r.char].c.icon} ${ALLCHARS[r.char].c.name}`); if (r.tickets) a.push(`🎟️ ${r.tickets}`); if (r.medals) a.push(`🎖️ ${fmt(r.medals)}`); if (r.dust) a.push(`✨ ${r.dust}`); return a.join(' · '); }
   function mailClaim(m,x){ if (mailGot(m).includes(x.id)) return ''; const r=x.rw||{}, out=[];
     if (r.char && ALLCHARS[r.char]){ if (!owned(m,r.char)){ m.chars[r.char]={star:1,form:false,recs:[],main:0}; if (!m.show.main) m.show.main=r.char; if (!m.skin[r.char]){ const bt=['l','r','n'].find(t=>m.skins[r.char+'_'+t]); if (bt) m.skin[r.char]=bt; } out.push(`ได้วีรชน ${ALLCHARS[r.char].c.name}!`); }
       else { m.shards[r.char]=(m.shards[r.char]||0)+50; out.push(`มี${ALLCHARS[r.char].c.name.split(' ')[0]}แล้ว ได้เศษ 50 ชิ้นแทน`); } }
     if (r.skin){ const [sid,st]=r.skin.split('_'); if (!m.skins[r.skin]){ m.skins[r.skin]=true; if (m.chars[sid]) m.skin[sid]=st; out.push(`ได้สกิน ${skinsOf(sid)[st].name}!${m.chars[sid]?' (ใส่ให้แล้ว)':''}`); } else { m.skinSh+=SKIN_T[st].refund; out.push(`มีสกินนี้แล้ว ได้เศษผ้าสกิน ${SKIN_T[st].refund}`); } }
     if (r.tickets){ m.tickets+=r.tickets; out.push(`🎟️ +${r.tickets}`); } if (r.medals){ m.medals+=r.medals; out.push(`🎖️ +${r.medals}`); } if (r.dust){ m.dust+=r.dust; out.push(`✨ +${r.dust}`); }
+    if (x.rk){ m.rkClaim=m.rkClaim||{}; m.rkClaim[x.rk]=1; }
     mailGot(m).push(x.id); return out.join(' · '); }
   let mailMsg='';
   function mailPopHtml(m){ const got=mailGot(m);
     return `<div class="pop-bg" data-act="mailclose"><div class="pop cpop" data-act="noop"><div class="pop-h">📬 <b>จดหมาย</b></div>
       ${mailMsg?`<div class="hubmsg">${mailMsg}</div>`:''}
-      ${MAIL.length?MAIL.slice().reverse().map(x=>{ const ok=got.includes(x.id); return `<div class="mailit ${ok?'got':''}"><b>${x.t}</b><div class="gdn">${x.d}</div>${x.rw&&x.rw.skin?`<div class="mailsk">${skinImg(x.rw.skin.split('_')[0],x.rw.skin.split('_')[1])}</div>`:''}<div class="mailrw">🎁 ${mailRwTxt(x.rw||{})}</div>
+      ${mailAll(m).length?mailAll(m).slice().sort((a,b)=>(b.ts||0)-(a.ts||0)).map(x=>{ const ok=got.includes(x.id); return `<div class="mailit ${ok?'got':''}"><b>${x.t}</b><div class="gdn">${String(x.d).replace(/\n/g,'<br>')}</div>${x.rw&&x.rw.skin?`<div class="mailsk">${skinImg(x.rw.skin.split('_')[0],x.rw.skin.split('_')[1])}</div>`:''}<div class="mailrw">🎁 ${mailRwTxt(x.rw||{})}</div>
         <button class="choice ${ok?'alt':''}" data-act="mailget" data-k="${x.id}" ${ok?'disabled':''}><span>${ok?'✅ รับแล้ว':'รับของขวัญ'}</span></button></div>`; }).join(''):'<div class="gs">ยังไม่มีจดหมาย</div>'}
       <button class="choice alt" data-act="mailclose"><span>ปิด</span></button></div></div>`; }
   function mailAct(act,b){
     if (act==='mailopen'){ setPop=false; mailPop=true; mailMsg=''; render(); return true; }
     if (act==='mailclose'){ mailPop=false; mailMsg=''; render(); return true; }
-    if (act==='mailget'){ const m=loadMeta(), x=MAIL.find(y=>y.id===b.dataset.k); if (!x) return true; const t=mailClaim(m,x); if (t){ storeMeta(m); mailMsg='🎉 '+t; SND.sfx&&SND.sfx('magic'); } render(); return true; }
+    if (act==='mailget'){ const m=loadMeta(), x=mailAll(m).find(y=>y.id===b.dataset.k); if (!x) return true; const t=mailClaim(m,x); if (t){ storeMeta(m); mailMsg='🎉 '+t; SND.sfx&&SND.sfx('magic'); } render(); return true; }
     return false; }
   function settingsPop(m){
     return `<div class="pop-bg" data-act="setclose"><div class="pop cpop" data-act="noop"><div class="pop-h">⚙️ <b>ตั้งค่า</b></div>
@@ -3440,7 +3442,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="pbtns"><button class="choice" data-act="guideopen"><span>📚 ข้อมูลเกม</span><small>ระดับอุปกรณ์ · ธาตุ · อาชีพ · อัตราสุ่ม · โหมดเกม</small></button><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.38<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.39<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
@@ -4983,6 +4985,23 @@ if (typeof document !== 'undefined') (function(){
   function rkCdHtml(k){ const C={daily:['day','⏳ อันดับรายวันรีเซ็ตใน'],dragon:['week','⏳ อันดับล่ามังกรรีเซ็ตใน'],endless:['week','🎁 รางวัลประจำสัปดาห์รอบใหม่ใน'],hundred:['week','🎁 รางวัลประจำสัปดาห์รอบใหม่ใน'],arena:['week','🛒 ร้านประลองรีเซ็ตใน']}[k]; if (!C) return '';
     return `<div class="rkcd">${C[1]} <b data-cd="${C[0]}">${cdFmt(nextReset(C[0]))}</b> <small>(${C[0]==='day'?'ทุกวัน 05:00':'ทุกวันจันทร์ 05:00'})</small></div>`; }
   setInterval(()=>{ document.querySelectorAll('[data-cd]').forEach(e=>{ e.textContent=cdFmt(nextReset(e.dataset.cd)); }); },1000);
+  /* ---------- 📬 ส่งรางวัลอันดับเข้าจดหมายอัตโนมัติเมื่อถึงรอบรีเซ็ต ---------- */
+  const RK_MAIL_N={daily:'อันดับด่านท้าทายรายวัน',endless:'อันดับหอคอยไร้สิ้นสุด (ประจำสัปดาห์)',hundred:'อันดับหอคอยร้อยชั้น (ประจำสัปดาห์)',dragon:'อันดับล่ามังกร (สัปดาห์ที่แล้ว)'};
+  let rkMailBusy=false, rkMailT=0;
+  function rkMailKeys(){ const w=dhWeek(), y=dayKey(Date.now()-864e5);
+    return [['daily',y,'daily|'+y,'ของวันที่ '+y],['dragon',String(w-1),'dragon|'+(w-1),'สัปดาห์ที่แล้ว'],['endless','all','endless|w'+(w-1),'สัปดาห์ที่แล้ว'],['hundred','all','hundred|w'+(w-1),'สัปดาห์ที่แล้ว']]; }
+  async function rkAutoMail(force){ const C=window.__dqCloud; if (!C||!C.auth||!C.lbMine||rkMailBusy) return; if (!force&&Date.now()-rkMailT<5*60e3) return; rkMailBusy=true; rkMailT=Date.now();
+    try{ const m0=loadMeta(), todo=rkMailKeys().filter(([k,per,key])=>!(m0.rkClaim&&m0.rkClaim[key]) && !((m0.mail||{}).rkChk||{})[key]); if (!todo.length) return;
+      const res=await Promise.all(todo.map(([k,per])=>C.lbMine(k,per).catch(()=>undefined)));
+      const m=loadMeta(); m.mail=m.mail||{got:[]}; m.mail.dyn=m.mail.dyn||[]; m.mail.rkChk=m.mail.rkChk||{}; let added=0;
+      todo.forEach(([k,per,key,when],i)=>{ const r=res[i]; if (r===undefined) return; m.mail.rkChk[key]=1; if (!r||!r.rank || (m.rkClaim&&m.rkClaim[key])) return; const tier=rkTier(k,r.rank); if (!tier) return; const R=tier[2];
+        m.mail.dyn.push({id:'rk|'+key, ts:Date.now(), rk:key, t:`🏆 รางวัล${RK_MAIL_N[k]}`, d:`ยินดีด้วย! คุณได้อันดับ <b>#${fmt(r.rank)}</b> จาก ${fmt(r.total||0)} คน (${when})\nคะแนน ${fmt(r.score||0)}\n\n🎁 รางวัลอันดับ ${tier[0]===tier[1]?tier[0]:tier[0]+'-'+(tier[1]>=1e9?'ขึ้นไป':tier[1])}:\n${R.t?`🎟️ ตั๋วสุ่มเศษ ×${R.t}\n`:''}${R.md?`🎖️ เหรียญตรา ×${fmt(R.md)}\n`:''}${R.du?`✨ ผงดาว ×${fmt(R.du)}`:''}`, rw:{tickets:R.t, medals:R.md, dust:R.du}}); added++; });
+      const ks=Object.keys(m.mail.rkChk); if (ks.length>60) ks.slice(0,ks.length-60).forEach(k=>delete m.mail.rkChk[k]);
+      m.mail.dyn=m.mail.dyn.filter(x=>!(mailGot(m).includes(x.id) && Date.now()-(x.ts||0)>14*864e5)).slice(-25);
+      storeMeta(m); if (added) render(); }
+    finally{ rkMailBusy=false; } }
+  setTimeout(()=>rkAutoMail(true), 6000); setInterval(()=>rkAutoMail(false), 60e3);
+  window.addEventListener('dqauth',()=>setTimeout(()=>rkAutoMail(true),1500));
   function rkClaimInfo(k){ const w=dhWeek();
     if (k==='daily'){ const per=dayKey(Date.now()-864e5); return {per, key:'daily|'+per, label:'รางวัลอันดับรายวันของเมื่อวาน'}; }
     if (k==='dragon') return {per:String(w-1), key:'dragon|'+(w-1), label:'รางวัลอันดับล่ามังกรสัปดาห์ที่แล้ว'};
@@ -5019,9 +5038,7 @@ if (typeof document !== 'undefined') (function(){
       : D.top ? `<div class="rkme">คุณยังไม่ติดอันดับในหมวดนี้</div>` : '';
     const L=window.__dqLB||{}, lbst = !uid ? '' : L.state==='sending' ? `<div class="rkst">⏳ กำลังส่งคะแนนขึ้นอันดับ…</div>` : L.state==='err' ? `<div class="rkst bad">⚠️ ส่งคะแนนไม่สำเร็จ: ${rkEsc(L.msg||'')} <button class="mini" data-act="rksend">ลองส่งใหม่</button></div>` : L.state==='ok' ? `<div class="rkst ok">✅ ส่งคะแนนล่าสุดขึ้นอันดับแล้ว</div>` : '';
     const isAr=rkTab==='arena', ci=rkClaimInfo(rkTab), got=m.rkClaim&&m.rkClaim[ci.key], cl=D.claim, tier=!isAr&&cl&&cl.rank?rkTier(rkTab,cl.rank):null;
-    const claimBtn = !uid ? `<div class="csd">เข้าสู่ระบบเพื่อรับรางวัลอันดับ</div>` : got ? `<div class="rkst ok">✅ รับ${ci.label}แล้ว</div>`
-      : tier ? `<button class="choice wide rkclaim" data-act="rkclaim"><span>🎁 รับ${ci.label}</span><small>อันดับ #${fmt(cl.rank)} · ${rkRwTxt(tier[2])}</small></button>`
-      : D.top ? `<div class="csd">${rkTab==='daily'?'เมื่อวานคุณยังไม่ได้ติดอันดับ':rkTab==='dragon'?'สัปดาห์ที่แล้วคุณยังไม่ได้ติดอันดับ':'ติดอันดับก่อนเพื่อรับรางวัลประจำสัปดาห์'}</div>` : '';
+    const claimBtn = !uid ? `<div class="csd">เข้าสู่ระบบเพื่อรับรางวัลอันดับ</div>` : `<div class="rkst ok">📬 รางวัลอันดับจะส่งเข้า <b>จดหมาย</b> ให้อัตโนมัติเมื่อถึงรอบรีเซ็ต (เปิดได้ที่ ⚙️ ตั้งค่า → จดหมาย)</div>`;
     const rwTable = isAr ? `<div class="sumbox"><h3>🛒 รางวัลสนามประลอง</h3><div class="csd">ทุกการประลองได้ ⚜️ เหรียญประลอง (ชนะ ${AR_COIN.win} · แพ้ ${AR_COIN.lose} · ชนะครั้งแรกของวัน +${AR_COIN.first}) นำไปแลกตั๋ว เศษวีรชน ผงดาว เศษผ้าสกิน ฯลฯ ที่ร้านประลอง</div><button class="choice wide" data-act="arnopen"><span>⚔️ ไปสนามประลอง / ร้านประลอง</span></button></div>` : `<div class="sumbox"><h3>🎁 รางวัลอันดับ</h3><div class="rkrw">${RK_RW[rkTab].map(([a,b,r])=>`<div class="sumr"><span>${a===b?`อันดับ ${a}`:b>=1e9?`อันดับ ${a} ขึ้นไป`:`อันดับ ${a}-${b}`}</span><b>${rkRwTxt(r)}</b></div>`).join('')}</div>${claimBtn}</div>`;
     const view = rkSel!=null && D.top && D.top[rkSel] ? rkViewPop(D.top[rkSel], rkSel) : '';
     return `<div class="overlay hub" ${pageBg('rank')}>${hubHead(m,'🏆 ตารางอันดับ')}${tabs}<div class="sumbox"><div class="csd">${note}</div>${rkCdHtml(rkTab)}${mine}${lbst}</div>${rwTable}<div class="sumbox"><div class="csd" style="text-align:center;margin-bottom:6px">${rkTab==='arena'?'ทีมป้องกันของผู้เล่นแต่ละคน':'แตะชื่อผู้เล่นเพื่อดูวีรชน อุปกรณ์ และค่าสถานะ'}</div>${body}</div>
@@ -5616,7 +5633,7 @@ if (typeof document !== 'undefined') (function(){
   async function req(path,opt={},useUser){ const h={'apikey':SB_KEY,'Content-Type':'application/json'}; if (useUser&&auth) h.Authorization='Bearer '+auth.access_token;
     const r=await fetch(SB_URL+path,Object.assign({},opt,{headers:Object.assign(h,opt.headers||{})})); const t=await r.text(); let j=null; try{ j=t?JSON.parse(t):null; }catch(e){}
     if (!r.ok){ const err=new Error((j&&(j.msg||j.error_description||j.message||j.error))||('HTTP '+r.status)); err.status=r.status; throw err; } return j; }
-  function keep(s){ auth={access_token:s.access_token,refresh_token:s.refresh_token,expires_at:Date.now()+(s.expires_in||3600)*1000,user:{id:s.user.id,email:s.user.email}}; set(K_AUTH,JSON.stringify(auth)); }
+  function keep(s){ auth={access_token:s.access_token,refresh_token:s.refresh_token,expires_at:Date.now()+(s.expires_in||3600)*1000,user:{id:s.user.id,email:s.user.email}}; setTimeout(()=>{ try{ window.dispatchEvent(new Event('dqauth')); }catch(e){} },0); set(K_AUTH,JSON.stringify(auth)); }
   async function fresh(){ if (!auth) return false; if (Date.now()<auth.expires_at-60000) return true;
     try{ keep(await req('/auth/v1/token?grant_type=refresh_token',{method:'POST',body:JSON.stringify({refresh_token:auth.refresh_token})})); return true; }
     catch(e){ if (e.status===400||e.status===401){ auth=null; set(K_AUTH,null); } return false; } }
