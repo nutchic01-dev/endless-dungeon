@@ -1005,6 +1005,7 @@ h3 img.uiico{height:24px;width:auto;vertical-align:middle}
 @keyframes rfxtx{0%,25%{opacity:0;transform:translateY(12px)}40%{opacity:1;transform:none}85%{opacity:1}100%{opacity:0}}
 .fishbar{position:relative;height:34px;margin:10px 4px 4px;border-radius:17px;background:linear-gradient(180deg,#1b3b6b,#0d2140);border:2px solid #7fc8ff;overflow:hidden;box-shadow:inset 0 2px 8px rgba(0,0,0,.6)}.fishbar .fz{position:absolute;top:0;bottom:0;background:linear-gradient(180deg,#5dff9a,#1fbf62);box-shadow:0 0 12px #5dff9a}.fishbar .fneedle{position:absolute;top:-2px;bottom:-2px;width:6px;margin-left:-3px;background:#fff;border-radius:3px;box-shadow:0 0 8px #fff,0 0 2px #000;animation:fneed linear infinite alternate;left:0}@keyframes fneed{from{left:0}to{left:100%}}
 .awpbox{background:rgba(255,255,255,.04);border:1px solid rgba(180,140,255,.25);border-radius:12px;padding:8px}.awp{margin:5px 0;padding:4px 6px;border-radius:9px}.awp.on{background:rgba(255,211,77,.12);box-shadow:0 0 0 1.5px #ffd34d}.awp.on .awpt span b::after{content:' ⭐'}.awpt{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:12.5px}.awpt span{display:flex;align-items:center;gap:6px}.awpt span img,.awpt span .heroimg{width:26px;height:26px;object-fit:contain}.awq{display:inline-flex;width:26px;height:26px;border-radius:50%;background:#3a2a5a;color:#c9b6ff;font-style:normal;font-weight:900;align-items:center;justify-content:center}.awpt small{color:#cfc2e4}.awpb{height:8px;border-radius:4px;background:rgba(255,255,255,.1);overflow:hidden;margin-top:3px}.awpb i{display:block;height:100%;background:linear-gradient(90deg,#9b6bff,#ff7bd5);border-radius:4px}.awp.full .awpb i{background:linear-gradient(90deg,#ffd34d,#ff9d2e)}
+.rkcd{margin:6px 0 2px;padding:6px 10px;border-radius:10px;background:rgba(255,200,80,.1);border:1px dashed rgba(255,210,120,.45);text-align:center;font-size:13px;color:#ffe9b0}.rkcd b{color:#ffd34d;font-size:15px;font-variant-numeric:tabular-nums}.rkcd small{color:#cfc2e4;font-size:11px}
 .gdtw{overflow-x:auto;margin:4px 0}.gdt{width:100%;border-collapse:collapse;font-size:12.5px;color:#e9def7}.gdt th{background:rgba(255,214,140,.16);color:#ffd77a;font-weight:700;padding:6px 4px;white-space:nowrap}.gdt td{padding:6px 4px;text-align:center;border-bottom:1px dashed rgba(255,255,255,.12);white-space:nowrap}.gdn{font-size:12px;color:#cfc2e4;line-height:1.6;margin-top:6px}.gdcl{flex-direction:column;align-items:flex-start;gap:2px}.gdcl small{color:#cfc2e4;font-size:12px}.gdtabs button span{font-size:11px}
 .arlock{font-size:54px;text-align:center}.arbeta{font-size:11.5px;color:#ffd77a;background:rgba(255,190,80,.12);border:1px dashed rgba(255,200,100,.5);border-radius:10px;padding:3px 10px;text-align:center}
 .rkl{display:flex;flex-direction:column;gap:5px}.rkr{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:12px;background:rgba(20,15,40,.7);border:1px solid rgba(255,255,255,.08)}
@@ -1086,7 +1087,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.37</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.38</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -3132,7 +3133,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.37</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.38</span>'}</div>`;
   }
   let runSet=false, runQuit=false;
   function runPop(){
@@ -3354,7 +3355,7 @@ if (typeof document !== 'undefined') (function(){
     if (on && !shown){ el.innerHTML=tkInner(); el.classList.remove('tkhide'); }
     else if (!on && shown){ el.classList.add('tkhide'); setTimeout(()=>{ if (el.classList.contains('tkhide')) el.innerHTML=''; },450); } },1000);
   /* ---------- 🔔 แจ้งเตือนเกมมีอัปเดต ---------- */
-  const GAME_VER='v3.37'; let updSkip='', updT=0;
+  const GAME_VER='v3.38'; let updSkip='', updT=0;
   function updCheck(){ if (location.protocol==='file:' || document.getElementById('updpop')) return; if (Date.now()-updT<60000) return; updT=Date.now();
     fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{ if (!j||!j.v||j.v===GAME_VER||j.v===updSkip) return; updShow(j); }).catch(()=>{}); }
   function updShow(j){ const inRun=S&&S.phase&&S.phase!=='title'&&!S.over&&!hub, d=document.createElement('div'); d.id='updpop';
@@ -3439,7 +3440,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="pbtns"><button class="choice" data-act="guideopen"><span>📚 ข้อมูลเกม</span><small>ระดับอุปกรณ์ · ธาตุ · อาชีพ · อัตราสุ่ม · โหมดเกม</small></button><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.37<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.38<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
@@ -4976,6 +4977,12 @@ if (typeof document !== 'undefined') (function(){
   const RK_RW={endless:RK_RW_BIG, dragon:RK_RW_BIG, daily:RK_RW_SM, hundred:RK_RW_SM};
   const rkTier=(k,rank)=>RK_RW[k].find(([a,b])=>rank>=a&&rank<=b);
   const rkRwTxt=r=>[r.t?`🎟️ ${r.t}`:'', r.md?`🎖️ ${fmt(r.md)}`:'', r.du?`✨ ${r.du}`:''].filter(Boolean).join(' ');
+  /* ---------- ⏳ นับถอยหลังรีเซ็ต (รายวัน ตี 5 · รายสัปดาห์ จันทร์ ตี 5 ตามเวลาเครื่อง) ---------- */
+  function nextReset(kind){ const now=Date.now(), d=new Date(now-5*3600e3); d.setHours(0,0,0,0); let days=1; if (kind==='week'){ const wd=d.getDay(); days=((8-wd)%7)||7; } d.setDate(d.getDate()+days); return d.getTime()+5*3600e3-now; }
+  function cdFmt(ms){ const t=Math.max(0,Math.floor(ms/1000)), dd=Math.floor(t/86400), h=Math.floor(t%86400/3600), mi=Math.floor(t%3600/60), se=t%60, p=n=>String(n).padStart(2,'0'); return (dd?dd+' วัน ':'')+p(h)+':'+p(mi)+':'+p(se); }
+  function rkCdHtml(k){ const C={daily:['day','⏳ อันดับรายวันรีเซ็ตใน'],dragon:['week','⏳ อันดับล่ามังกรรีเซ็ตใน'],endless:['week','🎁 รางวัลประจำสัปดาห์รอบใหม่ใน'],hundred:['week','🎁 รางวัลประจำสัปดาห์รอบใหม่ใน'],arena:['week','🛒 ร้านประลองรีเซ็ตใน']}[k]; if (!C) return '';
+    return `<div class="rkcd">${C[1]} <b data-cd="${C[0]}">${cdFmt(nextReset(C[0]))}</b> <small>(${C[0]==='day'?'ทุกวัน 05:00':'ทุกวันจันทร์ 05:00'})</small></div>`; }
+  setInterval(()=>{ document.querySelectorAll('[data-cd]').forEach(e=>{ e.textContent=cdFmt(nextReset(e.dataset.cd)); }); },1000);
   function rkClaimInfo(k){ const w=dhWeek();
     if (k==='daily'){ const per=dayKey(Date.now()-864e5); return {per, key:'daily|'+per, label:'รางวัลอันดับรายวันของเมื่อวาน'}; }
     if (k==='dragon') return {per:String(w-1), key:'dragon|'+(w-1), label:'รางวัลอันดับล่ามังกรสัปดาห์ที่แล้ว'};
@@ -5017,7 +5024,7 @@ if (typeof document !== 'undefined') (function(){
       : D.top ? `<div class="csd">${rkTab==='daily'?'เมื่อวานคุณยังไม่ได้ติดอันดับ':rkTab==='dragon'?'สัปดาห์ที่แล้วคุณยังไม่ได้ติดอันดับ':'ติดอันดับก่อนเพื่อรับรางวัลประจำสัปดาห์'}</div>` : '';
     const rwTable = isAr ? `<div class="sumbox"><h3>🛒 รางวัลสนามประลอง</h3><div class="csd">ทุกการประลองได้ ⚜️ เหรียญประลอง (ชนะ ${AR_COIN.win} · แพ้ ${AR_COIN.lose} · ชนะครั้งแรกของวัน +${AR_COIN.first}) นำไปแลกตั๋ว เศษวีรชน ผงดาว เศษผ้าสกิน ฯลฯ ที่ร้านประลอง</div><button class="choice wide" data-act="arnopen"><span>⚔️ ไปสนามประลอง / ร้านประลอง</span></button></div>` : `<div class="sumbox"><h3>🎁 รางวัลอันดับ</h3><div class="rkrw">${RK_RW[rkTab].map(([a,b,r])=>`<div class="sumr"><span>${a===b?`อันดับ ${a}`:b>=1e9?`อันดับ ${a} ขึ้นไป`:`อันดับ ${a}-${b}`}</span><b>${rkRwTxt(r)}</b></div>`).join('')}</div>${claimBtn}</div>`;
     const view = rkSel!=null && D.top && D.top[rkSel] ? rkViewPop(D.top[rkSel], rkSel) : '';
-    return `<div class="overlay hub" ${pageBg('rank')}>${hubHead(m,'🏆 ตารางอันดับ')}${tabs}<div class="sumbox"><div class="csd">${note}</div>${mine}${lbst}</div>${rwTable}<div class="sumbox"><div class="csd" style="text-align:center;margin-bottom:6px">${rkTab==='arena'?'ทีมป้องกันของผู้เล่นแต่ละคน':'แตะชื่อผู้เล่นเพื่อดูวีรชน อุปกรณ์ และค่าสถานะ'}</div>${body}</div>
+    return `<div class="overlay hub" ${pageBg('rank')}>${hubHead(m,'🏆 ตารางอันดับ')}${tabs}<div class="sumbox"><div class="csd">${note}</div>${rkCdHtml(rkTab)}${mine}${lbst}</div>${rwTable}<div class="sumbox"><div class="csd" style="text-align:center;margin-bottom:6px">${rkTab==='arena'?'ทีมป้องกันของผู้เล่นแต่ละคน':'แตะชื่อผู้เล่นเพื่อดูวีรชน อุปกรณ์ และค่าสถานะ'}</div>${body}</div>
       <button class="choice alt wide" data-act="rkreload"><span>🔄 รีเฟรช</span></button>${nav()}${view}</div>`; }
 
   /* ---------- แชทโลก ---------- */
