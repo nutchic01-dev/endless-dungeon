@@ -1110,7 +1110,7 @@ h3 img.uiico{height:24px;width:auto;vertical-align:middle}
 @keyframes cbpop{0%{transform:scale(2.4) rotate(-8deg);opacity:0}25%{transform:scale(.92) rotate(-4deg);opacity:1}40%{transform:scale(1.06) rotate(-4deg)}80%{opacity:1;transform:scale(1) rotate(-4deg)}100%{opacity:0;transform:scale(1.12) translateY(-18px) rotate(-4deg)}}
 @keyframes cbring{0%{transform:scale(.4);opacity:1}100%{transform:scale(6);opacity:0}}
 .cbshk{animation:cbshake .35s}@keyframes cbshake{0%,100%{transform:none}20%{transform:translate(-5px,3px)}40%{transform:translate(5px,-3px)}60%{transform:translate(-3px,2px)}80%{transform:translate(3px,-1px)}}
-.gembar{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.gembar b{font-size:20px;color:#9fe7ff;text-shadow:0 0 8px #3ab8ff}.gsi{font-size:38px;display:flex;align-items:center;justify-content:center;height:56px}
+.gembar{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.gembig img.uiico{height:40px}.gsdisc img.uiico{height:14px;vertical-align:-2px;margin-right:2px}.gemplus img.uiico{height:18px;vertical-align:-4px}.gsi img.uiico{height:50px}.gembar b{font-size:20px;color:#9fe7ff;text-shadow:0 0 8px #3ab8ff}.gsi{font-size:38px;display:flex;align-items:center;justify-content:center;height:56px}
 .shit{position:relative}.gsdisc{position:absolute;top:-6px;right:-6px;background:linear-gradient(#ff5a7a,#d61e4a);color:#fff;font-weight:800;font-size:11px;padding:2px 6px;border-radius:9px;box-shadow:0 2px 6px rgba(0,0,0,.4);z-index:2}.gsoff{border-color:#ff7a9a!important;box-shadow:0 0 10px rgba(255,90,122,.35)}
 .shit s{opacity:.6;font-size:10px}.gemplus{margin-left:6px;background:linear-gradient(#5ad2ff,#2a8fe0)!important;color:#fff!important}
 .reccmp{margin-top:10px;text-align:left;background:rgba(255,255,255,.04);border:1px solid rgba(255,209,102,.35);border-radius:12px;padding:10px}.reccmp h3{margin:0 0 6px;font-size:15px}
@@ -1203,7 +1203,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.51</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.52</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -1890,7 +1890,7 @@ function skillIco(d, key, emoji, el){ const u='sk_'+key+'.webp', g='ski_'+skillG
 function clsSkillKey(cls, name){ const k=CLASS_KIT[cls]; if (k){ const i=k.c1.findIndex(x=>x.name===name); if (i>=0) return `cls_${cls}_${i+1}`; return `cls_${cls}_m`; }
   const h=HIDDEN[cls]; return h ? `${h.char.id}_m` : 'cls'; }
 /* ไอคอนเมนูและสกุลเงิน: ใส่ชื่อไฟล์ใน UI_READY เมื่อมีภาพ (ยังไม่มี = อีโมจิ) */
-const UI_READY = new Set(['ui_adv.webp', 'ui_altar.webp', 'ui_boss.webp', 'ui_chars.webp', 'ui_chest.webp', 'ui_dust.webp', 'ui_equip.webp', 'ui_gacha.webp', 'ui_gold.webp', 'ui_home.webp', 'ui_lore.webp', 'ui_medal.webp', 'ui_mission.webp', 'ui_scale.webp', 'ui_settings.webp', 'ui_shop.webp', 'ui_skin.webp', 'ui_ticket.webp', 'ui_troop.webp']);
+const UI_READY = new Set(['ui_gem.webp','ui_gempile.webp','ui_gemchest.webp','ui_gembag.webp','ui_sale.webp','ui_reroll.webp','ui_enpot.webp','ui_gemshop.webp','ui_gemplus.webp','ui_adv.webp', 'ui_altar.webp', 'ui_boss.webp', 'ui_chars.webp', 'ui_chest.webp', 'ui_dust.webp', 'ui_equip.webp', 'ui_gacha.webp', 'ui_gold.webp', 'ui_home.webp', 'ui_lore.webp', 'ui_medal.webp', 'ui_mission.webp', 'ui_scale.webp', 'ui_settings.webp', 'ui_shop.webp', 'ui_skin.webp', 'ui_ticket.webp', 'ui_troop.webp']);
 const ITEMI = (typeof window!=='undefined'&&window.ITEM_IMG)||{};
 const clsIco = k => ITEMI['cls_'+k] ? `<img class="uiico" src="${ITEMI['cls_'+k]}" alt="">` : (CLASSES[k]?CLASSES[k].icon:'');
 const uiIco = (k, emoji) => ITEMI[k] ? `<img class="uiico" src="${ITEMI[k]}" alt="">` : UI_READY.has('ui_'+k+'.webp') ? `<img class="uiico" src="art/ui_${k}.webp" alt="">` : emoji;
@@ -3404,7 +3404,7 @@ const GEM_KILL_CAP = 30;
 function gemDay(m){ const d=dayKey(); if (!m.gemDay||m.gemDay.d!==d) m.gemDay={d,kill:0,en:0,rr:0,buy:[]}; return m.gemDay; }
 function gemAdd(m,n){ m.gem=(m.gem||0)+Math.max(0,Math.round(n)); return n; }
 const GSHOP_POOL = [
-  {k:'en50',n:'สายฟ้า ×50',ic:'⚡',p:30},{k:'arena',n:'สิทธิ์ประลอง +1',ic:'⚔️',p:20},{k:'shard',n:'เศษวีรชนสุ่ม ×10',ic:'🧩',p:40},
+  {k:'en50',n:'สายฟ้า ×50',ic:'⚡',ui:'enpot',p:30},{k:'arena',n:'สิทธิ์ประลอง +1',ic:'⚔️',p:20},{k:'shard',n:'เศษวีรชนสุ่ม ×10',ic:'🧩',p:40},
   {k:'ticket',n:'ตั๋วอัญเชิญ ×1',ic:'🎟️',p:25},{k:'sktix',n:'ตั๋วสกิน ×1',ic:'🎀',p:35},{k:'sktix2',n:'ตั๋วสกิน ×1',ic:'🎀',p:35},{k:'rtix',n:'ตั๋วเรลิก ×1',ic:'🏺',p:40},
   {k:'rsh',n:'หินตีบวกเรลิก ×20',ic:'✴️',p:20},{k:'ro',n:'หินพยากรณ์ ×2',ic:'🔮',p:30},{k:'medals',n:'เหรียญตรา ×3000',ic:'🎖️',p:25},{k:'eqtix',n:'ตั๋วตีเหล็ก ×10',ic:'⚒️',p:15}];
 function gshopStock(m){ const G=gemDay(m), r=seedRng('gshop-'+G.d+'-'+(m.name||'')+'-'+(G.rr||0)), pool=GSHOP_POOL.slice(), out=[];
@@ -3484,7 +3484,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.51</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.52</span>'}</div>`;
   }
   let runSet=false, runQuit=false;
   function runPop(){
@@ -3644,7 +3644,7 @@ if (typeof document !== 'undefined') (function(){
   const HEAD_ICO = {'⚔️':()=>uiIco('adv','⚔️'),'🎒':()=>uiIco('bag','🎒'),'🎖️':()=>uiIco('medal','🎖️'),'🎴':()=>uiIco('chars','🎴'),'🏪':()=>uiIco('shop','🏪'),'🏯':()=>'<img class="uiico" src="art/mode_hundred.webp" alt="">','🏺':()=>uiIco('tab_relic','🏺'),'🐲':()=>uiIco('boss','🐲'),'🐾':()=>EGG(),'👗':()=>uiIco('skin','👗'),'🔮':()=>uiIco('gacha','🔮'),'🗼':()=>'<img class="uiico" src="art/mode_endless.webp" alt="">','🛡️':()=>uiIco('troop','🛡️')};
   const headIco = t => { const k=Object.keys(HEAD_ICO).find(e=>t.startsWith(e+' ')); return k ? HEAD_ICO[k]()+t.slice(k.length) : t; };
   /* แทนอีโมจิของไอเทม/สกุลเงิน/ธาตุ ด้วยไอคอนวาด หลังวาดหน้าทุกครั้ง (เฉพาะหน้าเมือง ไม่แตะฉากต่อสู้) */
-  const EMO_ICO = {'🎖':'medal','🎟':'ticket','🎀':'sktix','🧵':'skinsh','✴':'rsh','💠':'crystal','⚡':'energy','💰':'gold','🏺':'tab_relic','📊':'ic_stats','🎯':'ic_target','🗓':'ic_calendar','📅':'ic_calendar','🗺':'ic_map','🎪':'ic_event','💾':'ic_save','📜':'lore','🧩':'tab_shard','🛒':'shop','🏛':'altar','🎴':'chars','🏪':'shop','⚙':'settings','🎒':'bag','👗':'skin','🔥':'el_fire','💧':'el_water','🌿':'el_wood','🪨':'el_earth','☀':'el_light','🌑':'el_dark','⚒':'equip','🥚':'@egg','🐾':'@egg','🔷':'@skip'};
+  const EMO_ICO = {'💎':'gem','🎖':'medal','🎟':'ticket','🎀':'sktix','🧵':'skinsh','✴':'rsh','💠':'crystal','⚡':'energy','💰':'gold','🏺':'tab_relic','📊':'ic_stats','🎯':'ic_target','🗓':'ic_calendar','📅':'ic_calendar','🗺':'ic_map','🎪':'ic_event','💾':'ic_save','📜':'lore','🧩':'tab_shard','🛒':'shop','🏛':'altar','🎴':'chars','🏪':'shop','⚙':'settings','🎒':'bag','👗':'skin','🔥':'el_fire','💧':'el_water','🌿':'el_wood','🪨':'el_earth','☀':'el_light','🌑':'el_dark','⚒':'equip','🥚':'@egg','🐾':'@egg','🔷':'@skip'};
   const EMO_RE = new RegExp('('+Object.keys(EMO_ICO).filter(k=>EMO_ICO[k]!=='@skip').map(k=>k.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|')+')\uFE0F?','gu');
   function emoSwap(root){ if (!root) return; const tw=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>{ const p=n.parentNode; if (!p||/^(SCRIPT|STYLE|TEXTAREA|OPTION|CANVAS)$/.test(p.nodeName)||p.closest('.noemo')) return NodeFilter.FILTER_REJECT; EMO_RE.lastIndex=0; return EMO_RE.test(n.nodeValue)?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_SKIP; }});
     const list=[]; while (tw.nextNode()) list.push(tw.currentNode);
@@ -3740,7 +3740,7 @@ if (typeof document !== 'undefined') (function(){
     if (on && !shown){ el.innerHTML=tkInner(); el.classList.remove('tkhide'); }
     else if (!on && shown){ el.classList.add('tkhide'); setTimeout(()=>{ if (el.classList.contains('tkhide')) el.innerHTML=''; },450); } },1000);
   /* ---------- 🔔 แจ้งเตือนเกมมีอัปเดต ---------- */
-  const GAME_VER='v3.51'; let updSkip='', updT=0;
+  const GAME_VER='v3.52'; let updSkip='', updT=0;
   function updCheck(){ if (location.protocol==='file:' || document.getElementById('updpop')) return; if (Date.now()-updT<60000) return; updT=Date.now();
     fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{ if (!j||!j.v||j.v===GAME_VER||j.v===updSkip) return; updShow(j); }).catch(()=>{}); }
   function updShow(j){ const inRun=S&&S.phase&&S.phase!=='title'&&!S.over&&!hub, d=document.createElement('div'); d.id='updpop';
@@ -3827,7 +3827,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="pbtns"><button class="choice" data-act="guideopen"><span>📚 ข้อมูลเกม</span><small>ระดับอุปกรณ์ · ธาตุ · อาชีพ · อัตราสุ่ม · โหมดเกม</small></button><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.51<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.52<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
@@ -4520,16 +4520,16 @@ if (typeof document !== 'undefined') (function(){
       else { const t=+b.dataset.t, p=t===3?600:200; if (m.rsh<p){ hubMsg='เศษเรลิกไม่พอ'; render(); return true; } m.rsh-=p; m.relics.push(relicNew(k,t)); hubMsg=`ได้ ${RELIC_DEF[k][0]} (${RT[t].n})`; }
       storeMeta(m); render(); return true; }
     return false; }
-  function hubShop(m){ const T=[['gem','💎','ร้านเพชร'],['shard',uiIco('tab_shard','🧩'),'เศษวีรชน'],['medal',uiIco('medal','🎖️'),'เหรียญตรา'],['skin',uiIco('skin','👗'),'สกิน'],['relic',uiIco('tab_relic','🏺'),'เรลิก'],['pvp',uiIco('tab_pvp','⚔️'),'PvP']];
+  function hubShop(m){ const T=[['gem',uiIco('gemshop','💎'),'ร้านเพชร'],['shard',uiIco('tab_shard','🧩'),'เศษวีรชน'],['medal',uiIco('medal','🎖️'),'เหรียญตรา'],['skin',uiIco('skin','👗'),'สกิน'],['relic',uiIco('tab_relic','🏺'),'เรลิก'],['pvp',uiIco('tab_pvp','⚔️'),'PvP']];
     const tabs=`<div class="gtabs shtabs">${T.map(([k,ic,n])=>`<button class="${shTab===k?'on':''}" data-act="shtab" data-k="${k}"><i>${ic}</i><span>${n}</span></button>`).join('')}</div>`;
     let body='';
     if (shTab==='gem'){ const G=gemDay(m), st=gshopStock(m), rrc=GSHOP_RR(G.rr||0);
       body=`<div class="shopkeeper"><div class="sk-npc"><img class="art" src="art/npc_librarian.webp" alt=""></div><div class="sk-say">"ของเด็ดประจำวัน ใช้ 💎 เพชรแลกได้เลย บางชิ้นลดราคาด้วยนะ"</div></div>
-        <div class="sumbox gembar"><b>💎 ${fmt(m.gem||0)}</b><span class="gs">เปลี่ยนของทุกวันตี 5</span>${(G.rr||0)<3?`<button class="mini" data-act="gsrr">🔄 สุ่มร้านใหม่ · 💎 ${rrc}</button>`:'<small class="gs">สุ่มใหม่ครบ 3 ครั้ง</small>'}</div>
+        <div class="sumbox gembar"><span class="gembig">${uiIco('gempile','💎')}</span><b>${fmt(m.gem||0)}</b><span class="gs">เปลี่ยนของทุกวันตี 5</span>${(G.rr||0)<3?`<button class="mini" data-act="gsrr">${uiIco('reroll','🔄')} สุ่มร้านใหม่ · 💎 ${rrc}</button>`:'<small class="gs">สุ่มใหม่ครบ 3 ครั้ง</small>'}</div>
         <div class="sumbox"><div class="shgrid">${st.map((x,i)=>{ const done=(G.buy||[]).includes(i+'|'+(G.rr||0));
-          return `<div class="shit ${x.off?'gsoff':''} ${done?'sold':''}">${x.off?`<span class="gsdisc">-${x.off}%</span>`:''}<div class="shi gsi">${x.ic}</div><div class="shn">${x.n}</div>
+          return `<div class="shit ${x.off?'gsoff':''} ${done?'sold':''}">${x.off?`<span class="gsdisc">${uiIco('sale','')}-${x.off}%</span>`:''}<div class="shi gsi">${x.ui?uiIco(x.ui,x.ic):x.ic}</div><div class="shn">${x.n}</div>
             ${done?'<span class="tag">ซื้อแล้ว</span>':`<button class="mini ${(m.gem||0)>=x.price?'':'off'}" data-act="gsbuy" data-i="${i}">${x.off?`<s>${x.p}</s> `:''}💎 ${x.price}</button>`}</div>`; }).join('')}</div></div>
-        <div class="sumbox"><h3>💎 หาเพชรได้จาก</h3><div class="csd">หีบออฟไลน์ (30 นาที/เม็ด) · มอนสเตอร์ในเมือง (สูงสุด ${GEM_KILL_CAP}/วัน) · ล็อกอินรายวัน 20 (วันที่ 7 ได้ 50) · ภารกิจรายวัน 15 · รางวัลอันดับ</div></div>`; }
+        <div class="sumbox"><h3>${uiIco('gemchest','💎')} หาเพชรได้จาก</h3><div class="csd">หีบออฟไลน์ (30 นาที/เม็ด) · มอนสเตอร์ในเมือง (สูงสุด ${GEM_KILL_CAP}/วัน) · ล็อกอินรายวัน 20 (วันที่ 7 ได้ 50) · ภารกิจรายวัน 15 · รางวัลอันดับ</div></div>`; }
     else if (shTab==='shard'){ const st=shardStock(), d=dayKey(), bought=(m.shopBuy&&m.shopBuy.d===d)?m.shopBuy.i:[];
       body=`<div class="shopkeeper"><div class="sk-npc"><img class="art" src="art/npc_librarian.webp" alt=""></div><div class="sk-say">"วันนี้มีเศษความทรงจำมาใหม่ 6 ชิ้น รีบเลือกก่อนหมดวันนะ"</div></div>
         <div class="sumbox"><h3>🧩 เศษวีรชนประจำวัน <span class="gs" style="font-size:11px">เปลี่ยนทุกวัน</span></h3><div class="shgrid">${st.map((x,i)=>{ const a=ALLCHARS[x.id], done=bought.includes(i);
@@ -5036,7 +5036,7 @@ if (typeof document !== 'undefined') (function(){
     const slot=i=>{ const id=S0.team[i], hp=htHelpAt(S0,i); return `<button class="dhslot htslot ${hp?'hthelp':''}" data-act="htslot" data-i="${i}">${id?charArt(ALLCHARS[id].c,m.chars[id].form)+`<small>${ALLCHARS[id].c.name.split(' ')[0]}</small>`:hp?charArt(ALLCHARS[hp.id].c,!!hp.f)+`<i class="hthtag">🤝 ยืม</i><small>${ALLCHARS[hp.id].c.name.split(' ')[0]}</small>`:'<span>➕</span><small>ว่าง</small>'}</button>`; };
     const tag=id=>{ const el=ALLCHARS[id].c.el; return els.some(e=>BEATS[el]===e)?'<i class="dhtag g">ชนะทาง</i>':els.some(e=>BEATS[e]===el)?'<i class="dhtag b">แพ้ทาง</i>':''; };
     return `<div class="overlay hub" ${pageBg('adv')}>${hubHead(m,'🏯 หอคอยร้อยชั้น')}
-      <div class="sumbox htenb"><div><b>⚡ สายฟ้า ${S0.en}/${HT_EN_MAX}</b> <small class="gs">${nextIn}</small> ${(()=>{ const G=gemDay(m), left=3-G.en; return left>0?`<button class="mini gemplus" data-act="htenbuy">＋50 · 💎 ${HT_ENBUY[G.en]}</button>`:'<small class="gs">ซื้อครบ 3 ครั้งวันนี้</small>'; })()}</div><div class="gs">★ ${htStarTot(S0)}/${HT_OPEN*3} · ผ่าน ${best}/${HT_MAX}</div></div>
+      <div class="sumbox htenb"><div><b>⚡ สายฟ้า ${S0.en}/${HT_EN_MAX}</b> <small class="gs">${nextIn}</small> ${(()=>{ const G=gemDay(m), left=3-G.en; return left>0?`<button class="mini gemplus" data-act="htenbuy">${uiIco('enpot','⚡')} +50 · 💎 ${HT_ENBUY[G.en]}</button>`:'<small class="gs">ซื้อครบ 3 ครั้งวันนี้</small>'; })()}</div><div class="gs">★ ${htStarTot(S0)}/${HT_OPEN*3} · ผ่าน ${best}/${HT_MAX}</div></div>
       <div class="sumbox"><h3>🗺️ แมพ ${mi+1} · ${htMap(mi*10+1).name}</h3><div class="htmaps">${maps}</div><div class="httiles">${tiles}</div></div>
       <div class="sumbox"><h3>ชั้น ${f} · ${MP.name} ${k!=='n'?`<span class="htkind ${k}">${HT_KIND_TXT[k]}</span>`:''}</h3>
         <div class="htmons">${uniq.map(e=>`<div class="htmon ${e.boss?'boss':''}">${e.src?`<img src="${e.src}" alt="">`:`<span class="htemo">${e.ic||'👾'}</span>`}<small>${elIcon(e.el)} ${e.name}</small></div>`).join('')}</div>
