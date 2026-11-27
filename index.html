@@ -1003,6 +1003,11 @@ h3 img.uiico{height:24px;width:auto;vertical-align:middle}
 .runefx.bad .rfx-txt{color:#ffb0a0}
 .rfx-txt small{display:block;font-size:14px;font-weight:700;color:#f3e9ff;margin-top:4px}
 @keyframes rfxtx{0%,25%{opacity:0;transform:translateY(12px)}40%{opacity:1;transform:none}85%{opacity:1}100%{opacity:0}}
+.seqbox{position:relative;margin:12px 4px 4px;padding:12px 8px 8px;border-radius:16px;background:radial-gradient(ellipse at 50% 40%,rgba(120,90,220,.35),rgba(20,12,40,.3) 70%);border:2px solid rgba(160,130,255,.45)}
+.seqruns{display:flex;justify-content:space-around;gap:8px}.seqr{flex:1;max-width:96px;display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 0 6px;border-radius:14px;background:linear-gradient(#3a2d6a,#221845);border:2px solid #8f7bff;color:#e9e3ff;cursor:pointer}
+.seqr i{font-style:normal;font-size:40px;line-height:1;display:block}.seqr small{font-size:11px}.seqbox.ready .seqr:active{transform:scale(.94);background:linear-gradient(#5a4aa0,#33266a)}
+.seqdots{display:flex;justify-content:center;gap:6px;margin-top:10px;min-height:24px}.seqdots b{font-size:16px;color:#9f93d8;min-width:18px;text-align:center}.seqdots b.on{color:#fff}
+.seqgo{text-align:center;font-weight:800;color:#ffe46b;text-shadow:0 0 8px #ff9b3d,0 2px 2px #000;opacity:0;animation:cupgo .4s var(--seqend) forwards;margin-top:4px}
 .cupbox{position:relative;height:120px;margin:12px 6px 4px;border-radius:16px;background:radial-gradient(ellipse at 50% 85%,rgba(120,70,30,.55),rgba(30,18,40,.2) 70%);border:2px solid rgba(255,209,102,.35)}
 .cupw{position:absolute;bottom:10px;left:0;width:33.333%;height:96px;cursor:pointer}
 .cupb{position:absolute;bottom:0;left:50%;width:66px;height:78px;margin-left:-33px;background:linear-gradient(90deg,#6e2410,#d9622c 42%,#f08a4a 52%,#7a2a12);clip-path:polygon(20% 0,80% 0,100% 100%,0 100%);border-radius:6px;filter:drop-shadow(0 4px 3px rgba(0,0,0,.5));z-index:2}
@@ -1211,7 +1216,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.53</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.54</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -1764,7 +1769,7 @@ const SND = (()=>{ let ctx=null, master, musG, sfxG, duck, revIn, musRev, sfxRev
   function vol(k,v){ set[k]=v; try{ localStorage.setItem('dq_snd',JSON.stringify(set)); }catch(e){} if (ctx){ musG.gain.value=set.mus*0.55; sfxG.gain.value=set.sfx; } }
   if (typeof document!=='undefined') document.addEventListener('pointerdown',()=>init(),{capture:true});
   if (typeof document!=='undefined') document.addEventListener('visibilitychange',()=>{ if (!ctx) return; if (document.hidden) ctx.suspend(); else ctx.resume(); });
-  return {sfx, music, vol, set, init, blip, _song:songOf, _render:renderOff};
+  return {sfx, music, vol, set, init, blip, _song:songOf, _render:renderOff, note:(m)=>{ if (!ctx||set.sfx<=0) return; try{ const t=ctx.currentTime+0.01; tone(hz(m),t,0.4,'triangle',0.13,sfxG); tone(hz(m+12),t,0.25,'sine',0.05,sfxG); }catch(e){} }};
 
 })();
 /* 🔗 เอฟเฟกต์ติดคอมโบ (ใช้ทุกโหมด): ตัวหนังสือใหญ่ + วงแสง + จอสั่น */
@@ -2340,6 +2345,21 @@ function fishPos(e){ const t=((typeof performance!=='undefined'?performance.now(
 function fishEv(q,title,icon,text,dur,zw,after,leave){ const z0=8+Math.floor(rng()*(84-zw)), e={title,icon,text:text+'\n<small class="gs">🎣 แตะ "ดึงเบ็ด!" ตอนเข็มอยู่ในช่องสีเขียว</small>', mini:'fish', dur, z0, zw};
   e.choices=[{label:'🎣 ดึงเบ็ด!', wide:true, fn:()=>{ const x=e.t0?fishPos(e):z0+zw/2*(rng()<0.5?1:3), c=z0+zw/2, d=Math.abs(x-c); after(d<=zw/2?'perfect':d<=zw/2+10?'near':'miss'); }},
     {label:'ไม่ตกปลา เดินต่อ', alt:true, fn:()=>leave?leave():qEnd('ชายแก่โบกมือลา "ไว้มาใหม่นะ"')}]; return e; }
+/* มินิเกมจำลำดับอักขระ: อักขระสว่างทีละตัว → กดตามลำดับ (ใช้กับประตูอักขระเวท / ห้องอักขระ) */
+const SEQ_RUNES=[['🔺','สามเหลี่ยม',64],['🔵','วงกลม',68],['🟪','สี่เหลี่ยม',71]];
+function seqEv(type,title,icon,text,after,leave){ const len=Math.min(7,3+Math.floor(S.floor/80)), d=Math.max(0.42,0.72-S.floor/1500), seq=[]; for (let i=0;i<len;i++){ let r=Math.floor(rng()*3); if (i>=2&&r===seq[i-1]&&r===seq[i-2]) r=(r+1)%3; seq.push(r); }
+  const L0=0.8, T=L0+len*d+0.2, id='sq'+Math.floor(rng()*1e9), P=t=>(t/T*100).toFixed(2), t0=(typeof performance!=='undefined'?performance.now():0);
+  const css=[0,1,2].map(r=>{ const k=[`0%{filter:none;transform:scale(1)}`]; seq.forEach((x,i)=>{ if (x!==r) return; const a=L0+i*d, b=a+d*0.62; k.push(`${P(a-0.01)}%{filter:none;transform:scale(1)}`,`${P(a)}%{filter:brightness(2.2) drop-shadow(0 0 14px #fff);transform:scale(1.25)}`,`${P(b)}%{filter:brightness(2.2) drop-shadow(0 0 14px #fff);transform:scale(1.25)}`,`${P(b+0.01)}%{filter:none;transform:scale(1)}`); }); k.push('100%{filter:none;transform:scale(1)}'); return `@keyframes ${id}r${r}{${k.join('')}}`; }).join('');
+  if (typeof setTimeout!=='undefined') seq.forEach((x,i)=>setTimeout(()=>{ try{ SND.note(SEQ_RUNES[x][2]); }catch(e){} },(L0+i*d)*1000));
+  const e={type, title, icon, mini:'seq', seq:{s:seq, inp:[], css, T, id, t0, end:t0+T*1000}, text:text+`\n<small class="gs">👀 จำลำดับอักขระที่สว่างขึ้น (${len} ตัว) แล้วกดตามให้ครบ</small>`};
+  const fin=r=>{ e.seq.done=true; after(r, seq.map(x=>SEQ_RUNES[x][0]).join(' ')); };
+  e.choices=[0,1,2].map(r=>({label:'อักขระ', hide:true, fn:()=>{ const Q=e.seq, now=(typeof performance!=='undefined'?performance.now():Infinity); if (now<Q.end||Q.done) return;
+      try{ SND.note(SEQ_RUNES[r][2]); }catch(err){}
+      const i=Q.inp.length; Q.inp.push(r);
+      if (r!==Q.s[i]) return fin(i===Q.s.length-1?'near':'miss');
+      if (Q.inp.length===Q.s.length) return fin('perfect'); }}))
+    .concat([{label:leave?'ไม่แตะ เดินผ่าน':'ยอมแพ้', alt:true, fn:()=>leave?leave():fin('miss')}]);
+  return e; }
 /* มินิเกมถ้วยสามใบ: โชว์ลูกแก้ว → สลับถ้วยมีแอนิเมชัน → แตะถ้วยที่คิดว่ามีลูกแก้ว (ตาไวชนะ) */
 function cupsEv(q,bet){ const n=Math.min(11,5+Math.floor(S.floor/50)), d=Math.max(0.24,0.52-S.floor/1400), ball=Math.floor(rng()*3), R0=1.7, T=R0+n*d+0.15, id='cg'+Math.floor(rng()*1e9);
   const pos=[0,1,2], fr=[[],[],[]], P=t=>(t/T*100).toFixed(2), add=(c,t,y)=>fr[c].push(`${P(t)}%{left:${(pos[c]*33.333).toFixed(2)}%;transform:translateY(${y||0}px)}`);
@@ -2405,7 +2425,7 @@ const QUESTS = {
         return {title:'📜 นักต้มตุ๋นถ้วยสามใบ (2/2)', icon:'🎩', text:'ชายหมวกสูงพาลูกน้องมาดักรอ "เอาทองข้าคืนมา!"', choices:[
           {label:'สู้!', fn:()=>{ S.q=null; S.qCool=S.floor+15; S.qDone=(S.qDone||[]).concat('cups'); fight([m], ()=>{ const v=gainGold(base2(F)*4); return `ไล่พวกนักต้มตุ๋นไปได้ ยึดทองมาอีก ${fmt(v)}`; }); }},
           {label:'คืนทองครึ่งหนึ่ง', sub:`เสีย ${fmt(Math.floor(S.gold/2))} ทอง`, alt:true, fn:()=>{ S.gold-=Math.floor(S.gold/2); qEnd('นักต้มตุ๋นรับทองแล้วหายตัวไป','bad'); }}]}; }
-      return {title:'📜 นักต้มตุ๋นถ้วยสามใบ (2/2)', icon:'🎩', text:'ชายหมวกสูงคนเดิมถอดหมวกคำนับ "ท่านเป็นคนดี ข้าจะให้คำทำนายฟรี"', choices:
+      return {title:'📜 นักต้มตุ๋นถ้วยสามใบ (2/2)', icon:'🎩', text:q.flag==='lost'?'ชายหมวกสูงคนเดิมยิ้มกริ่ม "ขอบใจสำหรับทองคราวก่อน ข้าใจดี ขอแถมคำทำนายให้ฟรี ๆ"':'ชายหมวกสูงคนเดิมถอดหมวกคำนับ "ท่านไม่โลภเข้าบ่อนของข้า เป็นคนรอบคอบ ข้าจะให้คำทำนายฟรี"', choices:
         (()=>{ const all=trainOptions(F,2), lk=all.filter(o=>/คริ|เจาะ/.test(o.label)); return lk.concat(all.filter(o=>!lk.includes(o))).slice(0,2); })().map(o=>({label:`🔮 ${o.label}`, sub:'คำทำนายแห่งโชค', fn:()=>{ applyTrain(o); qEnd(`ได้รับคำทำนาย ${o.label}`); }}))}; }]},
   sphinx:{name:'ปริศนาสฟิงซ์', steps:[0,1].map(n=>q=>{ if (!q.rd) q.rd=shuffle(RIDDLES.map((_,i)=>i)).slice(0,2); const R=RIDDLES[q.rd[n]], wrong=shuffle(RIDDLES.filter(x=>x[1]!==R[1]).map(x=>x[1])).slice(0,2), opts=shuffle([R[1],...wrong]);
     return {title:`📜 ปริศนาสฟิงซ์ (${n+1}/2)`, icon:'🦁', text:`${n?'สฟิงซ์ตัวเดิมปรากฏขวางทางอีกครั้ง':'สฟิงซ์ตัวใหญ่นอนขวางประตู ดวงตาเป็นประกาย'} "ตอบปริศนาของข้าให้ถูก แล้วจะได้รางวัล ถ้าผิด… เจ็บตัว!"\n\n❓ <b>${R[0]}</b>`, choices: opts.map(o=>({label:o, fn:()=>{
@@ -2414,7 +2434,8 @@ const QUESTS = {
       const a=trainOptions(S.floor,3); applyTrain(a[0]); applyTrain(a[1]); const b=gainBook(1); qEnd(`ถูกทั้ง 2 ข้อ! สฟิงซ์มอบพร ${a[0].label}, ${a[1].label} และตำราสกิล`); }}))}; })},
   alchemist:{name:'นักปรุงยาเพี้ยน', steps:[
     q=>{ if (!q.mix) q.mix=shuffle(['good','heal','bad']); const C=[['🔴','แดง'],['🔵','ฟ้า'],['🟢','เขียว']];
-      return {title:'📜 นักปรุงยาเพี้ยน (1/2)', icon:'🧪', text:'นักปรุงยาผมฟูยื่นขวดยาสามสีมาให้ "ช่วยทดลองยาหน่อย! ข้าก็จำไม่ได้ว่าขวดไหนเป็นอะไร ฮ่า ๆ"', choices:[
+      const look={good:'เดือดปุด ๆ มีฟองระยิบ',heal:'นิ่งสนิท ส่งกลิ่นสมุนไพรหอมเย็น',bad:'เดือดปุด ๆ มีฟองระยิบ'};
+      return {title:'📜 นักปรุงยาเพี้ยน (1/2)', icon:'🧪', text:`นักปรุงยาผมฟูยื่นขวดยาสามสีมาให้ "ช่วยทดลองยาหน่อย! มียาพลัง ยาฟื้นฟู กับยาพิษอย่างละขวด ยาฟื้นฟูของข้าไม่มีฟองหรอก แต่อีกสองขวดข้าจำไม่ได้ ฮ่า ๆ"\n${C.map(([ic,n],i)=>`• ${ic} ขวดสี${n}: ${look[q.mix[i]]}`).join('\n')}`, choices:[
         ...C.map(([ic,n],i)=>({label:`${ic} ดื่มขวดสี${n}`, fn:()=>{ const t=q.mix[i]; q.tried=i;
           if (t==='good'){ S.mods.atk+=5; qNext(`💪 พลังพุ่งพล่าน! ทีม ATK/MATK +5% ตลอดรอบ (จำไว้ว่าสี${n}ดี!)`); }
           else if (t==='heal'){ heal(0.35); healMates(0.35); qNext(`💚 สดชื่น! ทีมฟื้น HP 35% (สี${n}คือยาฟื้นฟู)`); }
@@ -2534,9 +2555,10 @@ function routeEvent(F){ const R=routeOf(), k=pick(R.ev), ev=(title,icon,text,cho
         {label:'🔥 ใช้ไฟละลาย', sub:'เสีย HP 15%', fn:()=>{ S.hp=Math.max(1,S.hp-stats().maxhp*0.15); const o=pick(trainOptions(F,2)); applyTrain(o); done(`นักผจญภัยรอดชีวิต! สอนเคล็ดวิชาให้ ${o.label}`,'good'); }},
         {label:'💰 จ้างคนมาช่วย', sub:`${fmt(c)} ทอง`, disabled:S.gold<c, fn:()=>{ S.gold-=c; healMates(0.5); runeGain(1); done('นักผจญภัยมอบรูนให้เป็นการตอบแทน และช่วยรักษาเพื่อน','good'); }},
         {label:'เดินผ่าน', alt:true, fn:()=>done('ลมหนาวพัดผ่าน…')}]); }
-    case 'magicDoor': { const ok=Math.floor(rng()*3), R=[['🔺','สามเหลี่ยม'],['🔵','วงกลม'],['🟪','สี่เหลี่ยม']], hint=rng()<0.6?ok:Math.floor(rng()*3);
-      return ev('ประตูอักขระเวท','🚪',`ประตูหินสลักอักขระสามแบบ ต้องกดให้ถูกอันเดียว\n📜 จารึกเลือนราง: "…ผู้ใดเลือก<b>${R[hint][1]}</b>…" (จารึกอาจถูกบิดเบือน)`,
-        R.map(([ic,n],i)=>({label:`${ic} กดอักขระ${n}`, fn:()=>{ if (i===ok){ S.mods.atk+=3; runeGain(1); done('ประตูเปิดออก! ได้รูนและพลังเวท ATK/MATK +3%','good'); } else { S.hp=Math.max(1,S.hp-stats().maxhp*0.12); done('อักขระระเบิด! HP -12%','bad'); } }})).concat([{label:'ไม่แตะประตู', alt:true, fn:()=>done('เดินอ้อมไปทางอื่น')}])); }
+    case 'magicDoor': return seqEv('route','ประตูอักขระเวท','🚪','ประตูหินสลักอักขระสามแบบ อักขระจะสว่างขึ้นเป็นลำดับ ต้องกดซ้ำให้ถูกลำดับประตูจึงจะเปิด',
+      (r,ans)=>{ if (r==='perfect'){ S.mods.atk+=3; runeGain(1); done('ประตูเปิดออก! ได้รูนและพลังเวท ATK/MATK +3%','good'); }
+        else if (r==='near'){ S.mods.atk+=1; done(`เกือบแล้ว! พลาดแค่ตัวสุดท้าย (ลำดับคือ ${ans}) ประตูแง้มให้พลังเล็กน้อย ATK/MATK +1%`,'good'); }
+        else { S.hp=Math.max(1,S.hp-stats().maxhp*0.12); done(`อักขระระเบิด! HP -12% (ลำดับที่ถูกคือ ${ans})`,'bad'); } }, ()=>done('เดินอ้อมไปทางอื่น'));
     case 'genie': return ev('ตะเกียงวิเศษ','🧞','จินนี่ปรากฏตัว "ข้าให้พรเจ้า 1 ข้อ… แต่ทุกพรมีราคา ฮ่า ๆ"',[
         {label:'💰 ขอความร่ำรวย', sub:'ทองจำนวนมาก · แต่ทองรั่ว 8 ชั้น', fn:()=>{ const v=gainGold(b2*10); S.goldCurse=Math.max(S.goldCurse||0,8); done(`ได้ทอง ${fmt(v)}! แต่กระเป๋ารั่ว 8 ชั้น`,'good'); }},
         {label:'💪 ขอพลัง', sub:'ATK/MATK +8% · แต่ DEF -4%', fn:()=>{ S.mods.atk+=8; S.mods.def-=4; done('พลังพุ่งพล่าน! ATK/MATK +8% แต่ร่างกายเปราะลง DEF -4%','good'); }},
@@ -2556,7 +2578,10 @@ function rqFinal(F){ const M=MAINQ[S.route]; const t=M.reward(F); try{ const mm=
 const MAINQ = {
   caravan:{name:'กองคาราวานทองคำ', slot:'acc', steps:[
     F=>rqEv(1,'เสียงร้องขอ','🐫','หัวหน้ากองคาราวานวิ่งมาหา "โจรทะเลทรายปล้นขบวนของข้า! ช่วยตามสินค้าคืนด้วย ข้าจะตอบแทนอย่างงาม"',[{label:'รับปาก!', fn:()=>rqAdv('รับภารกิจตามสินค้าคืน หัวหน้าคาราวานมอบแผนที่ให้')},{label:'ขอค่าจ้างล่วงหน้า', sub:`ได้ทอง ${fmt(Math.round(base2(F)*2))}`, alt:true, fn:()=>{ S.gold+=Math.round(base2(F)*2); rqAdv('รับเงินมัดจำแล้วออกตามรอยโจร'); }}]),
-    F=>rqEv(2,'รอยเท้าบนผืนทราย','👣','รอยเท้าแยกเป็นสามทาง บนพื้นมีเหรียญทองตกอยู่ทางหนึ่ง…',[...['ซ้าย','กลาง','ขวา'].map((d,i)=>({label:`ตามทาง${d}`, fn:()=>{ if (rng()<0.5){ rqAdv(`ทาง${d}ถูกต้อง! เจอค่ายโจรอยู่ข้างหน้า`); } else { S.hp=Math.max(1,S.hp-stats().maxhp*0.1); rqAdv(`ทาง${d}มีกับดักทราย HP -10% แต่ก็ยังตามรอยจนเจอค่ายโจร`,'bad'); } }}))]),
+    F=>{ const tr=shuffle([['ok','รอยเท้าลึกหลายคู่ เหมือนคนแบกของหนัก มีเหรียญทองหล่นเป็นระยะ'],['camel','รอยกีบอูฐเดินเป็นแถวเรียบร้อย ไม่มีรอยคน'],['fake','รอยเท้าคู่เดียวตื้น ๆ เดินวนไปวนมา มีเหรียญทองวางไว้เหรียญเดียวกลางทาง']]), D=['ซ้าย','กลาง','ขวา'];
+      return rqEv(2,'รอยเท้าบนผืนทราย','👣',`รอยเท้าแยกเป็นสามทาง โจรขนสินค้าของคาราวานไปทางไหนนะ?\n${tr.map((t,i)=>`• ทาง${D[i]}: ${t[1]}`).join('\n')}`, tr.map((t,i)=>({label:`ตามทาง${D[i]}`, fn:()=>{
+        if (t[0]==='ok'){ healMates(0.15); rqAdv(`ทาง${D[i]}ถูกต้อง! รอยเท้าของโจรที่แบกของหนักพาไปถึงค่ายโจรโดยไม่เสียแรง`); }
+        else { S.hp=Math.max(1,S.hp-stats().maxhp*0.1); rqAdv(t[0]==='fake'?`ทาง${D[i]}เป็นกับดักล่อ! เหรียญทองเป็นเหยื่อ ทรายดูด HP -10% กว่าจะตามรอยจนเจอค่ายโจร`:`ทาง${D[i]}เป็นแค่รอยอูฐ หลงกลางทะเลทราย HP -10% กว่าจะวกกลับมาเจอค่ายโจร`,'bad'); } }}))); },
     F=>rqEv(3,'ค่ายโจร','⛺','ลูกน้องโจรเฝ้ายามอยู่หน้าค่าย',[{label:'⚔️ บุกตรงๆ', fn:()=>rqFight([rqMon(F,'ลูกน้องนักต้มตุ๋น','🥷',1.6,1.1),rqMon(F,'ลูกน้องนักต้มตุ๋น','🥷',1.6,1.1)], ()=>'ฝ่าด่านยามเข้าไปได้!')},{label:'💰 ติดสินบนยาม', sub:`${fmt(Math.round(base2(F)*4))} ทอง`, disabled:S.gold<Math.round(base2(F)*4), fn:()=>{ S.gold-=Math.round(base2(F)*4); rqAdv('ยามรับเงินแล้วแกล้งหลับ'); }}]),
     F=>rqEv(4,'หัวหน้าโจรทะเลทราย','🏜️','หัวหน้าโจรนั่งบนกองสมบัติ "กล้าดียังไงบุกมาถึงนี่!"',[{label:'⚔️ สู้!', fn:()=>rqFight([rqMon(F,'หัวหน้าโจรทะเลทราย','🗡️',3,1.25,'earth')], ()=>{ const v=gainGold(base2(F)*5); return `ปราบหัวหน้าโจรได้! ได้ทอง ${fmt(v)} แต่สินค้าชิ้นสำคัญถูกจอมโจรตัวจริงชิงไป`; })}]),
     F=>rqEv(5,'จอมโจรเงาทอง','👤','ชายสวมหน้ากากทองปรากฏ "สินค้านี้ของข้าแล้ว!" — เขาคือผู้บงการตัวจริง',[{label:'⚔️ ศึกตัดสิน!', fn:()=>rqFight([rqMon(F,'จอมโจรเงาทอง','👤',4.2,1.4,'dark')], ()=>rqFinal(F))}]),
@@ -2571,14 +2596,17 @@ const MAINQ = {
   cursed:{name:'มงกุฎต้องสาป', slot:'weapon', steps:[
     F=>rqEv(1,'เสียงกระซิบ','👑','มงกุฎดำลอยอยู่กลางอากาศ "สวมข้า… แล้วเจ้าจะได้พลัง…" มงกุฎพยายามสิงคุณ!',[{label:'ต่อต้านมัน', fn:()=>rqAdv('คุณสะบัดคำสาปออก มงกุฎหายไปในความมืด ต้องตามไปทำลายมัน')},{label:'แตะมงกุฎ', sub:'ได้ ATK +5% แต่โดนคำสาป', alt:true, fn:()=>{ S.mods.atk+=5; const c=applyCurse(); rqAdv(`พลังไหลเข้า ATK/MATK +5% แต่ ${c}`,'bad'); }}]),
     F=>rqEv(2,'แม่มดคำสาป','🧙‍♀️','แม่มดหัวเราะ "อยากทำลายมงกุฎ? ต้องผ่านข้าก่อน!"',[{label:'⚔️ สู้', fn:()=>rqFight([rqMon(F,'แม่มดคำสาป','🧙‍♀️',2.6,1.2,'dark')], ()=>'แม่มดสลายไป ทิ้งแผนที่สุสานไว้')}]),
-    F=>{ const a=shuffle(['good','bad','bad']); S.rq.tomb=a; return rqEv(3,'สุสานสามโลง','⚰️','มีโลงศพ 3 ใบ ใบหนึ่งซ่อนกุญแจสุสาน อีกสองใบมีวิญญาณร้าย',a.map((t,i)=>({label:`⚰️ เปิดโลงที่ ${i+1}`, fn:()=>{ if (t==='good') rqAdv('เจอกุญแจสุสาน!'); else { S.hp=Math.max(1,S.hp-stats().maxhp*0.18); rqAdv('วิญญาณร้ายพุ่งออกมา HP -18% แต่ระหว่างหนีก็เจอกุญแจตกอยู่','bad'); } }}))); },
+    F=>{ const a=shuffle([['good','ฝาปิดสนิท ฝุ่นจับหนาไม่มีใครแตะมานาน มีตรามงกุฎประทับ'],['bad','ฝาเผยอเล็กน้อย มีรอยข่วนลึกจากด้านใน'],['bad','ฝุ่นหนาเหมือนกัน แต่มีไอเย็นสีม่วงรั่วออกมาและได้ยินเสียงหายใจเบา ๆ']]);
+      return rqEv(3,'สุสานสามโลง','⚰️',`มีโลงศพ 3 ใบ ใบหนึ่งซ่อนกุญแจสุสาน อีกสองใบมีวิญญาณร้ายที่ตื่นอยู่\n${a.map((t,i)=>`• โลงที่ ${i+1}: ${t[1]}`).join('\n')}`, a.map((t,i)=>({label:`⚰️ เปิดโลงที่ ${i+1}`, fn:()=>{ if (t[0]==='good') rqAdv('โลงเงียบสนิทจริง ๆ เจอกุญแจสุสาน!'); else { S.hp=Math.max(1,S.hp-stats().maxhp*0.18); rqAdv('วิญญาณร้ายพุ่งออกมา HP -18% แต่ระหว่างหนีก็เจอกุญแจตกอยู่','bad'); } }}))); },
     F=>rqEv(4,'ราชองครักษ์','🛡️','อัศวินโครงกระดูกยืนเฝ้าประตูห้องบัลลังก์',[{label:'⚔️ ฝ่าเข้าไป', fn:()=>rqFight([rqMon(F,'อัศวินโครงกระดูก','💀',2,1.15),rqMon(F,'อัศวินโครงกระดูก','💀',2,1.15)], ()=>'ประตูห้องบัลลังก์เปิดออก…')}]),
     F=>rqEv(5,'อัศวินมงกุฎดำ','👑','ผู้ที่สวมมงกุฎลุกจากบัลลังก์ ดวงตาลุกโชนสีแดง',[{label:'⚔️ ทำลายมงกุฎ!', fn:()=>rqFight([rqMon(F,'อัศวินมงกุฎดำ','👑',4.5,1.45,'dark')], ()=>rqFinal(F))}]),
   ], reward:F=>{ S.poison=0; S.goldCurse=0; ['atk','def','cri'].forEach(k=>{ if (S.mods[k]<0) S.mods[k]=0; }); S.mods.atk+=12; return 'มงกุฎแตกสลาย! คำสาปลดพลังหายหมด ATK/MATK +12% ตลอดรอบ และอาวุธตำนาน!'; }},
   wild:{name:'เขากวางเงินพันปี', slot:'boots', steps:[
     F=>rqEv(1,'ป่าที่ป่วยไข้','🍂','ต้นไม้เหี่ยวเฉา ภูตป่าตัวน้อยร้องไห้ "ราชันย์ภูตไม้ถูกความมืดครอบงำ ช่วยด้วย!"',[{label:'ช่วยภูตป่า', fn:()=>rqAdv('ภูตป่าน้อยนำทางเข้าป่าลึก')}]),
     F=>rqEv(2,'หมาป่าเงาจันทร์','🐺','ฝูงหมาป่าตาแดงล้อมไว้',[{label:'⚔️ สู้', fn:()=>rqFight([rqMon(F,'หมาป่าเงาจันทร์','🐺',1.8,1.15),rqMon(F,'หมาป่าเงาจันทร์','🐺',1.8,1.15)], ()=>'ฝูงหมาป่าแตกหนี')},{label:'🍖 โยนเนื้อล่อ', sub:'เสีย HP 10%', alt:true, fn:()=>{ S.hp=Math.max(1,S.hp-stats().maxhp*0.1); rqAdv('หมาป่าวิ่งตามเนื้อไป รีบผ่านไปได้'); }}]),
-    F=>rqEv(3,'น้ำค้างแห่งชีวิต','💧','ต้องเก็บน้ำค้างจากดอกไม้วิเศษ แต่ดอกไหนล่ะ?',['🌹','🌻','🌷'].map((f,i)=>({label:`${f} เก็บจากดอกนี้`, fn:()=>{ if (rng()<0.55){ healMates(0.4); rqAdv('ได้น้ำค้างแห่งชีวิต! เพื่อนร่วมทีมสดชื่นขึ้น'); } else { S.poison=Math.max(S.poison,5); rqAdv('ดอกมีพิษ! ติดพิษ 5 ชั้น แต่ก็เก็บน้ำค้างได้สำเร็จ','bad'); } }}))),
+    F=>{ const fl=shuffle([['ok','🌷','กลีบสดใส มีผีเสื้อเกาะดูดน้ำค้างอยู่หลายตัว'],['bad','🌹','กลีบแดงสด หยดน้ำค้างสีดำ รอบโคนมีแมลงตายเกลื่อน'],['bad','🌻','ใบเหี่ยว มีจุดสีม่วงแบบเดียวกับต้นไม้ที่ป่วย']]);
+      return rqEv(3,'น้ำค้างแห่งชีวิต','💧',`ต้องเก็บน้ำค้างจากดอกไม้วิเศษ ภูตป่ากระซิบว่า "ความป่วยไข้กำลังลามไปถึงดอกไม้บางดอก"\n${fl.map(f=>`• ${f[1]} ${f[2]}`).join('\n')}`, fl.map(f=>({label:`${f[1]} เก็บจากดอกนี้`, fn:()=>{
+        if (f[0]==='ok'){ healMates(0.4); rqAdv('ได้น้ำค้างแห่งชีวิต! เพื่อนร่วมทีมสดชื่นขึ้น'); } else { S.poison=Math.max(S.poison,5); rqAdv('ดอกนี้ติดความป่วยไข้! ติดพิษ 5 ชั้น แต่ก็เก็บน้ำค้างได้สำเร็จ','bad'); } }}))); },
     F=>rqEv(4,'ราชาก็อบลินป่า','👺','ราชาก็อบลินตัดต้นไม้ศักดิ์สิทธิ์อยู่!',[{label:'⚔️ หยุดมัน!', fn:()=>rqFight([rqMon(F,'ราชาก็อบลินป่า','👺',3,1.25,'wood')], ()=>'ราชาก็อบลินหนีไป ต้นไม้ศักดิ์สิทธิ์รอดแล้ว')}]),
     F=>rqEv(5,'ราชันย์ภูตไม้','🌳','ราชันย์ภูตไม้ที่ถูกความมืดครอบงำ คำรามจนป่าสั่น',[{label:'⚔️ ปลดปล่อยราชันย์!', fn:()=>rqFight([rqMon(F,'ราชันย์ภูตไม้','🌳',4.4,1.35,'wood')], ()=>rqFinal(F))}]),
   ], reward:F=>{ healMates(1); S.mods.atk+=6; S.mods.def+=6; return 'ราชันย์ภูตไม้ฟื้นคืนสติ มอบเขากวางเงินพันปี! ทีม ATK/MATK +6% DEF +6% ตลอดรอบ และรองเท้าตำนาน!'; }},
@@ -2599,7 +2627,8 @@ const MAINQ = {
   arcane:{name:'คทาจักรวาล', slot:'acc', steps:[
     F=>rqEv(1,'จอมเวทหลงยุค','🧙','จอมเวทชราพูดพึมพำ "คทาจักรวาลแตกเป็นสี่ชิ้น ถ้าตกถึงมือผิดคน หอคอยจะพังทลาย!"',[{label:'ช่วยรวบรวม', fn:()=>rqAdv('จอมเวทมอบเข็มทิศเวทให้')}]),
     F=>rqEv(2,'ภูตเวทคลั่ง','👹','ภูตเวทกินพลังเศษคทาจนคลั่ง',[{label:'⚔️ สู้', fn:()=>rqFight([rqMon(F,'ภูตเวทคลั่ง','👹',2.4,1.2,'fire')], ()=>'ได้เศษคทาชิ้นที่ 1 และ 2!')}]),
-    F=>{ const ok=Math.floor(rng()*3), R=[['🔺','สามเหลี่ยม'],['🔵','วงกลม'],['🟪','สี่เหลี่ยม']]; return rqEv(3,'ห้องอักขระ','🔣',`ผนังสลักอักขระ 3 แบบ เข็มทิศเวทสั่นแรงที่สุดตอนชี้ไปทาง<b>${R[rng()<0.75?ok:Math.floor(rng()*3)][1]}</b>`,R.map(([ic,n],i)=>({label:`${ic} ${n}`, fn:()=>{ if (i===ok) rqAdv('อักขระเปล่งแสง! ได้เศษคทาชิ้นที่ 3'); else { S.hp=Math.max(1,S.hp-stats().maxhp*0.15); rqAdv('อักขระระเบิด HP -15% แต่เศษคทาก็หลุดออกมา','bad'); } }}))); },
+    F=>{ const M=MAINQ[S.route]; return seqEv('mainq',`👑 ${M.name} (3/5) · ห้องอักขระ`,'🔣','ผนังสลักอักขระ 3 แบบ เศษคทาชิ้นที่ 3 ถูกผนึกไว้ อักขระจะสว่างเป็นลำดับ กดตามให้ถูกเพื่อคลายผนึก',
+      (r,ans)=>{ if (r==='perfect') rqAdv('อักขระเปล่งแสงพร้อมกัน! ผนึกคลายออก ได้เศษคทาชิ้นที่ 3'); else if (r==='near'){ S.hp=Math.max(1,S.hp-stats().maxhp*0.05); rqAdv(`พลาดตัวสุดท้าย (ลำดับคือ ${ans}) ผนึกสะท้อนเบา ๆ HP -5% แต่เศษคทาก็หลุดออกมา`,'bad'); } else { S.hp=Math.max(1,S.hp-stats().maxhp*0.15); rqAdv(`อักขระระเบิด HP -15% (ลำดับคือ ${ans}) แต่เศษคทาก็หลุดออกมา`,'bad'); } }); },
     F=>rqEv(4,'ดวงตาจักรวาล','👁️','ดวงตายักษ์ลอยอยู่ ห่อหุ้มเศษชิ้นสุดท้ายไว้',[{label:'⚔️ สู้', fn:()=>rqFight([rqMon(F,'ดวงตาจักรวาล','👁️',3.2,1.25,'dark')], ()=>'ได้เศษคทาครบ 4 ชิ้น!')}]),
     F=>rqEv(5,'การทรยศ','🧙','จอมเวทหลงยุคเผยโฉมจริง "ขอบใจที่หามาให้ คทานี้เป็นของข้าแล้ว!"',[{label:'⚔️ ชิงคทาคืน!', fn:()=>rqFight([rqMon(F,'จอมเวทหลงยุค','🧙',4.4,1.45,'dark')], ()=>rqFinal(F))}]),
   ], reward:F=>{ S.mods.atk+=10; let t=''; if (S.passives.length<4){ const free=Object.keys(PASSIVES).filter(k=>!S.passives.includes(k)); if (free.length){ const k=pick(free); S.passives.push(k); if (k==='vital') S.hp*=1.12; t=` ได้สกิลติดตัว ${PASSIVES[k].name}`; } } return `คทาจักรวาลเรืองแสง! ATK/MATK +10% ตลอดรอบ${t} และเครื่องประดับตำนาน!`; }},
@@ -3511,7 +3540,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.53</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.54</span>'}</div>`;
   }
   let runSet=false, runQuit=false;
   function runPop(){
@@ -3559,7 +3588,9 @@ if (typeof document !== 'undefined') (function(){
       <div class="choices battle-tools"><button class="choice alt" data-act="speed"><span>ความเร็ว x${speed}</span></button><button class="choice" data-act="skip"><span>ข้าม ⏭</span></button></div><div class="scroll-hint">▼ เลื่อนลงดูข้อมูลวีรชน</div></div>`;
     if (S.phase==='event' && S.ev){
       const e = S.ev;
-      return `<div class="event">${autoMsg?`<div class="automsg">${autoMsg}</div>`:''}<div class="ev-title"><span>${e.icon}</span>${e.title}</div><div class="ev-text">${e.text}</div>${e.mini==='cups'?(()=>{ const C=e.cups, el=Math.max(0,(performance.now()-C.t0)/1000).toFixed(2), ready=performance.now()>=C.end;
+      return `<div class="event">${autoMsg?`<div class="automsg">${autoMsg}</div>`:''}<div class="ev-title"><span>${e.icon}</span>${e.title}</div><div class="ev-text">${e.text}</div>${e.mini==='seq'?(()=>{ const Q=e.seq, el=Math.max(0,(performance.now()-Q.t0)/1000).toFixed(2), ready=performance.now()>=Q.end;
+          return `<style>${Q.css}</style><div class="seqbox ${ready?'ready':''}" style="--seqend:${Math.max(0,(Q.end-performance.now())/1000).toFixed(2)}s"><div class="seqruns">${SEQ_RUNES.map(([ic,n],r)=>`<button class="seqr" data-act="choose" data-i="${r}"><i style="animation:${Q.id}r${r} ${Q.T}s linear -${el}s forwards">${ic}</i><small>${n}</small></button>`).join('')}</div>
+            <div class="seqdots">${Q.s.map((x,i)=>`<b class="${i<Q.inp.length?'on':''}">${i<Q.inp.length?SEQ_RUNES[Q.inp[i]][0]:'•'}</b>`).join('')}</div><div class="seqgo">ถึงตาคุณแล้ว! กดตามลำดับ</div></div>`; })():''}${e.mini==='cups'?(()=>{ const C=e.cups, el=Math.max(0,(performance.now()-C.t0)/1000).toFixed(2), ready=performance.now()>=C.end;
           return `<style>${C.css}</style><div class="cupbox ${ready?'ready':''}" style="--cupend:${Math.max(0,(C.end-performance.now())/1000).toFixed(2)}s">${[0,1,2].map(c=>`<div class="cupw" data-act="choose" data-i="${c}" style="animation:${C.id}c${c} ${C.T}s linear -${el}s forwards">${c===C.ball?'<i class="cball"></i>':''}<div class="cupb ${c===C.ball?'lift':''}" style="animation-delay:-${el}s"></div></div>`).join('')}<div class="cupgo">แตะเลือกถ้วย!</div></div>`; })():''}${e.mini==='fish'?(()=>{ if (!e.t0) e.t0=performance.now(); return `<div class="fishbar"><div class="fz" style="left:${e.z0}%;width:${e.zw}%"></div><div class="fneedle" style="animation-duration:${e.dur}s;animation-delay:-${((performance.now()-e.t0)/1000).toFixed(2)}s"></div></div>`; })():''}
         <div class="choices ${e.grid?'grid':''}">${e.choices.map((c,i)=>c.hide?'':`<button class="choice ${c.alt&&!c.enh?'alt':''} ${c.enh?'enhbtn':''} ${c.wide?'wide':''}" data-act="choose" data-i="${i}" ${c.disabled?'disabled':''}><span>${c.label}</span>${c.sub?`<small>${c.sub}</small>`:''}</button>`).join('')}</div><div class="scroll-hint">▼ เลื่อนลงดูข้อมูลวีรชน</div></div>`;
     }
@@ -3768,7 +3799,7 @@ if (typeof document !== 'undefined') (function(){
     if (on && !shown){ el.innerHTML=tkInner(); el.classList.remove('tkhide'); }
     else if (!on && shown){ el.classList.add('tkhide'); setTimeout(()=>{ if (el.classList.contains('tkhide')) el.innerHTML=''; },450); } },1000);
   /* ---------- 🔔 แจ้งเตือนเกมมีอัปเดต ---------- */
-  const GAME_VER='v3.53'; let updSkip='', updT=0;
+  const GAME_VER='v3.54'; let updSkip='', updT=0;
   function updCheck(){ if (location.protocol==='file:' || document.getElementById('updpop')) return; if (Date.now()-updT<60000) return; updT=Date.now();
     fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{ if (!j||!j.v||j.v===GAME_VER||j.v===updSkip) return; updShow(j); }).catch(()=>{}); }
   function updShow(j){ const inRun=S&&S.phase&&S.phase!=='title'&&!S.over&&!hub, d=document.createElement('div'); d.id='updpop';
@@ -3855,7 +3886,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="pbtns"><button class="choice" data-act="guideopen"><span>📚 ข้อมูลเกม</span><small>ระดับอุปกรณ์ · ธาตุ · อาชีพ · อัตราสุ่ม · โหมดเกม</small></button><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.53<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.54<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
