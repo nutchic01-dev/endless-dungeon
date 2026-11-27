@@ -1086,7 +1086,7 @@ h3 img.uiico{height:24px;width:auto;vertical-align:middle}
 .hvbg{z-index:60}.hvpop{max-width:400px;max-height:88vh;overflow-y:auto}.hvtop{display:flex;gap:10px;align-items:center}.hvart{width:110px;height:120px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,rgba(255,214,140,.18),transparent 70%);border-radius:14px}.hvart img,.hvart .art{width:110px!important;height:120px!important;max-width:none!important;object-fit:contain}.hvmeta{flex:1;min-width:0;font-size:13px}.hvmeta small{color:#cfc2e4}.hvmeta b{display:block;font-size:18px;color:#ffe9b0;margin:2px 0}.hvstar{color:#ffd34d}
 .hvsec{margin:10px 0 4px;font-weight:800;font-size:13px;color:#ffd77a;border-bottom:1px dashed rgba(255,214,140,.3);padding-bottom:2px}.hvgrid{display:grid;grid-template-columns:1fr 1fr;gap:5px}.hvst{display:flex;justify-content:space-between;background:rgba(255,255,255,.06);border-radius:8px;padding:5px 8px;font-size:12.5px}.hvst b{color:#fff}
 .hvsk div{font-size:13px;margin:3px 0}.hvsk small{color:#cfc2e4}.hvrel{display:flex;gap:8px;align-items:center;font-size:13px}.hvrs{display:flex;flex-wrap:wrap;gap:4px;margin-top:3px}.hvrs span{font-size:11px;background:rgba(255,255,255,.08);border-radius:6px;padding:1px 6px}.hveqs{display:flex;flex-wrap:wrap;gap:6px}.hveq{font-size:12px;background:rgba(255,255,255,.08);border-radius:8px;padding:3px 8px}
-.hvbtns{display:grid;grid-template-columns:1fr 1.4fr;gap:8px;margin-top:12px}.hvbtns .choice{margin:0}
+.hvbon{margin-top:6px;font-size:12.5px;color:#7dffcf;background:rgba(95,224,176,.1);border-radius:8px;padding:5px 8px}.hvbtns{display:grid;grid-template-columns:1fr 1.4fr;gap:8px;margin-top:12px}.hvbtns .choice{margin:0}
 .gdtw{overflow-x:auto;margin:4px 0}.gdt{width:100%;border-collapse:collapse;font-size:12.5px;color:#e9def7}.gdt th{background:rgba(255,214,140,.16);color:#ffd77a;font-weight:700;padding:6px 4px;white-space:nowrap}.gdt td{padding:6px 4px;text-align:center;border-bottom:1px dashed rgba(255,255,255,.12);white-space:nowrap}.gdn{font-size:12px;color:#cfc2e4;line-height:1.6;margin-top:6px}.gdcl{flex-direction:column;align-items:flex-start;gap:2px}.gdcl small{color:#cfc2e4;font-size:12px}.gdtabs button span{font-size:11px}
 .arlock{font-size:54px;text-align:center}.arbeta{font-size:11.5px;color:#ffd77a;background:rgba(255,190,80,.12);border:1px dashed rgba(255,200,100,.5);border-radius:10px;padding:3px 10px;text-align:center}
 .rkl{display:flex;flex-direction:column;gap:5px}.rkr{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:12px;background:rgba(20,15,40,.7);border:1px solid rgba(255,255,255,.08)}
@@ -1168,7 +1168,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.42</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.43</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -3079,6 +3079,14 @@ const relicRefund = r => { let c=0; for (let l=0;l<r.lv;l++) c+=relicCost({lv:l,
 const rerollCost = locks => 2+locks*3;
 function relicOf(m, heroId){ return (m.relics||[]).find(r=>r.on===heroId); }
 // พลังจากเรลิก: ใช้กับล่ามังกร เฝ้าเมือง และหอคอยร้อยชั้นในอนาคต (ไม่ใช้ในหอคอยไร้สิ้นสุด)
+/* พลังจากบันทึกสถานะหลัก (สเตตัส+อุปกรณ์ที่ได้จากหอคอย) ใช้ในโหมดทีม: ร้อยชั้น · ประลอง · ล่ามังกร */
+function recMain(m,id){ const c=m.chars&&m.chars[id]; return c&&c.recs&&c.recs.length ? (c.recs[c.main]||c.recs[0]) : null; }
+function recPower(m,id){ const r=recMain(m,id); if (!r||!r.st) return {dps:1,hp:1,def:0,rec:null};
+  const st=r.st, a=st.type==='mag'?(st.matk||0):(st.atk||0), crit=1+Math.min(60,st.cri||0)/100*Math.max(0,(st.cridmg||150)-100)/100, pen=1+Math.min(40,st.pen||0)/200;
+  const dps=1+Math.min(0.55, 0.18*Math.log2(1+a/800)), dpsAll=Math.min(1.8, dps*(1+(crit-1)*0.5)*pen), hp=1+Math.min(0.6, 0.2*Math.log2(1+(st.maxhp||0)/4000));
+  const df=Math.min(0.15, ((st.def||0)+(st.mdef||0))/30000);
+  return {dps:dpsAll, hp, def:df, rec:r}; }
+function heroPw(m,id){ const p=relicPower(m,id), q=recPower(m,id); return Object.assign({}, p, {dps:p.dps*q.dps, hp:p.hp*q.hp, res:(p.res||0)+q.def, recP:q}); }
 function relicPower(m, heroId){ const r=relicOf(m,heroId); if (!r) return {dps:1,hp:1,spd:1,heal:0,res:0,match:false,r:null};
   const s=relicTotals(r), match=r.id===heroId;
   const dps=(1+s.atkP/100)*(1+(s.cri||0)/100*(0.5+(s.cridmg||0)/100))*(1+(s.pen||0)/200)*(1+(s.eldmg||0)/100)*(match?1.1:1);
@@ -3268,7 +3276,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.42</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.43</span>'}</div>`;
   }
   let runSet=false, runQuit=false;
   function runPop(){
@@ -3524,7 +3532,7 @@ if (typeof document !== 'undefined') (function(){
     if (on && !shown){ el.innerHTML=tkInner(); el.classList.remove('tkhide'); }
     else if (!on && shown){ el.classList.add('tkhide'); setTimeout(()=>{ if (el.classList.contains('tkhide')) el.innerHTML=''; },450); } },1000);
   /* ---------- 🔔 แจ้งเตือนเกมมีอัปเดต ---------- */
-  const GAME_VER='v3.42'; let updSkip='', updT=0;
+  const GAME_VER='v3.43'; let updSkip='', updT=0;
   function updCheck(){ if (location.protocol==='file:' || document.getElementById('updpop')) return; if (Date.now()-updT<60000) return; updT=Date.now();
     fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{ if (!j||!j.v||j.v===GAME_VER||j.v===updSkip) return; updShow(j); }).catch(()=>{}); }
   function updShow(j){ const inRun=S&&S.phase&&S.phase!=='title'&&!S.over&&!hub, d=document.createElement('div'); d.id='updpop';
@@ -3611,7 +3619,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="pbtns"><button class="choice" data-act="guideopen"><span>📚 ข้อมูลเกม</span><small>ระดับอุปกรณ์ · ธาตุ · อาชีพ · อัตราสุ่ม · โหมดเกม</small></button><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.42<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.43<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
@@ -4351,7 +4359,7 @@ if (typeof document !== 'undefined') (function(){
   function dhHero(m,id,D){ const a=ALLCHARS[id], ch=m.chars[id], cls=heroIdleCls(id), el=a.c.el;
     let dps=({n:1000,sp:1500,hid:2150})[a.tier]*(1+0.25*((ch.star||1)-1))*(ch.form?1.4:1);
     const hp=12000*(1+0.25*((ch.star||1)-1))*(ch.form?1.3:1);
-    const em = el===dhWeak(D.el) ? 1.5 : el===D.el ? 0.7 : 1, pw=relicPower(m,id);
+    const em = el===dhWeak(D.el) ? 1.5 : el===D.el ? 0.7 : 1, pw=heroPw(m,id);
     return {id,cls,el,dps:dps*em*pw.dps,hp:hp*pw.hp,em,spd:pw.spd,res:pw.res,heal:pw.heal,sig:pw.match?RELIC_CLS(id):null}; }
   function dhTeam(m,D){ const T=dhState(m).team.map(id=>dhHero(m,id,D)); const ids=T.map(h=>h.id); let rel=0;
     ids.forEach(id=>{ const L=CHAR_LORE[id]; if (L) L.rel.forEach(([r])=>{ if (ids.includes(r)) rel++; }); });
@@ -4471,7 +4479,7 @@ if (typeof document !== 'undefined') (function(){
         ${c && need ? `<button class="choice alt" data-act="dustshard" data-k="${id}" ${m.dust<DUST_BUY[a.tier]?'disabled':''}><span>ซื้อเศษ 1 ชิ้น</span><small>${DUST_BUY[a.tier]} ${uiIco('dust','✨')}</small></button>`:''}
         ${sh && !secret ? `<button class="choice alt" data-act="todust" data-k="${id}"><span>แปลงเศษทั้งหมดเป็นผงดาว</span><small>+${sh*DUST_OF[a.tier]} ${uiIco('dust','✨')}</small></button>`:''}
       </div>
-      ${c&&c.recs.length?`<h3 class="rect">📜 บันทึกสถานะ (${c.recs.length}/3)</h3><div class="gs" style="font-size:12px">ใช้ใน PvP และหอคอยในอนาคต · ลงดันเจี้ยนเริ่มจากตัวเปล่าเสมอ</div>${c.recs.map((r,i)=>recHtml(r,i,i===c.main,id)).join('')}`:''}
+      ${c&&c.recs.length?`<h3 class="rect">📜 บันทึกสถานะ (${c.recs.length}/3)</h3><div class="gs" style="font-size:12px">บันทึกหลักเพิ่มพลังวีรชนในโหมดทีม (หอคอยร้อยชั้น · สนามประลอง · ล่ามังกร) · ลงดันเจี้ยนเริ่มจากตัวเปล่าเสมอ</div>${c.recs.map((r,i)=>recHtml(r,i,i===c.main,id)).join('')}`:''}
       <div class="pop-f">${c?'':'ยังไม่มีตัวนี้ เก็บเศษไว้ได้ ใช้ได้เมื่อได้ตัวแล้ว<br>'}แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   /* ---------- หอคอยร้อยชั้น : 10 แมพ x 10 ชั้น · ชั้น x5 มินิบอส · ชั้น x10 บอสประจำแมพ · 3 ระลอก · 1-3 ดาว · ใช้สายฟ้า ⚡ · กวาดชั้นที่ได้ 3 ดาว ---------- */
@@ -4541,7 +4549,7 @@ if (typeof document !== 'undefined') (function(){
     else if (k==='mini') W.push([mon(0,1),big(htMapOf(f).mini,1,5,1.8),mon(1,1)]);
     else W.push([mon(0,1.1),big(htMapOf(f).boss,2,9,2.2),mon(1,1.1)]);
     return W; }
-  function htHero(m,id){ const ch=m.chars[id]||{}; return heroStat(id, ch.star||1, ch.form, relicPower(m,id)); }
+  function htHero(m,id){ const ch=m.chars[id]||{}; return heroStat(id, ch.star||1, ch.form, heroPw(m,id)); }
   function heroStat(id,star,form,pw){ const a=ALLCHARS[id], cls=heroIdleCls(id), st=1+0.25*((star||1)-1), fm=form?1.35:1; pw=pw||{dps:1,hp:1,spd:1,res:0,heal:0};
     const b={tank:[0.55,1.8],warrior:[1,1.2],archer:[1.15,0.8],mage:[0.85,0.8],support:[0.55,0.95],assassin:[1.3,0.75]}[cls]||[1,1];
     const atk=({n:900,sp:1300,hid:1850})[a.tier]*st*fm*b[0]*pw.dps, hp=11000*({n:1,sp:1.05,hid:1.25})[a.tier]*st*fm*b[1]*pw.hp;
@@ -4713,7 +4721,7 @@ if (typeof document !== 'undefined') (function(){
   const CLS_TH={tank:'แทงค์',warrior:'นักรบ',archer:'นักธนู',mage:'นักเวท',support:'ซัพพอร์ต',assassin:'นักฆ่า'};
   function hvPopHtml(m){ if (!HV) return ''; let id, star, form, pw, by='', rel=null;
     if (HV.help){ const sn=htHelpPool(m)[+HV.k]; if (!sn){ HV=null; return ''; } id=sn.id; star=sn.s||1; form=!!sn.f; pw=sn.pw||undefined; by=sn.by; }
-    else { id=HV.k; const c=m.chars[id]; if (!c) { HV=null; return ''; } star=c.star||1; form=!!c.form; pw=relicPower(m,id); rel=relicOf(m,id); }
+    else { id=HV.k; const c=m.chars[id]; if (!c) { HV=null; return ''; } star=c.star||1; form=!!c.form; pw=heroPw(m,id); rel=relicOf(m,id); }
     const a=ALLCHARS[id]; if (!a){ HV=null; return ''; } const h=heroStat(id,star,form,pw), K=CHAR_KIT[id]||{}, cls=h.cls;
     const st=(ic,n,v)=>`<div class="hvst"><span>${ic} ${n}</span><b>${v}</b></div>`;
     let relHtml='<div class="gs">ยังไม่ได้ใส่เรลิก (ใส่ได้ที่หน้าวีรชน)</div>';
@@ -4727,7 +4735,13 @@ if (typeof document !== 'undefined') (function(){
       <div class="hvsec">⚔️ ค่าพลังในโหมดทีม</div><div class="hvgrid">${st('⚔️','พลังโจมตี',fmt(Math.round(h.atk)))}${st('❤️','พลังชีวิต',fmt(Math.round(h.hp)))}${st('💨','ความเร็ว','×'+h.spd.toFixed(2))}${st('🛡️','ต้านทานดาเมจ',Math.round(h.res*100)+'%')}${h.heal?st('💚','ฮีลเพิ่ม',Math.round(h.heal*100)+'%'):''}</div>
       <div class="hvsec">✨ ทักษะ</div><div class="hvsk">${K.ult?`<div>💥 <b>${K.ult.name}</b> <small>ท่าไม้ตาย (พลังเต็ม 100)</small></div>`:''}${K.p?`<div>🔹 <b>${K.p.name}</b> <small>ติดตัว</small></div>`:''}${K.s3?`<div>🔸 <b>${K.s3.name}</b> <small>สกิลพิเศษ</small></div>`:''}</div>
       <div class="hvsec">🔮 เรลิก</div>${relHtml}
-      ${!HV.help?`<div class="hvsec">🛠️ อุปกรณ์นักรบสาย${CLS_TH[cls]||''}</div><div class="hveqs">${eqTxt||'<span class="gs">ยังไม่ได้สวมใส่</span>'}</div><div class="gs" style="font-size:11px">อุปกรณ์นักรบเสริมพลังทหารในเมือง · ค่าพลังโหมดทีมมาจากดาว ร่างปลุกพลัง และเรลิก</div>`:''}
+      ${!HV.help?(()=>{ const q=recPower(m,id), r=q.rec; if (!r) return `<div class="hvsec">📜 บันทึกสถานะจากหอคอย</div><div class="gs">ยังไม่มีบันทึก — ชนะบอสในหอคอยไร้สิ้นสุดด้วยวีรชนตัวนี้ เพื่อบันทึกสเตตัสและอุปกรณ์ แล้วพลังในโหมดทีมจะเพิ่มขึ้น</div>`;
+        const g=Object.values(r.gear||{}); return `<div class="hvsec">📜 บันทึกสถานะหลัก (จากหอคอย) · พลัง ${fmt(r.power)}</div>
+        <div class="gs" style="font-size:12px">Lv.${r.lv} · ชั้น ${r.floor} · บอส Lv.${r.boss}</div>
+        <div class="hvgrid">${st('❤️','HP',fmt(r.st.maxhp))}${st(r.st.type==='mag'?'🔮':'⚔️',r.st.type==='mag'?'MATK':'ATK',fmt(r.st.type==='mag'?r.st.matk:r.st.atk))}${st('🛡️','DEF',fmt(r.st.def)+'/'+fmt(r.st.mdef))}${st('🎯','คริ',r.st.cri+'% · '+r.st.cridmg+'%')}</div>
+        <div class="hveqs" style="margin-top:6px">${g.length?g.map(it=>`<span class="hveq r${it.r}">${itIco(it)}${it.name}${it.plus?' +'+it.plus:''}</span>`).join(''):'<span class="gs">ไม่มีอุปกรณ์</span>'}</div>
+        <div class="hvbon">📈 บันทึกนี้เพิ่มพลังในโหมดทีม: โจมตี ×${q.dps.toFixed(2)} · พลังชีวิต ×${q.hp.toFixed(2)}${q.def?` · ต้านทาน +${Math.round(q.def*100)}%`:''}</div>
+        <div class="gs" style="font-size:11px">เปลี่ยนบันทึกหลักได้ที่หน้าวีรชน (เก็บได้ 3 บันทึก)</div>`; })():''}
       <div class="hvbtns"><button class="choice alt" data-act="hvclose"><span>ยกเลิก</span></button><button class="choice" data-act="${HV.next}" data-k="${HV.k}"><span>${btnLabel}</span></button></div></div></div>`; }
   function hubHundred(m){ const S0=htState(m), best=S0.best, cur=Math.min(HT_OPEN,best+1); if (!htSel||htSel>cur) htSel=cur;
     const f=htSel, mi=htMapSel>=0?htMapSel:htMapIdx(f), MP=htMap(f), k=htKind(f), Wv=htWaves(f), P=htPower(m), els=[...new Set(Wv.flat().map(e=>e.el))], stf=htStars(S0,f), cost=htCost(f);
@@ -4896,7 +4910,7 @@ if (typeof document !== 'undefined') (function(){
     if (A.day!==dayKey()){ A.day=dayKey(); A.used=0; A.fw=false; }
     if (A.coin==null) A.coin=(A.w||0)*30+(A.l||0)*10;   // เหรียญประลอง (ย้อนหลังให้จากผลที่เคยสู้)
     if (!A.shop||A.shop.wk!==dhWeek()) A.shop={wk:dhWeek(),b:{}}; return A; }
-  function arSnap(m,ids){ return ids.filter(Boolean).map(id=>{ const ch=m.chars[id]||{}, pw=relicPower(m,id), r3=v=>Math.round(v*1000)/1000;
+  function arSnap(m,ids){ return ids.filter(Boolean).map(id=>{ const ch=m.chars[id]||{}, pw=heroPw(m,id), r3=v=>Math.round(v*1000)/1000;
     return {id, s:ch.star||1, f:ch.form?1:0, pw:{dps:r3(pw.dps),hp:r3(pw.hp),spd:r3(pw.spd||1),res:r3(pw.res||0),heal:r3(pw.heal||0)}}; }); }
   function arPow(snaps){ const T=snaps.filter(s=>ALLCHARS[s.id]).map(s=>heroStat(s.id,s.s,s.f,s.pw)), r=htRel(T.map(h=>h.id)); return Math.round(T.reduce((a,h)=>a+h.atk*2+h.hp/10,0)*r); }
   function arAutoTeam(m){ const own=arOwn(m).map(id=>({id,h:htHero(m,id)})).sort((a,b)=>(b.h.atk*2+b.h.hp/10)-(a.h.atk*2+a.h.hp/10)), used=new Set(), out=[];
