@@ -710,7 +710,7 @@ img.gico{width:1.4em;height:1.4em;object-fit:contain;vertical-align:-0.35em;filt
 .dhtop{display:flex;justify-content:space-between;align-items:center;font-size:17px}.dhtime{font-size:16px}.dhtime b{color:#ffe08a;font-size:22px}
 .dhhp{display:flex;flex-direction:column;gap:3px;font-size:12px}.dhhpb{position:relative;height:16px;background:rgba(0,0,0,.6);border:1.5px solid var(--dc);border-radius:8px;overflow:hidden}.dhhpb i{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,#c22,#ff6a3a);transition:width .1s}
 .dhhpb em{position:absolute;top:0;bottom:0;width:2px;background:rgba(255,255,255,.6)}.dhhp b{color:#ffe08a;font-size:15px}
-.dhstage{position:relative;flex:1;min-height:340px;border-radius:16px;overflow:hidden;background:linear-gradient(transparent 60%,rgba(0,0,0,.4))}.dhstage.shake{animation:sshake .3s}
+.dhsb{margin-left:6px;padding:4px 9px!important;font-size:12px!important}.dhstage{position:relative;flex:1;min-height:340px;border-radius:16px;overflow:hidden;background:linear-gradient(transparent 60%,rgba(0,0,0,.4))}.dhstage.shake{animation:sshake .3s}
 .dhdrag{position:absolute;right:2%;top:6%;width:62%;height:66%;display:flex;align-items:center;justify-content:center}.dhdrag span{font-size:170px;filter:drop-shadow(0 0 24px var(--dc));animation:fob 2.6s ease-in-out infinite;transform:scaleX(-1)}
 .dhdrag img{max-width:100%;max-height:100%;filter:drop-shadow(0 0 18px var(--dc));animation:fob 2.6s ease-in-out infinite}.dhdrag.roar{animation:roar .8s}
 @keyframes roar{20%{transform:scale(1.15);filter:brightness(1.8)}100%{transform:scale(1)}}
@@ -1102,6 +1102,14 @@ h3 img.uiico{height:24px;width:auto;vertical-align:middle}
 .tsmini{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:8px;text-align:left}.tsmini .tsov{margin-top:0}
 .tsmr{display:grid;grid-template-columns:30px 74px 1fr 38px;gap:6px;align-items:center;font-size:12.5px;margin-top:5px}.tsmr.dead{opacity:.7}.tsma{width:30px;height:30px;display:flex;align-items:flex-end;justify-content:center;overflow:hidden}.tsma img{width:30px!important;height:30px!important;object-fit:contain}.tsmr b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tsmr em{font-style:normal;font-weight:800;text-align:right;color:#ffd98a}.tsmini .tsbtn{margin-top:8px;width:100%;flex-direction:column;gap:2px}.tsmini .tsbtn small{font-size:11px;opacity:.85}
 .tsov2{grid-template-columns:repeat(3,1fr)!important}.tsg.p{background:#5a2066;color:#ffb3ff}.tschs{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}.tsch{font-size:10.5px;background:rgba(255,255,255,.08);border-radius:7px;padding:2px 6px;color:#d9d0ff}.tsch b{color:#fff}
+.cbst{position:absolute;inset:0;pointer-events:none;z-index:45;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.cbst b{display:flex;align-items:baseline;gap:6px;font-size:44px;font-weight:900;font-style:italic;letter-spacing:1px;color:#fff;-webkit-text-stroke:2px #5a1670;text-shadow:0 0 12px #ff4fd8,0 0 28px #ffb000,0 4px 0 #3a0a4a;animation:cbpop 1s cubic-bezier(.2,1.6,.4,1) forwards}
+.cbst b small{font-size:22px;-webkit-text-stroke:1px #5a1670;color:#ffe46b}.cbst em{font-style:normal;font-weight:800;font-size:15px;color:#ffe9ff;text-shadow:0 0 8px #ff4fd8,0 2px 2px #000;margin-top:2px;animation:cbpop 1s .05s both}
+.cbst.lv2 b{font-size:52px}.cbst.lv3 b{font-size:58px;color:#ffe46b}.cbst.lv4 b{font-size:64px;color:#ff9b3d;text-shadow:0 0 16px #ff3d3d,0 0 34px #ffb000,0 4px 0 #3a0a4a}
+.cbr{position:absolute;width:60px;height:60px;border-radius:50%;border:4px solid #ff6fe0;box-shadow:0 0 18px #ff6fe0,inset 0 0 12px #ffb000;animation:cbring .7s ease-out forwards}.cbr.r2{border-color:#ffd24a;animation-delay:.12s;opacity:0}
+@keyframes cbpop{0%{transform:scale(2.4) rotate(-8deg);opacity:0}25%{transform:scale(.92) rotate(-4deg);opacity:1}40%{transform:scale(1.06) rotate(-4deg)}80%{opacity:1;transform:scale(1) rotate(-4deg)}100%{opacity:0;transform:scale(1.12) translateY(-18px) rotate(-4deg)}}
+@keyframes cbring{0%{transform:scale(.4);opacity:1}100%{transform:scale(6);opacity:0}}
+.cbshk{animation:cbshake .35s}@keyframes cbshake{0%,100%{transform:none}20%{transform:translate(-5px,3px)}40%{transform:translate(5px,-3px)}60%{transform:translate(-3px,2px)}80%{transform:translate(3px,-1px)}}
 .reccmp{margin-top:10px;text-align:left;background:rgba(255,255,255,.04);border:1px solid rgba(255,209,102,.35);border-radius:12px;padding:10px}.reccmp h3{margin:0 0 6px;font-size:15px}
 .rcg{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:3px 6px;font-size:12.5px;align-items:start}.rcg>div{padding:2px 0}.rch{font-weight:700;color:#ffd166;text-align:center}.rco,.rcn{text-align:right}.rcg2{text-align:left!important;font-size:11.5px;line-height:1.45}
 .rco.win,.rcn.win{color:#7dffcf;font-weight:700}.rcu{color:#5fe0b0;font-style:normal}.rcd{color:#ff6b8a;font-style:normal}.rcpair{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:8px}.rcpair>div+div{border-left:1px solid rgba(255,255,255,.12);padding-left:8px}.rcsep{grid-column:1/-1;margin-top:6px;padding-top:4px;border-top:1px dashed rgba(255,255,255,.18);color:#c9b8ff;font-size:12px}.reccmp .row2{margin-top:10px}
@@ -1192,7 +1200,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.49</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.50</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -1554,83 +1562,204 @@ const BANDS = [
 ];
 
 /* ---------- เสียง: เพลงและเอฟเฟกต์สังเคราะห์ด้วย WebAudio (ไม่ต้องใช้ไฟล์เสียง) ---------- */
-const SND = (()=>{ let ctx=null, master, musG, sfxG, track=null, want=null, step=0, nextT=0, timer=null, last={};
+const SND = (()=>{ let ctx=null, master, musG, sfxG, duck, revIn, musRev, sfxRev, track=null, want=null, step=0, nextT=0, timer=null, last={};
   const set={mus:0.5,sfx:0.7}; try{ Object.assign(set, JSON.parse(localStorage.getItem('dq_snd')||'{}')); }catch(e){}
   const hz = m => 440*Math.pow(2,(m-69)/12);
+  function mkImpulse(sec,decay){ const n=Math.floor(ctx.sampleRate*sec), b=ctx.createBuffer(2,n,ctx.sampleRate);
+    for (let c=0;c<2;c++){ const a=b.getChannelData(c); for (let i=0;i<n;i++) a[i]=(Math.random()*2-1)*Math.pow(1-i/n,decay); } return b; }
   function init(){ try{ if (ctx){ if (ctx.state==='suspended') ctx.resume(); return true; } const AC=window.AudioContext||window.webkitAudioContext; if (!AC) return false;
-    ctx=new AC(); master=ctx.createGain(); master.gain.value=0.9; { const cp=ctx.createDynamicsCompressor(); cp.threshold.value=-14; cp.knee.value=8; cp.ratio.value=5; cp.attack.value=0.002; cp.release.value=0.12; master.connect(cp); cp.connect(ctx.destination); }
-    musG=ctx.createGain(); sfxG=ctx.createGain(); musG.gain.value=set.mus*0.5; sfxG.gain.value=set.sfx; musG.connect(master); sfxG.connect(master);
-    timer=setInterval(sched,60); return true; }catch(e){ return false; } }
-  function tone(f,t,d,type,v,dest,slide,att){ const o=ctx.createOscillator(), g=ctx.createGain(); o.type=type||'sine'; o.frequency.setValueAtTime(f,t);
-    if (slide) o.frequency.exponentialRampToValueAtTime(slide,t+d); g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(v,t+(att||0.008)); g.gain.exponentialRampToValueAtTime(0.0001,t+d);
-    o.connect(g); g.connect(dest); o.start(t); o.stop(t+d+0.03); }
-  let nbuf=null; function noise(t,d,v,dest,freq,q,sweep){ if (!nbuf){ nbuf=ctx.createBuffer(1,ctx.sampleRate*0.5,ctx.sampleRate); const a=nbuf.getChannelData(0); for (let i=0;i<a.length;i++) a[i]=Math.random()*2-1; }
-    const s=ctx.createBufferSource(), f=ctx.createBiquadFilter(), g=ctx.createGain(); s.buffer=nbuf; s.loop=true; f.type='bandpass'; f.frequency.setValueAtTime(freq||2000,t); f.Q.value=q||1;
-    if (sweep) f.frequency.exponentialRampToValueAtTime(sweep,t+d); g.gain.setValueAtTime(v,t); g.gain.exponentialRampToValueAtTime(0.0001,t+d); s.connect(f); f.connect(g); g.connect(dest); s.start(t); s.stop(t+d+0.02); }
-  /* เพลง: คอร์ด 4 ห้อง + ทำนอง (โน้ตเขบ็ต 1 ชั้น 8 ตัวต่อห้อง) */
-  const TR={
-    town:{bpm:92, ch:[[60,64,67],[57,60,64],[53,57,60],[55,59,62]], bass:[48,45,41,43],
-      mel:[72,0,74,76,79,0,76,0, 76,0,74,72,74,0,0,0, 72,0,74,76,77,0,76,74, 74,0,72,71,72,0,0,0, 79,0,77,76,77,0,76,74, 76,0,72,0,69,0,0,0, 72,0,74,0,77,0,81,79, 79,0,77,74,72,0,0,0], lead:'triangle', arp:1, pad:1},
-    adv:{bpm:112, ch:[[57,60,64],[53,57,60],[60,64,67],[55,59,62]], bass:[45,41,48,43],
-      mel:[69,0,72,0,76,74,72,0, 72,0,69,0,65,0,0,0, 67,0,72,0,76,0,79,77, 76,74,71,0,74,0,0,0], lead:'square', arp:1, pulse:1, hat:1},
-    battle:{bpm:140, ch:[[62,65,69],[58,62,65],[60,64,67],[57,61,64]], bass:[38,34,36,33],
-      mel:[74,0,74,77,76,0,74,72, 70,0,74,0,77,0,0,0, 72,0,76,0,79,77,76,74, 73,0,76,0,81,0,0,0], lead:'square', arp:1, pulse:1, hat:1, kick:1},
-    boss:{bpm:150, ch:[[52,55,59],[48,52,55],[50,54,57],[47,51,54]], bass:[40,36,38,35],
-      mel:[64,0,67,0,71,0,70,0, 67,0,64,0,60,0,0,0, 62,0,66,0,69,0,67,66, 63,0,66,0,71,0,0,0], lead:'sawtooth', arp:1, pulse:1, hat:1, kick:1, snare:1},
-    gacha:{bpm:80, ch:[[53,57,60,64],[52,55,59,62],[50,53,57,60],[48,52,55,59]], bass:[41,40,38,36], mel:null, bell:1, pad:1},
+    ctx=new AC(); build(ctx.destination); timer=setInterval(sched,50); return true; }catch(e){ return false; } }
+  function build(out){ master=ctx.createGain(); master.gain.value=0.9;
+    { const cp=ctx.createDynamicsCompressor(); cp.threshold.value=-16; cp.knee.value=10; cp.ratio.value=4; cp.attack.value=0.003; cp.release.value=0.15; master.connect(cp); cp.connect(out); }
+    // reverb (ห้องโถงใหญ่) แชร์ระหว่างเพลงและเอฟเฟกต์
+    const cv=ctx.createConvolver(); cv.buffer=mkImpulse(1.4,3.5); revIn=ctx.createGain(); revIn.gain.value=1; const rOut=ctx.createGain(); rOut.gain.value=0.55; revIn.connect(cv); cv.connect(rOut); rOut.connect(master);
+    musG=ctx.createGain(); sfxG=ctx.createGain(); musG.gain.value=set.mus*0.55; sfxG.gain.value=set.sfx; musG.connect(master); sfxG.connect(master);
+    duck=ctx.createGain(); duck.connect(musG);                       // ช่องที่ "ปั๊ม" ตามจังหวะกลองเบส (sidechain)
+    musRev=ctx.createGain(); musRev.gain.value=0.22; musG.connect(musRev); musRev.connect(revIn);
+    sfxRev=ctx.createGain(); sfxRev.gain.value=0.28; sfxG.connect(sfxRev); sfxRev.connect(revIn); }
+  /* เรนเดอร์ออฟไลน์ (ใช้ทดสอบ/ฟังตัวอย่าง): เพลง key ยาว sec วินาที หรือรายการเอฟเฟกต์ [[ชื่อ,เวลา],...] */
+  function renderOff(key, sec, fxList){ const sv={ctx,master,musG,sfxG,duck,revIn,musRev,sfxRev,nbuf,DB};
+    const oc=new OfflineAudioContext(2,Math.ceil(44100*sec),44100); ctx=oc; nbuf=null; DB=null; build(oc.destination); musG.gain.value=0.55*0.5; sfxG.gain.value=0.7;
+    if (key){ const S=songOf(key); let t=0.05,i=0; while (t<sec-0.3){ playStep(S,i,t); t+=60/S.th.bpm/2; i++; } }
+    (fxList||[]).forEach(([n,t])=>SFX[n](t,sfxG));
+    const p=oc.startRendering(); ({ctx,master,musG,sfxG,duck,revIn,musRev,sfxRev,nbuf,DB}=sv); return p; }
+  /* ---------- เครื่องกำเนิดเสียงพื้นฐาน ---------- */
+  function env(g,t,v,a,d,sus){ g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(Math.max(0.0002,v),t+(a||0.008)); if (sus){ g.gain.setValueAtTime(v,t+Math.max(a||0.008,d-sus)); } g.gain.exponentialRampToValueAtTime(0.0001,t+d); }
+  function tone(f,t,d,type,v,dest,slide,att,pan){ const o=ctx.createOscillator(), g=ctx.createGain(); o.type=type||'sine'; o.frequency.setValueAtTime(f,t);
+    if (slide) o.frequency.exponentialRampToValueAtTime(slide,t+d); env(g,t,v,att,d); let out=g;
+    if (pan && ctx.createStereoPanner){ const p=ctx.createStereoPanner(); p.pan.value=pan; g.connect(p); out=p; } o.connect(g); out.connect(dest); o.start(t); o.stop(t+d+0.05); }
+  let nbuf=null; function noise(t,d,v,dest,freq,q,sweep,type,pan){ if (!nbuf){ nbuf=ctx.createBuffer(1,ctx.sampleRate*0.6,ctx.sampleRate); const a=nbuf.getChannelData(0); for (let i=0;i<a.length;i++) a[i]=Math.random()*2-1; }
+    const s=ctx.createBufferSource(), f=ctx.createBiquadFilter(), g=ctx.createGain(); s.buffer=nbuf; s.loop=true; f.type=type||'bandpass'; f.frequency.setValueAtTime(freq||2000,t); f.Q.value=q||1;
+    if (sweep) f.frequency.exponentialRampToValueAtTime(sweep,t+d); g.gain.setValueAtTime(v,t); g.gain.exponentialRampToValueAtTime(0.0001,t+d); s.connect(f); f.connect(g);
+    let out=g; if (pan && ctx.createStereoPanner){ const p=ctx.createStereoPanner(); p.pan.value=pan; g.connect(p); out=p; } out.connect(dest); s.start(t); s.stop(t+d+0.03); }
+  // เสียงซินธ์หลายชั้น (detune) ผ่านฟิลเตอร์ low-pass: ใช้ทำ supersaw / pad / คอรัส
+  function synth(m,t,d,o){ const f=hz(m), g=ctx.createGain(), lp=ctx.createBiquadFilter(); lp.type='lowpass'; lp.Q.value=o.q||0.7;
+    lp.frequency.setValueAtTime(o.cut||2400,t); if (o.cutEnd) lp.frequency.exponentialRampToValueAtTime(o.cutEnd,t+d);
+    env(g,t,o.v,o.a||0.01,d,o.sus); lp.connect(g); let out=g; if (o.pan && ctx.createStereoPanner){ const p=ctx.createStereoPanner(); p.pan.value=o.pan; g.connect(p); out=p; } out.connect(o.dest);
+    (o.det||[0]).forEach((dt,i)=>{ const os=ctx.createOscillator(); os.type=o.type||'sawtooth'; os.frequency.setValueAtTime(f*(o.oct||1),t); os.detune.value=dt;
+      if (o.vib){ const l=ctx.createOscillator(), lg=ctx.createGain(); l.frequency.value=5.2; lg.gain.value=o.vib; l.connect(lg); lg.connect(os.detune); l.start(t); l.stop(t+d+0.05); }
+      if (o.glide) os.frequency.exponentialRampToValueAtTime(f*(o.oct||1)*o.glide,t+d);
+      os.connect(lp); os.start(t); os.stop(t+d+0.05); }); }
+  /* ---------- เครื่องดนตรี ---------- */
+  const INS = {
+    pluck:(m,t,d,v,dst,p)=>synth(m,t,Math.min(d,0.35),{v:v*1.3,dest:dst,type:'square',det:[0],cut:3200,cutEnd:500,a:0.004,pan:p}),
+    flute:(m,t,d,v,dst,p)=>{ synth(m,t,d,{v:v*1.3,dest:dst,type:'triangle',det:[0],cut:5000,a:0.04,vib:14,sus:d*0.6,pan:p}); noise(t,0.05,v*0.25,dst,3000,2); },
+    saw:(m,t,d,v,dst,p)=>synth(m,t,d,{v:v*0.8,dest:dst,type:'sawtooth',det:[-12,12],cut:3800,cutEnd:1600,a:0.01,sus:d*0.5,pan:p}),
+    bell:(m,t,d,v,dst,p)=>{ tone(hz(m),t,Math.max(0.6,d*1.6),'sine',v*1.2,dst,0,0.003,p); tone(hz(m)*2.76,t,0.4,'sine',v*0.35,dst,0,0.002,p); tone(hz(m)*5.4,t,0.18,'sine',v*0.15,dst,0,0.002,p); },
+    organ:(m,t,d,v,dst,p)=>{ synth(m,t,d,{v:v*0.6,dest:dst,type:'square',det:[0],cut:2600,a:0.02,sus:d*0.7,pan:p}); synth(m,t,d,{v:v*0.5,dest:dst,type:'sine',det:[0],oct:2,a:0.02,sus:d*0.7,pan:p}); },
+    erhu:(m,t,d,v,dst,p)=>synth(m,t,d,{v:v*0.9,dest:dst,type:'sawtooth',det:[-4,4],cut:1900,a:0.06,vib:22,sus:d*0.7,pan:p}),
+    lead:(m,t,d,v,dst,p)=>synth(m,t,d,{v:v*0.8,dest:dst,type:'sawtooth',det:[-16,0,16],cut:4200,cutEnd:2200,a:0.008,sus:d*0.55,pan:p}),
   };
-  function playStep(T,i,t){ const sd=60/T.bpm/2, bar=Math.floor(i/8)%4, s=i%8, ch=T.ch[bar];
-    if (T.pad && s===0) ch.forEach(m=>tone(hz(m),t,sd*8,'sine',0.035,musG,0,0.25));
-    if (T.pulse) tone(hz(T.bass[bar]+(s%2?12:0)),t,sd*0.9,'triangle',0.11,musG);
-    else if (s===0||s===4) tone(hz(T.bass[bar]),t,sd*3.5,'triangle',0.12,musG);
-    if (T.arp) tone(hz(ch[s%ch.length]+12),t,sd*0.8,'triangle',0.035,musG);
-    if (T.bell && s%2===0) tone(hz(ch[(s/2)%ch.length]+24),t,sd*3,'sine',0.05,musG);
-    if (T.mel){ const n=T.mel[i%T.mel.length]; if (n){ let len=1; while (len<4 && !T.mel[(i+len)%T.mel.length]) len++; tone(hz(n),t,sd*len*0.95,T.lead,T.lead==='square'||T.lead==='sawtooth'?0.035:0.07,musG); } }
-    if (T.hat && s%2===1) noise(t,0.04,0.05,musG,8000,1);
-    if (T.kick && s%4===0) tone(150,t,0.12,'sine',0.25,musG,45);
-    if (T.snare && s%8===4) noise(t,0.12,0.12,musG,1800,0.8); }
-  function sched(){ if (!ctx) return; if (want!==track){ track=want; step=0; nextT=ctx.currentTime+0.1; } const T=TR[track]; if (!T||set.mus<=0) return;
+  const PAD = {
+    warm:(ch,t,d,v,dst)=>ch.forEach((m,i)=>synth(m,t,d,{v:v*1.3,dest:dst,type:'sawtooth',det:[i*7-7],cut:900,a:0.35,sus:d*0.6,pan:(i-1)*0.4})),
+    choir:(ch,t,d,v,dst)=>ch.forEach((m,i)=>synth(m+12,t,d,{v:v*1.2,dest:dst,type:'sawtooth',det:[-8,8],cut:1500,q:2,a:0.5,vib:9,sus:d*0.6,pan:(i-1)*0.5})),
+    glass:(ch,t,d,v,dst)=>ch.forEach((m,i)=>tone(hz(m+12),t,d,'sine',v*1.4,dst,0,0.3,(i-1)*0.5)),
+    dark:(ch,t,d,v,dst)=>{ synth(ch[0]-12,t,d,{v:v*1.3,dest:dst,type:'sawtooth',det:[-20,20],cut:500,a:0.6,sus:d*0.7}); ch.slice(1).forEach((m,i)=>synth(m,t,d,{v:v*0.7,dest:dst,type:'triangle',det:[-8,8],cut:1200,a:0.6,sus:d*0.6,pan:i?0.5:-0.5})); },
+  };
+  /* ---------- กลอง ---------- */
+  /* กลองแบบ sample สร้างครั้งเดียวต่อ AudioContext (เบากว่าสร้างโน้ตทีละตัวหลายเท่า) */
+  let DB=null;
+  function mkDrums(){ const sr=ctx.sampleRate, B=(sec,fn)=>{ const n=Math.floor(sr*sec), b=ctx.createBuffer(1,n,sr), a=b.getChannelData(0); let ph=0, pn=0; for (let i=0;i<n;i++){ const t=i/sr, w=Math.random()*2-1, hp=w-pn; pn=w; a[i]=fn(t,w,hp,()=>ph,(d)=>ph+=d); } return b; };
+    const TAU=Math.PI*2;
+    return {
+      kick:B(0.38,(t,w,hp,ph,adv)=>{ const f=42+120*Math.exp(-t*28); adv(TAU*f/sr); return Math.sin(ph())*Math.exp(-t*8)*0.95+(t<0.004?w*0.5:0); }),
+      snare:B(0.26,(t,w,hp,ph,adv)=>{ adv(TAU*190/sr); return hp*Math.exp(-t*16)*0.55+w*Math.exp(-t*30)*0.2+Math.sin(ph())*Math.exp(-t*28)*0.45; }),
+      clap:B(0.22,(t,w,hp)=>{ const e=[0,0.011,0.022].reduce((s,o)=>s+(t>=o?Math.exp(-(t-o)*90):0),0)+Math.exp(-t*14)*0.35; return hp*e*0.45; }),
+      hat:B(0.05,(t,w,hp)=>hp*Math.exp(-t*90)*0.5),
+      ohat:B(0.28,(t,w,hp)=>hp*Math.exp(-t*12)*0.35),
+      shaker:B(0.08,(t,w,hp)=>hp*Math.exp(-t*45)*Math.min(1,t*300)*0.35),
+      tom:B(0.4,(t,w,hp,ph,adv)=>{ adv(TAU*(110*(0.62+0.38*Math.exp(-t*9)))/sr); return Math.sin(ph())*Math.exp(-t*7)*0.9; }),
+      crash:B(1.6,(t,w,hp)=>hp*Math.exp(-t*2.6)*0.32),
+    }; }
+  function dplay(k,t,v,p,rate){ if (!DB) DB=mkDrums(); const s=ctx.createBufferSource(), g=ctx.createGain(); s.buffer=DB[k]; if (rate) s.playbackRate.value=rate; g.gain.value=v; s.connect(g);
+    let out=g; if (p && ctx.createStereoPanner){ const pp=ctx.createStereoPanner(); pp.pan.value=p; g.connect(pp); out=pp; } g.gain.value=v*0.75; out.connect(musG); s.start(t); }
+  const DR = {
+    kick:(t,v=1)=>{ dplay('kick',t,0.8*v); duck.gain.cancelScheduledValues(t); duck.gain.setValueAtTime(0.45,t); duck.gain.linearRampToValueAtTime(1,t+0.2); },
+    snare:(t,v=1)=>dplay('snare',t,0.75*v),
+    clap:(t,v=1)=>dplay('clap',t,0.7*v),
+    hat:(t,v=1,p)=>dplay('hat',t,0.5*v,p),
+    ohat:(t,v=1,p)=>dplay('ohat',t,0.45*v,p),
+    shaker:(t,v=1,p)=>dplay('shaker',t,0.5*v,p),
+    tom:(t,m,v=1)=>dplay('tom',t,0.7*v,0,hz(m)/110),
+    crash:(t,v=1)=>dplay('crash',t,0.6*v),
+  };
+  /* ---------- เพลงตามฉาก: สร้างทำนองจากโมทีฟ (ตั้ง seed ต่อธีมให้ได้เพลงเดิมทุกครั้ง) ---------- */
+  const MODES={maj:[0,2,4,5,7,9,11],min:[0,2,3,5,7,8,10],dor:[0,2,3,5,7,9,10],phr:[0,1,3,5,7,8,10],hmin:[0,2,3,5,7,8,11],lyd:[0,2,4,6,7,9,11],phd:[0,1,4,5,7,8,10],mix:[0,2,4,5,7,9,10]};
+  function seeded(s){ return ()=>{ s=(s*1103515245+12345)&0x7fffffff; return s/0x7fffffff; }; }
+  const RHY=[[1,0,1,0,1,1,1,0],[1,0,0,1,0,1,1,0],[1,1,1,0,1,0,1,0],[1,0,1,1,0,1,0,1],[1,0,0,0,1,0,1,1],[1,1,0,1,1,0,1,0]];
+  function buildSong(th){ const sc=MODES[th.mode], R=seeded(th.seed), deg=d=>{ const o=Math.floor(d/7); return sc[((d%7)+7)%7]+12*o; };
+    const prog=th.prog.concat(th.prog2||th.prog), chords=prog.map(d=>[0,2,4].map(k=>th.root+deg(d+k)));
+    const motif=()=>{ const r=RHY[Math.floor(R()*RHY.length)]; let cur=[0,2,4][Math.floor(R()*3)]; return r.map((on,i)=>{ if (!on) return null; if (i%4===0) cur=[0,2,4,7][Math.floor(R()*4)]; else cur+=R()<0.5?-1:1; return cur; }); };
+    const mA=motif(), mB=motif(), mel=[];
+    for (let b=0;b<8;b++){ const cad=b===3||b===7, mo=b<4?mA:mB, base=prog[b];
+      for (let s=0;s<8;s++){ let n=null;
+        if (cad){ if (s===0) n=b===7?7:4; else if (s===2) n=b===7?4:2; else if (s===4) n=b===7?0:1; }
+        else if (mo[s]!=null) n=mo[s]+(b%2&&s>3?1:0);
+        mel.push(n==null?0:th.root+24+deg((b===7&&cad?0:base)+n)+(th.mOct||0)); } }
+    return {th, chords, mel}; }
+  const TH={
+    town:{bpm:92,root:48,mode:'maj',prog:[0,5,3,4],seed:7,lead:'pluck',pad:'warm',arp:'bell',dr:'light',bass:'soft'},
+    forest:{bpm:104,root:43,mode:'lyd',prog:[0,1,5,4],seed:11,lead:'flute',pad:'warm',arp:'pluck',dr:'light',bass:'soft'},
+    crystal:{bpm:100,root:45,mode:'dor',prog:[0,3,6,4],seed:23,lead:'bell',pad:'glass',arp:'bell',dr:'light',bass:'soft'},
+    sky:{bpm:118,root:50,mode:'maj',prog:[0,4,5,3],prog2:[3,4,2,5],seed:31,lead:'flute',pad:'choir',arp:'pluck',dr:'light',bass:'soft'},
+    sea:{bpm:94,root:40,mode:'min',prog:[0,5,2,6],seed:41,lead:'bell',pad:'glass',arp:'pluck',dr:'shaker',bass:'soft'},
+    desert:{bpm:110,root:50,mode:'phd',prog:[0,1,0,6],prog2:[3,1,6,0],seed:53,lead:'erhu',pad:'warm',arp:'pluck',dr:'tribal',bass:'soft'},
+    castle:{bpm:104,root:48,mode:'hmin',prog:[0,5,3,4],seed:61,lead:'organ',pad:'dark',arp:'pluck',dr:'march',bass:'soft'},
+    ice:{bpm:96,root:42,mode:'min',prog:[0,5,6,4],seed:71,lead:'bell',pad:'glass',arp:'bell',dr:'light',bass:'soft'},
+    lava:{bpm:126,root:40,mode:'phr',prog:[0,1,6,5],seed:83,lead:'saw',pad:'dark',arp:'pluck',dr:'drive',bass:'saw'},
+    heaven:{bpm:98,root:51,mode:'maj',prog:[0,3,5,4],prog2:[5,3,1,4],seed:97,lead:'flute',pad:'choir',arp:'bell',dr:'light',bass:'soft'},
+    abyss:{bpm:88,root:47,mode:'hmin',prog:[0,1,5,4],seed:101,lead:'erhu',pad:'dark',arp:'bell',dr:'march',bass:'saw'},
+    gacha:{bpm:80,root:53,mode:'maj',prog:[0,6,5,4],seed:5,lead:null,pad:'glass',arp:'bell',dr:'none',bass:'soft'},
+    arena:{bpm:146,root:45,mode:'dor',prog:[0,6,5,6],prog2:[3,4,5,6],seed:131,lead:'lead',pad:'warm',arp:'pluck',dr:'drive',bass:'pulse',bat:1},
+    dragon:{bpm:156,root:40,mode:'hmin',prog:[0,5,1,4],prog2:[0,3,1,4],seed:149,lead:'lead',pad:'choir',arp:'pluck',dr:'boss',bass:'pulse',bat:1},
+  };
+  const SONG={};
+  function songOf(key){ if (SONG[key]) return SONG[key]; const [kind,z]=key.split(':'); let th;
+    if (!z) th=TH[kind]||TH.town;
+    else { const b=TH[z]||TH.forest;
+      if (kind==='battle') th=Object.assign({},b,{bpm:Math.round(b.bpm*1.3),lead:b.lead==='bell'?'saw':b.lead==='flute'?'lead':b.lead,pad:b.pad==='glass'?'warm':b.pad,dr:b.dr==='tribal'?'tribal2':'drive',bass:'pulse',bat:1,seed:b.seed+3});
+      else if (kind==='boss') th=Object.assign({},b,{bpm:152,mode:'hmin',prog:[0,5,1,4],prog2:[0,3,6,4],lead:'lead',pad:'choir',dr:'boss',bass:'pulse',bat:1,seed:b.seed+7,root:b.root>45?b.root-12:b.root});
+      else th=b; }
+    return SONG[key]=buildSong(th); }
+  function playStep(S,i,t){ const T=S.th, sd=60/T.bpm/2, bar=Math.floor(i/8)%8, s=i%8, ch=S.chords[bar], loopStart=i%64===0;
+    // pad + bass
+    if (s===0 && T.pad) PAD[T.pad](ch,t,sd*8,T.bat?0.02:0.028,duck);
+    if (T.bass==='pulse') INS.pluck(ch[0]-24+(s%2?12:0),t,sd*0.9,0.12,duck);
+    else if (T.bass==='saw'){ if (s%2===0) synth(ch[0]-24,t,sd*1.8,{v:0.13,dest:duck,type:'sawtooth',det:[-8,8],cut:700,cutEnd:200,a:0.005}); }
+    else if (s===0||s===3||s===6) tone(hz(ch[0]-12),t,sd*2.5,'triangle',0.13,duck);
+    // arp
+    if (T.arp){ const n=ch[(s*(T.bat?1:2))%3]+12+(s>=4&&T.bat?12:0); if (T.bat||s%2===0) INS[T.arp](n,t,sd*(T.bat?0.9:1.8),T.bat?0.03:0.035,duck,s%2?0.35:-0.35); }
+    // ทำนอง
+    if (T.lead){ const n=S.mel[i%S.mel.length]; if (n){ let len=1; while (len<4 && !S.mel[(i+len)%S.mel.length]) len++; INS[T.lead](n,t,sd*len*0.95,T.bat?0.07:0.075,musG,0); } }
+    // กลอง
+    const fill=bar===7&&s>=4, D=T.dr;
+    if (loopStart && T.bat) DR.crash(t);
+    if (D==='light'){ if (s===0) DR.kick(t,0.5); if (s%2) DR.shaker(t,0.8,s%4===1?-0.3:0.3); }
+    else if (D==='shaker'){ if (s%2) DR.shaker(t,0.9); if (s===0) DR.tom(t,40,0.4); }
+    else if (D==='tribal'){ if (s===0||s===3) DR.tom(t,43,0.7); if (s===6) DR.tom(t,48,0.5); if (s%2) DR.shaker(t); }
+    else if (D==='tribal2'){ if (s%2===0) DR.kick(t,0.8); if (s===4) DR.snare(t); [3,7].includes(s)&&DR.tom(t,s===3?50:45,0.7); DR.hat(t,s%2?1:0.5); }
+    else if (D==='march'){ if (s===0||s===4) DR.kick(t,0.8); if (s===2||s===6) DR.snare(t,0.6); if (fill) DR.snare(t,0.5+0.1*(s-4)); }
+    else if (D==='drive'){ if (s%2===0) DR.kick(t); if (s===2||s===6) DR.snare(t); DR.hat(t,s%2?0.9:0.5,s%2?0.3:-0.3); if (s%4===1) DR.ohat(t,0.6); if (fill) DR.snare(t,0.6); }
+    else if (D==='boss'){ if (s%2===0||s===3||s===7) DR.kick(t,s%2?0.7:1); if (s===2||s===6){ DR.snare(t); DR.clap(t,0.6); } DR.hat(t,0.8,s%2?0.35:-0.35); if (fill){ DR.tom(t,52-(s-4)*3,0.9); } } }
+  function sched(){ if (!ctx) return; if (want!==track){ track=want; step=0; nextT=ctx.currentTime+0.12; } if (!track||set.mus<=0) return; const S=songOf(track);
     if (nextT<ctx.currentTime) nextT=ctx.currentTime+0.05;
-    while (nextT<ctx.currentTime+0.3){ playStep(T,step,nextT); nextT+=60/T.bpm/2; step++; } }
+    while (nextT<ctx.currentTime+0.25){ playStep(S,step,nextT); nextT+=60/S.th.bpm/2; step++; } }
+  /* ---------- เอฟเฟกต์เสียง ---------- */
+  const rv=()=>sfxRev;
   const SFX={
     click:(t,d)=>tone(880,t,0.05,'square',0.04,d),
-    hit:(t,d)=>{ noise(t,0.06,0.3,d,1800,0.8,500); tone(160,t,0.12,'sine',0.35,d,50); tone(240,t,0.06,'square',0.05,d,110); },
-    crit:(t,d)=>{ noise(t,0.05,0.4,d,5000,0.6); noise(t+0.02,0.22,0.35,d,2200,0.7,400); tone(110,t,0.25,'sine',0.5,d,38); tone(1400,t,0.18,'sawtooth',0.06,d,300); tone(2637,t+0.03,0.35,'sine',0.05,d); },
-    slash:(t,d)=>{ noise(t,0.12,0.28,d,900,1.2,7000); noise(t+0.08,0.05,0.3,d,2600,0.8); tone(150,t+0.08,0.12,'sine',0.32,d,55); tone(1900,t+0.08,0.16,'triangle',0.04,d,1300); },
-    heavy:(t,d)=>{ tone(90,t,0.5,'sine',0.6,d,30); noise(t,0.35,0.4,d,700,0.6,150); noise(t,0.06,0.35,d,4000,0.7); tone(55,t+0.05,0.6,'triangle',0.3,d,28); },
-    fire:(t,d)=>{ noise(t,0.45,0.32,d,500,0.7,2500); noise(t+0.05,0.3,0.18,d,3000,1.5,800); tone(120,t,0.3,'sawtooth',0.08,d,60); },
-    ice:(t,d)=>{ [96,100,103,108].forEach((m,i)=>tone(hz(m),t+i*0.03,0.3,'sine',0.06,d)); noise(t,0.18,0.25,d,6000,2,2500); tone(140,t,0.1,'sine',0.25,d,60); },
-    thunder:(t,d)=>{ noise(t,0.04,0.5,d,6000,0.4); noise(t+0.03,0.6,0.35,d,400,0.5,80); tone(70,t,0.6,'sawtooth',0.12,d,30); },
-    dark:(t,d)=>{ tone(220,t,0.4,'sawtooth',0.07,d,55); tone(233,t,0.4,'sawtooth',0.07,d,58); noise(t,0.4,0.2,d,350,1.5,120); },
-    arrow:(t,d)=>{ noise(t,0.1,0.18,d,3000,3,8000); noise(t+0.09,0.05,0.3,d,1500,0.8); tone(180,t+0.09,0.08,'sine',0.25,d,70); },
-    enemy:(t,d)=>{ noise(t,0.1,0.32,d,600,0.6,200); tone(95,t,0.16,'sine',0.4,d,40); },
-    charge:(t,d)=>{ tone(180,t,0.5,'sawtooth',0.06,d,1400); tone(270,t,0.5,'square',0.03,d,2100); noise(t,0.5,0.12,d,400,2,6000); },
-    boom:(t,d)=>{ tone(70,t,0.8,'sine',0.7,d,25); noise(t,0.7,0.5,d,1200,0.5,90); noise(t,0.08,0.4,d,5000,0.6); },
-    kill:(t,d)=>{ noise(t,0.3,0.3,d,2500,0.8,300); tone(600,t,0.3,'square',0.05,d,80); [79,84].forEach((m,i)=>tone(hz(m),t+0.12+i*0.06,0.18,'triangle',0.06,d)); },
-    magic:(t,d)=>{ tone(600,t,0.2,'sine',0.1,d,1500); tone(900,t+0.04,0.2,'sine',0.07,d,2200); },
-    heal:(t,d)=>[72,76,79].forEach((m,i)=>tone(hz(m),t+i*0.06,0.25,'sine',0.09,d)),
-    coin:(t,d)=>{ tone(1319,t,0.08,'square',0.06,d); tone(1760,t+0.07,0.18,'square',0.06,d); },
-    upgrade:(t,d)=>[60,64,67,72].forEach((m,i)=>tone(hz(m+12),t+i*0.05,0.16,'triangle',0.1,d)),
-    levelup:(t,d)=>{ [67,72,76,79].forEach((m,i)=>tone(hz(m+12),t+i*0.07,0.14,'square',0.05,d)); [84,88,91].forEach(m=>tone(hz(m),t+0.3,0.5,'triangle',0.06,d)); },
-    pull:(t,d)=>{ noise(t,0.6,0.18,d,300,1.5,4000); tone(90,t+0.55,0.4,'sine',0.3,d,40); },
-    reveal:(t,d)=>[84,88,91,96].forEach((m,i)=>tone(hz(m),t+i*0.05,0.7,'sine',0.06,d)),
-    legend:(t,d)=>{ [72,76,79,84].forEach((m,i)=>tone(hz(m),t+i*0.09,0.18,'square',0.06,d)); [84,88,91].forEach(m=>tone(hz(m),t+0.4,0.9,'triangle',0.07,d)); noise(t+0.4,0.6,0.08,d,6000,0.5); },
-    ult:(t,d)=>{ tone(200,t,0.35,'sawtooth',0.08,d,900); noise(t,0.35,0.15,d,800,0.8,5000); },
-    win:(t,d)=>{ [67,72,76].forEach((m,i)=>tone(hz(m+12),t+i*0.12,0.14,'square',0.06,d)); [79,84,88].forEach(m=>tone(hz(m),t+0.4,0.8,'triangle',0.08,d)); },
-    lose:(t,d)=>[64,63,62,58].forEach((m,i)=>tone(hz(m),t+i*0.22,i===3?0.7:0.25,'triangle',0.1,d)),
+    hit:(t,d)=>{ noise(t,0.012,0.4,d,5000,0.7); noise(t,0.09,0.35,d,1600,0.8,400); tone(170,t,0.16,'sine',0.5,d,45,0.002); tone(320,t,0.05,'square',0.06,d,120); },
+    crit:(t,d)=>{ // กระแทกหนัก + เสียงเหล็กกังวาน + เบสดิ่ง + หางเสียงก้อง
+      noise(t,0.02,0.6,d,6000,0.5); tone(140,t,0.45,'sine',0.75,d,28,0.002); noise(t,0.3,0.45,d,1800,0.6,250);
+      [2093,3136,4186].forEach((f,i)=>tone(f*(1+i*0.013),t+0.02,0.6-i*0.12,'sine',0.07,d,0,0.002,(i-1)*0.5));
+      tone(1200,t+0.01,0.25,'sawtooth',0.07,d,180); noise(t+0.02,0.7,0.2,rv(),3000,0.6,600); tone(55,t+0.04,0.5,'triangle',0.35,d,30); },
+    slash:(t,d)=>{ noise(t,0.13,0.3,d,800,1.4,8000,'bandpass',-0.4); noise(t+0.09,0.05,0.35,d,3000,0.8,0,'bandpass',0.4); tone(160,t+0.09,0.14,'sine',0.38,d,50,0.002); tone(2400,t+0.09,0.22,'triangle',0.05,d,1600); },
+    heavy:(t,d)=>{ tone(95,t,0.55,'sine',0.75,d,28,0.002); noise(t,0.4,0.45,d,700,0.6,120); noise(t,0.05,0.45,d,4500,0.6); tone(48,t+0.05,0.7,'triangle',0.35,d,26); noise(t,0.8,0.18,rv(),800,0.5,200); },
+    fire:(t,d)=>{ noise(t,0.5,0.38,d,400,0.7,3000); noise(t+0.06,0.35,0.22,d,3500,1.5,700); tone(110,t,0.35,'sawtooth',0.1,d,55); tone(80,t,0.3,'sine',0.4,d,40,0.002); noise(t,0.6,0.15,rv(),1500,0.6); },
+    ice:(t,d)=>{ [96,100,103,108].forEach((m,i)=>tone(hz(m),t+i*0.03,0.4,'sine',0.07,d,0,0.002,(i-1.5)*0.3)); noise(t,0.2,0.3,d,6500,2,2500); tone(150,t,0.12,'sine',0.35,d,55,0.002); noise(t+0.05,0.5,0.12,rv(),7000,1); },
+    thunder:(t,d)=>{ noise(t,0.04,0.6,d,6500,0.4); noise(t+0.03,0.7,0.42,d,450,0.5,70); tone(65,t,0.7,'sawtooth',0.15,d,28); noise(t,1,0.2,rv(),900,0.5,150); },
+    dark:(t,d)=>{ tone(220,t,0.45,'sawtooth',0.08,d,52); tone(233,t,0.45,'sawtooth',0.08,d,55); noise(t,0.45,0.25,d,350,1.5,110); tone(70,t,0.4,'sine',0.35,d,35,0.002); noise(t,0.7,0.12,rv(),500,1); },
+    arrow:(t,d)=>{ noise(t,0.1,0.2,d,3000,3,9000,'bandpass',-0.5); noise(t+0.09,0.05,0.35,d,1600,0.8,0,'bandpass',0.4); tone(190,t+0.09,0.1,'sine',0.32,d,70,0.002); },
+    enemy:(t,d)=>{ noise(t,0.12,0.38,d,600,0.6,180); tone(100,t,0.2,'sine',0.5,d,38,0.002); noise(t,0.015,0.25,d,3500,0.8); },
+    charge:(t,d)=>{ // ไรเซอร์ก่อนอัลติเมท
+      synth(48,t,0.7,{v:0.08,dest:d,type:'sawtooth',det:[-15,15],cut:400,cutEnd:6000,a:0.05,glide:4}); noise(t,0.7,0.2,d,500,2,9000,'bandpass'); tone(hz(84),t+0.6,0.4,'sine',0.06,d); },
+    ulthit:(t,d)=>{ tone(70,t,0.9,'sine',0.85,d,24,0.002); noise(t,0.8,0.5,d,1300,0.5,80); noise(t,0.03,0.55,d,6000,0.5);
+      [0,4,7,12].forEach(k=>synth(52+k,t,0.9,{v:0.05,dest:d,type:'sawtooth',det:[-12,12],cut:3000,cutEnd:400,a:0.005})); noise(t,1.4,0.3,rv(),1500,0.5,200); },
+    boom:(t,d)=>{ tone(70,t,0.85,'sine',0.8,d,24,0.002); noise(t,0.75,0.55,d,1200,0.5,85); noise(t,0.08,0.45,d,5000,0.6); noise(t,1.2,0.25,rv(),1000,0.5,150); },
+    kill:(t,d)=>{ noise(t,0.3,0.32,d,2500,0.8,300); tone(620,t,0.3,'square',0.05,d,80); [79,84,91].forEach((m,i)=>tone(hz(m),t+0.1+i*0.05,0.25,'triangle',0.06,d,0,0.004,(i-1)*0.4)); },
+    magic:(t,d)=>{ tone(600,t,0.25,'sine',0.12,d,1600); tone(900,t+0.04,0.25,'sine',0.08,d,2400); [88,91,95].forEach((m,i)=>tone(hz(m),t+0.05+i*0.04,0.3,'sine',0.04,d,0,0.003,(i-1)*0.5)); noise(t,0.5,0.1,rv(),5000,1); },
+    heal:(t,d)=>{ [72,76,79,84].forEach((m,i)=>tone(hz(m),t+i*0.06,0.45,'sine',0.09,d,0,0.01,(i-1.5)*0.3)); noise(t,0.6,0.06,rv(),6000,1); },
+    combo:(t,d)=>{ [76,79,83,88].forEach((m,i)=>tone(hz(m),t+i*0.045,0.2,'square',0.05,d,0,0.003,(i-1.5)*0.4)); tone(hz(95),t+0.2,0.5,'sine',0.07,d); noise(t+0.18,0.4,0.1,rv(),7000,1); },
+    dodge:(t,d)=>{ noise(t,0.18,0.25,d,1200,1.5,7000,'bandpass',0.5); tone(900,t,0.12,'sine',0.04,d,1800); },
+    revive:(t,d)=>{ PAD.choir([60,64,67],t,1.4,0.035,d); [72,79,84,88].forEach((m,i)=>tone(hz(m),t+0.1+i*0.08,0.8,'sine',0.07,d)); noise(t,1.2,0.12,rv(),6000,0.8); },
+    coin:(t,d)=>{ tone(1319,t,0.08,'square',0.06,d); tone(1760,t+0.07,0.22,'square',0.06,d); },
+    upgrade:(t,d)=>[60,64,67,72].forEach((m,i)=>tone(hz(m+12),t+i*0.05,0.18,'triangle',0.1,d)),
+    levelup:(t,d)=>{ [67,72,76,79].forEach((m,i)=>tone(hz(m+12),t+i*0.07,0.14,'square',0.05,d)); [84,88,91].forEach(m=>tone(hz(m),t+0.3,0.6,'triangle',0.06,d)); noise(t+0.3,0.8,0.08,rv(),6000,1); },
+    pull:(t,d)=>{ noise(t,0.6,0.2,d,300,1.5,4500); tone(90,t+0.55,0.45,'sine',0.35,d,40); },
+    reveal:(t,d)=>{ [84,88,91,96].forEach((m,i)=>tone(hz(m),t+i*0.05,0.8,'sine',0.06,d)); noise(t,0.8,0.08,rv(),7000,1); },
+    legend:(t,d)=>{ [72,76,79,84].forEach((m,i)=>tone(hz(m),t+i*0.09,0.2,'square',0.06,d)); PAD.choir([60,64,67],t+0.35,1.3,0.04,d); [84,88,91].forEach(m=>tone(hz(m),t+0.4,1,'triangle',0.07,d)); DRX(t+0.4,d); },
+    ult:(t,d)=>{ synth(55,t,0.4,{v:0.09,dest:d,type:'sawtooth',det:[-10,10],cut:600,cutEnd:5000,glide:3}); noise(t,0.4,0.2,d,800,0.8,6000); },
+    win:(t,d)=>{ [67,72,76].forEach((m,i)=>tone(hz(m+12),t+i*0.12,0.14,'square',0.06,d)); [79,84,88].forEach(m=>synth(m,t+0.4,1,{v:0.05,dest:d,type:'sawtooth',det:[-10,10],cut:3000,a:0.01,sus:0.5})); DRX(t+0.4,d); },
+    lose:(t,d)=>[64,63,62,58].forEach((m,i)=>tone(hz(m),t+i*0.22,i===3?0.8:0.25,'triangle',0.1,d)),
     start:(t,d)=>{ noise(t,0.3,0.15,d,400,1,3000); tone(300,t,0.25,'triangle',0.08,d,700); },
     error:(t,d)=>{ tone(220,t,0.1,'square',0.05,d); tone(165,t+0.1,0.15,'square',0.05,d); },
     open:(t,d)=>{ tone(523,t,0.08,'triangle',0.07,d); tone(784,t+0.06,0.14,'triangle',0.07,d); },
   };
+  function DRX(t,d){ noise(t,1.3,0.12,d,7000,0.4,3000,'highpass'); noise(t,1.5,0.06,rv(),6000,0.5); }
   function sfx(n){ if (!ctx||set.sfx<=0||!SFX[n]) return; const now=performance.now(); if (last[n]&&now-last[n]<55) return; last[n]=now; try{ SFX[n](ctx.currentTime+0.005,sfxG); }catch(e){} }
   function blip(pitch, n){ if (!ctx||(set.voice===0)) return; const t0=ctx.currentTime+0.01, v=(set.voice==null?1:set.voice)*0.07;
     for (let i=0;i<n;i++){ const f=pitch*(0.85+Math.random()*0.35); tone(f,t0+i*0.075,0.06,'square',v,sfxG,f*1.12); } }
   function music(n){ want=n; }
-  function vol(k,v){ set[k]=v; try{ localStorage.setItem('dq_snd',JSON.stringify(set)); }catch(e){} if (ctx){ musG.gain.value=set.mus*0.5; sfxG.gain.value=set.sfx; } }
+  function vol(k,v){ set[k]=v; try{ localStorage.setItem('dq_snd',JSON.stringify(set)); }catch(e){} if (ctx){ musG.gain.value=set.mus*0.55; sfxG.gain.value=set.sfx; } }
   if (typeof document!=='undefined') document.addEventListener('pointerdown',()=>init(),{capture:true});
   if (typeof document!=='undefined') document.addEventListener('visibilitychange',()=>{ if (!ctx) return; if (document.hidden) ctx.suspend(); else ctx.resume(); });
-  return {sfx, music, vol, set, init, blip};
+  return {sfx, music, vol, set, init, blip, _song:songOf, _render:renderOff};
+
 })();
+/* 🔗 เอฟเฟกต์ติดคอมโบ (ใช้ทุกโหมด): ตัวหนังสือใหญ่ + วงแสง + จอสั่น */
+function comboBurst(host, n, sub){ try{ if (!host) return; const e=document.createElement('div'); const lv=Math.min(4,Math.max(1,(n|0)-1)); e.className='cbst lv'+lv;
+  e.innerHTML=`<i class="cbr"></i><i class="cbr r2"></i><b><small>COMBO</small>${n>1?'x'+n:''}</b>${sub?`<em>${sub}</em>`:''}`; host.appendChild(e); setTimeout(()=>e.remove(),1100);
+  host.classList.remove('cbshk'); void host.offsetWidth; host.classList.add('cbshk'); setTimeout(()=>host.classList.remove('cbshk'),400); SND.sfx('combo'); }catch(e){} }
 if (typeof window!=='undefined') window.sndVol = (k,v) => { SND.vol(k,v/100); const o=document.getElementById('sv_'+k); if (o) o.textContent=v+'%'; };
 /* ---------- utils ---------- */
 let rng = Math.random;
@@ -3339,7 +3468,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.49</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.50</span>'}</div>`;
   }
   let runSet=false, runQuit=false;
   function runPop(){
@@ -3595,7 +3724,7 @@ if (typeof document !== 'undefined') (function(){
     if (on && !shown){ el.innerHTML=tkInner(); el.classList.remove('tkhide'); }
     else if (!on && shown){ el.classList.add('tkhide'); setTimeout(()=>{ if (el.classList.contains('tkhide')) el.innerHTML=''; },450); } },1000);
   /* ---------- 🔔 แจ้งเตือนเกมมีอัปเดต ---------- */
-  const GAME_VER='v3.49'; let updSkip='', updT=0;
+  const GAME_VER='v3.50'; let updSkip='', updT=0;
   function updCheck(){ if (location.protocol==='file:' || document.getElementById('updpop')) return; if (Date.now()-updT<60000) return; updT=Date.now();
     fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{ if (!j||!j.v||j.v===GAME_VER||j.v===updSkip) return; updShow(j); }).catch(()=>{}); }
   function updShow(j){ const inRun=S&&S.phase&&S.phase!=='title'&&!S.over&&!hub, d=document.createElement('div'); d.id='updpop';
@@ -3682,7 +3811,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="pbtns"><button class="choice" data-act="guideopen"><span>📚 ข้อมูลเกม</span><small>ระดับอุปกรณ์ · ธาตุ · อาชีพ · อัตราสุ่ม · โหมดเกม</small></button><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.49<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.50<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
@@ -4015,11 +4144,13 @@ if (typeof document !== 'undefined') (function(){
   window.addEventListener('resize',()=>{ if (document.getElementById('tut')&&tutKey) tutShow(); });
   /* เพลงตามหน้าที่อยู่ + เสียงกดปุ่ม */
   let sndPhase=null;
+  const ZKEY={'ป่าเวทมนตร์':'forest','ถ้ำคริสตัล':'crystal','เกาะลอยฟ้า':'sky','วิหารใต้สมุทร':'sea','สุสานทะเลทราย':'desert','ปราสาทร้าง':'castle','ปราสาทน้ำแข็ง':'ice','เมืองลาวา':'lava','วิหารเทพล่มสลาย':'heaven','ห้วงเหว':'abyss'};
   function sndAuto(){ if (!S) return; let tr='town';
-    if (htFight){ tr=htFight.done?'town':htKind(htFight.f)==='boss'?'boss':'battle'; }
-    else if (dhFight) tr='boss';
-    else if (S.phase==='battle') tr=S.bossFight?'boss':'battle';
-    else if (S.phase==='walk'||S.phase==='event') tr='adv';
+    const zf=f=>{ try{ return ZKEY[band(f).name]||'forest'; }catch(e){ return 'forest'; } };
+    if (htFight){ const z=(()=>{ try{ return htMapOf(htFight.f).key||'forest'; }catch(e){ return 'forest'; } })(); tr=htFight.done?'town':htFight.cus&&htFight.cus.pvp?'arena':htKind(htFight.f)==='boss'?'boss:'+z:'battle:'+z; }
+    else if (dhFight) tr='dragon';
+    else if (S.phase==='battle') tr=(S.bossFight?'boss:':'battle:')+zf(S.floor);
+    else if (S.phase==='walk'||S.phase==='event') tr='adv:'+zf(S.floor);
     else if (S.phase==='title' && hub==='gacha') tr='gacha';
     SND.music(tr);
     if (sndPhase!==S.phase){ if (S.phase==='dead') SND.sfx('lose'); if (S.phase==='victory') SND.sfx('win'); sndPhase=S.phase; } }
@@ -4472,8 +4603,8 @@ if (typeof document !== 'undefined') (function(){
   const tsBtn = () => `<button class="choice alt tsbtn" data-act="tsum"><span>📊 ดูสรุปการต่อสู้รายตัว</span></button>`;
   function dhStart(){ const m=loadMeta(), S0=dhState(m), D=dhDragon(); if (!S0.team.length||S0.tries.n>=DH_TRIES) return; S0.tries.n++; storeMeta(m);
     tsOpen=false; const tm=dhTeam(m,D); dhFight={D, tm, t:0, dmg:0, hp:tm.hp, mx:tm.hp, phase:0, atkT:2.5, hitT:tm.T.map((_,i)=>0.3+i*0.25), ultT:tm.T.map((_,i)=>7+i*2.5), sg:tm.T.map((_,i)=>i*33), drT:0, done:false, msg:''};
-    render(); dhFight.iv=setInterval(dhTick,100); }
-  function dhFx(html, cls, x, y){ const L=document.getElementById('dhfx'); if (!L) return; const e=document.createElement('div'); e.className='dhf '+cls; e.style.left=x+'%'; e.style.top=y+'%'; e.innerHTML=html; L.appendChild(e); setTimeout(()=>e.remove(),1100); }
+    render(); dhFight.iv=setInterval(()=>{ for (let k=0;k<dhSpd&&dhFight&&!dhFight.done;k++) dhTick(); },100); }
+  function dhFx(html, cls, x, y){ if (dhFight&&dhFight.skip) return; const L=document.getElementById('dhfx'); if (!L) return; const e=document.createElement('div'); e.className='dhf '+cls; e.style.left=x+'%'; e.style.top=y+'%'; e.innerHTML=html; L.appendChild(e); setTimeout(()=>e.remove(),1100); }
   function dhTick(){ const F=dhFight; if (!F||F.done) return; const dt=0.1, D=F.D, tm=F.tm; F.t+=dt;
     const ph=F.dmg>=DH_HP*0.75?3:F.dmg>=DH_HP*0.5?2:F.dmg>=DH_HP*0.25?1:0;
     if (ph>F.phase){ F.phase=ph; const msg=['','ช่วงที่ 2: มังกรโกรธ!','ช่วงที่ 3: มังกรบินขึ้นฟ้า!','ช่วงสุดท้าย: มังกรคลั่ง!!'][ph]; dhFx(msg,'dhph',50,30); const dr=document.getElementById('dhdrag'); if (dr){ dr.classList.remove('roar'); void dr.offsetWidth; dr.classList.add('roar'); } }
@@ -4487,7 +4618,7 @@ if (typeof document !== 'undefined') (function(){
         const cr=h.fx.cr>0&&Math.random()*100<h.fx.cr; if (cr) h.cc=(h.cc||0)+1; const d=h.dps*tm.relB*(tm.hasC?1:0.75)*regen*(0.9+Math.random()*0.2)*(1+h.fx.dmg/100)*(1+h.fx.boss/100)*(cr?2:1); F.dmg+=d; h.dd+=d; h.mh=Math.max(h.mh||0,d); dhFx(fmtN(d),'dhd'+(h.em>1||cr?' weak':''),52+Math.random()*22,28+Math.random()*24);
         if (h.fx.steal>0){ const a=Math.min(F.mx-F.hp,d*h.fx.steal/100*0.5); F.hp+=a; h.hl+=a; }
         if (u){ u.classList.remove('hit'); void u.offsetWidth; u.classList.add('hit'); } SND.sfx(({fire:'fire',water:'ice',wood:'slash',earth:'hit',light:'magic',dark:'dark'})[h.el]||'hit'); }
-      if (F.ultT[i]<=0){ F.ultT[i]=9/(1+h.fx.en/100); h.uc=(h.uc||0)+1; F.chain=F.t-(F.lastUlt==null?-99:F.lastUlt)<=1&&F.lastUid!==h.id?(F.chain||0)+1:1; F.lastUlt=F.t; F.lastUid=h.id; if (F.chain>=2){ h.cb=(h.cb||0)+1; F.maxChain=Math.max(F.maxChain||0,F.chain); dhFx(`🔗 คอมโบ x${F.chain}!`,'dhph',50,48); } const d=(1+0.05*Math.min(3,F.chain-1))*h.dps*tm.relB*(tm.hasC?1:0.75)*regen*5*(1+h.fx.dmg/100)*(1+h.fx.boss/100)*(1+h.fx.ult/100); F.dmg+=d; h.dd+=d; h.mh=Math.max(h.mh||0,d); dhFx(`💥 ${fmtN(d)}`,'dhd ult',58,22+i*8); dhFx('','dhbeam el-'+h.el,40,40);
+      if (F.ultT[i]<=0){ F.ultT[i]=9/(1+h.fx.en/100); h.uc=(h.uc||0)+1; F.chain=F.t-(F.lastUlt==null?-99:F.lastUlt)<=1&&F.lastUid!==h.id?(F.chain||0)+1:1; F.lastUlt=F.t; F.lastUid=h.id; if (F.chain>=2){ h.cb=(h.cb||0)+1; F.maxChain=Math.max(F.maxChain||0,F.chain); if (!F.skip) comboBurst(document.getElementById('dhstage'), F.chain, ALLCHARS[h.id].c.name.split(' ')[0]+' · ท่าไม้ตายต่อเนื่อง'); } const d=(1+0.05*Math.min(3,F.chain-1))*h.dps*tm.relB*(tm.hasC?1:0.75)*regen*5*(1+h.fx.dmg/100)*(1+h.fx.boss/100)*(1+h.fx.ult/100); F.dmg+=d; h.dd+=d; h.mh=Math.max(h.mh||0,d); dhFx(`💥 ${fmtN(d)}`,'dhd ult',58,22+i*8); dhFx('','dhbeam el-'+h.el,40,40);
         { const st=document.getElementById('dhstage'), [tx,ty]=relXY(st,document.getElementById('dhdrag')), [hx,hy]=relXY(st,u,0.9); SND.sfx('charge'); ultFX(st, h.id, h.el, h.cls==='support'?'healAll':h.cls==='tank'?'shieldAll':'dmg', tx, ty, hx, hy, (CHAR_KIT[h.id]&&CHAR_KIT[h.id].ult&&CHAR_KIT[h.id].ult.name)||'ท่าไม้ตาย'); st&&st.classList.add('shake'); setTimeout(()=>st&&st.classList.remove('shake'),300); }
         if (u){ u.classList.remove('ult'); void u.offsetWidth; u.classList.add('ult'); } } });
     F.atkT-=dt; if (F.atkT<=0){ F.atkT=[3,2.6,2.2,1.4][F.phase]; let d=1500*[1,1.25,1.5,2.2][F.phase]*(tm.hasC?1:1.4);
@@ -4504,11 +4635,13 @@ if (typeof document !== 'undefined') (function(){
     F.slain=dmg>=DH_HP; F.died=F.hp<=0; S0.dmg+=dmg; S0.best=Math.max(S0.best||0,dmg); let sc=Math.floor(dmg/20000)+(F.slain?50:0);
     if (F.slain){ F.first=!S0.kills[F.D.el]; S0.kills[F.D.el]=true; S0.slain=true; }
     S0.scales+=sc; F.res={dmg,sc,total:S0.dmg}; if (S0.dmg>=DH_TIERS[4].v){ m.ach=m.ach||{}; m.ach.dragonL=true; } storeMeta(m); setTimeout(()=>render(),400); }
+  const DH_BG={fire:'bg_lava.jpg',water:'bg_sea.webp',wood:'bg_forest.jpg',earth:'bg_cave.jpg',light:'bg_heaven.webp',dark:'bg_abyss.jpg'};
+  let dhSpd=(()=>{ try{ return Math.min(3,Math.max(1,+localStorage.getItem('dq_dhspd')||1)); }catch(e){ return 1; } })();
   function dhFightHtml(m){ const F=dhFight, D=F.D, tm=F.tm, dr=DRAGON_READY.has(`dragon_${D.el}.webp`);
     return `<div class="dhfight" style="--dc:${D.col}" ${F.done?'data-act="dhclose"':''}>
-      <div class="dhtop"><div><b>${D.name}</b> ${elIcon(D.el)}</div><div class="dhtime">⏱ <b id="dhtime">${Math.max(0,Math.ceil(DH_TIME-F.t))}</b></div></div>
+      <div class="dhtop"><div><b>${D.name}</b> ${elIcon(D.el)}</div><div class="dhtime">⏱ <b id="dhtime">${Math.max(0,Math.ceil(DH_TIME-F.t))}</b></div>${F.done?'':`<button class="mini dhsb" data-act="dhspd">⏩ x${dhSpd}</button><button class="mini dhsb" data-act="dhskip">⏭ ข้าม</button>`}</div>
       <div class="dhhp"><div class="dhhpb"><i id="dhbar" style="width:${(1-F.dmg/DH_HP)*100}%"></i>${[25,50,75].map(p=>`<em style="left:${p}%"></em>`).join('')}</div><span>ดาเมจ <b id="dhdmg">${fmtN(F.dmg)}</b></span></div>
-      <div class="dhstage" id="dhstage"><div class="dhdrag" id="dhdrag">${dr?`<img src="art/dragon_${D.el}.webp" alt="">`:`<span>🐉</span>`}</div>
+      <div class="dhstage" id="dhstage" style="background:linear-gradient(rgba(10,4,16,.15),rgba(10,4,16,.25) 55%,rgba(6,2,10,.75)),url(art/${DH_BG[D.el]||'bg_dragonlair.jpg'}) center/cover"><div class="dhdrag" id="dhdrag">${dr?`<img src="art/dragon_${D.el}.webp" alt="">`:`<span>🐉</span>`}</div>
         <div class="dhteam">${tm.T.map((h,i)=>`<div class="dhh" id="dhh${i}">${charArt(ALLCHARS[h.id].c,m.chars[h.id]&&m.chars[h.id].form)}${relicOf(m,h.id)?`<span class="dhrel">${relicIco(relicOf(m,h.id))}</span>`:''}${h.sig?`<div class="dhsg"><i id="dhsg${i}"></i></div>`:''}</div>`).join('')}</div>
         <div class="dhtbar"><i id="dhtbar" style="width:${F.hp/F.mx*100}%"></i></div><div id="dhfx" class="dhfx"></div></div>
       ${F.done&&F.res?`<div class="dhres"><div class="dhrt">${F.slain?'🏆 ล้มมังกรสำเร็จ!':F.died?'💀 ทีมพ่ายแพ้':'⏱ หมดเวลา'}</div>
@@ -4544,6 +4677,8 @@ if (typeof document !== 'undefined') (function(){
     if (act==='dhpick'){ dhPick=true; render(); return true; }
     if (act==='dhpickc'){ dhPick=false; render(); return true; }
     if (act==='dhstart'){ dhStart(); return true; }
+    if (act==='dhspd'){ dhSpd=dhSpd>=3?1:dhSpd+1; try{ localStorage.setItem('dq_dhspd',dhSpd); }catch(e){} const bb=document.querySelector('[data-act=dhspd]'); if (bb) bb.textContent='⏩ x'+dhSpd; return true; }
+    if (act==='dhskip'){ const F=dhFight; if (!F||F.done) return true; F.skip=true; let g=0; while (!F.done && g++<5000) dhTick(); return true; }
     if (act==='dhclose'){ if (dhFight&&!dhFight.done) return true; dhFight=null; render(); return true; }
     const m=loadMeta(), S0=dhState(m);
     if (act==='dhtog'){ const id=b.dataset.k, i=S0.team.indexOf(id); if (i>=0) S0.team.splice(i,1); else if (S0.team.length<3) S0.team.push(id); storeMeta(m); render(); return true; }
@@ -4591,7 +4726,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="pop-f">${c?'':'ยังไม่มีตัวนี้ เก็บเศษไว้ได้ ใช้ได้เมื่อได้ตัวแล้ว<br>'}แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   /* ---------- หอคอยร้อยชั้น : 10 แมพ x 10 ชั้น · ชั้น x5 มินิบอส · ชั้น x10 บอสประจำแมพ · 3 ระลอก · 1-3 ดาว · ใช้สายฟ้า ⚡ · กวาดชั้นที่ได้ 3 ดาว ---------- */
-  const HT_MAX = 100, HT_OPEN = 100, HT_TIME = 120, HT_EN_MAX = 60, HT_EN_MS = 6*60*1000;
+  const HT_MAX = 100, HT_OPEN = 100, HT_TIME = 120, HT_EN_MAX = 100, HT_EN_MS = 3*60*1000;
   /* ภาพใหม่ที่ส่งมาแล้ว (ใส่ชื่อไฟล์ไม่มี .webp) : mon_xxx, mb_<map>, bs_<map>, bg_<map> */
   const MAPART_READY = new Set(['bs_forest','bs_crystal','bs_sky','bs_sea','bs_desert','bs_castle','bs_ice','bs_lava','bs_heaven','bs_abyss','mb_abyss','mb_castle','mb_crystal','mb_desert','mb_forest','mb_heaven','mb_ice','mb_lava','mb_sea','mb_sky','mon_coralcrab','mon_darkmermaid','mon_firefox','mon_goldlion','mon_holystatue','mon_jelly','mon_lostangel','mon_madwisp','mon_mummy','mon_sandworm','mon_scarab','mon_sharkguard']);
   const VO_PICK={"leo": "สิงห์ทองไม่เคยถอย! ข้าจะปกป้องทุกคนเอง!", "coral": "กระแสน้ำจะคุ้มครองเจ้าเอง", "gason": "ภูผาไม่เคยหวั่นไหว ข้าก็เช่นกัน", "brenda": "โล่ใบนี้ ไม่มีใครเจาะผ่าน!", "titan": "ราชาเหล็ก พร้อมออกรบ!", "marine": "ดาบของข้า สงบดั่งคลื่น แต่ร้ายกาจ", "blaze": "ฮ่า! ไฟลุกแล้ว ใครอยากโดนเผาบ้าง!", "raiden": "ฟ้าผ่าครั้งเดียว ก็พอแล้ว!", "mira": "ดาบคู่นี้ เร็วกว่าที่เจ้าคิดนะ!", "athena": "รุ่งเช้ามาถึงแล้ว ตามข้ามา!", "elena": "แสงจันทร์จะนำทางเรา", "ivy": "ดอกไม้สวยๆ… แต่มีพิษนะจ๊ะ", "luna": "ราตรีนี้… เป็นของข้า", "ignis": "ไฟของข้า เผาได้ทุกสิ่ง!", "celeste": "จงคุกเข่าต่อหน้าราชินีน้ำแข็ง", "panpan": "เจ็บตรงไหน ปันปันช่วยเอง!", "nyx": "ราตรีเงียบงัน… จะโอบกอดเจ้า", "serena": "แสงยามเช้า จะรักษาทุกบาดแผล", "toby": "มาฟังเพลงของโทบี้กันเถอะ!", "lumina": "ขอพรแห่งแสง จงอยู่กับเจ้า", "seris": "ลูกศรของข้า ไม่เคยพลาดเป้า", "ash": "ศรไฟพร้อมแล้ว ยิงเลย!", "finn": "ป่าคือบ้าน ข้าคือนักล่า", "raven": "เป้าหมาย อยู่ในสายตาแล้ว", "artemis": "ดวงดาวชี้ทาง ให้ศรของข้า", "scorp": "พิษแมงป่อง… ไม่มียาแก้", "sol": "แดดส่องที่ไหน ความตายอยู่ที่นั่น", "yami": "ข้าคือเงา… เจ้ามองไม่เห็นข้าหรอก", "kira": "จิ้งจอกเจ้าเล่ห์ มาแล้วจ้า!", "shada": "ติดใยของข้าแล้ว… หนีไม่พ้นหรอก", "nameless": "ชื่อไม่สำคัญ… ดาบจะพูดแทนข้า", "sage": "ความรู้ คืออาวุธที่คมที่สุด", "giant": "ยักษ์ใจดี จะช่วยเจ้าเอง ฮ่าฮ่า", "knight": "อัศวินพเนจร พร้อมรับใช้!", "gambler": "เดิมพันครั้งนี้ ข้าไม่มีวันแพ้!", "smith": "ค้อนนี้ตีเหล็กมาร้อยปี ตีหัวสัตว์ก็ได้!"};
@@ -4679,12 +4814,12 @@ if (typeof document !== 'undefined') (function(){
   function htWave(){ const F=htFight; F.E=F.W[F.wi].map((e,i)=>Object.assign({},e,{slot:i,at:e.ehero?0.4+i*0.15+Math.random()*0.4:1+i*0.3,lg:0,hit:0,cnt:0})); }
   function htFx(o){ htFight.fx.push(Object.assign({t:0},o)); }
   const htPos = (u,hero) => { const c=document.getElementById('htcv'); const W=c?c.clientWidth:375, H=c?c.clientHeight:560, p=(hero?HT_HPOS:u.ehero?HT_EHPOS:HT_EPOS)[u.slot]; return [p[0]*W,p[1]*H,W,H]; };
-  function htRevive(F,u,hero){ if (u.hp>0||u.rv||!(u.fx&&u.fx.rev>0)) return; u.rv=1; u.hp=u.mx*u.fx.rev/100; const [x,y,,H]=htPos(u,hero); htFx({k:'n',x,y:y-H*0.22,txt:'🪶 ฟื้นคืนชีพ!',col:'#ffd56a',big:true}); SND.sfx('heal'); }
-  function htDodge(F,u,hero){ if (!(u.fx&&u.fx.dodge>0) || Math.random()*100>=u.fx.dodge) return false; u.dg=(u.dg||0)+1; const [x,y,,H]=htPos(u,hero); htFx({k:'n',x,y:y-H*0.15,txt:'หลบ!',col:'#9fe7ff'}); return true; }
+  function htRevive(F,u,hero){ if (u.hp>0||u.rv||!(u.fx&&u.fx.rev>0)) return; u.rv=1; u.hp=u.mx*u.fx.rev/100; const [x,y,,H]=htPos(u,hero); htFx({k:'n',x,y:y-H*0.22,txt:'🪶 ฟื้นคืนชีพ!',col:'#ffd56a',big:true}); SND.sfx('revive'); }
+  function htDodge(F,u,hero){ if (!(u.fx&&u.fx.dodge>0) || Math.random()*100>=u.fx.dodge) return false; u.dg=(u.dg||0)+1; SND.sfx('dodge'); const [x,y,,H]=htPos(u,hero); htFx({k:'n',x,y:y-H*0.15,txt:'หลบ!',col:'#9fe7ff'}); return true; }
   function htDmgE(F,h,e,mul,crit){ if (e.hp<=0) return 0; const fx=h.fx||FX0(); if (!crit && fx.cr>0 && Math.random()*100<fx.cr) crit=true;
     if (e.ehero && htDodge(F,e,false)) return 0;
     const d=h.atk*F.relB*htElMul(h.el,e.el)*mul*(crit?2:1)*(0.9+Math.random()*0.2)*(1-(e.res||0))*(F.esh>0?0.5:1)*(F.pvpD||1)*(1+fx.dmg/100)*(e.boss?1+fx.boss/100:1)*(h.ulting?(1+fx.ult/100)*(h.cbK||1):1)*(1-((e.fx&&e.fx.dr)||0)/100);
-    const real=Math.min(d,e.hp); h.dd=(h.dd||0)+real; h.mh=Math.max(h.mh||0,real); if (crit) h.cc=(h.cc||0)+1; if (e.hp>0&&e.hp-d<=0&&!(e.fx&&e.fx.rev>0&&!e.rv)) h.kl=(h.kl||0)+1; if (e.ehero) e.tk=(e.tk||0)+real; if (fx.steal>0) htHeal(h,real*fx.steal/100,h); e.hp-=d; if (e.ehero) htRevive(F,e,false); e.hit=0.15; if (e.ehero) e.en=Math.min(100,(e.en||0)+6); SND.sfx(crit?'crit':mul>=2?'heavy':({fire:'fire',water:'ice',wood:'slash',earth:'hit',light:'magic',dark:'dark'})[h.el]||'hit'); if (crit||mul>=2){ F.shk=Math.max(F.shk||0,0.18); htFx({k:'spark',x:htPos(e,false)[0],y:htPos(e,false)[1]-htPos(e,false)[3]*(e.boss?0.12:0.06),col:crit?'#ff7af0':'#ffe08a'}); }
+    const real=Math.min(d,e.hp); h.dd=(h.dd||0)+real; h.mh=Math.max(h.mh||0,real); if (crit){ h.cc=(h.cc||0)+1; SND.sfx('crit'); } if (h.ulting) SND.sfx('ulthit'); if (e.hp>0&&e.hp-d<=0&&!(e.fx&&e.fx.rev>0&&!e.rv)) h.kl=(h.kl||0)+1; if (e.ehero) e.tk=(e.tk||0)+real; if (fx.steal>0) htHeal(h,real*fx.steal/100,h); e.hp-=d; if (e.ehero) htRevive(F,e,false); e.hit=0.15; if (e.ehero) e.en=Math.min(100,(e.en||0)+6); SND.sfx(crit?'crit':mul>=2?'heavy':({fire:'fire',water:'ice',wood:'slash',earth:'hit',light:'magic',dark:'dark'})[h.el]||'hit'); if (crit||mul>=2){ F.shk=Math.max(F.shk||0,0.18); htFx({k:'spark',x:htPos(e,false)[0],y:htPos(e,false)[1]-htPos(e,false)[3]*(e.boss?0.12:0.06),col:crit?'#ff7af0':'#ffe08a'}); }
     const [x,y,,H]=htPos(e,false); htFx({k:'n',x:x+(Math.random()-0.5)*20,y:y-H*(e.boss?0.3:0.12),txt:fmtN(d),col:crit?'#ff7af0':htElMul(h.el,e.el)>1?'#ffe066':'#fff',big:crit||mul>=2}); return d; }
   function htDmgH(F,e,h,mul){ if (htDodge(F,h,true)) return; const ef=e.fx||FX0(), hf=h.fx||FX0();
     const d=e.atk*mul*htElMul(e.el,h.el)*(1-h.res)*(F.sh>0?0.5:1)*(0.9+Math.random()*0.2)*(F.pvpD||1)*(1-hf.dr/100)*(e.ehero?(1+ef.dmg/100)*(e.ulting?1+ef.ult/100:1):1);
@@ -4695,7 +4830,7 @@ if (typeof document !== 'undefined') (function(){
   function htHeroAct(F,h){ const eA=F.E.filter(e=>e.hp>0); if (!eA.length) return; const fr=eA.filter(e=>e.slot<(e.ehero?2:3)), pool=fr.length?fr:eA, hA=F.T.filter(x=>x.hp>0);
     const low=hA.reduce((a,b)=>a.hp/a.mx<b.hp/b.mx?a:b), tg0=(F.etau>0&&eA.find(e=>e.cls==='tank'))||pool[0];
     if (h.en>=100){ h.en=0; h.lg=1; h.ulting=true; h.uc=(h.uc||0)+1; F.chain = F.t-(F.lastUlt==null?-99:F.lastUlt)<=1 && F.lastUid!==h.id ? (F.chain||0)+1 : 1; F.lastUlt=F.t; F.lastUid=h.id; h.cbK=1+0.05*Math.min(3,F.chain-1);
-      if (F.chain>=2){ h.cb=(h.cb||0)+1; F.maxChain=Math.max(F.maxChain||0,F.chain); const [cx,cy,,cH]=htPos(h,true); htFx({k:'n',x:cx,y:cy-cH*0.32,txt:`🔗 คอมโบ x${F.chain}!`,col:'#ffb3ff',big:true}); }
+      if (F.chain>=2){ h.cb=(h.cb||0)+1; F.maxChain=Math.max(F.maxChain||0,F.chain); const [cx,cy,,cH]=htPos(h,true); htFx({k:'n',x:cx,y:cy-cH*0.32,txt:`🔗 คอมโบ x${F.chain}!`,col:'#ffb3ff',big:true}); { const cv=document.getElementById('htcv'); comboBurst(cv&&cv.parentElement, F.chain, (ALLCHARS[h.id]?ALLCHARS[h.id].c.name.split(' ')[0]+' · ':'')+'ท่าไม้ตายต่อเนื่อง'); } }
       const [x,y,,H]=htPos(h,true); htFx({k:'ult',x,y:y-H*0.2,txt:'',col:heroCol(F.M,h.id)}); SND.sfx('charge'); speakUlt(h.id, h.ult); F.shk=0.35;
       if (!F.skip){ const st=document.querySelector('.htstage'), [ex,ey,,H2]=htPos(tg0||eA[0],false); ultFX(st, h.id, h.el, h.cls==='support'?'healAll':h.cls==='tank'?'shieldAll':'dmg', ex, ey-H2*0.08, x, y, h.ult); }
       if (h.cls==='warrior') pool.forEach(e=>htDmgE(F,h,e,3.2));
@@ -5705,8 +5840,8 @@ if (typeof document !== 'undefined') (function(){
   }
   const FX = {slash:['','fx-slash'], magic:['✦','fx-magic'], fire:['🔥','fx-fire'], ice:['❄️','fx-ice'], thunder:['⚡','fx-thunder'], poison:['🫧','fx-poison'], dark:['🌙','fx-magic'], arrow:['','fx-slash'],
     dot:['','fx-dot'], claw:['','fx-claw'], boss:['','fx-claw big'], heal:['✚','fx-heal'], shield:['','fx-shield'], buff:['▲','fx-buff']};
-  function fxAt(el, kind, big){
-    SND.sfx(big&&!['heal','shield','buff'].includes(kind)?'crit':({slash:'slash',claw:'slash',boss:'heavy',magic:'magic',fire:'fire',ice:'ice',thunder:'thunder',dark:'dark',poison:'dark',arrow:'arrow',dot:'hit',heal:'heal',shield:'open',buff:'open'})[kind]||'hit');
+  function fxAt(el, kind, big, crit){
+    SND.sfx(crit&&!['heal','shield','buff'].includes(kind)?'crit':big&&!['heal','shield','buff'].includes(kind)?'ulthit':({slash:'slash',claw:'slash',boss:'heavy',magic:'magic',fire:'fire',ice:'ice',thunder:'thunder',dark:'dark',poison:'dark',arrow:'arrow',dot:'hit',heal:'heal',shield:'open',buff:'open'})[kind]||'hit');
     if (!el || !FX[kind]) return; const [ico, cls] = FX[kind], sc=document.getElementById('scene'); if (!sc) return;
     const r = el.getBoundingClientRect(), a = sc.getBoundingClientRect();
     const f = document.createElement('div'); f.className = 'fx '+cls+(big?' big':''); f.style.left = (r.left-a.left+r.width/2)+'px'; f.style.top = (r.top-a.top+r.height*0.4)+'px';
@@ -5890,7 +6025,7 @@ if (typeof document !== 'undefined') (function(){
           if (fr.big){ fx2(el,'ring',col); fx2(el,'pillar',col); }
           else if (fr.crit && fr.target==='mon') fx2(el,'xslash',col);
           if (el){ el.classList.remove('hit'); void el.offsetWidth; el.classList.add('hit'); flashHit(el, fr.target!=='mon'); }
-          fxAt(el, fr.fx, fr.big||fr.crit);
+          fxAt(el, fr.fx, fr.big||fr.crit, fr.crit);
           if (fr.target==='mon') sparks(el, col, fr.big?14:fr.crit?10:6);
           if (fr.big){ scFlash(col); zoomPunch(); setTimeout(()=>SND.sfx('boom'),60); }
           if (fr.big || (fr.crit && fr.target==='mon')) shake(fr.big?2:1);
@@ -5903,7 +6038,7 @@ if (typeof document !== 'undefined') (function(){
         if (fr.type==='ult' && fr.from!=null){ const u0=fr.from===0?{cls:S.cls,char:S.char}:S.party[fr.from-1]||{}, cid=u0.char?u0.char.id:(u0.cls||'villager'), sc=document.getElementById('scene');
           speakUlt(cid, fr.sname); setTimeout(()=>{ const [tx,ty]=relXY(sc,document.getElementById('monActor')), [hx,hy]=relXY(sc,document.getElementById('u'+fr.from),0.9); ultFX(sc, cid, fr.el, fr.kind, tx, ty, hx, hy); }, 380/speed); }
         if (fr.type==='ult'){ if (fr.from!=null){ SND.sfx('charge'); cutIn(fr); const a=document.getElementById('u'+fr.from); if (a) pose(a, fr.kind==='dmg'||!fr.kind?'p-charge':fr.kind.startsWith('heal')||fr.kind==='revive'?'p-pray':'p-raise'); } else banner(fr.text, fr.sp); }
-        if (fr.type==='combo'){ banner(fr.text, 'combo'); shake(1); }
+        if (fr.type==='combo'){ banner(fr.text, 'combo'); shake(1); const sc=document.getElementById('scene'); if (sc){ sc._cb=(sc._cb||0)+1; comboBurst(sc, 0, fr.text.replace(/^💥\s*/,'')); } }
         const b = document.getElementById('blog'); if (b){ const d=document.createElement('div'); d.textContent=fr.text;
           d.className = fr.type==='ult'||fr.type==='combo'?'ult':fr.crit?'crit':fr.type==='lose'?'bad':fr.type==='kill'?'good':''; b.prepend(d); }
         setTimeout(tick, (fr.type==='ult'?900:fr.type==='combo'?650:fr.type==='hit'&&(fr.big||fr.crit)?470:380)/speed);
