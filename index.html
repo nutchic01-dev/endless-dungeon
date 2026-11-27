@@ -1047,6 +1047,42 @@ h3 img.uiico{height:24px;width:auto;vertical-align:middle}
 .cosit{min-width:0;position:relative;display:flex;flex-direction:column;gap:4px;padding:8px 6px 6px;border-radius:12px;background:rgba(255,255,255,.05);border:1.5px solid var(--tc);color:#fff;font-family:inherit;cursor:pointer;text-align:center}
 .cosit.on{box-shadow:0 0 0 2px #ffd34d,0 0 12px rgba(255,211,77,.5)}.cosit.lock .cosprev{filter:saturate(.75)}.cosit b{font-size:12.5px}.cosit small{font-size:10.5px;color:#cfc2e4}
 .costier{position:absolute;top:-8px;right:6px;font-style:normal;font-size:9.5px;font-weight:900;padding:1px 6px;border-radius:6px;background:var(--tc);color:#1a1030}
+
+/* แก้ความอ่านง่ายในตารางอันดับ */
+.rkr.pbg .rks{text-shadow:0 1px 0 #000,0 0 6px rgba(0,0,0,.9),0 0 2px #000}.rkr.pbg .rkm small{text-shadow:0 1px 2px #000;color:#f0e9ff}
+.rkr.pbg-royal{background:linear-gradient(90deg,rgba(40,24,0,.88),rgba(60,36,0,.55) 45%,rgba(40,24,0,.88)),repeating-linear-gradient(45deg,rgba(255,220,120,.08) 0 6px,transparent 6px 14px),linear-gradient(135deg,#3a2400,#7a4a00)!important}
+.rkr.pbg-royal .rks{color:#fff3c4}
+.nc-ice{filter:drop-shadow(0 0 2px #2a9dff) drop-shadow(0 0 5px rgba(120,210,255,.9))!important}
+.rkr.pbg-night,.rkr.pbg-sakura,.rkr.pbg-galaxy{background-size:80px 60px,110px 80px,100% 100%,100% 100%!important}
+.rkr.pbg-galaxy{background:radial-gradient(circle at 25% 35%,rgba(255,255,255,.55) 1px,transparent 2px),radial-gradient(ellipse at 60% 50%,rgba(170,90,255,.35),transparent 60%),linear-gradient(135deg,#0a0420,#1a0b3a)!important;background-size:90px 70px,100% 100%,100% 100%!important;animation:none}
+.rkr.pbg-night{background:radial-gradient(circle at 20% 30%,rgba(255,255,255,.35) 1px,transparent 2px),linear-gradient(135deg,#0f1238,#2a1d5c)!important;background-size:90px 60px,100% 100%!important}
+.rkr.pbg-sakura{background:radial-gradient(circle at 15% 25%,rgba(255,196,220,.6) 2px,transparent 3px),linear-gradient(135deg,#4a1b3b,#7d3a63)!important;background-size:90px 64px,100% 100%!important}
+/* ชุดเทศกาลลอยกระทง */
+.nf-chonburi{font-family:'Chonburi',serif;letter-spacing:.3px}
+.nc-moonriver{-webkit-background-clip:text;background-clip:text;color:transparent!important;background-image:linear-gradient(180deg,#fff8d6 0%,#ffe08a 45%,#7fd3ff 55%,#bfe9ff 100%);filter:drop-shadow(0 0 4px rgba(255,230,150,.8))}
+.pbg-loykrathong{background:radial-gradient(circle at 85% 18%,#fff6c8 0 7px,rgba(255,240,180,.35) 8px,transparent 18px),radial-gradient(circle at 20% 78%,rgba(255,170,60,.9) 0 2px,rgba(255,150,40,.35) 3px,transparent 9px),radial-gradient(circle at 55% 85%,rgba(255,170,60,.9) 0 2px,rgba(255,150,40,.35) 3px,transparent 9px),linear-gradient(180deg,#0b1640 0%,#1a2b6b 55%,#0e3a5c 56%,#08263f 100%)!important}
+.rkr.pbg-loykrathong{background:radial-gradient(circle at 58% 16%,#fff6c8 0 4px,rgba(255,240,180,.3) 5px,transparent 11px),radial-gradient(circle at 20% 80%,rgba(255,170,60,.9) 0 2px,rgba(255,150,40,.35) 3px,transparent 9px),radial-gradient(circle at 48% 88%,rgba(255,170,60,.9) 0 2px,rgba(255,150,40,.35) 3px,transparent 9px),linear-gradient(180deg,#0b1640 0%,#1a2b6b 55%,#0e3a5c 56%,#08263f 100%)!important}
+.avatar.fr-krathong{border-color:#ff9ec7;box-shadow:0 0 0 2px #2f8a4f,0 0 12px rgba(255,200,120,.8)}.avatar.fr-krathong::before{content:'🪷';position:absolute;bottom:-11px;left:50%;transform:translateX(-50%);font-size:17px;filter:drop-shadow(0 0 4px #ffcf7a)}.avatar.fr-krathong::after{content:'🕯️';position:absolute;top:-12px;right:-6px;font-size:13px;animation:frcand 1.6s ease-in-out infinite alternate}
+.avatar.mini.fr-krathong::before{font-size:12px;bottom:-8px}.avatar.mini.fr-krathong::after{font-size:10px;top:-9px;right:-5px}
+@keyframes frcand{to{filter:drop-shadow(0 0 6px #ffb300);transform:translateY(-1px)}}
+/* ชุดเส้นทาง */
+.avatar.fr-rq_caravan{border-color:#e6b85c;box-shadow:0 0 0 2px #8a5a1a,0 0 10px rgba(230,184,92,.7),inset 0 0 8px rgba(255,210,120,.4)}
+.avatar.fr-rq_sacred{border-color:#fff7d6;box-shadow:0 0 0 2px #e8c45a,0 0 16px rgba(255,245,200,.9)}.avatar.fr-rq_sacred::before{content:'';position:absolute;top:-9px;left:50%;width:70%;height:6px;transform:translateX(-50%);border:2px solid #ffe58a;border-radius:50%;box-shadow:0 0 8px #ffe58a}
+.avatar.fr-rq_cursed{border-color:#9b4bff;border-style:dashed;box-shadow:0 0 0 2px #2a0a40,0 0 12px rgba(155,75,255,.8)}
+.avatar.fr-rq_wild{border-color:#6bdc6b;box-shadow:0 0 0 2px #1d5a24,0 0 10px rgba(107,220,107,.6)}.avatar.fr-rq_wild::before{content:'🍃';position:absolute;top:-10px;left:-8px;font-size:14px}
+.avatar.fr-rq_warrior{border-color:#d9dde3;box-shadow:0 0 0 2px #a01818,0 0 10px rgba(255,80,80,.6)}.avatar.fr-rq_warrior::before{content:'🗡️';position:absolute;bottom:-9px;left:-9px;font-size:14px}
+.avatar.fr-rq_frost{border-color:#bfefff;box-shadow:0 0 0 2px #2a7fb8,0 0 14px rgba(150,220,255,.9)}.avatar.fr-rq_frost::before{content:'❄️';position:absolute;top:-10px;right:-8px;font-size:14px}
+.avatar.fr-rq_arcane{border-color:#7c5cff;box-shadow:0 0 0 2px #1a0b3a,0 0 14px #7c5cff;animation:frvoid 2.4s linear infinite}.avatar.fr-rq_arcane::before{content:'🔮';position:absolute;bottom:-10px;right:-8px;font-size:14px}
+.avatar.mini[class*="fr-rq_"]::before{font-size:10px}
+/* ชุดอันดับประจำวัน */
+.avatar.fr-day1{border-color:#ff3b5c;box-shadow:0 0 0 2px #ffd34d,0 0 18px #ff3b5c;animation:frday 1.4s ease-in-out infinite alternate}.avatar.fr-day1::before{content:'👑';position:absolute;top:-15px;left:50%;transform:translateX(-50%);font-size:17px;filter:hue-rotate(-30deg) drop-shadow(0 0 4px #ff3b5c)}
+.avatar.fr-day2{border-color:#e6eef7;box-shadow:0 0 0 2px #8a96a6,0 0 14px #e6eef7}.avatar.fr-day2::before{content:'⭐';position:absolute;top:-11px;right:-7px;font-size:14px;filter:grayscale(1) brightness(1.6)}
+.avatar.fr-day3{border-color:#e08a4a;box-shadow:0 0 0 2px #6b3a17,0 0 12px #e08a4a}.avatar.fr-day3::before{content:'⭐';position:absolute;top:-11px;right:-7px;font-size:13px;filter:sepia(1) saturate(2) hue-rotate(-20deg)}
+.avatar.fr-day4{border-color:#5fb8ff;box-shadow:0 0 0 2px #1d4f7a,0 0 12px #5fb8ff}.avatar.fr-day5{border-color:#5fe0a0;box-shadow:0 0 0 2px #0d5a3a,0 0 12px #5fe0a0}
+.avatar.mini.fr-day1::before{font-size:12px;top:-10px}.avatar.mini.fr-day2::before,.avatar.mini.fr-day3::before{font-size:10px}
+@keyframes frday{to{box-shadow:0 0 0 2px #ffd34d,0 0 26px #ff3b5c}}
+.nc-champday{-webkit-background-clip:text;background-clip:text;color:transparent!important;background-image:linear-gradient(90deg,#ffd34d,#ff3b5c,#ffd34d);background-size:200% 100%;animation:ncsh 1.8s linear infinite;filter:drop-shadow(0 0 4px rgba(255,59,92,.8))}
+.cosgrp{grid-column:1/-1;font-size:12px;font-weight:800;color:#ffe9b0;margin:4px 2px -2px;border-bottom:1px dashed rgba(255,214,140,.3);padding-bottom:2px}
 .gdtw{overflow-x:auto;margin:4px 0}.gdt{width:100%;border-collapse:collapse;font-size:12.5px;color:#e9def7}.gdt th{background:rgba(255,214,140,.16);color:#ffd77a;font-weight:700;padding:6px 4px;white-space:nowrap}.gdt td{padding:6px 4px;text-align:center;border-bottom:1px dashed rgba(255,255,255,.12);white-space:nowrap}.gdn{font-size:12px;color:#cfc2e4;line-height:1.6;margin-top:6px}.gdcl{flex-direction:column;align-items:flex-start;gap:2px}.gdcl small{color:#cfc2e4;font-size:12px}.gdtabs button span{font-size:11px}
 .arlock{font-size:54px;text-align:center}.arbeta{font-size:11.5px;color:#ffd77a;background:rgba(255,190,80,.12);border:1px dashed rgba(255,200,100,.5);border-radius:10px;padding:3px 10px;text-align:center}
 .rkl{display:flex;flex-direction:column;gap:5px}.rkr{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:12px;background:rgba(20,15,40,.7);border:1px solid rgba(255,255,255,.08)}
@@ -1128,7 +1164,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.40</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.41</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -2329,7 +2365,7 @@ function rqAdv(text,tone){ const R=routeOf(), M=MAINQ[S.route]; S.rq.step++; if 
 function rqMon(F,name,icon,hpK,atkK,el){ const m=makeMon(F); m.name=name; m.icon=icon; m.hp*=hpK; m.maxhp=m.hp; m.atk*=atkK; if (el) m.el=el; return m; }
 function rqFight(mons,winFn){ S.rq.next=S.floor+8; return fight(mons, ()=>{ const t=winFn(); S.rq.step++; if (S.rq.step>=5) S.rq.done=true; else S.rq.next=S.floor+16+Math.floor(rng()*10); return t; }); }   // แพ้ = ลองใหม่อีก 8 ชั้น
 function rqEv(n,title,icon,text,choices){ const M=MAINQ[S.route]; return {type:'mainq', title:`👑 ${M.name} (${n}/5) · ${title}`, icon, text, choices}; }
-function rqFinal(F){ const M=MAINQ[S.route]; const t=M.reward(F); S.offer=makeItem(F, M.slot, 3); return `🏆 ผ่านเควสหลัก "${M.name}" ครบ 5 ตอน! ${t}`; }
+function rqFinal(F){ const M=MAINQ[S.route]; const t=M.reward(F); try{ const mm=loadMeta(); mm.ach=mm.ach||{}; mm.ach.rq=mm.ach.rq||{}; mm.ach.rq[S.route]=1; storeMeta(mm); }catch(e){} S.offer=makeItem(F, M.slot, 3); return `🏆 ผ่านเควสหลัก "${M.name}" ครบ 5 ตอน! ${t}`; }
 const MAINQ = {
   caravan:{name:'กองคาราวานทองคำ', slot:'acc', steps:[
     F=>rqEv(1,'เสียงร้องขอ','🐫','หัวหน้ากองคาราวานวิ่งมาหา "โจรทะเลทรายปล้นขบวนของข้า! ช่วยตามสินค้าคืนด้วย ข้าจะตอบแทนอย่างงาม"',[{label:'รับปาก!', fn:()=>rqAdv('รับภารกิจตามสินค้าคืน หัวหน้าคาราวานมอบแผนที่ให้')},{label:'ขอค่าจ้างล่วงหน้า', sub:`ได้ทอง ${fmt(Math.round(base2(F)*2))}`, alt:true, fn:()=>{ S.gold+=Math.round(base2(F)*2); rqAdv('รับเงินมัดจำแล้วออกตามรอยโจร'); }}]),
@@ -2681,7 +2717,7 @@ function rankDetail(win){ const st=stats(), t=S.st||{}; let sk=[]; try{ sk=heroS
     gear:gearMini(S.gear), sk, party:(S.party||[]).map(p=>[p.char?p.char.id:null, unitName(p.cls,p.char), !!p.ko])}; }
 /* รายการคะแนนที่จะส่งขึ้นตารางอันดับ (ใช้โดยระบบคลาวด์) — เติมข้อมูลจากบันทึกวีรชนให้รอบเก่าที่ยังไม่มีรายละเอียด */
 /* ---------- 🎨 ตกแต่งโปรไฟล์: กรอบ · ฟอนต์ชื่อ · สีชื่อ · พื้นหลังการ์ด (ทำด้วย CSS ล้วน ไม่ใช้รูป) ---------- */
-const COS_T = {c:['ธรรมดา','#c9c2d8'], r:['หายาก','#5fb8ff'], e:['มหากาพย์','#c58bff'], l:['ตำนาน','#ffb300']};
+const COS_T = {c:['ธรรมดา','#c9c2d8'], r:['หายาก','#5fb8ff'], e:['มหากาพย์','#c58bff'], l:['ตำนาน','#ffb300'], f:['เทศกาล','#ff9ec7'], s:['เส้นทาง','#7dffcf'], d:['อันดับวันนี้','#ff5b5b']};
 const COS = {
   font:[
     {k:'mitr',n:'มาตรฐาน',t:'c',free:1},{k:'sarabun',n:'สุภาพ',t:'c',free:1},
@@ -2689,30 +2725,47 @@ const COS = {
     {k:'sriracha',n:'ลายมือ',t:'r',md:8000},{k:'chakra',n:'ไซเบอร์',t:'r',md:8000},
     {k:'pattaya',n:'พาดหัวสะใจ',t:'e',md:25000},{k:'charm',n:'อักษรวิจิตร',t:'e',ar:600},
     {k:'srisakdi',n:'อักษรราชสำนัก',t:'l',rk:10,d:'ติดอันดับ 1–10 ตารางใดก็ได้'},
+    {k:'chonburi',n:'ลายไทยลอยกระทง',t:'f',free:1,d:'ชุดเทศกาลลอยกระทง (ฟรี)'},
   ],
   color:[
     {k:'white',n:'ขาวสะอาด',t:'c',free:1},{k:'sky',n:'ฟ้าใส',t:'c',md:1500},{k:'rose',n:'ชมพูกุหลาบ',t:'c',md:1500},{k:'mint',n:'เขียวมินต์',t:'c',md:1500},
     {k:'sunset',n:'อาทิตย์อัสดง',t:'r',md:6000},{k:'ocean',n:'ห้วงมหาสมุทร',t:'r',md:6000},{k:'toxic',n:'พิษเขียวเรือง',t:'r',cl:120},
     {k:'gold',n:'ทองประกาย',t:'e',md:20000},{k:'ice',n:'คริสตัลน้ำแข็ง',t:'e',ar:400},
     {k:'rainbow',n:'สายรุ้งนิรันดร์',t:'l',rk:3,d:'ติดอันดับ 1–3 ตารางใดก็ได้'},{k:'flame',n:'เปลวเพลิงมังกร',t:'l',fl:300,d:'ไต่หอคอยถึงชั้น 300'},
+    {k:'moonriver',n:'แสงจันทร์วันเพ็ญ',t:'f',free:1,d:'ชุดเทศกาลลอยกระทง (ฟรี)'},
+    {k:'champday',n:'แชมป์ประจำวัน',t:'d',dr:1,d:'อันดับ 1 รายวันของเมื่อวาน (ใช้ได้ถึงตี 5)'},
   ],
   bg:[
     {k:'none',n:'เรียบ ๆ',t:'c',free:1},{k:'night',n:'ราตรีพราว',t:'c',md:2000},{k:'sakura',n:'ซากุระ',t:'c',md:2000},
     {k:'ocean',n:'ใต้สมุทร',t:'r',md:8000},{k:'lava',n:'ลาวาเดือด',t:'r',cl:200},{k:'forest',n:'ป่ามรกต',t:'r',md:8000},
     {k:'aurora',n:'แสงเหนือ',t:'e',md:30000},{k:'galaxy',n:'ห้วงจักรวาล',t:'e',ar:800},
     {k:'royal',n:'ราชันย์ทองคำ',t:'l',rk:1,d:'ติดอันดับ 1 ตารางใดก็ได้'},
+    {k:'loykrathong',n:'สายน้ำคืนลอยกระทง',t:'f',free:1,d:'ชุดเทศกาลลอยกระทง (ฟรี)'},
   ],
   frame:[
     {k:'wood',n:'ไม้แกะสลัก',t:'c',md:2500},{k:'jade',n:'หยกมรกต',t:'r',md:9000},{k:'neon',n:'นีออนไซเบอร์',t:'r',ar:300},
     {k:'sakuraf',n:'ซากุระบาน',t:'e',md:25000},{k:'flamef',n:'เพลิงนรก',t:'e',md:32000},{k:'voidf',n:'ห้วงมิติ',t:'e',ar:900},
     {k:'crown',n:'มงกุฎราชัน',t:'l',rk:1,d:'ติดอันดับ 1 ตารางใดก็ได้'},{k:'champ',n:'แชมป์สนามประลอง',t:'l',ar_r:1300,d:'คะแนนประลองถึง 1,300'},
+    {k:'krathong',n:'กระทงดอกบัว',t:'f',free:1,d:'ชุดเทศกาลลอยกระทง (ฟรี)'},
+    {k:'rq_caravan',n:'ทรายทองคาราวาน',t:'s',rq:'caravan',d:'ผ่านเควสหลักเส้นทางคาราวาน'},
+    {k:'rq_sacred',n:'รัศมีศักดิ์สิทธิ์',t:'s',rq:'sacred',d:'ผ่านเควสหลักเส้นทางศักดิ์สิทธิ์'},
+    {k:'rq_cursed',n:'โซ่ต้องสาป',t:'s',rq:'cursed',d:'ผ่านเควสหลักเส้นทางต้องสาป'},
+    {k:'rq_wild',n:'ใบไม้พันปี',t:'s',rq:'wild',d:'ผ่านเควสหลักเส้นทางป่าลึก'},
+    {k:'rq_warrior',n:'ดาบแชมป์',t:'s',rq:'warrior',d:'ผ่านเควสหลักเส้นทางนักรบ'},
+    {k:'rq_frost',n:'ผลึกน้ำแข็ง',t:'s',rq:'frost',d:'ผ่านเควสหลักเส้นทางน้ำแข็ง'},
+    {k:'rq_arcane',n:'วงเวทจักรวาล',t:'s',rq:'arcane',d:'ผ่านเควสหลักเส้นทางเวทมนตร์'},
+    {k:'day1',n:'มงกุฎทับทิม #1',t:'d',dr:1,d:'อันดับ 1 รายวันของเมื่อวาน (ใช้ได้ถึงตี 5)'},
+    {k:'day2',n:'ดาวเงิน #2',t:'d',dr:2,d:'อันดับ 2 รายวันของเมื่อวาน (ใช้ได้ถึงตี 5)'},
+    {k:'day3',n:'ดาวทองแดง #3',t:'d',dr:3,d:'อันดับ 3 รายวันของเมื่อวาน (ใช้ได้ถึงตี 5)'},
+    {k:'day4',n:'ประกายฟ้า #4',t:'d',dr:4,d:'อันดับ 4 รายวันของเมื่อวาน (ใช้ได้ถึงตี 5)'},
+    {k:'day5',n:'ประกายเขียว #5',t:'d',dr:5,d:'อันดับ 5 รายวันของเมื่อวาน (ใช้ได้ถึงตี 5)'},
   ],
 };
-const COS_FONT_URL='https://fonts.googleapis.com/css2?family=Itim&family=Mali:wght@600&family=Sriracha&family=Chakra+Petch:wght@700&family=Pattaya&family=Charm:wght@700&family=Srisakdi:wght@700&display=swap';
+const COS_FONT_URL='https://fonts.googleapis.com/css2?family=Chonburi&family=Itim&family=Mali:wght@600&family=Sriracha&family=Chakra+Petch:wght@700&family=Pattaya&family=Charm:wght@700&family=Srisakdi:wght@700&display=swap';
 function cosReqTxt(f){ return f.md?`ซื้อด้วย 🎖️ ${f.md.toLocaleString()}`:f.ar?`ซื้อด้วย ⚜️ ${f.ar.toLocaleString()}`:f.cl?`ซื้อด้วย 🧵 ${f.cl}`:(f.d||''); }
 function cosFontsLoad(){ if (typeof document==='undefined' || document.getElementById('cosfonts')) return; const l=document.createElement('link'); l.id='cosfonts'; l.rel='stylesheet'; l.href=COS_FONT_URL; document.head.appendChild(l); }
 function cosOwn(m,cat,k){ const it=(COS[cat]||[]).find(x=>x.k===k); if (!it) return false; if (it.free) return true; if ((m.cos||{})[cat+':'+k]) return true;
-  const a=m.ach||{}; if (it.rk) return (a.rkBest||1e9)<=it.rk; if (it.fl) return bestFl(m)>=it.fl; if (it.ar_r) return ((m.arena||{}).rating||0)>=it.ar_r; return false; }
+  const a=m.ach||{}; if (it.rq) return !!(a.rq&&a.rq[it.rq]); if (it.dr) return !!(a.dRank&&a.dRank.day===dayKey()&&a.dRank.rank===it.dr); if (it.rk) return (a.rkBest||1e9)<=it.rk; if (it.fl) return bestFl(m)>=it.fl; if (it.ar_r) return ((m.arena||{}).rating||0)>=it.ar_r; return false; }
 function pfOf(m){ const p=m.pf||{}; const ok=(cat,k,def)=>k&&cosOwn(m,cat,k)?k:def; return {nf:ok('font',p.nf,'mitr'), nc:ok('color',p.nc,'white'), bg:ok('bg',p.bg,'none')}; }
 function pfNameCls(p){ return `nf-${p.nf} nc-${p.nc}`; }
 function lbList(m){ const d=new Date(Date.now()-5*3600e3), today=d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate(), out=[];
@@ -3211,7 +3264,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.40</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.41</span>'}</div>`;
   }
   let runSet=false, runQuit=false;
   function runPop(){
@@ -3413,10 +3466,12 @@ if (typeof document !== 'undefined') (function(){
     const prev=(it)=>{ const q=Object.assign({},p); if (cosTab==='font') q.nf=it.k; if (cosTab==='color') q.nc=it.k; if (cosTab==='bg') q.bg=it.k;
       return `<div class="cosprev pbg ${q.bg!=='none'?'pbg-'+q.bg:''}"><span class="avatar mini fr-${cosTab==='frame'?it.k:fr}">${mi}</span><b class="${pfNameCls(q)}">${rkEsc(m.name||'ผู้กล้า')}</b></div>`; };
     const list=cosTab==='frame' ? COS.frame : COS[cosTab];
-    const items=list.map(it=>{ const own=cosOwn(m,cosTab,it.k), on=cur===it.k, T2=COS_T[it.t];
+    const GN={c:'🛒 ร้านตกแต่ง',f:'🏮 เทศกาลลอยกระทง (ฟรี!)',s:'🧭 รางวัลเควสหลักประจำเส้นทาง',d:'🏆 อันดับรายวัน 1–5 (ใช้ได้ถึงตี 5 ของวันนี้)'}, gk=t=>'cre l'.includes(t)?'c':t;
+    const ord=t=>({f:0,d:1,s:2}[gk(t)] ?? 3); let lastG='';
+    const items=list.slice().sort((a,b)=>ord(a.t)-ord(b.t)).map(it=>{ const own=cosOwn(m,cosTab,it.k), on=cur===it.k, T2=COS_T[it.t], g=gk(it.t), hd=g!==lastG?(lastG=g,`<div class="cosgrp">${GN[g]}</div>`):'';
       const act= on?'noop' : own?'cosuse' : (it.md||it.ar||it.cl)&&cosCan(m,it)?'cosbuy':'noop';
       const lab= on?'✓ ใช้อยู่' : own?'ใช้แบบนี้' : (it.md||it.ar||it.cl)?`ซื้อ ${cosPrice(it)}`:`🔒 ${it.d||''}`;
-      return `<button class="cosit ${on?'on':''} ${own?'':'lock'}" data-act="${act}" data-k="${it.k}" style="--tc:${T2[1]}"><i class="costier">${T2[0]}</i>${prev(it)}<b>${it.n}</b><small>${lab}</small></button>`; }).join('');
+      return hd+`<button class="cosit ${on?'on':''} ${own?'':'lock'}" data-act="${act}" data-k="${it.k}" style="--tc:${T2[1]}"><i class="costier">${T2[0]}</i>${prev(it)}<b>${it.n}</b><small>${lab}</small></button>`; }).join('');
     return `<div class="pop-bg" data-act="coscl"><div class="pop cospop" data-act="noop"><div class="pop-h">🎨 <b>ตกแต่งโปรไฟล์</b></div>
       <div class="cosme">${prev({k:cur})}</div>
       <div class="gtabs costabs">${T.map(([k,ic,n])=>`<button class="${cosTab===k?'on':''}" data-act="costab" data-k="${k}"><i>${ic}</i><span>${n}</span></button>`).join('')}</div>
@@ -3465,7 +3520,7 @@ if (typeof document !== 'undefined') (function(){
     if (on && !shown){ el.innerHTML=tkInner(); el.classList.remove('tkhide'); }
     else if (!on && shown){ el.classList.add('tkhide'); setTimeout(()=>{ if (el.classList.contains('tkhide')) el.innerHTML=''; },450); } },1000);
   /* ---------- 🔔 แจ้งเตือนเกมมีอัปเดต ---------- */
-  const GAME_VER='v3.40'; let updSkip='', updT=0;
+  const GAME_VER='v3.41'; let updSkip='', updT=0;
   function updCheck(){ if (location.protocol==='file:' || document.getElementById('updpop')) return; if (Date.now()-updT<60000) return; updT=Date.now();
     fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{ if (!j||!j.v||j.v===GAME_VER||j.v===updSkip) return; updShow(j); }).catch(()=>{}); }
   function updShow(j){ const inRun=S&&S.phase&&S.phase!=='title'&&!S.over&&!hub, d=document.createElement('div'); d.id='updpop';
@@ -3552,7 +3607,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="pbtns"><button class="choice" data-act="guideopen"><span>📚 ข้อมูลเกม</span><small>ระดับอุปกรณ์ · ธาตุ · อาชีพ · อัตราสุ่ม · โหมดเกม</small></button><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.40<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.41<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
@@ -5104,7 +5159,7 @@ if (typeof document !== 'undefined') (function(){
     try{ const m0=loadMeta(), todo=rkMailKeys().filter(([k,per,key])=>!(m0.rkClaim&&m0.rkClaim[key]) && !((m0.mail||{}).rkChk||{})[key]); if (!todo.length) return;
       const res=await Promise.all(todo.map(([k,per])=>C.lbMine(k,per).catch(()=>undefined)));
       const m=loadMeta(); m.mail=m.mail||{got:[]}; m.mail.dyn=m.mail.dyn||[]; m.mail.rkChk=m.mail.rkChk||{}; let added=0;
-      todo.forEach(([k,per,key,when],i)=>{ const r=res[i]; if (r===undefined) return; m.mail.rkChk[key]=1; if (!r||!r.rank || (m.rkClaim&&m.rkClaim[key])) return; m.ach=m.ach||{}; m.ach.rkBest=Math.min(m.ach.rkBest||1e9, r.rank); const tier=rkTier(k,r.rank); if (!tier) return; const R=tier[2];
+      todo.forEach(([k,per,key,when],i)=>{ const r=res[i]; if (r===undefined) return; m.mail.rkChk[key]=1; if (k==='daily'){ m.ach=m.ach||{}; m.ach.dRank={day:dayKey(), rank:(r&&r.rank)||0}; } if (!r||!r.rank || (m.rkClaim&&m.rkClaim[key])) return; m.ach=m.ach||{}; m.ach.rkBest=Math.min(m.ach.rkBest||1e9, r.rank); const tier=rkTier(k,r.rank); if (!tier) return; const R=tier[2];
         m.mail.dyn.push({id:'rk|'+key, ts:Date.now(), rk:key, t:`🏆 รางวัล${RK_MAIL_N[k]}`, d:`ยินดีด้วย! คุณได้อันดับ <b>#${fmt(r.rank)}</b> จาก ${fmt(r.total||0)} คน (${when})\nคะแนน ${fmt(r.score||0)}\n\n🎁 รางวัลอันดับ ${tier[0]===tier[1]?tier[0]:tier[0]+'-'+(tier[1]>=1e9?'ขึ้นไป':tier[1])}:\n${R.t?`🎟️ ตั๋วสุ่มเศษ ×${R.t}\n`:''}${R.md?`🎖️ เหรียญตรา ×${fmt(R.md)}\n`:''}${R.du?`✨ ผงดาว ×${fmt(R.du)}`:''}`, rw:{tickets:R.t, medals:R.md, dust:R.du}}); added++; });
       const ks=Object.keys(m.mail.rkChk); if (ks.length>60) ks.slice(0,ks.length-60).forEach(k=>delete m.mail.rkChk[k]);
       m.mail.dyn=m.mail.dyn.filter(x=>!(mailGot(m).includes(x.id) && Date.now()-(x.ts||0)>14*864e5)).slice(-25);
