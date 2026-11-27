@@ -1110,6 +1110,9 @@ h3 img.uiico{height:24px;width:auto;vertical-align:middle}
 @keyframes cbpop{0%{transform:scale(2.4) rotate(-8deg);opacity:0}25%{transform:scale(.92) rotate(-4deg);opacity:1}40%{transform:scale(1.06) rotate(-4deg)}80%{opacity:1;transform:scale(1) rotate(-4deg)}100%{opacity:0;transform:scale(1.12) translateY(-18px) rotate(-4deg)}}
 @keyframes cbring{0%{transform:scale(.4);opacity:1}100%{transform:scale(6);opacity:0}}
 .cbshk{animation:cbshake .35s}@keyframes cbshake{0%,100%{transform:none}20%{transform:translate(-5px,3px)}40%{transform:translate(5px,-3px)}60%{transform:translate(-3px,2px)}80%{transform:translate(3px,-1px)}}
+.gembar{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.gembar b{font-size:20px;color:#9fe7ff;text-shadow:0 0 8px #3ab8ff}.gsi{font-size:38px;display:flex;align-items:center;justify-content:center;height:56px}
+.shit{position:relative}.gsdisc{position:absolute;top:-6px;right:-6px;background:linear-gradient(#ff5a7a,#d61e4a);color:#fff;font-weight:800;font-size:11px;padding:2px 6px;border-radius:9px;box-shadow:0 2px 6px rgba(0,0,0,.4);z-index:2}.gsoff{border-color:#ff7a9a!important;box-shadow:0 0 10px rgba(255,90,122,.35)}
+.shit s{opacity:.6;font-size:10px}.gemplus{margin-left:6px;background:linear-gradient(#5ad2ff,#2a8fe0)!important;color:#fff!important}
 .reccmp{margin-top:10px;text-align:left;background:rgba(255,255,255,.04);border:1px solid rgba(255,209,102,.35);border-radius:12px;padding:10px}.reccmp h3{margin:0 0 6px;font-size:15px}
 .rcg{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:3px 6px;font-size:12.5px;align-items:start}.rcg>div{padding:2px 0}.rch{font-weight:700;color:#ffd166;text-align:center}.rco,.rcn{text-align:right}.rcg2{text-align:left!important;font-size:11.5px;line-height:1.45}
 .rco.win,.rcn.win{color:#7dffcf;font-weight:700}.rcu{color:#5fe0b0;font-style:normal}.rcd{color:#ff6b8a;font-style:normal}.rcpair{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:8px}.rcpair>div+div{border-left:1px solid rgba(255,255,255,.12);padding-left:8px}.rcsep{grid-column:1/-1;margin-top:6px;padding-top:4px;border-top:1px dashed rgba(255,255,255,.18);color:#c9b8ff;font-size:12px}.reccmp .row2{margin-top:10px}
@@ -1200,7 +1203,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.50</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.51</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -3396,10 +3399,23 @@ function snapshot(){
 }
 /* รายวัน: ล็อกอิน + ภารกิจ */
 /* ล็อกอิน 7 วัน: นับวันที่เข้าเกม (ไม่ต้องติดกัน) วันที่ 7 = บัตรสุ่มฮีโร่ธรรมดาที่ยังไม่มี */
+/* 💎 เพชร: เงินกลางใช้ได้ทุกร้าน (ซื้อสายฟ้า ร้านรายวัน · อนาคตเติมเงิน) */
+const GEM_KILL_CAP = 30;
+function gemDay(m){ const d=dayKey(); if (!m.gemDay||m.gemDay.d!==d) m.gemDay={d,kill:0,en:0,rr:0,buy:[]}; return m.gemDay; }
+function gemAdd(m,n){ m.gem=(m.gem||0)+Math.max(0,Math.round(n)); return n; }
+const GSHOP_POOL = [
+  {k:'en50',n:'สายฟ้า ×50',ic:'⚡',p:30},{k:'arena',n:'สิทธิ์ประลอง +1',ic:'⚔️',p:20},{k:'shard',n:'เศษวีรชนสุ่ม ×10',ic:'🧩',p:40},
+  {k:'ticket',n:'ตั๋วอัญเชิญ ×1',ic:'🎟️',p:25},{k:'sktix',n:'ตั๋วสกิน ×1',ic:'🎀',p:35},{k:'sktix2',n:'ตั๋วสกิน ×1',ic:'🎀',p:35},{k:'rtix',n:'ตั๋วเรลิก ×1',ic:'🏺',p:40},
+  {k:'rsh',n:'หินตีบวกเรลิก ×20',ic:'✴️',p:20},{k:'ro',n:'หินพยากรณ์ ×2',ic:'🔮',p:30},{k:'medals',n:'เหรียญตรา ×3000',ic:'🎖️',p:25},{k:'eqtix',n:'ตั๋วตีเหล็ก ×10',ic:'⚒️',p:15}];
+function gshopStock(m){ const G=gemDay(m), r=seedRng('gshop-'+G.d+'-'+(m.name||'')+'-'+(G.rr||0)), pool=GSHOP_POOL.slice(), out=[];
+  while (out.length<6 && pool.length){ const i=Math.floor(r()*pool.length), it=pool.splice(i,1)[0]; if (it.k==='sktix2' && out.some(x=>x.k==='sktix')) { out.push(it); continue; } if (it.k==='sktix' && out.some(x=>x.k==='sktix2')){ out.push(it); continue; } out.push(it); }
+  const nd=1+(r()<0.5?1:0); for (let j=0;j<nd;j++){ const i=Math.floor(r()*out.length); out[i]=Object.assign({},out[i],{off:10*(1+Math.floor(r()*5))}); }
+  return out.map(x=>Object.assign({},x,{price:Math.round(x.p*(1-(x.off||0)/100))})); }
+const GSHOP_RR = n => 20+10*n;
 const LOGIN_RW = [{t:1},{t:1},{t:1},{t:1},{t:1},{t:1},{hero:1}];
 function dailyLogin(m){ const k=dayKey(); if (m.login.last===k) return null;
   m.login.streak = (m.login.streak||0)%7+1; m.login.last=k; const day=m.login.streak, R=LOGIN_RW[day-1], g={day};
-  if (R.t){ m.tickets+=R.t; g.t=R.t; }
+  if (R.t){ m.tickets+=R.t; g.t=R.t; } g.gem=gemAdd(m, day===7?50:20);
   if (R.hero){ const nn=Object.keys(ALLCHARS).filter(id=>ALLCHARS[id].tier==='n'), free=nn.filter(id=>!m.chars[id]), pk=a=>a[(Math.random()*a.length)|0];
     if (free.length){ const id=pk(free); m.chars[id]={star:1,form:false,recs:[],main:0}; if (!m.show.main) m.show.main=id; g.hero=id; }
     else { const id=pk(nn); m.shards[id]=(m.shards[id]||0)+50; g.shardHero=id; g.shards=50; } }
@@ -3416,7 +3432,7 @@ function saveMeta(sc, medals, win){
       if (!c.recs.length){ c.recs=[snap]; c.main=0; rw.rec={placed:true, first:true}; }
       else { c.pend=snap; rw.rec={cmp:true, now:snap.power}; } } }
   if (win && !S.char){ rw.tickets+=3; rw.vilCons=true; rw.awNext=awakenChanceOf(m); }
-  m.daily.runs++; if (m.daily.runs>=3 && !m.daily.mission){ m.daily.mission=true; rw.mission=2; rw.tickets+=2; }
+  m.daily.runs++; if (m.daily.runs>=3 && !m.daily.mission){ m.daily.mission=true; rw.mission=2; rw.tickets+=2; gemAdd(m,15); rw.gem=15; }
   if (S.daily){ const b=m.dailyBest&&m.dailyBest.day===S.daily ? m.dailyBest : null; rw.daily={floor:S.floor, win, prev:b?b.floor:0};
     if (!b){ rw.tickets+=2; rw.dailyFirst=2; }
     const rk=S.over&&S.over.rank?S.over.rank.total:0;
@@ -3468,7 +3484,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.50</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.51</span>'}</div>`;
   }
   let runSet=false, runQuit=false;
   function runPop(){
@@ -3724,7 +3740,7 @@ if (typeof document !== 'undefined') (function(){
     if (on && !shown){ el.innerHTML=tkInner(); el.classList.remove('tkhide'); }
     else if (!on && shown){ el.classList.add('tkhide'); setTimeout(()=>{ if (el.classList.contains('tkhide')) el.innerHTML=''; },450); } },1000);
   /* ---------- 🔔 แจ้งเตือนเกมมีอัปเดต ---------- */
-  const GAME_VER='v3.50'; let updSkip='', updT=0;
+  const GAME_VER='v3.51'; let updSkip='', updT=0;
   function updCheck(){ if (location.protocol==='file:' || document.getElementById('updpop')) return; if (Date.now()-updT<60000) return; updT=Date.now();
     fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{ if (!j||!j.v||j.v===GAME_VER||j.v===updSkip) return; updShow(j); }).catch(()=>{}); }
   function updShow(j){ const inRun=S&&S.phase&&S.phase!=='title'&&!S.over&&!hub, d=document.createElement('div'); d.id='updpop';
@@ -3735,7 +3751,7 @@ if (typeof document !== 'undefined') (function(){
   setInterval(updCheck, 3*60*1000); setTimeout(updCheck, 8000); document.addEventListener('visibilitychange',()=>{ if (!document.hidden) updCheck(); });
   /* ---------- 📅 ป๊อปอัปล็อกอิน 7 วัน ---------- */
   let loginPop=false;
-  function loginRwTxt(g){ if (g.hero) return `ได้วีรชน ${ALLCHARS[g.hero].c.name}!`; if (g.shardHero) return `มีวีรชนธรรมดาครบแล้ว ได้เศษ ${ALLCHARS[g.shardHero].c.name.split(' ')[0]} ${g.shards} ชิ้น`; return `ได้ตั๋วสุ่มเศษ ${g.t} ใบ`; }
+  function loginRwTxt(g){ if (g.hero) return `ได้วีรชน ${ALLCHARS[g.hero].c.name}!`; if (g.shardHero) return `มีวีรชนธรรมดาครบแล้ว ได้เศษ ${ALLCHARS[g.shardHero].c.name.split(' ')[0]} ${g.shards} ชิ้น`; return `ได้ตั๋วสุ่มเศษ ${g.t} ใบ${g.gem?` · 💎 ${g.gem}`:''}`; }
   function loginPopHtml(m){ const g=loginGift; if (!loginPop||!g) return ''; const d=g.day;
     const cell=(R,i)=>{ const n=i+1, got=n<d, now=n===d; return `<div class="lgd ${got?'got':''} ${now?'now':''} ${R.hero?'big':''}"><small>วันที่ ${n}</small><div class="lgi">${R.hero?(now&&g.hero?charArt(ALLCHARS[g.hero].c,false,true):'🎴'):'🎟️'}</div><b>${R.hero?'บัตรสุ่มวีรชน':'ตั๋ว x'+R.t}</b>${got?'<i>✔</i>':''}</div>`; };
     return `<div class="pop-bg" data-act="lgclose"><div class="pop cpop lgpop" data-act="noop"><div class="pop-h">📅 <b>ล็อกอิน 7 วัน</b></div>
@@ -3783,7 +3799,7 @@ if (typeof document !== 'undefined') (function(){
     if (r.char && ALLCHARS[r.char]){ if (!owned(m,r.char)){ m.chars[r.char]={star:1,form:false,recs:[],main:0}; if (!m.show.main) m.show.main=r.char; if (!m.skin[r.char]){ const bt=['l','r','n'].find(t=>m.skins[r.char+'_'+t]); if (bt) m.skin[r.char]=bt; } out.push(`ได้วีรชน ${ALLCHARS[r.char].c.name}!`); }
       else { m.shards[r.char]=(m.shards[r.char]||0)+50; out.push(`มี${ALLCHARS[r.char].c.name.split(' ')[0]}แล้ว ได้เศษ 50 ชิ้นแทน`); } }
     if (r.skin){ const [sid,st]=r.skin.split('_'); if (!m.skins[r.skin]){ m.skins[r.skin]=true; if (m.chars[sid]) m.skin[sid]=st; out.push(`ได้สกิน ${skinsOf(sid)[st].name}!${m.chars[sid]?' (ใส่ให้แล้ว)':''}`); } else { m.skinSh+=SKIN_T[st].refund; out.push(`มีสกินนี้แล้ว ได้เศษผ้าสกิน ${SKIN_T[st].refund}`); } }
-    if (r.tickets){ m.tickets+=r.tickets; out.push(`🎟️ +${r.tickets}`); } if (r.medals){ m.medals+=r.medals; out.push(`🎖️ +${r.medals}`); } if (r.dust){ m.dust+=r.dust; out.push(`✨ +${r.dust}`); }
+    if (r.gem){ gemAdd(m,r.gem); out.push(`💎 +${r.gem}`); } if (r.tickets){ m.tickets+=r.tickets; out.push(`🎟️ +${r.tickets}`); } if (r.medals){ m.medals+=r.medals; out.push(`🎖️ +${r.medals}`); } if (r.dust){ m.dust+=r.dust; out.push(`✨ +${r.dust}`); }
     if (x.rk){ m.rkClaim=m.rkClaim||{}; m.rkClaim[x.rk]=1; }
     mailGot(m).push(x.id); return out.join(' · '); }
   let mailMsg='';
@@ -3811,7 +3827,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="pbtns"><button class="choice" data-act="guideopen"><span>📚 ข้อมูลเกม</span><small>ระดับอุปกรณ์ · ธาตุ · อาชีพ · อัตราสุ่ม · โหมดเกม</small></button><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.50<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.51<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
@@ -3940,10 +3956,12 @@ if (typeof document !== 'undefined') (function(){
   const hm = mins => `${Math.floor(mins/60)}ชม. ${mins%60}น.`;
   const idleChest = m => Math.floor(Math.min(CHEST_MAX, (Date.now()-m.idle.chestT)/60000)*idleRate(m));
   const stageTxt = (st,sub) => `${st}-${sub}`;
-  function idleFlush(){ if (!idleGoldBuf && !idleTixBuf && !idleRcBuf) return; const m=loadMeta(); m.rc+=idleRcBuf; idleRcBuf=0; m.idle.gold+=idleGoldBuf; idleGoldBuf=0; m.eq.tix+=idleTixBuf; idleTixBuf=0; storeMeta(m); IB.st=m.idle; }
+  let idleGemBuf=0;
+  function idleFlush(){ if (!idleGoldBuf && !idleTixBuf && !idleRcBuf && !idleGemBuf) return; const m=loadMeta(); if (idleGemBuf){ const G=gemDay(m), g=Math.max(0,Math.min(idleGemBuf,GEM_KILL_CAP-G.kill)); G.kill+=g; gemAdd(m,g); idleGemBuf=0; } m.rc+=idleRcBuf; idleRcBuf=0; m.idle.gold+=idleGoldBuf; idleGoldBuf=0; m.eq.tix+=idleTixBuf; idleTixBuf=0; storeMeta(m); IB.st=m.idle; }
   function idleEvents(ev){ let m=null, needR=false; const M=()=>m||(m=loadMeta());
     for (const e of ev){
       if (e.k==='gold'){ idleGoldBuf+=Math.round(e.g*(IB.m?spCityMul(IB.m):1)); const dr=e.boss?5+((IB.st&&IB.st.st)||1):(Math.random()<0.03?1:0);
+        if (Math.random()<(e.boss?0.5:0.004)){ idleGemBuf+=e.boss?2:1; IB.fx.push({k:'tixd',x:e.x,y:e.y,oy:76,t:1.2,txt:`💎+${e.boss?2:1}`}); }
         if (!e.boss && Math.random()<0.012){ idleRcBuf++; IB.fx.push({k:'tixd',x:e.x,y:e.y,oy:60,t:1.1,txt:'💠+1'}); }
         if (dr){ idleTixBuf+=dr; IB.fx.push({k:'tixd',x:e.x,y:e.y,oy:44,t:1.1,txt:`⚒️+${dr}`}); } }
       if (e.k==='clear'){ const d=M().idle, w={st:d.st,sub:d.sub};
@@ -4269,7 +4287,7 @@ if (typeof document !== 'undefined') (function(){
     if (act==='altup'){ if (b.dataset.c) altSel=b.dataset.c; const k=b.dataset.k, u=IDLE_UP[k], l=d.alt[altSel][k], cost=u.cost(l); if (l>=u.max||d.gold<cost) return true;
       d.gold-=cost; d.alt[altSel][k]++; storeMeta(m); idleCfgT=0; render(); return true; }
     if (act==='althero'){ if (b.dataset.c) altSel=b.dataset.c; const id=b.dataset.k, sl=+b.dataset.s, A=sl?d.hero2:d.hero, O=sl?d.hero:d.hero2; if (id===ROOKIE&&sl) return true; if (id!==ROOKIE&&O[altSel]===id) O[altSel]=null; A[altSel]=A[altSel]===id?null:id; storeMeta(m); idleCfgT=0; render(); return true; }
-    if (act==='ichest'){ const g=idleChest(m); if (chestMins(m)<CHEST_MIN){ idleBanner={t:2,txt:`🎁 สะสมอีก ${CHEST_MIN-chestMins(m)} นาทีจึงเปิดได้`,sub:`หีบเต็มที่ 12 ชม. · ตอนนี้ ${hm(chestMins(m))}`}; return true; } const tx=Math.floor(Math.min(720,(Date.now()-d.chestT)/60000)/15), rcx=Math.floor(Math.min(720,(Date.now()-d.chestT)/60000)/12); d.gold+=g; m.eq.tix+=tx; m.rc+=rcx; d.chestT=Date.now(); storeMeta(m); idleBanner={t:2.2,txt:`🎁 ได้ทอง ${fmtN(g)}${tx?` · ⚒️ ${tx}`:''}${rcx?` · 💠 ${rcx}`:''}`,sub:'หีบสะสมทอง + ตั๋วตีอุปกรณ์ (15 นาที/ใบ) แม้ปิดเกม สูงสุด 12 ชม.'}; render(); return true; }
+    if (act==='ichest'){ const g=idleChest(m); if (chestMins(m)<CHEST_MIN){ idleBanner={t:2,txt:`🎁 สะสมอีก ${CHEST_MIN-chestMins(m)} นาทีจึงเปิดได้`,sub:`หีบเต็มที่ 12 ชม. · ตอนนี้ ${hm(chestMins(m))}`}; return true; } const tx=Math.floor(Math.min(720,(Date.now()-d.chestT)/60000)/15), rcx=Math.floor(Math.min(720,(Date.now()-d.chestT)/60000)/12); const gx=Math.floor(Math.min(720,(Date.now()-d.chestT)/60000)/30); d.gold+=g; m.eq.tix+=tx; m.rc+=rcx; gemAdd(m,gx); d.chestT=Date.now(); storeMeta(m); idleBanner={t:2.4,txt:`🎁 ได้ทอง ${fmtN(g)}${tx?` · ⚒️ ${tx}`:''}${rcx?` · 💠 ${rcx}`:''}${gx?` · 💎 ${gx}`:''}`,sub:'หีบสะสมทอง ตั๋วตีอุปกรณ์ (15 นาที/ใบ) เพชร (30 นาที/เม็ด) แม้ปิดเกม สูงสุด 12 ชม.'}; render(); return true; }
     if (act==='ifight'){ d.farm=false; d.sub=Math.min(10,d.sub+1); storeMeta(m); IB.wave=null; IB.mons=[]; IB.q=[]; render(); return true; }
     return false; }
   /* ---------- สกิน: หน้าจอ ---------- */
@@ -4391,7 +4409,7 @@ if (typeof document !== 'undefined') (function(){
       storeMeta(m); idleCfgT=0; forgeRes=res.sort((a,b)=>b.t-a.t); forgeAnimT=1; render(); setTimeout(()=>{ forgeAnimT=0; render(); }, 950); return true; }
     return false; }
   /* ---------- เมนูหลักใหม่: ทหาร / ร้านค้า / แผนที่ผจญภัย ---------- */
-  let trTab = 'alt', shTab = 'shard';
+  let trTab = 'alt', shTab = 'gem';
   const pageify = (html, rm) => { let h=html.replace(/^<div class="pop-bg"[^>]*><div class="pop ([^"]*)" data-act="noop">/, '<div class="pagebox $1">').replace(/<\/div><\/div>$/, '</div>'); (rm||[]).forEach(x=>{ h=h.split(x).join(''); }); return h; };
   function hubTroop(m){ const tabs=`<div class="gtabs"><button class="${trTab==='alt'?'on':''}" data-act="trtab" data-k="alt">🏛️ แท่นบูชา</button><button class="${trTab==='eq'?'on':''}" data-act="trtab" data-k="eq">⚒️ อุปกรณ์</button></div>`;
     const body = trTab==='eq' ? pageify(eqPopHtml(m), ['<button class="mini" data-act="eqclose">ปิด</button>']) : pageify(altarPop(m), ['<button class="choice wide" data-act="altclose"><span>ปิด</span></button>']);
@@ -4502,10 +4520,17 @@ if (typeof document !== 'undefined') (function(){
       else { const t=+b.dataset.t, p=t===3?600:200; if (m.rsh<p){ hubMsg='เศษเรลิกไม่พอ'; render(); return true; } m.rsh-=p; m.relics.push(relicNew(k,t)); hubMsg=`ได้ ${RELIC_DEF[k][0]} (${RT[t].n})`; }
       storeMeta(m); render(); return true; }
     return false; }
-  function hubShop(m){ const T=[['shard',uiIco('tab_shard','🧩'),'เศษวีรชน'],['medal',uiIco('medal','🎖️'),'เหรียญตรา'],['skin',uiIco('skin','👗'),'สกิน'],['relic',uiIco('tab_relic','🏺'),'เรลิก'],['pvp',uiIco('tab_pvp','⚔️'),'PvP']];
+  function hubShop(m){ const T=[['gem','💎','ร้านเพชร'],['shard',uiIco('tab_shard','🧩'),'เศษวีรชน'],['medal',uiIco('medal','🎖️'),'เหรียญตรา'],['skin',uiIco('skin','👗'),'สกิน'],['relic',uiIco('tab_relic','🏺'),'เรลิก'],['pvp',uiIco('tab_pvp','⚔️'),'PvP']];
     const tabs=`<div class="gtabs shtabs">${T.map(([k,ic,n])=>`<button class="${shTab===k?'on':''}" data-act="shtab" data-k="${k}"><i>${ic}</i><span>${n}</span></button>`).join('')}</div>`;
     let body='';
-    if (shTab==='shard'){ const st=shardStock(), d=dayKey(), bought=(m.shopBuy&&m.shopBuy.d===d)?m.shopBuy.i:[];
+    if (shTab==='gem'){ const G=gemDay(m), st=gshopStock(m), rrc=GSHOP_RR(G.rr||0);
+      body=`<div class="shopkeeper"><div class="sk-npc"><img class="art" src="art/npc_librarian.webp" alt=""></div><div class="sk-say">"ของเด็ดประจำวัน ใช้ 💎 เพชรแลกได้เลย บางชิ้นลดราคาด้วยนะ"</div></div>
+        <div class="sumbox gembar"><b>💎 ${fmt(m.gem||0)}</b><span class="gs">เปลี่ยนของทุกวันตี 5</span>${(G.rr||0)<3?`<button class="mini" data-act="gsrr">🔄 สุ่มร้านใหม่ · 💎 ${rrc}</button>`:'<small class="gs">สุ่มใหม่ครบ 3 ครั้ง</small>'}</div>
+        <div class="sumbox"><div class="shgrid">${st.map((x,i)=>{ const done=(G.buy||[]).includes(i+'|'+(G.rr||0));
+          return `<div class="shit ${x.off?'gsoff':''} ${done?'sold':''}">${x.off?`<span class="gsdisc">-${x.off}%</span>`:''}<div class="shi gsi">${x.ic}</div><div class="shn">${x.n}</div>
+            ${done?'<span class="tag">ซื้อแล้ว</span>':`<button class="mini ${(m.gem||0)>=x.price?'':'off'}" data-act="gsbuy" data-i="${i}">${x.off?`<s>${x.p}</s> `:''}💎 ${x.price}</button>`}</div>`; }).join('')}</div></div>
+        <div class="sumbox"><h3>💎 หาเพชรได้จาก</h3><div class="csd">หีบออฟไลน์ (30 นาที/เม็ด) · มอนสเตอร์ในเมือง (สูงสุด ${GEM_KILL_CAP}/วัน) · ล็อกอินรายวัน 20 (วันที่ 7 ได้ 50) · ภารกิจรายวัน 15 · รางวัลอันดับ</div></div>`; }
+    else if (shTab==='shard'){ const st=shardStock(), d=dayKey(), bought=(m.shopBuy&&m.shopBuy.d===d)?m.shopBuy.i:[];
       body=`<div class="shopkeeper"><div class="sk-npc"><img class="art" src="art/npc_librarian.webp" alt=""></div><div class="sk-say">"วันนี้มีเศษความทรงจำมาใหม่ 6 ชิ้น รีบเลือกก่อนหมดวันนะ"</div></div>
         <div class="sumbox"><h3>🧩 เศษวีรชนประจำวัน <span class="gs" style="font-size:11px">เปลี่ยนทุกวัน</span></h3><div class="shgrid">${st.map((x,i)=>{ const a=ALLCHARS[x.id], done=bought.includes(i);
           return `<div class="shit ${a.tier} ${done?'sold':''}"><div class="shi">${charArt(a.c,false,true)}</div><div class="shn">${a.c.name.split(' ')[0]}</div><div class="gs">เศษ x${x.n}</div>
@@ -4765,6 +4790,7 @@ if (typeof document !== 'undefined') (function(){
   function htGrow(f){ const a=Math.min(f,30)-1, b=Math.max(0,Math.min(f,50)-30), c=Math.max(0,f-50); return {hp:Math.pow(1.075,a)*Math.pow(1.045,b)*Math.pow(HTG[0],c), atk:Math.pow(1.065,a)*Math.pow(1.038,b)*Math.pow(HTG[1],c)}; }
   const HTG=[1.03,1.024]; window.__htg=HTG;
   function htCond(f){ const k=htKind(f); return ['ผ่านชั้น','ไม่มีวีรชนล้ม', k==='n'?'ผ่านภายใน 60 วินาที':k==='mini'?'เลือดรวมทั้งทีมเหลือ 50% ขึ้นไป':'ผ่านภายใน 90 วินาที']; }
+  const HT_ENBUY=[30,50,80];
   const htCost = f => ({n:6,mini:8,boss:10})[htKind(f)];
   function htState(m){ if (!m.ht) m.ht={best:0,team:[]}; const S0=m.ht, t=S0.team||[]; S0.team=[0,1,2,3,4].map(i=>t[i]&&m.chars[t[i]]&&ALLCHARS[t[i]]?t[i]:null);
     if (!S0.st) S0.st={}; for (let f=1; f<=S0.best; f++) if (!S0.st[f]) S0.st[f]=1;
@@ -5010,7 +5036,7 @@ if (typeof document !== 'undefined') (function(){
     const slot=i=>{ const id=S0.team[i], hp=htHelpAt(S0,i); return `<button class="dhslot htslot ${hp?'hthelp':''}" data-act="htslot" data-i="${i}">${id?charArt(ALLCHARS[id].c,m.chars[id].form)+`<small>${ALLCHARS[id].c.name.split(' ')[0]}</small>`:hp?charArt(ALLCHARS[hp.id].c,!!hp.f)+`<i class="hthtag">🤝 ยืม</i><small>${ALLCHARS[hp.id].c.name.split(' ')[0]}</small>`:'<span>➕</span><small>ว่าง</small>'}</button>`; };
     const tag=id=>{ const el=ALLCHARS[id].c.el; return els.some(e=>BEATS[el]===e)?'<i class="dhtag g">ชนะทาง</i>':els.some(e=>BEATS[e]===el)?'<i class="dhtag b">แพ้ทาง</i>':''; };
     return `<div class="overlay hub" ${pageBg('adv')}>${hubHead(m,'🏯 หอคอยร้อยชั้น')}
-      <div class="sumbox htenb"><div><b>⚡ สายฟ้า ${S0.en}/${HT_EN_MAX}</b> <small class="gs">${nextIn}</small></div><div class="gs">★ ${htStarTot(S0)}/${HT_OPEN*3} · ผ่าน ${best}/${HT_MAX}</div></div>
+      <div class="sumbox htenb"><div><b>⚡ สายฟ้า ${S0.en}/${HT_EN_MAX}</b> <small class="gs">${nextIn}</small> ${(()=>{ const G=gemDay(m), left=3-G.en; return left>0?`<button class="mini gemplus" data-act="htenbuy">＋50 · 💎 ${HT_ENBUY[G.en]}</button>`:'<small class="gs">ซื้อครบ 3 ครั้งวันนี้</small>'; })()}</div><div class="gs">★ ${htStarTot(S0)}/${HT_OPEN*3} · ผ่าน ${best}/${HT_MAX}</div></div>
       <div class="sumbox"><h3>🗺️ แมพ ${mi+1} · ${htMap(mi*10+1).name}</h3><div class="htmaps">${maps}</div><div class="httiles">${tiles}</div></div>
       <div class="sumbox"><h3>ชั้น ${f} · ${MP.name} ${k!=='n'?`<span class="htkind ${k}">${HT_KIND_TXT[k]}</span>`:''}</h3>
         <div class="htmons">${uniq.map(e=>`<div class="htmon ${e.boss?'boss':''}">${e.src?`<img src="${e.src}" alt="">`:`<span class="htemo">${e.ic||'👾'}</span>`}<small>${elIcon(e.el)} ${e.name}</small></div>`).join('')}</div>
@@ -5147,6 +5173,8 @@ if (typeof document !== 'undefined') (function(){
     if (act==='htnext'){ const f=htFight.f+1; htSel=f; htStart(f); return true; }
     if (act==='htclose'){ if (htFight&&!htFight.done) return true; if (htFight&&htFight.cus){ htFight=null; render(); return true; } if (htFight) htSel=Math.min(HT_OPEN,htFight.win?htFight.f+1:htFight.f); htFight=null; render(); return true; }
     const m=loadMeta(), S0=htState(m);
+    if (act==='htenbuy'){ const G=gemDay(m), c=HT_ENBUY[G.en]; if (G.en>=3) return true; if ((m.gem||0)<c){ hubMsg=`💎 ไม่พอ (ต้องใช้ ${c}) · หาเพชรได้จากหีบออฟไลน์ มอนสเตอร์ในเมือง ล็อกอิน ภารกิจรายวัน และรางวัลอันดับ`; render(); return true; }
+      m.gem-=c; G.en++; S0.en+=50; storeMeta(m); hubMsg=`⚡ เติมสายฟ้า +50 แล้ว (เหลือ 💎 ${fmt(m.gem)})`; SND.sfx('coin'); render(); return true; }
     if (act==='htsweep'){ const n=+b.dataset.n, f=htSel, c=htCost(f)*n; if (htStars(S0,f)<3||S0.en<c) return true; S0.en-=c; let rw={}; for (let i=0;i<n;i++) rw=htAdd(rw,htDrop(f)); htGive(m,rw); storeMeta(m); htSweepRes={f,n,rw}; render(); return true; }
     if (act==='htset'){ const id=b.dataset.k, j=S0.team.indexOf(id), old=S0.team[htPick]; if (j>=0) S0.team[j]=old; S0.team[htPick]=id; delete S0.help.slots[htPick]; Object.keys(S0.help.slots).forEach(i=>{ if (S0.help.slots[i].id===id) delete S0.help.slots[i]; }); htPick=-1; storeMeta(m); render(); return true; }
     if (act==='hthelp'){ const pool=htHelpPool(m), sn=pool[+b.dataset.k]; if (!sn||htPick<0) return true; const cur=htHelpAt(S0,htPick); if (htHelpUsed(S0)-(cur?1:0)>=htHelpMax(m)) return true; S0.team[htPick]=null; S0.help.slots[htPick]={id:sn.id,s:sn.s,f:sn.f,pw:sn.pw,by:sn.by}; htPick=-1; storeMeta(m); render(); return true; }
@@ -5435,11 +5463,11 @@ if (typeof document !== 'undefined') (function(){
   document.addEventListener('dqlb',()=>{ try{ const L=window.__dqLB||{}; if (L.state==='ok') Object.keys(RK_CACHE).forEach(k=>{ if (RK_CACHE[k]) RK_CACHE[k].t=0; }); if (hub==='rank'||(S&&S.over&&!hub)) render(); }catch(e){} });
   let rkTab='endless'; const RK_CACHE={}, RK_TABS=[['endless','mode_endless','หอคอยไร้สิ้นสุด'],['daily','ic_calendar','รายวัน'],['hundred','mode_hundred','ร้อยชั้น'],['dragon','boss','ล่ามังกร'],['arena','mode_pvp','ประลอง']];
   const rkPeriod=(k,m)=>k==='daily'?dayKey():k==='dragon'?String((m.dh&&m.dh.wk)||'-'):'all';
-  const RK_RW_BIG=[[1,1,{t:30,md:3000,du:300}],[2,3,{t:20,md:2000,du:200}],[4,10,{t:12,md:1200,du:120}],[11,50,{t:6,md:600,du:60}],[51,100,{t:3,md:300,du:30}],[101,1e9,{t:1,md:100,du:0}]];
-  const RK_RW_SM=RK_RW_BIG.map(([a,b,r])=>[a,b,{t:Math.max(1,Math.ceil(r.t/2)),md:Math.round(r.md/2),du:Math.round(r.du/2)}]);
+  const RK_RW_BIG=[[1,1,{t:30,md:3000,du:300,ge:100}],[2,3,{t:20,md:2000,du:200,ge:60}],[4,10,{t:12,md:1200,du:120,ge:40}],[11,50,{t:6,md:600,du:60,ge:20}],[51,100,{t:3,md:300,du:30,ge:10}],[101,1e9,{t:1,md:100,du:0,ge:5}]];
+  const RK_RW_SM=RK_RW_BIG.map(([a,b,r])=>[a,b,{t:Math.max(1,Math.ceil(r.t/2)),md:Math.round(r.md/2),du:Math.round(r.du/2),ge:Math.ceil(r.ge/2)}]);
   const RK_RW={endless:RK_RW_BIG, dragon:RK_RW_BIG, daily:RK_RW_SM, hundred:RK_RW_SM};
   const rkTier=(k,rank)=>RK_RW[k].find(([a,b])=>rank>=a&&rank<=b);
-  const rkRwTxt=r=>[r.t?`🎟️ ${r.t}`:'', r.md?`🎖️ ${fmt(r.md)}`:'', r.du?`✨ ${r.du}`:''].filter(Boolean).join(' ');
+  const rkRwTxt=r=>[r.ge?`💎 ${r.ge}`:'', r.t?`🎟️ ${r.t}`:'', r.md?`🎖️ ${fmt(r.md)}`:'', r.du?`✨ ${r.du}`:''].filter(Boolean).join(' ');
   /* ---------- ⏳ นับถอยหลังรีเซ็ต (รายวัน ตี 5 · รายสัปดาห์ จันทร์ ตี 5 ตามเวลาเครื่อง) ---------- */
   function nextReset(kind){ const now=Date.now(), d=new Date(now-5*3600e3); d.setHours(0,0,0,0); let days=1; if (kind==='week'){ const wd=d.getDay(); days=((8-wd)%7)||7; } d.setDate(d.getDate()+days); return d.getTime()+5*3600e3-now; }
   function cdFmt(ms){ const t=Math.max(0,Math.floor(ms/1000)), dd=Math.floor(t/86400), h=Math.floor(t%86400/3600), mi=Math.floor(t%3600/60), se=t%60, p=n=>String(n).padStart(2,'0'); return (dd?dd+' วัน ':'')+p(h)+':'+p(mi)+':'+p(se); }
@@ -5456,7 +5484,7 @@ if (typeof document !== 'undefined') (function(){
       const res=await Promise.all(todo.map(([k,per])=>C.lbMine(k,per).catch(()=>undefined)));
       const m=loadMeta(); m.mail=m.mail||{got:[]}; m.mail.dyn=m.mail.dyn||[]; m.mail.rkChk=m.mail.rkChk||{}; let added=0;
       todo.forEach(([k,per,key,when],i)=>{ const r=res[i]; if (r===undefined) return; m.mail.rkChk[key]=1; if (k==='daily'){ m.ach=m.ach||{}; m.ach.dRank={day:dayKey(), rank:(r&&r.rank)||0}; } if (!r||!r.rank || (m.rkClaim&&m.rkClaim[key])) return; m.ach=m.ach||{}; m.ach.rkBest=Math.min(m.ach.rkBest||1e9, r.rank); const tier=rkTier(k,r.rank); if (!tier) return; const R=tier[2];
-        m.mail.dyn.push({id:'rk|'+key, ts:Date.now(), rk:key, t:`🏆 รางวัล${RK_MAIL_N[k]}`, d:`ยินดีด้วย! คุณได้อันดับ <b>#${fmt(r.rank)}</b> จาก ${fmt(r.total||0)} คน (${when})\nคะแนน ${fmt(r.score||0)}\n\n🎁 รางวัลอันดับ ${tier[0]===tier[1]?tier[0]:tier[0]+'-'+(tier[1]>=1e9?'ขึ้นไป':tier[1])}:\n${R.t?`🎟️ ตั๋วสุ่มเศษ ×${R.t}\n`:''}${R.md?`🎖️ เหรียญตรา ×${fmt(R.md)}\n`:''}${R.du?`✨ ผงดาว ×${fmt(R.du)}`:''}`, rw:{tickets:R.t, medals:R.md, dust:R.du}}); added++; });
+        m.mail.dyn.push({id:'rk|'+key, ts:Date.now(), rk:key, t:`🏆 รางวัล${RK_MAIL_N[k]}`, d:`ยินดีด้วย! คุณได้อันดับ <b>#${fmt(r.rank)}</b> จาก ${fmt(r.total||0)} คน (${when})\nคะแนน ${fmt(r.score||0)}\n\n🎁 รางวัลอันดับ ${tier[0]===tier[1]?tier[0]:tier[0]+'-'+(tier[1]>=1e9?'ขึ้นไป':tier[1])}:\n${R.t?`🎟️ ตั๋วสุ่มเศษ ×${R.t}\n`:''}${R.md?`🎖️ เหรียญตรา ×${fmt(R.md)}\n`:''}${R.du?`✨ ผงดาว ×${fmt(R.du)}`:''}`, rw:{tickets:R.t, medals:R.md, dust:R.du, gem:R.ge||0}}); added++; });
       const ks=Object.keys(m.mail.rkChk); if (ks.length>60) ks.slice(0,ks.length-60).forEach(k=>delete m.mail.rkChk[k]);
       m.mail.dyn=m.mail.dyn.filter(x=>!(mailGot(m).includes(x.id) && Date.now()-(x.ts||0)>14*864e5)).slice(-25);
       storeMeta(m); if (added) render(); }
@@ -5634,7 +5662,7 @@ if (typeof document !== 'undefined') (function(){
     if (act==='rkclaim'){ const per=rkPeriod(rkTab,m), D=RK_CACHE[rkTab+'|'+per]||{}, ci=rkClaimInfo(rkTab), cl=D.claim, tier=cl&&cl.rank?rkTier(rkTab,cl.rank):null;
       if (!tier) return true; m.rkClaim=m.rkClaim||{}; if (m.rkClaim[ci.key]) return true;
       Object.keys(m.rkClaim).forEach(k=>{ if (Object.keys(m.rkClaim).length>40) delete m.rkClaim[k]; });
-      m.rkClaim[ci.key]=1; const r=tier[2]; m.tickets=(m.tickets||0)+r.t; m.medals=(m.medals||0)+r.md; m.dust=(m.dust||0)+r.du;
+      m.rkClaim[ci.key]=1; const r=tier[2]; m.tickets=(m.tickets||0)+r.t; m.medals=(m.medals||0)+r.md; m.dust=(m.dust||0)+r.du; gemAdd(m,r.ge||0);
       SND.sfx&&SND.sfx('open'); return done(`🎁 รับ${ci.label}แล้ว (อันดับ #${fmt(cl.rank)}): ${rkRwTxt(r)}`); }
     if (act==='rkreload'){ const C=window.__dqCloud; Promise.resolve(C&&C.lbSync?C.lbSync():0).then(()=>rkLoad(rkTab,true)); render(); return true; }
     if (/^(sp|nest)/.test(act) && spAct(act,b)) return true;
@@ -5647,6 +5675,20 @@ if (typeof document !== 'undefined') (function(){
     if (act==='shtab'){ shTab=b.dataset.k; render(); return true; }
     if (act==='goshop'){ hub='shop'; shTab=b.dataset.k; render(); return true; }
     if (act==='modesoon'){ hubMsg=`${b.dataset.k}: เร็วๆ นี้`; render(); return true; }
+    if (act==='gsrr'){ const G=gemDay(m), c=GSHOP_RR(G.rr||0); if ((G.rr||0)>=3) return true; if ((m.gem||0)<c){ hubMsg=`💎 ไม่พอ (ต้องใช้ ${c})`; render(); return true; } m.gem-=c; G.rr=(G.rr||0)+1; storeMeta(m); SND.sfx('coin'); render(); return true; }
+    if (act==='gsbuy'){ const G=gemDay(m), st=gshopStock(m), i=+b.dataset.i, x=st[i], key=i+'|'+(G.rr||0); if (!x||(G.buy||[]).includes(key)) return true;
+      if ((m.gem||0)<x.price){ hubMsg=`💎 ไม่พอ (ต้องใช้ ${x.price})`; render(); return true; } m.gem-=x.price; (G.buy=G.buy||[]).push(key); let msg='';
+      if (x.k==='en50'){ const H=htState(m); H.en+=50; msg='⚡ สายฟ้า +50'; }
+      else if (x.k==='arena'){ const A=arState(m); A.used=Math.max(-3,(A.used||0)-1); msg='⚔️ สิทธิ์ประลอง +1'; }
+      else if (x.k==='shard'){ const nn=Object.keys(ALLCHARS).filter(id=>ALLCHARS[id].tier==='n'), own=nn.filter(id=>m.chars[id]), pool=own.length?own:nn, id=pool[Math.floor(Math.random()*pool.length)]; m.shards[id]=(m.shards[id]||0)+10; msg=`🧩 เศษ${ALLCHARS[id].c.name.split(' ')[0]} ×10`; }
+      else if (x.k==='ticket'){ m.tickets=(m.tickets||0)+1; msg='🎟️ ตั๋วอัญเชิญ +1'; }
+      else if (x.k==='sktix'||x.k==='sktix2'){ m.sktix=(m.sktix||0)+1; msg='🎀 ตั๋วสกิน +1'; }
+      else if (x.k==='rtix'){ m.rtix=(m.rtix||0)+1; msg='🏺 ตั๋วเรลิก +1'; }
+      else if (x.k==='rsh'){ m.rsh=(m.rsh||0)+20; msg='✴️ หินตีบวกเรลิก +20'; }
+      else if (x.k==='ro'){ m.ro=(m.ro||0)+2; msg='🔮 หินพยากรณ์ +2'; }
+      else if (x.k==='medals'){ m.medals=(m.medals||0)+3000; msg='🎖️ เหรียญตรา +3,000'; }
+      else if (x.k==='eqtix'){ m.eq.tix=(m.eq.tix||0)+10; msg='⚒️ ตั๋วตีเหล็ก +10'; }
+      storeMeta(m); hubMsg=`ซื้อแล้ว: ${msg}`; SND.sfx('coin'); render(); return true; }
     if (act==='shbuy'){ const m1=loadMeta(), i=+b.dataset.i, x=shardStock()[i], d=dayKey(); if (!m1.shopBuy||m1.shopBuy.d!==d) m1.shopBuy={d,i:[]};
       if (m1.shopBuy.i.includes(i)) return true; if (m1.dust<x.p){ hubMsg='ผงดาวไม่พอ'; render(); return true; }
       m1.dust-=x.p; m1.shards[x.id]=(m1.shards[x.id]||0)+x.n; m1.shopBuy.i.push(i); hubMsg=`ได้เศษ ${ALLCHARS[x.id].c.name.split(' ')[0]} x${x.n}`; storeMeta(m1); render(); return true; }
