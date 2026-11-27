@@ -1121,6 +1121,11 @@ img.elico{height:1.2em;vertical-align:-.25em}
 .npcsay small{display:block;font-size:10px;color:#9a5a0a;font-weight:700}
 @keyframes npcsay{0%{opacity:0;transform:translateY(8px) scale(.8)}8%{opacity:1;transform:none}88%{opacity:1}100%{opacity:0}}
 
+.ucq{position:absolute;left:6px;top:6px;z-index:15;display:flex;flex-direction:column;gap:4px;pointer-events:none;max-width:64%}
+.ucard{display:flex;align-items:center;gap:6px;padding:3px 10px 3px 3px;border-radius:12px;background:linear-gradient(90deg,rgba(10,6,24,.92),color-mix(in srgb,var(--c1) 40%,rgba(10,6,24,.85)));border:1.5px solid var(--c1);box-shadow:0 0 10px color-mix(in srgb,var(--c1) 60%,transparent);animation:ucard 1.9s ease-out forwards}
+.ucp{width:40px;height:40px;flex:none;border-radius:9px;overflow:hidden;background:rgba(255,255,255,.08);display:flex;align-items:flex-end;justify-content:center}.ucp img{width:40px!important;height:40px!important;object-fit:cover;object-position:top}
+.uct{display:flex;flex-direction:column;line-height:1.15;min-width:0}.uct small{font-size:10px;color:#e8defa}.uct b{font-size:14px;color:#fff;text-shadow:0 0 6px var(--c1),0 1px 2px #000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@keyframes ucard{0%{opacity:0;transform:translateX(-30px)}10%{opacity:1;transform:none}82%{opacity:1}100%{opacity:0;transform:translateX(-12px)}}
 .uname{position:absolute;left:0;right:0;top:26%;text-align:center;z-index:14;pointer-events:none;animation:uname 1.6s ease-out forwards}
 .uname small{display:block;font-size:13px;color:#fff;font-weight:700;letter-spacing:1px;text-shadow:0 2px 4px #000}
 .uname b{display:inline-block;font-family:Mitr,sans-serif;font-size:34px;font-weight:700;color:#fff;padding:2px 22px;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--c1) 70%,#000) 20%,color-mix(in srgb,var(--c1) 70%,#000) 80%,transparent);text-shadow:0 0 12px var(--c1),0 3px 0 #000,0 0 3px #000}
@@ -1180,7 +1185,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.46</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.47</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -2064,8 +2069,8 @@ function battle(mons){
             const s=u.act[i]; if(u.cds[i]>0) continue;
             if (s.kind==='heal' && lowest.hp/lowest.st.maxhp>0.6) continue;
             if (s.kind==='healAll' && avg>0.7) continue;
-            if (s.kind==='revive' && !dead.length && avg>0.6) continue;
-            if (s.kind==='shieldAll' && U.some(x=>x.shield>0)) continue;
+            if (s.kind==='revive' && !dead.length && avg>(s.slot==='ult'?0.92:0.6)) continue;   // อัลติเมท: ไม่มีคนล้มก็ใช้เป็นฮีลทั้งทีม
+            if (s.kind==='shieldAll' && (s.slot==='ult' ? living.every(x=>x.shield>0) : U.some(x=>x.shield>0))) continue;
             if (s.kind==='buff' && buff.turns>0) continue;
             if (s.kind==='teamDR' && dr.turns>0) continue;
             if (s.kind==='undying' && (undy.used || avg>0.65)) continue;
@@ -3323,7 +3328,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.46</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.47</span>'}</div>`;
   }
   let runSet=false, runQuit=false;
   function runPop(){
@@ -3579,7 +3584,7 @@ if (typeof document !== 'undefined') (function(){
     if (on && !shown){ el.innerHTML=tkInner(); el.classList.remove('tkhide'); }
     else if (!on && shown){ el.classList.add('tkhide'); setTimeout(()=>{ if (el.classList.contains('tkhide')) el.innerHTML=''; },450); } },1000);
   /* ---------- 🔔 แจ้งเตือนเกมมีอัปเดต ---------- */
-  const GAME_VER='v3.46'; let updSkip='', updT=0;
+  const GAME_VER='v3.47'; let updSkip='', updT=0;
   function updCheck(){ if (location.protocol==='file:' || document.getElementById('updpop')) return; if (Date.now()-updT<60000) return; updT=Date.now();
     fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{ if (!j||!j.v||j.v===GAME_VER||j.v===updSkip) return; updShow(j); }).catch(()=>{}); }
   function updShow(j){ const inRun=S&&S.phase&&S.phase!=='title'&&!S.over&&!hub, d=document.createElement('div'); d.id='updpop';
@@ -3666,7 +3671,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="pbtns"><button class="choice" data-act="guideopen"><span>📚 ข้อมูลเกม</span><small>ระดับอุปกรณ์ · ธาตุ · อาชีพ · อัตราสุ่ม · โหมดเกม</small></button><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.46<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.47<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
@@ -4047,7 +4052,9 @@ if (typeof document !== 'undefined') (function(){
     if (st==='storm') h+=at(tx,ty,'us')+at(tx,ty,'us s2');
     if (st==='moon') h+=at(tx,ty,'uo')+at(tx,ty,'uring','animation-delay:.5s');
     if (st==='dome') h+=at(hx,hy,'uv')+Array.from({length:10},()=>at(hx+R(-120,120),hy-R(0,30),'uq',`animation-delay:${R(0,0.5)}s`)).join('');
-    if (name){ const ch=ALLCHARS[id]; h+=`<div class="uname"><small>${ch?ch.c.name:''}</small><b>${name}</b></div>`; }
+    if (name){ const ch=ALLCHARS[id]; let q=layer.querySelector(':scope > .ucq'); if (!q){ q=document.createElement('div'); q.className='ucq'; layer.appendChild(q); }
+      const cd=document.createElement('div'); cd.className='ucard'; cd.style.setProperty('--c1',c1); cd.innerHTML=`<span class="ucp">${ch?charArt(ch.c):''}</span><span class="uct"><small>${ch?ch.c.name.split(' ')[0]:''} · อัลติเมท</small><b>${name}</b></span>`;
+      q.appendChild(cd); while (q.children.length>3) q.firstChild.remove(); setTimeout(()=>cd.remove(),1900); }
     f.innerHTML=h; layer.appendChild(f); setTimeout(()=>f.remove(),name?1700:1500);
     setTimeout(()=>SND.sfx(st==='dome'?'heal':'boom'),st==='meteor'?450:250); }
   function speakUlt(){}   // เสียงพากย์ถูกยกเลิก: ใช้ข้อความชื่อท่าแทน (ดู ultFX)
