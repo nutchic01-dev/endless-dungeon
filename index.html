@@ -1126,6 +1126,9 @@ h3 img.uiico{height:24px;width:auto;vertical-align:middle}
 .gembar{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.gembig img.uiico{height:40px}.gsdisc img.uiico{height:14px;vertical-align:-2px;margin-right:2px}.gemplus img.uiico{height:18px;vertical-align:-4px}.gsi img.uiico{height:50px}.gembar b{font-size:20px;color:#9fe7ff;text-shadow:0 0 8px #3ab8ff}.gsi{font-size:38px;display:flex;align-items:center;justify-content:center;height:56px}
 .shit{position:relative}.gsdisc{position:absolute;top:-6px;right:-6px;background:linear-gradient(#ff5a7a,#d61e4a);color:#fff;font-weight:800;font-size:11px;padding:2px 6px;border-radius:9px;box-shadow:0 2px 6px rgba(0,0,0,.4);z-index:2}.gsoff{border-color:#ff7a9a!important;box-shadow:0 0 10px rgba(255,90,122,.35)}
 .shit s{opacity:.6;font-size:10px}.gemplus{margin-left:6px;background:linear-gradient(#5ad2ff,#2a8fe0)!important;color:#fff!important}
+.gdtabs{display:flex!important;flex-wrap:nowrap!important;overflow-x:auto;flex:none;min-height:56px;gap:4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}.gdtabs::-webkit-scrollbar{display:none}.gdtabs button{flex:none!important;min-width:62px}
+.gstep{display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-bottom:1px dashed rgba(255,255,255,.1)}.gstep:last-of-type{border:0}.gsn{flex:none;width:26px;height:26px;border-radius:50%;background:linear-gradient(#ffd56a,#e0a020);color:#3a2400;display:flex;align-items:center;justify-content:center;font-size:14px}
+.gstep small{display:block;color:#d9d0ff;font-size:12px;line-height:1.5;margin-top:2px}.ghelp{max-height:86vh;overflow:auto;text-align:left}
 .reccmp{margin-top:10px;text-align:left;background:rgba(255,255,255,.04);border:1px solid rgba(255,209,102,.35);border-radius:12px;padding:10px}.reccmp h3{margin:0 0 6px;font-size:15px}
 .rcg{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:3px 6px;font-size:12.5px;align-items:start}.rcg>div{padding:2px 0}.rch{font-weight:700;color:#ffd166;text-align:center}.rco,.rcn{text-align:right}.rcg2{text-align:left!important;font-size:11.5px;line-height:1.45}
 .rco.win,.rcn.win{color:#7dffcf;font-weight:700}.rcu{color:#5fe0b0;font-style:normal}.rcd{color:#ff6b8a;font-style:normal}.rcpair{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:8px}.rcpair>div+div{border-left:1px solid rgba(255,255,255,.12);padding-left:8px}.rcsep{grid-column:1/-1;margin-top:6px;padding-top:4px;border-top:1px dashed rgba(255,255,255,.18);color:#c9b8ff;font-size:12px}.reccmp .row2{margin-top:10px}
@@ -1216,7 +1219,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.56</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.57</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -3031,6 +3034,18 @@ function rollChars(pickId){
 
 /* ---------- meta (บันทึกในเครื่อง) ---------- */
 /* สถานะถาวร: ขั้น (โอกาส) → [key, ชื่อ, ค่าต่อขั้น, ขั้นสูงสุด, หน่วย] */
+/* 📖 คู่มือเริ่มต้นหอคอยไร้สิ้นสุด (ใช้ทั้งในข้อมูลเกม และปุ่ม ❓ ระหว่างลงหอคอย) */
+function guideStartHtml(){ const st=(n,ic,t,d)=>`<div class="gstep"><b class="gsn">${n}</b><div><b>${ic} ${t}</b><small>${d}</small></div></div>`;
+  return `<div class="sumbox"><h3>🗼 หอคอยไร้สิ้นสุด เล่นยังไง?</h3>
+    ${st(1,'🌾','เริ่มเป็นชาวบ้านตัวเปล่าทุกรอบ','ไม่มีของติดตัวเข้าไป พลังที่ติดตัวถาวรมีแค่ค่าที่ฝึกด้วย 🎖️ เหรียญตรา และค่าสุ่มตอนเริ่มรอบ')}
+    ${st(2,'👣','กด "เดินต่อ" ลงไปทีละชั้น','แต่ละชั้นอาจเจอมอนสเตอร์ เหตุการณ์ ร้านค้า หีบ หรือเควส อ่านตัวเลือกแล้วเลือกเอง (กดอัตโนมัติได้ เกมจะหยุดให้ตอนเจอเควสหรือเรื่องสำคัญ)')}
+    ${st(3,'⚔️','สู้ชนะ = เลเวลขึ้น + ของ','ได้ EXP ทอง และอุปกรณ์ เลเวลขึ้นแล้วเลือกฝึกค่าสถานะ อุปกรณ์เซ็ตเดียวกันใส่ 2/4 ชิ้นได้โบนัส')}
+    ${st(4,'🛡️','Lv.10 เลือกอาชีพ','แทงค์ นักรบ นักเวท ซัพพอต นักธนู นักฆ่า · หรือ <b>เป็นชาวบ้านต่อ</b> เพื่อลุ้น <b>อาชีพลับ</b> (ค่าที่ฝึกบ่อยสุดเป็นตัวกำหนด ดูแถบคืบหน้าได้ในแท็บอาชีพ)')}
+    ${st(5,'🦸','Lv.40 สวมบทวีรชน','เลือกวีรชนสายเดียวกันที่มีอยู่แล้ว หรือสุ่มตัวที่ยังไม่มีก็ได้ และได้เพื่อนร่วมทีมมาช่วยสู้')}
+    ${st(6,'😈','บอสโผล่ได้ทุกชั้น (ประมาณ 1%)','ชั้นตื้นบอสโหดมาก ใช้ <b>🔷 รูน</b> หนี (รูนมีโอกาสหนีเป็น % และมีอายุ) ยิ่งลงลึก ตัวเรายิ่งแข็งแรงพอจะสู้ไหว')}
+    ${st(7,'🏆','ชนะบอส = จบรอบแบบชนะ','ครั้งแรกได้ <b>วีรชนตัวนั้นถาวร</b> + <b>📜 บันทึกสถานะ</b> (ค่าที่ทำได้รอบนี้ ใช้เพิ่มพลังวีรชนในหอคอยร้อยชั้น ประลอง ล่ามังกร) · ถ้าตาย = จบรอบ')}
+    ${st(8,'🎖️','จบรอบได้เหรียญตรา','เอาไปฝึกค่าสถานะถาวรในหน้าผจญภัย รอบหน้าเริ่มแข็งแรงกว่าเดิม · ลงซ้ำด้วยวีรชนตัวเดิมให้ไกลขึ้น เพื่อได้บันทึกที่ดีกว่า')}
+    <div class="gdn">💡 <b>เคล็ดลับ</b><br>• ชั้นต่ำกว่า ~100 ถ้าเจอบอสแล้วมีรูน ให้หนีก่อน<br>• เลือกท่าที่ติดสถานะก่อน แล้วตามด้วยท่าที่ทำคอมโบ (ดูแท็บคอมโบ)<br>• ระวังคำสาป แต่คำสาปช่วยเพิ่มตัวคูณคะแนน<br>• รีเฟรชหรือปิดเกม กลับมาเล่นต่อชั้นเดิมได้</div></div>`; }
 const PERM = [
   {p:60, list:[['hp','HP',5,100,''],['atk','ATK',1,100,''],['matk','MATK',1,100,''],['def','DEF',1,100,''],['mdef','MDEF',1,100,'']]},
   {p:28, list:[['gold','ทองทุกแหล่ง',1,100,'%'],['exp','EXP',1,50,'%']]},
@@ -3540,12 +3555,13 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.56</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rhelp" title="วิธีเล่น">❓</button><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.57</span>'}</div>`;
   }
-  let runSet=false, runQuit=false;
+  let runSet=false, runQuit=false, runHelp=false;
   function runPop(){
     if (!S || S.phase==='title' || S.over) return '';
     const v=k=>Math.round((SND.set[k]==null?1:SND.set[k])*100);
+    if (runHelp) return `<div class="pop-bg" data-act="rhelpc"><div class="pop cpop ghelp" data-act="noop">${guideStartHtml()}<button class="choice wide" data-act="rhelpc"><span>เข้าใจแล้ว เล่นต่อ</span></button></div></div>`;
     if (runSet) return `<div class="pop-bg" data-act="rsetc"><div class="pop cpop" data-act="noop"><div class="pop-h">⚙️ <b>ตั้งค่าเสียง</b></div>
       <div class="sndset"><div class="pop-r"><span>🎵 เสียงเพลง</span><b id="sv_mus">${v('mus')}%</b></div><input type="range" min="0" max="100" value="${v('mus')}" oninput="sndVol('mus',this.value)">
         <div class="pop-r"><span>🔊 เสียงเอฟเฟกต์</span><b id="sv_sfx">${v('sfx')}%</b></div><input type="range" min="0" max="100" value="${v('sfx')}" oninput="sndVol('sfx',this.value)">
@@ -3799,7 +3815,7 @@ if (typeof document !== 'undefined') (function(){
     if (on && !shown){ el.innerHTML=tkInner(); el.classList.remove('tkhide'); }
     else if (!on && shown){ el.classList.add('tkhide'); setTimeout(()=>{ if (el.classList.contains('tkhide')) el.innerHTML=''; },450); } },1000);
   /* ---------- 🔔 แจ้งเตือนเกมมีอัปเดต ---------- */
-  const GAME_VER='v3.56'; let updSkip='', updT=0;
+  const GAME_VER='v3.57'; let updSkip='', updT=0;
   function updCheck(){ if (location.protocol==='file:' || document.getElementById('updpop')) return; if (Date.now()-updT<60000) return; updT=Date.now();
     fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{ if (!j||!j.v||j.v===GAME_VER||j.v===updSkip) return; updShow(j); }).catch(()=>{}); }
   function updShow(j){ const inRun=S&&S.phase&&S.phase!=='title'&&!S.over&&!hub, d=document.createElement('div'); d.id='updpop';
@@ -3883,10 +3899,10 @@ if (typeof document !== 'undefined') (function(){
       <div class="sndset"><div class="pop-r"><span>🎵 เสียงเพลง</span><b id="sv_mus">${Math.round(SND.set.mus*100)}%</b></div><input type="range" min="0" max="100" value="${Math.round(SND.set.mus*100)}" oninput="sndVol('mus',this.value)">
         <div class="pop-r"><span>🔊 เสียงเอฟเฟกต์</span><b id="sv_sfx">${Math.round(SND.set.sfx*100)}%</b></div><input type="range" min="0" max="100" value="${Math.round(SND.set.sfx*100)}" oninput="sndVol('sfx',this.value)">
         <div class="pop-r"><span>🗣️ เสียงพากย์</span><b id="sv_voice">${SND.set.voice===0?'ปิด':Math.round((SND.set.voice==null?1:SND.set.voice)*100)+'%'}</b></div><input type="range" min="0" max="100" value="${Math.round((SND.set.voice==null?1:SND.set.voice)*100)}" oninput="sndVol('voice',this.value);var o=document.getElementById('sv_voice');if(o)o.textContent=this.value>0?this.value+'%':'ปิด'"></div>
-      <div class="pbtns"><button class="choice" data-act="guideopen"><span>📚 ข้อมูลเกม</span><small>ระดับอุปกรณ์ · ธาตุ · อาชีพ · อัตราสุ่ม · โหมดเกม</small></button><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
+      <div class="pbtns"><button class="choice" data-act="guideopen"><span>📚 ข้อมูลเกม</span><small>วิธีเล่นเริ่มต้น · บันทึกสถานะ · ทรัพยากร · เวลารีเซ็ต · อุปกรณ์ · ธาตุ · อาชีพ</small></button><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.56<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.57<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
@@ -5369,14 +5385,26 @@ if (typeof document !== 'undefined') (function(){
     if (act==='arnskip'){ arSkip(); return true; }
     return false; }
   /* ---------- 📚 ข้อมูลเกม (ความรู้เบื้องต้น) ---------- */
-  let gdTab='eq';
+  let gdTab='start';
   function hubGuide(m){
-    const T=[['eq','⚒️','อุปกรณ์'],['cb','💥','คอมโบ'],['sc','🏅','คะแนน'],['el','🔥','ธาตุ'],['cls','🛡️','อาชีพ'],['gc','🔮','อัตราสุ่ม'],['mode','🗺️','โหมดเกม']];
+    const T=[['start','🗼','เริ่มต้น'],['rec','📜','บันทึก'],['res','💎','ทรัพยากร'],['time','⏰','รีเซ็ต'],['eq','⚒️','อุปกรณ์'],['cb','💥','คอมโบ'],['sc','🏅','คะแนน'],['el','🔥','ธาตุ'],['cls','🛡️','อาชีพ'],['gc','🔮','อัตราสุ่ม'],['mode','🗺️','โหมดเกม']];
     const tabs=`<div class="gtabs shtabs gdtabs">${T.map(([k,ic,n])=>`<button class="${gdTab===k?'on':''}" data-act="gdtab" data-k="${k}"><i>${ic}</i><span>${n}</span></button>`).join('')}</div>`;
     const tb=(h,rows)=>`<div class="gdtw"><table class="gdt"><tr>${h.map(x=>`<th>${x}</th>`).join('')}</tr>${rows.map(r=>`<tr>${r.map(x=>`<td>${x}</td>`).join('')}</tr>`).join('')}</table></div>`;
     const pc=v=>v>=10?v.toFixed(1):v>=1?v.toFixed(1):v.toFixed(2);
     let body='';
-    if (gdTab==='eq'){
+    if (gdTab==='start') body=guideStartHtml();
+    else if (gdTab==='rec'){ body=`<div class="sumbox"><h3>📜 บันทึกสถานะ: หัวใจของทุกโหมด</h3><div class="gdn">
+        • ชนะบอสในหอคอยไร้สิ้นสุดด้วยวีรชนตัวไหน ตัวนั้นจะได้ <b>บันทึกสถานะ</b> = HP ATK/MATK DEF คริ เจาะเกราะ อุปกรณ์ การตีบวก เซ็ต เครื่องประดับ สกิล ที่ทำได้ในรอบนั้น<br>
+        • บันทึกนี้ <b>เพิ่มพลังวีรชนในโหมดทีม</b> ทั้งหอคอยร้อยชั้น รังวิญญาณ สนามประลอง และล่ามังกร (ดูได้ตอนกดเลือกวีรชนเข้าทีม)<br>
+        • <b>ความสามารถอุปกรณ์ใช้ได้จริงในโหมดทีม</b> เช่น 🪶 ขนนกฟีนิกซ์ฟื้นคืนชีพ 1 ครั้ง · 🧥 ผ้าคลุมหลบ · เซ็ตราชันย์โลหิตดูดเลือด · เซ็ตทะลวงเกราะแรงใส่บอส<br>
+        • ชนะบอสด้วยตัวเดิมอีกครั้ง เกมจะ <b>เทียบค่าเดิมกับค่าใหม่</b> ให้เลือกเก็บอันที่ดีกว่า (อันที่ไม่เลือกจะหายถาวร)<br>
+        • อยากให้วีรชนเก่งขึ้นในโหมดทีม → ลงหอคอยไร้สิ้นสุดด้วยตัวนั้นให้ไกลขึ้น ได้อุปกรณ์และสกิลดีขึ้น แล้วอัปเดตบันทึก</div></div>
+        <div class="sumbox"><h3>⭐ พลังวีรชนในโหมดทีมมาจาก</h3><div class="gdn">ดาว (อัปด้วยเศษ) × ร่างปลุกพลัง × เรลิก × บันทึกสถานะ<br>อัลติเมทของแต่ละตัวทำงานตามท่าจริง เช่น ลูมิน่า/เซเรน่าชุบเพื่อนที่ล้ม · ใช้อัลติเมทต่อกันภายใน 1 วินาทีได้ 🔗 คอมโบ ดาเมจอัลติเมทเพิ่ม</div></div>`; }
+    else if (gdTab==='res'){ const R=[['💎','เพชร','หีบออฟไลน์ · มอนสเตอร์ในเมือง · ล็อกอิน · ภารกิจรายวัน · รางวัลอันดับ','ร้านเพชรรายวัน · เติมสายฟ้า'],['🪙','ทองเมือง','มอนสเตอร์ในเมือง · หีบออฟไลน์ · หอคอยร้อยชั้น','อัปกองกำลังแท่นบูชา'],['🎖️','เหรียญตรา','จบรอบหอคอยไร้สิ้นสุด · ประลอง','ฝึกค่าสถานะถาวร · ร้านเหรียญตรา · ของตกแต่ง'],['🎟️','ตั๋วอัญเชิญ','ล็อกอิน · ภารกิจ · รางวัลอันดับ · ร้าน','ตู้สุ่มเศษวีรชน'],['🧩','เศษวีรชน','ตู้สุ่ม · ร้าน · ล็อกอินวันที่ 7','อัปดาววีรชน (ต้องมีตัวนั้นก่อน)'],['⚒️','ตั๋วตีเหล็ก','หีบออฟไลน์ · ร้าน','ตีอุปกรณ์นักรบในเมือง'],['🏺','ตั๋วเรลิก / ✴️ หินตีบวก','หอคอยร้อยชั้น · ร้าน','สุ่มและตีบวกเรลิก'],['🎀','ตั๋วสกิน','ร้าน · กิจกรรม','สุ่มสกินวีรชน'],['⚡','สายฟ้า','ฟื้นเอง 1 หน่วย/3 นาที (เก็บได้ 100)','เข้าหอคอยร้อยชั้น'],['🐲','เกล็ดมังกร','ล่ามังกร','ร้านมังกร'],['⚜️','เหรียญประลอง','สนามประลอง','ร้านประลอง']];
+      body=`<div class="sumbox"><h3>💎 ทรัพยากรในเกม</h3>${tb(['','ชื่อ','ได้จาก','ใช้ทำอะไร'],R.map(([i,n,a,b])=>[i,`<b>${n}</b>`,`<span style="white-space:normal;display:block;text-align:left">${a}</span>`,`<span style="white-space:normal;display:block;text-align:left">${b}</span>`]))}</div>`; }
+    else if (gdTab==='time'){ body=`<div class="sumbox"><h3>⏰ เวลารีเซ็ต (เวลาไทย)</h3>${tb(['รีเซ็ต','เวลา','อะไรบ้าง'],[['รายวัน','ทุกวัน ตี 5','ภารกิจรายวัน · ล็อกอิน · ร้านเพชร · สิทธิ์ประลอง · ล่ามังกร 3 ครั้ง · รังวิญญาณ 3 ครั้ง · อันดับรายวัน · ชุดตกแต่งอันดับรายวัน'],['รายสัปดาห์','วันจันทร์ ตี 5','อันดับประจำสัปดาห์ · มังกรประจำสัปดาห์และเลเวลมังกร · ร้านประลอง'],['ตลอด','—','อันดับหอคอยไร้สิ้นสุดเก็บคะแนนสูงสุดตลอดกาล · ผ่านหอคอยร้อยชั้นแล้วไม่รีเซ็ต']].map(r=>r.map((x,i)=>i===2?`<span style="white-space:normal;display:block;text-align:left">${x}</span>`:x)))}
+        <div class="gdn">• รางวัลอันดับส่งเข้า 📬 จดหมายอัตโนมัติตอนรีเซ็ต<br>• หน้าอันดับมีตัวนับถอยหลังบอกเวลาที่เหลือ</div></div>`; }
+    else if (gdTab==='eq'){
       const tc=(t,x)=>`<b style="color:${EQ_TIER[t].c}">${x}</b>`;
       const lvs=[1,5,10,15,20], RT=lvs.map(L=>forgeRates(L)), rr=EQ_TIER.map((T,t)=>[tc(t,T.n),...RT.map(r=>tc(t,pc(r[t]*100)))]);
       body=`<div class="sumbox"><h3>⚒️ อุปกรณ์นักรบ (โรงตีเหล็ก) · 7 ระดับ</h3>
@@ -5412,22 +5440,22 @@ if (typeof document !== 'undefined') (function(){
       const E=k=>`${ELEMENTS[k].icon} ${ELEMENTS[k].name}`;
       body=`<div class="sumbox"><h3>🔥 ธาตุชนะทาง</h3>
         ${tb(['ธาตุ','ชนะ (ตีแรง ×1.3)','แพ้ (ตีเบา ×0.75)'],Object.keys(BEATS).map(k=>[`<b>${E(k)}</b>`,E(BEATS[k]),E(Object.keys(BEATS).find(x=>BEATS[x]===k))]))}
-        <div class="gdn">วงจร: 💧น้ำ → 🔥ไฟ → 🌿ไม้ → 🪨ดิน → 💧น้ำ<br>☀️แสง กับ 🌑มืด ชนะกันและกัน<br>เลือกฮีโร่ธาตุที่ชนะบอส จะตีแรงขึ้นมาก</div></div>`;
+        <div class="gdn">วงจร: 💧น้ำ → 🔥ไฟ → 🌿ไม้ → 🪨ดิน → 💧น้ำ<br>☀️แสง กับ 🌑มืด ชนะกันและกัน<br>เลือกวีรชนธาตุที่ชนะบอส จะตีแรงขึ้นมาก</div></div>`;
     } else if (gdTab==='cls'){
       body=`<div class="sumbox"><h3>🛡️ อาชีพ</h3>${Object.entries(CLASSES).filter(([k,c])=>c.desc&&!/^อาชีพลับ/.test(c.desc)).map(([k,c])=>`<div class="sumr gdcl"><span>${c.icon} <b>${c.name}</b></span><small>${c.desc}</small></div>`).join('')}
-        <div class="gdn">🔮 <b>คำใบ้อาชีพลับ</b>: ตอนเป็นชาวบ้าน "ค่าสถานะที่ฝึกบ่อยที่สุด" จะกำหนดว่าตื่นรู้เป็นอาชีพลับตัวไหน ฝึกต่างกัน → ได้อาชีพลับต่างกัน (มีทั้งสาย ATK · MATK · HP · DEF · คริ · เจาะเกราะ) ถ้าฝึกครบหลายสาย ตอนตื่นรู้จะได้เลือกเอง<br>🌾 <b>สายชาวบ้าน</b>: ชนะบอสได้เหรียญตรา x1.5 + 🎟️3 แต่ไม่ได้ฮีโร่ (เพราะไม่มีตัวละครประจำตัว) ทุกครั้งที่ชนะ โอกาสตื่นรู้อาชีพลับรอบหน้า +3% (เริ่ม 6% สูงสุด 25%)<br>🌑 ยังมีอาชีพลับซ่อนอยู่ ลองค้นหาระหว่างผจญภัยดู<br>ทีมที่ดีควรมี แทงค์ไว้ยืนหน้า + ซัพพอตไว้ฮีล + ตัวตีแรง</div></div>`;
+        <div class="gdn">🔮 <b>คำใบ้อาชีพลับ</b>: ตอนเป็นชาวบ้าน "ค่าสถานะที่ฝึกบ่อยที่สุด" จะกำหนดว่าตื่นรู้เป็นอาชีพลับตัวไหน ฝึกต่างกัน → ได้อาชีพลับต่างกัน (มีทั้งสาย ATK · MATK · HP · DEF · คริ · เจาะเกราะ) ถ้าฝึกครบหลายสาย ตอนตื่นรู้จะได้เลือกเอง<br>🌾 <b>สายชาวบ้าน</b>: ชนะบอสได้เหรียญตรา x1.5 + 🎟️3 แต่ไม่ได้วีรชน (เพราะไม่มีตัวละครประจำตัว) ทุกครั้งที่ชนะ โอกาสตื่นรู้อาชีพลับรอบหน้า +3% (เริ่ม 6% สูงสุด 25%)<br>🌑 ยังมีอาชีพลับซ่อนอยู่ ลองค้นหาระหว่างผจญภัยดู<br>ทีมที่ดีควรมี แทงค์ไว้ยืนหน้า + ซัพพอตไว้ฮีล + ตัวตีแรง</div></div>`;
     } else if (gdTab==='gc'){
       const TH={n:'ปกติ',sp:'ตัวพิเศษ',hid:'อาชีพลับ'};
-      body=`<div class="sumbox"><h3>🔮 อัตราออกตู้สุ่มเศษฮีโร่</h3>${tb(['ได้','โอกาส'],GACHA.map(([[t,n],p])=>[`เศษ${TH[t]} ×${n}`,p+'%']))}
-        <div class="gdn">สะสมเศษให้ครบเพื่อปลดล็อกหรืออัปดาวฮีโร่</div></div>`;
+      body=`<div class="sumbox"><h3>🔮 อัตราออกตู้สุ่มเศษวีรชน</h3>${tb(['ได้','โอกาส'],GACHA.map(([[t,n],p])=>[`เศษ${TH[t]} ×${n}`,p+'%']))}
+        <div class="gdn">สะสมเศษให้ครบเพื่อปลดล็อกหรืออัปดาววีรชน</div></div>`;
     } else {
-      const M=[['🗼','หอคอยไร้สิ้นสุด','ลงดันเจี้ยนให้ลึกที่สุด เก็บของ ใช้รูน สู้บอส ทำคะแนนขึ้นอันดับ'],['📅','ด่านท้าทายรายวัน','ด่านพิเศษเปลี่ยนทุกวัน แข่งกันว่าใครลงได้ลึกสุด'],['🏯','หอคอยร้อยชั้น',`ใช้ทีมฮีโร่สู้ทีละชั้น ${HT_MAX} ชั้น ใช้พลังงาน ⚡`],['🐾','รังวิญญาณ','สู้ผู้พิทักษ์ธาตุประจำวัน วันละ 3 ครั้ง'],['🐉','ล่ามังกร',`ทำดาเมจใส่มังกรให้มากที่สุด รับเกล็ดมังกร · วันละ ${DH_TRIES} ครั้ง`],['⚔️','สนามประลองวีรชน',`ต้องมีฮีโร่ ${AR_NEED} ตัว ตั้งทีมโจมตี/ป้องกัน ท้าวันละ ${AR_TRIES} ครั้ง ชนะได้ 🎖️ และคะแนนประลอง`]];
+      const M=[['🗼','หอคอยไร้สิ้นสุด','ลงดันเจี้ยนให้ลึกที่สุด เก็บของ ใช้รูน สู้บอส ทำคะแนนขึ้นอันดับ'],['📅','ด่านท้าทายรายวัน','ด่านพิเศษเปลี่ยนทุกวัน แข่งกันว่าใครลงได้ลึกสุด'],['🏯','หอคอยร้อยชั้น',`ใช้ทีมวีรชนสู้ทีละชั้น ${HT_MAX} ชั้น ใช้พลังงาน ⚡`],['🐾','รังวิญญาณ','สู้ผู้พิทักษ์ธาตุประจำวัน วันละ 3 ครั้ง'],['🐉','ล่ามังกร',`ทำดาเมจใส่มังกรให้มากที่สุด รับเกล็ดมังกร · วันละ ${DH_TRIES} ครั้ง`],['⚔️','สนามประลองวีรชน',`ต้องมีวีรชน ${AR_NEED} ตัว ตั้งทีมโจมตี/ป้องกัน ท้าวันละ ${AR_TRIES} ครั้ง ชนะได้ 🎖️ และคะแนนประลอง`]];
       body=`<div class="sumbox"><h3>🗺️ โหมดเกม</h3>${M.map(([i,n,d])=>`<div class="sumr gdcl"><span>${i} <b>${n}</b></span><small>${d}</small></div>`).join('')}</div>`;
     }
     return `<div class="overlay hub">${hubHead(m,'📚 ข้อมูลเกม')}${tabs}${body}${nav()}</div>`;
   }
   function gdAct(act,b){ if (act==='gdtab'){ gdTab=b.dataset.k; render(); const o=document.querySelector('.overlay'); if (o) o.scrollTop=0; return true; }
-    if (act==='guideopen'){ setPop=false; hub='guide'; gdTab=b.dataset.k||'eq'; render(); window.scrollTo(0,0); return true; } return false; }
+    if (act==='guideopen'){ setPop=false; hub='guide'; gdTab=b.dataset.k||'start'; render(); window.scrollTo(0,0); return true; } return false; }
   function hubGacha(m){
     const sp = gTab==='sp', B = bannerOf(bannerSlot()), left = bannerEnds();
     const feat = id => `<div class="feat ${ALLCHARS[id].tier}"><div class="fi">${charArt(ALLCHARS[id].c)}</div><div class="fn">${ALLCHARS[id].c.name.split(' ')[0]}</div></div>`;
@@ -6165,6 +6193,8 @@ if (typeof document !== 'undefined') (function(){
     if (act==='start') advPrep=false;
     if (act==='rset'){ runSet=true; runQuit=false; render(); return; }
     if (act==='rsetc'){ runSet=false; render(); return; }
+    if (act==='rhelp'){ runHelp=true; runSet=false; render(); return; }
+    if (act==='rhelpc'){ runHelp=false; render(); return; }
     if (act==='rquit'){ if (battleView) return; runQuit=true; runSet=false; if (auto) autoStop(); render(); return; }
     if (act==='rquitno'){ runQuit=false; render(); return; }
     if (act==='rquitok'){ runQuit=false; if (battleView||S.over) { render(); return; } if (auto) autoStop(); acfgPop=false; popSlot=null; endRun(false,'🚪 ออกจากหอคอย'); render(); window.scrollTo(0,0); return; }
