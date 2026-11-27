@@ -1003,6 +1003,14 @@ h3 img.uiico{height:24px;width:auto;vertical-align:middle}
 .runefx.bad .rfx-txt{color:#ffb0a0}
 .rfx-txt small{display:block;font-size:14px;font-weight:700;color:#f3e9ff;margin-top:4px}
 @keyframes rfxtx{0%,25%{opacity:0;transform:translateY(12px)}40%{opacity:1;transform:none}85%{opacity:1}100%{opacity:0}}
+.cupbox{position:relative;height:120px;margin:12px 6px 4px;border-radius:16px;background:radial-gradient(ellipse at 50% 85%,rgba(120,70,30,.55),rgba(30,18,40,.2) 70%);border:2px solid rgba(255,209,102,.35)}
+.cupw{position:absolute;bottom:10px;left:0;width:33.333%;height:96px;cursor:pointer}
+.cupb{position:absolute;bottom:0;left:50%;width:66px;height:78px;margin-left:-33px;background:linear-gradient(90deg,#6e2410,#d9622c 42%,#f08a4a 52%,#7a2a12);clip-path:polygon(20% 0,80% 0,100% 100%,0 100%);border-radius:6px;filter:drop-shadow(0 4px 3px rgba(0,0,0,.5));z-index:2}
+.cupb::before{content:'';position:absolute;left:0;right:0;bottom:8px;height:9px;background:linear-gradient(#ffe08a,#c99a2e)}.cupb::after{content:'';position:absolute;left:30%;right:30%;top:0;height:7px;background:#ffd56a;border-radius:0 0 6px 6px}
+.cupb.lift{animation:cuplift 1.7s ease-in-out forwards}@keyframes cuplift{0%{transform:translateY(0)}18%{transform:translateY(-52px) rotate(-6deg)}62%{transform:translateY(-52px) rotate(-6deg)}86%,100%{transform:translateY(0)}}
+.cball{position:absolute;bottom:4px;left:50%;width:26px;height:26px;margin-left:-13px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#9fe7ff 38%,#2f6fd6);box-shadow:0 0 12px #8fd8ff;z-index:1}
+.cupgo{position:absolute;left:0;right:0;top:4px;text-align:center;font-weight:800;color:#ffe46b;text-shadow:0 0 8px #ff9b3d,0 2px 2px #000;opacity:0;animation:cupgo .4s var(--cupend) forwards;pointer-events:none}@keyframes cupgo{to{opacity:1}}
+.cupbox.ready .cupw:hover .cupb,.cupbox.ready .cupw:active .cupb{transform:translateY(-6px);filter:drop-shadow(0 0 8px #ffd56a)}
 .fishbar{position:relative;height:34px;margin:10px 4px 4px;border-radius:17px;background:linear-gradient(180deg,#1b3b6b,#0d2140);border:2px solid #7fc8ff;overflow:hidden;box-shadow:inset 0 2px 8px rgba(0,0,0,.6)}.fishbar .fz{position:absolute;top:0;bottom:0;background:linear-gradient(180deg,#5dff9a,#1fbf62);box-shadow:0 0 12px #5dff9a}.fishbar .fneedle{position:absolute;top:-2px;bottom:-2px;width:6px;margin-left:-3px;background:#fff;border-radius:3px;box-shadow:0 0 8px #fff,0 0 2px #000;animation:fneed linear infinite alternate;left:0}@keyframes fneed{from{left:0}to{left:100%}}
 .awpbox{background:rgba(255,255,255,.04);border:1px solid rgba(180,140,255,.25);border-radius:12px;padding:8px}.awp{margin:5px 0;padding:4px 6px;border-radius:9px}.awp.on{background:rgba(255,211,77,.12);box-shadow:0 0 0 1.5px #ffd34d}.awp.on .awpt span b::after{content:' ⭐'}.awpt{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:12.5px}.awpt span{display:flex;align-items:center;gap:6px}.awpt span img,.awpt span .heroimg{width:26px;height:26px;object-fit:contain}.awq{display:inline-flex;width:26px;height:26px;border-radius:50%;background:#3a2a5a;color:#c9b6ff;font-style:normal;font-weight:900;align-items:center;justify-content:center}.awpt small{color:#cfc2e4}.awpb{height:8px;border-radius:4px;background:rgba(255,255,255,.1);overflow:hidden;margin-top:3px}.awpb i{display:block;height:100%;background:linear-gradient(90deg,#9b6bff,#ff7bd5);border-radius:4px}.awp.full .awpb i{background:linear-gradient(90deg,#ffd34d,#ff9d2e)}
 .rkcd{margin:6px 0 2px;padding:6px 10px;border-radius:10px;background:rgba(255,200,80,.1);border:1px dashed rgba(255,210,120,.45);text-align:center;font-size:13px;color:#ffe9b0}.rkcd b{color:#ffd34d;font-size:15px;font-variant-numeric:tabular-nums}.rkcd small{color:#cfc2e4;font-size:11px}
@@ -1203,7 +1211,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.52</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.53</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -2332,6 +2340,25 @@ function fishPos(e){ const t=((typeof performance!=='undefined'?performance.now(
 function fishEv(q,title,icon,text,dur,zw,after,leave){ const z0=8+Math.floor(rng()*(84-zw)), e={title,icon,text:text+'\n<small class="gs">🎣 แตะ "ดึงเบ็ด!" ตอนเข็มอยู่ในช่องสีเขียว</small>', mini:'fish', dur, z0, zw};
   e.choices=[{label:'🎣 ดึงเบ็ด!', wide:true, fn:()=>{ const x=e.t0?fishPos(e):z0+zw/2*(rng()<0.5?1:3), c=z0+zw/2, d=Math.abs(x-c); after(d<=zw/2?'perfect':d<=zw/2+10?'near':'miss'); }},
     {label:'ไม่ตกปลา เดินต่อ', alt:true, fn:()=>leave?leave():qEnd('ชายแก่โบกมือลา "ไว้มาใหม่นะ"')}]; return e; }
+/* มินิเกมถ้วยสามใบ: โชว์ลูกแก้ว → สลับถ้วยมีแอนิเมชัน → แตะถ้วยที่คิดว่ามีลูกแก้ว (ตาไวชนะ) */
+function cupsEv(q,bet){ const n=Math.min(11,5+Math.floor(S.floor/50)), d=Math.max(0.24,0.52-S.floor/1400), ball=Math.floor(rng()*3), R0=1.7, T=R0+n*d+0.15, id='cg'+Math.floor(rng()*1e9);
+  const pos=[0,1,2], fr=[[],[],[]], P=t=>(t/T*100).toFixed(2), add=(c,t,y)=>fr[c].push(`${P(t)}%{left:${(pos[c]*33.333).toFixed(2)}%;transform:translateY(${y||0}px)}`);
+  [0,1,2].forEach(c=>{ add(c,0); add(c,R0); });
+  for (let k=0;k<n;k++){ const a=Math.floor(rng()*3), b=(a+1+Math.floor(rng()*2))%3, t0=R0+k*d, t1=t0+d*0.92;
+    const ca=pos.indexOf(a), cb=pos.indexOf(b), oth=[0,1,2].find(c=>c!==ca&&c!==cb);
+    add(ca,t0); add(cb,t0); add(oth,t0); pos[ca]=b; pos[cb]=a;
+    fr[ca].push(`${P((t0+t1)/2)}%{left:${(((a+b)/2)*33.333).toFixed(2)}%;transform:translateY(-16px) scale(1.06)}`); fr[cb].push(`${P((t0+t1)/2)}%{left:${(((a+b)/2)*33.333).toFixed(2)}%;transform:translateY(12px) scale(.94)}`);
+    add(ca,t1); add(cb,t1); add(oth,t1); }
+  [0,1,2].forEach(c=>add(c,T));
+  const css=[0,1,2].map(c=>`@keyframes ${id}c${c}{${fr[c].join('')}}`).join(''), names=['ซ้าย','กลาง','ขวา'], t0=(typeof performance!=='undefined'?performance.now():0);
+  const e={type:'quest', title:'📜 นักต้มตุ๋นถ้วยสามใบ (1/2)', icon:'🎩', mini:'cups', cups:{css,T,ball,id,t0,end:t0+T*1000},
+    text:`ชายหมวกสูงยกถ้วยให้ดูลูกแก้ว แล้วสลับถ้วยไปมาอย่างรวดเร็ว!\n<small class="gs">👀 จับตาดูถ้วยที่มีลูกแก้วให้ดี สลับเสร็จแล้วแตะถ้วยนั้น (เดิมพัน ${fmt(bet)} ทอง · ถูกรับ 3 เท่า)</small>`};
+  e.choices=[0,1,2].map(c=>({label:'ถ้วย', hide:true, fn:()=>{ const now=(typeof performance!=='undefined'?performance.now():Infinity); if (now<e.cups.end) return;
+      const where=names[pos[ball]];
+      if (c===ball){ q.flag='won'; S.gold+=bet*3; qNext(`🎉 ตาไวมาก! ลูกแก้วอยู่ใต้ถ้วย${where}จริง ๆ ได้ ${fmt(bet*3)} ทอง ชายหมวกสูงหน้าเสีย…`); }
+      else { q.flag='lost'; qNext(`ผิด! ลูกแก้วอยู่ใต้ถ้วย${where} เสีย ${fmt(bet)} ทอง`,'bad'); } }}))
+    .concat([{label:'ยอมแพ้ (เสียเดิมพัน)', alt:true, fn:()=>{ q.flag='lost'; qNext(`ยอมแพ้… ลูกแก้วอยู่ใต้ถ้วย${names[pos[ball]]} เสีย ${fmt(bet)} ทอง`,'bad'); }}]);
+  return e; }
 const QUESTS = {
   child:{name:'เด็กหลงทาง', steps:[
     q=>({title:'📜 เด็กหลงทาง (1/3)', icon:'🧒', text:'เด็กชายตัวเล็กนั่งร้องไห้อยู่มุมห้อง บอกว่าพลัดหลงกับพ่อที่เป็นพ่อค้าเร่ในหอคอย', choices:[
@@ -2369,9 +2396,9 @@ const QUESTS = {
     q=>fishEv(q,'📜 บ่อตกปลาใต้ดิน (2/2)','🐡','ชายแก่คนเดิมกระซิบ "ในบ่อนี้มีปลาทองในตำนาน มันว่ายเร็วมาก ช่องสีเขียวแคบนิดเดียว"',0.95,14,
       r=> r==='perfect' ? (runeGain(1), (()=>{ const o=pick(trainOptions(S.floor,3)); applyTrain(o); qEnd(`🐉 จับปลาทองในตำนานได้! ได้รูน 1 ขั้น และ ${o.label}`); })()) : r==='near' ? qEnd(`เกือบได้! ปลาทองหลุดไป ได้ทองปลอบใจ ${fmt(gainGold(base2(S.floor)*2))}`) : qEnd('สายเบ็ดขาด… ปลาทองหายไปในความมืด','bad'))]},
   cups:{name:'นักต้มตุ๋นถ้วยสามใบ', steps:[
-    q=>{ const bet=Math.round(base2(S.floor)*2), win=Math.floor(rng()*3), tell=rng()<0.7?win:Math.floor(rng()*3), names=['ซ้าย','กลาง','ขวา'];
-      return {title:'📜 นักต้มตุ๋นถ้วยสามใบ (1/2)', icon:'🎩', text:`ชายสวมหมวกทรงสูงสลับถ้วยสามใบไปมาอย่างรวดเร็ว "ทายถูกรับ 3 เท่า! วางเดิมพัน ${fmt(bet)} ทอง"\n👀 ดูเหมือนถ้วย<b>${names[tell]}</b>จะขยับแปลก ๆ… (แต่เขาอาจหลอกก็ได้)`, choices:[
-        ...names.map((n,i)=>({label:`🥤 ถ้วย${n}`, sub:`เดิมพัน ${fmt(bet)} ทอง`, disabled:S.gold<bet, fn:()=>{ S.gold-=bet; if (i===win){ q.flag='won'; S.gold+=bet*3; qNext(`🎉 ถูกต้อง! ได้ ${fmt(bet*3)} ทอง ชายหมวกสูงหน้าเสีย…`); } else { q.flag='lost'; qNext(`ผิด! ลูกแก้วอยู่ใต้ถ้วย${names[win]} เสีย ${fmt(bet)} ทอง`,'bad'); } }})),
+    q=>{ const bet=Math.round(base2(S.floor)*2);
+      return {title:'📜 นักต้มตุ๋นถ้วยสามใบ (1/2)', icon:'🎩', text:`ชายสวมหมวกทรงสูงวางถ้วยสามใบเรียงกัน "ข้าจะซ่อนลูกแก้วไว้ใต้ถ้วยใบหนึ่งแล้วสลับไปมา ทายถูกรับ 3 เท่า! วางเดิมพัน ${fmt(bet)} ทอง"`, choices:[
+        {label:'🎩 เล่น!', sub:`เดิมพัน ${fmt(bet)} ทอง · ยิ่งชั้นลึกยิ่งสลับเร็ว`, disabled:S.gold<bet, fn:()=>{ S.gold-=bet; S.ev=cupsEv(q,bet); }},
         {label:'ไม่เล่น', alt:true, fn:()=>{ q.flag='skip'; qNext('คุณเดินผ่านไป ชายหมวกสูงจุ๊ปาก'); }}]}; },
     q=>{ const F=S.floor;
       if (q.flag==='won'){ const m=makeMon(F); m.name='ลูกน้องนักต้มตุ๋น'; m.icon='🥷'; m.hp*=1.8; m.maxhp=m.hp;
@@ -3484,7 +3511,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.52</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.53</span>'}</div>`;
   }
   let runSet=false, runQuit=false;
   function runPop(){
@@ -3532,8 +3559,9 @@ if (typeof document !== 'undefined') (function(){
       <div class="choices battle-tools"><button class="choice alt" data-act="speed"><span>ความเร็ว x${speed}</span></button><button class="choice" data-act="skip"><span>ข้าม ⏭</span></button></div><div class="scroll-hint">▼ เลื่อนลงดูข้อมูลวีรชน</div></div>`;
     if (S.phase==='event' && S.ev){
       const e = S.ev;
-      return `<div class="event">${autoMsg?`<div class="automsg">${autoMsg}</div>`:''}<div class="ev-title"><span>${e.icon}</span>${e.title}</div><div class="ev-text">${e.text}</div>${e.mini==='fish'?(()=>{ if (!e.t0) e.t0=performance.now(); return `<div class="fishbar"><div class="fz" style="left:${e.z0}%;width:${e.zw}%"></div><div class="fneedle" style="animation-duration:${e.dur}s;animation-delay:-${((performance.now()-e.t0)/1000).toFixed(2)}s"></div></div>`; })():''}
-        <div class="choices ${e.grid?'grid':''}">${e.choices.map((c,i)=>`<button class="choice ${c.alt&&!c.enh?'alt':''} ${c.enh?'enhbtn':''} ${c.wide?'wide':''}" data-act="choose" data-i="${i}" ${c.disabled?'disabled':''}><span>${c.label}</span>${c.sub?`<small>${c.sub}</small>`:''}</button>`).join('')}</div><div class="scroll-hint">▼ เลื่อนลงดูข้อมูลวีรชน</div></div>`;
+      return `<div class="event">${autoMsg?`<div class="automsg">${autoMsg}</div>`:''}<div class="ev-title"><span>${e.icon}</span>${e.title}</div><div class="ev-text">${e.text}</div>${e.mini==='cups'?(()=>{ const C=e.cups, el=Math.max(0,(performance.now()-C.t0)/1000).toFixed(2), ready=performance.now()>=C.end;
+          return `<style>${C.css}</style><div class="cupbox ${ready?'ready':''}" style="--cupend:${Math.max(0,(C.end-performance.now())/1000).toFixed(2)}s">${[0,1,2].map(c=>`<div class="cupw" data-act="choose" data-i="${c}" style="animation:${C.id}c${c} ${C.T}s linear -${el}s forwards">${c===C.ball?'<i class="cball"></i>':''}<div class="cupb ${c===C.ball?'lift':''}" style="animation-delay:-${el}s"></div></div>`).join('')}<div class="cupgo">แตะเลือกถ้วย!</div></div>`; })():''}${e.mini==='fish'?(()=>{ if (!e.t0) e.t0=performance.now(); return `<div class="fishbar"><div class="fz" style="left:${e.z0}%;width:${e.zw}%"></div><div class="fneedle" style="animation-duration:${e.dur}s;animation-delay:-${((performance.now()-e.t0)/1000).toFixed(2)}s"></div></div>`; })():''}
+        <div class="choices ${e.grid?'grid':''}">${e.choices.map((c,i)=>c.hide?'':`<button class="choice ${c.alt&&!c.enh?'alt':''} ${c.enh?'enhbtn':''} ${c.wide?'wide':''}" data-act="choose" data-i="${i}" ${c.disabled?'disabled':''}><span>${c.label}</span>${c.sub?`<small>${c.sub}</small>`:''}</button>`).join('')}</div><div class="scroll-hint">▼ เลื่อนลงดูข้อมูลวีรชน</div></div>`;
     }
     const res = S.result ? `<div class="ev-text">${S.result.text}</div>` : `<div class="ev-text">ทางเดินมืดสลัวทอดยาวลงไป… กดเดินต่อเพื่อลงชั้นถัดไป</div>`;
     return `<div class="event"><div class="ev-title">${S.floor? '✅ ผ่านไปได้' : '🚪 ปากทางดันเจี้ยน'}</div>${res}
@@ -3740,7 +3768,7 @@ if (typeof document !== 'undefined') (function(){
     if (on && !shown){ el.innerHTML=tkInner(); el.classList.remove('tkhide'); }
     else if (!on && shown){ el.classList.add('tkhide'); setTimeout(()=>{ if (el.classList.contains('tkhide')) el.innerHTML=''; },450); } },1000);
   /* ---------- 🔔 แจ้งเตือนเกมมีอัปเดต ---------- */
-  const GAME_VER='v3.52'; let updSkip='', updT=0;
+  const GAME_VER='v3.53'; let updSkip='', updT=0;
   function updCheck(){ if (location.protocol==='file:' || document.getElementById('updpop')) return; if (Date.now()-updT<60000) return; updT=Date.now();
     fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{ if (!j||!j.v||j.v===GAME_VER||j.v===updSkip) return; updShow(j); }).catch(()=>{}); }
   function updShow(j){ const inRun=S&&S.phase&&S.phase!=='title'&&!S.over&&!hub, d=document.createElement('div'); d.id='updpop';
@@ -3827,7 +3855,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="pbtns"><button class="choice" data-act="guideopen"><span>📚 ข้อมูลเกม</span><small>ระดับอุปกรณ์ · ธาตุ · อาชีพ · อัตราสุ่ม · โหมดเกม</small></button><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.52<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.53<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
