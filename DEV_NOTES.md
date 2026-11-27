@@ -1,6 +1,6 @@
 # DEV NOTES — ผู้กล้าแห่งดันเจี้ยนไร้สิ้นสุด
 
-บันทึกสำหรับ Claude ในแชทใหม่ อ่านไฟล์นี้ก่อนเริ่มงานทุกครั้ง (อัปเดตล่าสุด: v3.59, 27 พ.ย. 2026)
+บันทึกสำหรับ Claude ในแชทใหม่ อ่านไฟล์นี้ก่อนเริ่มงานทุกครั้ง (อัปเดตล่าสุด: v3.60, 27 พ.ย. 2026)
 
 ## วิธีทำงานกับเจ้าของเกม
 - ตอบเป็นภาษาไทยเสมอ
@@ -57,3 +57,15 @@
 - โหมดฝันร้าย หลังมีคนผ่านหอคอยร้อยชั้นชั้น 100
 - กรอบ CSS เก่า 3 แบบ (เพลิงนรก มงกุฎราชัน แชมป์) ยังไม่ได้เปลี่ยนเป็นภาพ
 - SpriteCook เหลือ 8 credits (GPT 2.5 Flare 1K medium โปร่งใส = 8 credits ต่อภาพ, วาด 9 กรอบในภาพเดียวแบบตาราง 3×3)
+
+
+## v3.60 — เศษซ้ำ / อันดับ 2 แบบ / การ์ดผู้เล่น / บังคับตั้งชื่อ
+- เศษเมื่อชนะบอสด้วยวีรชนที่มีแล้ว: `SHARD_WIN={n:10,sp:6,hid:5}` + `shardWin(tier,floor)` โบนัส +1 ทุก 100 ชั้น (สูงสุด +5)
+- อันดับหอคอยไร้สิ้นสุด: board `endlessw` period=`String(wkNow())` (จันทร์ 05:00, สูตรเดียวกับ dhWeek) เก็บใน `m.wkBest={wk,score,info}` ตอน saveMeta
+  - แท็บ endless มีปุ่มสลับ `rkEW` w/a, `rkB()` คืน board จริง · รางวัลจดหมายรายสัปดาห์ใช้ `endlessw|<w-1>` (RK_RW.endlessw) · ตลอดกาล (`endless|all`) ไม่มีรางวัลแล้ว
+  - หอเกียรติยศ: `m.ach.hof` = อันดับตลอดกาลดีที่สุด (≤3) ตั้งจาก rkLoad/rkAutoMail ผ่าน `hofNote` → กรอบ `hofk` (hof:1) / `hofl` (hof:3, CSS ล้วน ยังไม่มีภาพ) + ฉายา `HOF_T`
+  - เซิร์ฟเวอร์ต้องรัน `dev/sql/leaderboard_v3.sql` (submit_score รับ endlessw) ก่อน ไม่งั้น lbSync ขึ้น error "ต้องรัน leaderboard_v3.sql"
+- การ์ดผู้เล่น: `pfStats(m)` ใส่ใน `detail.pf.ps` {bf,bs,wb,wk,w,hc,tm,rk,hof,ar,ht} · `pcardHtml(r)` อยู่บนสุดของ rkViewPop · แชทแตะรูป/ชื่อ → `pcOpen(uid)` ใช้ `__dqCloud.lbUser(uid)` · state `PC`
+- ชื่อ: `isDefName`, `nameOk` (2–16, ห้ามชื่อเริ่มต้น/คำหยาบ/สัญลักษณ์), `nameTag(uid)` = #0000–9999 จาก user_id แสดงในอันดับ/แชท/การ์ด
+  - บทนำลูมี่ step `name:1` (ไม่มีปุ่มข้าม) · ผู้เล่นเก่าชื่อเริ่มต้น → `namePopHtml` บังคับ (act `nmsave`) · settings `savename` ตรวจด้วย nameOk
+- harness: dev/sim/pc.py (mock __dqCloud ดูอันดับ/การ์ด/ป๊อปชื่อ), tn.py (step ตั้งชื่อในบทนำ)
