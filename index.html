@@ -1229,7 +1229,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.60</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.61</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -1808,6 +1808,11 @@ function weighted(list){ let t=list.reduce((s,x)=>s+x[1],0), r=rng()*t; for(cons
 function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
 /* ---------- state ---------- */
 let S = null;
+/* ระบบกันดวงซวย: หนีบอสพลาด 1 ครั้ง → ครั้งต่อไป +10% (รวมไม่เกิน 70%) รีเซ็ตเมื่อหนีสำเร็จ · เก็บข้ามรอบใน meta.escPity */
+const ESC_PITY_STEP=10, ESC_PITY_CAP=70;
+function escPity(){ try{ return loadMeta().escPity||0; }catch(e){ return 0; } }
+function escPitySet(v){ try{ const m=loadMeta(); m.escPity=v; storeMeta(m); }catch(e){} }
+function escRate(lv){ const base=Math.min(75, RUNE[lv].pct+(lv?accVal('cloak'):0)), f=escPity(), rp=lv?Math.max(base, Math.min(ESC_PITY_CAP, base+f*ESC_PITY_STEP)):0; return {base, rp, bonus:rp-base, f}; }
 function newRun(consume){
   S = {
     floor:0, lv:1, exp:0, cls:'villager', char:null, gold:0,
@@ -2794,15 +2799,15 @@ function buildEvent(type){
         {label:'สู้เพื่อลูกแก้ว', fn:()=>fight([g], ()=>{ addExp(monExp(F)); return get(); })},
         {label:'เดินผ่าน', alt:true, fn:()=>done('ปล่อยลูกแก้วไว้ก่อน')}]); }
     case 'route': { const e=routeEvent(F); if (e&&!e.type) e.type='route'; return e; }
-    case 'boss': { const bosses=makeBosses(), bl=bossLevel(), rp=Math.min(75, RUNE[S.rune.lv].pct + (S.rune.lv?accVal('cloak'):0)), est=estimateWin(bosses);
+    case 'boss': { const bosses=makeBosses(), bl=bossLevel(), ER=escRate(S.rune.lv), rp=ER.rp, est=estimateWin(bosses);
       const lvl = est>=60?'สูง':est>=30?'ปานกลาง':'ต่ำ';
       const extra = bosses.length>1?`\nบอสมาทั้งหมด ${bosses.length} ตัว!`:'';
-      const runeLine = S.rune.lv ? `\n🔷 ใช้${RUNE[S.rune.lv].name}: หนีสำเร็จ ${rp}% แต่รูนจะหาย และบอสครั้งหน้า Lv.${bl+1}` : '\n🔷 ไม่มีรูน หนีไม่ได้';
+      const runeLine = S.rune.lv ? `\n🔷 ใช้${RUNE[S.rune.lv].name}: หนีสำเร็จ ${rp}%${ER.bonus>0?` (รวมโบนัสดวงซวย +${ER.bonus}%)`:''} แต่รูนจะหาย และบอสครั้งหน้า Lv.${bl+1}` : '\n🔷 ไม่มีรูน หนีไม่ได้';
       return ev('บอสปรากฏตัว!','😈',`พลังมืดแผ่ซ่าน… ${elIcon(bosses[0].el)} ${bosses[0].name}${extra}${bosses.some(b=>b.trueForm)?'\nบอสตัวสุดท้ายมีร่างแท้จริง':''}\n\n📊 โอกาสชนะโดยประมาณ ${est}% (${lvl}) คำนวณจากสภาพทีมตอนนี้${runeLine}`,[
         {label:'สู้กับบอส!', sub:`โอกาสชนะ ~${est}%`, fn:()=>fight(bosses, ()=>{ victory(); return 'ปราบบอสได้!'; })},
-        {label:`ใช้${RUNE[S.rune.lv].name}หนี`, sub: S.rune.lv?`สำเร็จ ${rp}% (รูนจะหายไป)`:'ไม่มีรูน', alt:true, disabled:!S.rune.lv,
-          fn:()=>{ const rl=S.rune.lv; if(chance(rp)){ S.rune={lv:0,timer:0}; S.escapes++; runeFx(true,rl); done('หนีจากบอสได้! รูนสลายไป บอสโกรธจัด (Lv+1)','good'); }
-            else { S.rune={lv:0,timer:0}; addLog(`${RUNE[rl].name}แตกสลาย! หนีไม่สำเร็จ`,'bad'); runeFx(false,rl);
+        {label:`ใช้${RUNE[S.rune.lv].name}หนี`, sub: S.rune.lv?`สำเร็จ ${rp}%${ER.bonus>0?` (🍀+${ER.bonus}%)`:''} (รูนจะหายไป)`:'ไม่มีรูน', alt:true, disabled:!S.rune.lv,
+          fn:()=>{ const rl=S.rune.lv; if(chance(rp)){ S.rune={lv:0,timer:0}; S.escapes++; escPitySet(0); runeFx(true,rl); done('หนีจากบอสได้! รูนสลายไป บอสโกรธจัด (Lv+1)','good'); }
+            else { S.rune={lv:0,timer:0}; escPitySet(escPity()+1); addLog(`${RUNE[rl].name}แตกสลาย! หนีไม่สำเร็จ (ครั้งหน้าได้โบนัสดวงซวย +${ESC_PITY_STEP}% รวมไม่เกิน ${ESC_PITY_CAP}%)`,'bad'); runeFx(false,rl);
               S.ev = ev('รูนแตกสลาย!','💥',`${RUNE[rl].name}ร้าวแล้วแตกเป็นเสี่ยง ๆ… หนีไม่พ้นแล้ว!\n\n📊 โอกาสชนะโดยประมาณ ${est}%`,[{label:'สู้กับบอส!', sub:`โอกาสชนะ ~${est}%`, fn:()=>fight(bosses, ()=>{ victory(); return 'ปราบบอสได้!'; })}]); } }},
       ]); }
   }
@@ -3067,7 +3072,7 @@ function guideStartHtml(){ const st=(n,ic,t,d)=>`<div class="gstep"><b class="gs
     ${st(3,'⚔️','สู้ชนะ = เลเวลขึ้น + ของ','ได้ EXP ทอง และอุปกรณ์ เลเวลขึ้นแล้วเลือกฝึกค่าสถานะ อุปกรณ์เซ็ตเดียวกันใส่ 2/4 ชิ้นได้โบนัส')}
     ${st(4,'🛡️','Lv.10 เลือกอาชีพ','แทงค์ นักรบ นักเวท ซัพพอต นักธนู นักฆ่า · หรือ <b>เป็นชาวบ้านต่อ</b> เพื่อลุ้น <b>อาชีพลับ</b> (ค่าที่ฝึกบ่อยสุดเป็นตัวกำหนด ดูแถบคืบหน้าได้ในแท็บอาชีพ)')}
     ${st(5,'🦸','Lv.40 สวมบทวีรชน','เลือกวีรชนสายเดียวกันที่มีอยู่แล้ว หรือสุ่มตัวที่ยังไม่มีก็ได้ และได้เพื่อนร่วมทีมมาช่วยสู้')}
-    ${st(6,'😈','บอสโผล่ได้ทุกชั้น (ประมาณ 1%)','ชั้นตื้นบอสโหดมาก ใช้ <b>🔷 รูน</b> หนี (รูนมีโอกาสหนีเป็น % และมีอายุ) ยิ่งลงลึก ตัวเรายิ่งแข็งแรงพอจะสู้ไหว')}
+    ${st(6,'😈','บอสโผล่ได้ทุกชั้น (ประมาณ 1%)','ชั้นตื้นบอสโหดมาก ใช้ <b>🔷 รูน</b> หนี (รูนมีโอกาสหนีเป็น % และมีอายุ · หนีพลาดครั้งหน้าได้ 🍀 +10% รวมไม่เกิน 70%) ยิ่งลงลึก ตัวเรายิ่งแข็งแรงพอจะสู้ไหว')}
     ${st(7,'🏆','ชนะบอส = จบรอบแบบชนะ','ครั้งแรกได้ <b>วีรชนตัวนั้นถาวร</b> + <b>📜 บันทึกสถานะ</b> (ค่าที่ทำได้รอบนี้ ใช้เพิ่มพลังวีรชนในหอคอยร้อยชั้น ประลอง ล่ามังกร) · ถ้าตาย = จบรอบ')}
     ${st(8,'🎖️','จบรอบได้เหรียญตรา','เอาไปฝึกค่าสถานะถาวรในหน้าผจญภัย รอบหน้าเริ่มแข็งแรงกว่าเดิม · ลงซ้ำด้วยวีรชนตัวเดิมให้ไกลขึ้น เพื่อได้บันทึกที่ดีกว่า')}
     <div class="gdn">💡 <b>เคล็ดลับ</b><br>• ชั้นต่ำกว่า ~100 ถ้าเจอบอสแล้วมีรูน ให้หนีก่อน<br>• เลือกท่าที่ติดสถานะก่อน แล้วตามด้วยท่าที่ทำคอมโบ (ดูแท็บคอมโบ)<br>• ระวังคำสาป แต่คำสาปช่วยเพิ่มตัวคูณคะแนน<br>• รีเฟรชหรือปิดเกม กลับมาเล่นต่อชั้นเดิมได้</div></div>`; }
@@ -3582,7 +3587,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rhelp" title="วิธีเล่น">❓</button><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.60</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rhelp" title="วิธีเล่น">❓</button><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.61</span>'}</div>`;
   }
   let runSet=false, runQuit=false, runHelp=false;
   function runPop(){
@@ -3665,7 +3670,7 @@ if (typeof document !== 'undefined') (function(){
         <div class="sh-exp"><i style="width:${exP}%"></i></div><div class="sh-exptxt">EXP ${fmt(S.exp)} / ${S.lv>=LV_CAP?'MAX':fmt(need)}</div></div></div>
       <div class="sh-hp"><div class="bigbar"><i id="heroBar" style="width:${100*S.hp/st.maxhp}%;background:linear-gradient(90deg,var(--hp),var(--hp2))"></i><span id="heroHpTxt">HP ${fmt(S.hp)} / ${fmt(st.maxhp)}</span></div></div>`;
     const rune = S.rune.lv
-      ? `<div class="runecard" style="--rc:${r.color}"><div class="ri2">🔷</div><div class="rmeta"><b>${r.name}</b><div>โอกาสหลบบอส: <span class="gold">${Math.min(75,r.pct+accVal('cloak'))}%</span></div></div><div class="rtimer"><small>${S.rune.lv>1?'ลดระดับใน':'แตกใน'}</small><div class="rbox">${S.rune.timer}<small> ชั้น</small></div></div></div>`
+      ? `<div class="runecard" style="--rc:${r.color}"><div class="ri2">🔷</div><div class="rmeta"><b>${r.name}</b><div>โอกาสหลบบอส: <span class="gold">${escRate(S.rune.lv).rp}%</span>${escRate(S.rune.lv).bonus>0?` <small>🍀+${escRate(S.rune.lv).bonus}%</small>`:''}</div></div><div class="rtimer"><small>${S.rune.lv>1?'ลดระดับใน':'แตกใน'}</small><div class="rbox">${S.rune.timer}<small> ชั้น</small></div></div></div>`
       : `<div class="runecard off"><div class="ri2">◇</div><div class="rmeta"><b>ยังไม่มีรูน</b><div>เก็บรูนจากเหตุการณ์ระหว่างทาง ใช้หนีบอสได้</div></div></div>`;
     let pane = '';
     if (tab==='stats'){
@@ -3842,7 +3847,7 @@ if (typeof document !== 'undefined') (function(){
     if (on && !shown){ el.innerHTML=tkInner(); el.classList.remove('tkhide'); }
     else if (!on && shown){ el.classList.add('tkhide'); setTimeout(()=>{ if (el.classList.contains('tkhide')) el.innerHTML=''; },450); } },1000);
   /* ---------- 🔔 แจ้งเตือนเกมมีอัปเดต ---------- */
-  const GAME_VER='v3.60'; let updSkip='', updT=0;
+  const GAME_VER='v3.61'; let updSkip='', updT=0;
   function updCheck(){ if (location.protocol==='file:' || document.getElementById('updpop')) return; if (Date.now()-updT<60000) return; updT=Date.now();
     fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{ if (!j||!j.v||j.v===GAME_VER||j.v===updSkip) return; updShow(j); }).catch(()=>{}); }
   function updShow(j){ const inRun=S&&S.phase&&S.phase!=='title'&&!S.over&&!hub, d=document.createElement('div'); d.id='updpop';
@@ -3929,7 +3934,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="pbtns"><button class="choice" data-act="guideopen"><span>📚 ข้อมูลเกม</span><small>วิธีเล่นเริ่มต้น · บันทึกสถานะ · ทรัพยากร · เวลารีเซ็ต · อุปกรณ์ · ธาตุ · อาชีพ</small></button><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.60<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.61<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
