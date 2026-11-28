@@ -1291,7 +1291,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.72</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.73</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -3651,7 +3651,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rhelp" title="วิธีเล่น">❓</button><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.72</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rhelp" title="วิธีเล่น">❓</button><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.73</span>'}</div>`;
   }
   let runSet=false, runQuit=false, runHelp=false;
   function runPop(){
@@ -3912,7 +3912,7 @@ if (typeof document !== 'undefined') (function(){
     if (on && !shown){ el.innerHTML=tkInner(); el.classList.remove('tkhide'); }
     else if (!on && shown){ el.classList.add('tkhide'); setTimeout(()=>{ if (el.classList.contains('tkhide')) el.innerHTML=''; },450); } },1000);
   /* ---------- 🔔 แจ้งเตือนเกมมีอัปเดต ---------- */
-  const GAME_VER='v3.72'; let updSkip='', updT=0;
+  const GAME_VER='v3.73'; let updSkip='', updT=0;
   function updCheck(){ if (location.protocol==='file:' || document.getElementById('updpop')) return; if (Date.now()-updT<60000) return; updT=Date.now();
     fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{ if (!j||!j.v||j.v===GAME_VER||j.v===updSkip) return; updShow(j); }).catch(()=>{}); }
   function updShow(j){ const inRun=S&&S.phase&&S.phase!=='title'&&!S.over&&!hub, d=document.createElement('div'); d.id='updpop';
@@ -4000,7 +4000,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="pbtns"><button class="choice" data-act="guideopen"><span>📚 ข้อมูลเกม</span><small>วิธีเล่นเริ่มต้น · บันทึกสถานะ · ทรัพยากร · เวลารีเซ็ต · อุปกรณ์ · ธาตุ · อาชีพ</small></button><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.72<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.73<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
@@ -4510,13 +4510,13 @@ if (typeof document !== 'undefined') (function(){
       ${SYS_LIST.map(([g,L])=>`<div class="sysg">${g}</div><div class="sysgrid">${L.map(([k,ic,n,d,a,dk,al])=>`<button class="sysi" data-act="sysgo" data-a="${a}" data-k="${dk}">${dotI(al&&A[al])}<span class="sysic">${sysIco(ic)}</span><b>${n}</b><small>${d}</small></button>`).join('')}</div>`).join('')}
       <button class="choice wide" data-act="sysc" style="width:100%"><span>ปิด</span></button></div></div>`; }
   function idleRow(m){ const d=m.idle, mins=chestMins(m), ok=mins>=CHEST_MIN, ms=m.daily.mission?'✅':`${m.daily.runs}/3`, D=dhDragon(), dt=DH_TRIES-dhState(m).tries.n;
-    return `<div class="iside l"><button class="sbtn chest ${ok?'ready':''}" data-act="ichest"><i>${uiIco('chest','🎁')}</i><span id="ichestt">${hm(mins)}</span>
-        <div class="cbar"><i id="ichestb" style="width:${mins/CHEST_MAX*100}%"></i></div><b id="ichest">${ok?'กดรับได้':`อีก ${CHEST_MIN-mins} น.`}</b></button>
-      <button class="sbtn" data-act="imission"><i>${uiIco('mission','🎯')}</i><span>ภารกิจ</span><b>${ms}</b></button>
+    return `<div class="iside l"><button class="sbtn" data-act="imission"><i>${uiIco('mission','🎯')}</i><span>ภารกิจ</span><b>${ms}</b></button>
       <button class="sbtn" data-act="hub" data-k="rank"><i>${uiIco('rank','🏆')}</i><span>อันดับ</span></button>
-      <button class="sbtn chatbtn" data-act="hub" data-k="chat"><i>${uiIco('chat','💬')}</i><span>แชท</span><em class="cbadge" style="${chatUnread>0?'':'display:none'}">${chatBadgeTxt()}</em></button>
-      <button class="sbtn sysb" data-act="syso">${dotI(Object.values(alertsOf(m)).some(Boolean))}<i>🧭</i><span>ระบบ<br>ทั้งหมด</span></button></div>
+      <button class="sbtn sysb" data-act="syso">${dotI(Object.values(alertsOf(m)).some(Boolean))}<i>🧭</i><span>ระบบ<br>ทั้งหมด</span></button>
+      <button class="sbtn chatbtn" data-act="hub" data-k="chat"><i>${uiIco('chat','💬')}</i><span>แชท</span><em class="cbadge" style="${chatUnread>0?'':'display:none'}">${chatBadgeTxt()}</em></button></div>
       <div class="iside r"><button class="sbtn ev" data-act="dhopen" style="--dc:${D.col}"><i>${DRAGON_READY.has(`dragon_${D.el}.webp`)?`<img class="uiico" src="art/dragon_${D.el}.webp" alt="">`:'🐲'}</i><span>ล่ามังกร</span><b>${dt>0?`เหลือ ${dt}`:'ครบแล้ว'}</b></button>
+      <button class="sbtn chest ${ok?'ready':''}" data-act="ichest"><i>${uiIco('chest','🎁')}</i><span id="ichestt">${hm(mins)}</span>
+        <div class="cbar"><i id="ichestb" style="width:${mins/CHEST_MAX*100}%"></i></div><b id="ichest">${ok?'กดรับได้':`อีก ${CHEST_MIN-mins} น.`}</b></button>
       ${d.farm?`<button class="sbtn fight" id="ifight" data-act="ifight"><i>${d.sub===9?uiIco('boss','👹'):'⚔️'}</i><span>${d.sub===9?'สู้บอส':'ลุยต่อ'}</span></button>`:''}</div>`; }
   function altPick(m,c,sl){ const d=m.idle, mine=Object.entries(ALLCHARS).filter(([id,x])=>heroIdleCls(id)===c&&m.chars[id]);
     const rk=!sl?`<button class="hpick ${d.hero[c]===ROOKIE?'on':''}" data-act="althero" data-k="${ROOKIE}" data-s="0" data-c="${c}">${clsArt(c)}<small>${CLASSES[c].name} · ฟรี</small></button>`:'';
