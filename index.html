@@ -890,7 +890,7 @@ img.gico{width:1.4em;height:1.4em;object-fit:contain;vertical-align:-0.35em;filt
 .rcur{display:flex;gap:8px;justify-content:center;font-size:12.5px;margin-bottom:6px}.rcur span{background:rgba(0,0,0,.35);border-radius:999px;padding:2px 9px}
 .rgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin:4px 0 8px}.rgi{position:relative;background:rgba(255,255,255,.04);border:1.5px solid transparent;border-radius:9px;padding:5px 0 3px;cursor:pointer}
 .rgi.sel{border-color:#ffd34d}.rgi em{position:absolute;left:2px;top:0;font-style:normal;color:#ffd34d;font-size:11px}.rgi small{display:block;font-size:8.5px;color:#9be7a0}
-.mini.off2{opacity:.75;background:#3a2030}
+.mini.off2{opacity:1;background:rgba(255,255,255,.08);border:1px dashed rgba(255,214,140,.5);color:#ffe6b0}
 .reliq{position:relative;height:190px;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden}
 .rqglow{position:absolute;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(255,180,60,.55),rgba(162,89,255,.25) 50%,transparent 70%);animation:rqp 2.4s ease-in-out infinite}
 .rqbox{position:relative;font-size:96px;filter:drop-shadow(0 0 18px #ffb340);animation:rqf 3s ease-in-out infinite}
@@ -1284,7 +1284,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.69</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.70</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -3644,7 +3644,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rhelp" title="วิธีเล่น">❓</button><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.69</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rhelp" title="วิธีเล่น">❓</button><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.70</span>'}</div>`;
   }
   let runSet=false, runQuit=false, runHelp=false;
   function runPop(){
@@ -3905,7 +3905,7 @@ if (typeof document !== 'undefined') (function(){
     if (on && !shown){ el.innerHTML=tkInner(); el.classList.remove('tkhide'); }
     else if (!on && shown){ el.classList.add('tkhide'); setTimeout(()=>{ if (el.classList.contains('tkhide')) el.innerHTML=''; },450); } },1000);
   /* ---------- 🔔 แจ้งเตือนเกมมีอัปเดต ---------- */
-  const GAME_VER='v3.69'; let updSkip='', updT=0;
+  const GAME_VER='v3.70'; let updSkip='', updT=0;
   function updCheck(){ if (location.protocol==='file:' || document.getElementById('updpop')) return; if (Date.now()-updT<60000) return; updT=Date.now();
     fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{ if (!j||!j.v||j.v===GAME_VER||j.v===updSkip) return; updShow(j); }).catch(()=>{}); }
   function updShow(j){ const inRun=S&&S.phase&&S.phase!=='title'&&!S.over&&!hub, d=document.createElement('div'); d.id='updpop';
@@ -3993,7 +3993,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="pbtns"><button class="choice" data-act="guideopen"><span>📚 ข้อมูลเกม</span><small>วิธีเล่นเริ่มต้น · บันทึกสถานะ · ทรัพยากร · เวลารีเซ็ต · อุปกรณ์ · ธาตุ · อาชีพ</small></button><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.69<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.70<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
@@ -4480,7 +4480,7 @@ if (typeof document !== 'undefined') (function(){
     if (a==='pull'||a==='skpull'||a==='rlpull') setTimeout(()=>{ const best=a==='rlpull'?Math.max(-1,...(rlRes||[]).map(r=>r.t)):0; SND.sfx(best>=4?'legend':'reveal'); },650); }, true);
   window.__idle = () => IB;
   document.addEventListener('click', e=>{ if (!e.target || e.target.id!=='idlecv') return; const r=e.target.getBoundingClientRect(), px=e.clientX-r.left, py=e.clientY-r.top;
-    const hs=(IB.hits||[]).filter(h=>px>=h.x&&px<=h.x+h.w&&py>=h.y&&py<=h.y+h.h), h=hs.find(h=>h.pri)||hs[0]; if (h&&h.c==='@sp'){ spCityOpen=true; render(); return; } if (h){ heroPop={c:h.c,s:h.s}; const L=document.createElement('div'); L.id='hplayer'; L.innerHTML=wallHeroPop(loadMeta()); document.querySelector('.overlay.hub.home')?.appendChild(L.firstElementChild); } });
+    const hs=(IB.hits||[]).filter(h=>px>=h.x&&px<=h.x+h.w&&py>=h.y&&py<=h.y+h.h), h=hs.find(h=>h.pri)||hs[0]; if (h&&h.c==='@sp'){ spCityOpen='city'; render(); return; } if (h){ heroPop={c:h.c,s:h.s}; const L=document.createElement('div'); L.id='hplayer'; L.innerHTML=wallHeroPop(loadMeta()); document.querySelector('.overlay.hub.home')?.appendChild(L.firstElementChild); } });
   function idleRow(m){ const d=m.idle, mins=chestMins(m), ok=mins>=CHEST_MIN, ms=m.daily.mission?'✅':`${m.daily.runs}/3`, D=dhDragon(), dt=DH_TRIES-dhState(m).tries.n;
     return `<div class="iside l"><button class="sbtn chest ${ok?'ready':''}" data-act="ichest"><i>${uiIco('chest','🎁')}</i><span id="ichestt">${hm(mins)}</span>
         <div class="cbar"><i id="ichestb" style="width:${mins/CHEST_MAX*100}%"></i></div><b id="ichest">${ok?'กดรับได้':`อีก ${CHEST_MIN-mins} น.`}</b></button>
@@ -5354,10 +5354,10 @@ if (typeof document !== 'undefined') (function(){
     return s.k==='atk' ? `${SP_SK.atk[s.el]}: ตีศัตรูทุกตัว ${Math.round(80*mu)}% ของพลังโจมตีวีรชนที่แรงที่สุด` : s.k==='hp' ? `${SP_SK.hp}: ฮีลทั้งทีม ${Math.round(8*mu)}% ของพลังชีวิต` : `${SP_SK.spd}: ทั้งทีมรับดาเมจ -50% นาน ${(2+mu).toFixed(1)} วินาที`; }
   const spEq = (m,slot) => { const id=spState(m).eq[slot]; return id&&spOwn(m,id)?id:null; };
   let spCityOpen=false;
-  function spCityPop(m){ if (!spCityOpen) return ''; const S0=spState(m), cur=spEq(m,'city'), own=Object.keys(S0.own).filter(id=>SP[id]).sort((a,b)=>SP[b].r-SP[a].r||spBonus(m,b)-spBonus(m,a));
-    return `<div class="pop-bg" data-act="spcc"><div class="pop altpop" data-act="noop"><div class="pop-h">🐾 <b>สัตว์วิญญาณประจำเมือง</b></div><p class="csd">ให้โบนัสกับการต่อสู้หน้าเมือง (ทหารและวีรชนบนแท่น) · แตะเพื่อเลือก</p>
+  function spCityPop(m){ if (!spCityOpen) return ''; const SL=spCityOpen===true?'city':spCityOpen, S0=spState(m), cur=spEq(m,SL), own=Object.keys(S0.own).filter(id=>SP[id]).sort((a,b)=>SP[b].r-SP[a].r||spBonus(m,b)-spBonus(m,a));
+    return `<div class="pop-bg" data-act="spcc"><div class="pop altpop" data-act="noop"><div class="pop-h">🐾 <b>สัตว์วิญญาณ · ${SP_SLOT[SL]}</b></div><p class="csd">${SL==='city'?'ให้โบนัสกับการต่อสู้หน้าเมือง (ทหารและวีรชนบนแท่น)':SL==='dh'?'ช่วยสู้ในโหมดล่ามังกร':'ช่วยสู้ในหอคอยร้อยชั้นและรังวิญญาณ'} · แตะเพื่อเลือก</p>
       <div class="spgrid">${own.map(id=>{ const s0=SP[id], o=S0.own[id]; return `<button class="spcard ${id===cur?'on':''}" data-act="spcity" data-id="${id}">${spIco(s0)}<b style="color:${SP_R[s0.r].c}">${s0.name}</b><small>Lv.${o.lv} · ${'★'.repeat(o.st)}</small><small>${SP_K[s0.k]} +${spBonus(m,id).toFixed(1)}%</small>${id===cur?'<i>✓ ใช้อยู่</i>':''}</button>`; }).join('')}</div>
-      <div class="row2">${cur?'<button class="choice alt" data-act="spcity" data-id=""><span>เอาออก</span></button>':''}<button class="choice alt" data-act="spgo"><span>🥚 ไปหน้าสัตว์วิญญาณ</span></button></div>
+      <div class="row2">${cur?'<button class="choice alt" data-act="spcity" data-id=""><span>เอาออก</span></button>':''}${hub==='spirits'?'':'<button class="choice alt" data-act="spgo"><span>🥚 ไปหน้าสัตว์วิญญาณ</span></button>'}</div>
       <button class="choice wide" data-act="spcc" style="width:100%"><span>ปิด</span></button></div></div>`; }
   const spCityMul = m => { const id=spEq(m,'city'); return id?1+spBonus(m,id)/100:1; };
   function spDhMul(m,D){ const id=spEq(m,'dh'); if (!id) return 1; return 1+spBonus(m,id)/100*(BEATS[SP[id].el]===D.el?1.5:1); }
@@ -5406,7 +5406,7 @@ if (typeof document !== 'undefined') (function(){
       ${nestRes?`<div class="pop-bg" data-act="nestok"><div class="pop altpop" data-act="noop"><div class="pop-h"><b>🥚 ฟักไข่วิญญาณ!</b></div>${hatchHtml(nestRes)}<button class="choice wide" data-act="nestok"><span>เยี่ยม!</span></button></div></div>`:''}
       ${nav()}${htFight?htFightHtml(m):''}</div>`; }
   function hubSpirits(m){ const S0=spState(m), sel=spSel&&SP[spSel]?SP[spSel]:null;
-    const slot=k=>{ const id=spEq(m,k); return `<div class="spslot"><small>${SP_SLOT[k]}</small>${id?spIco(SP[id]):'<span class="spemo">➕</span>'}<b>${id?SP[id].name:'ว่าง'}</b>${id?`<i>${SP_K[SP[id].k]} +${spBonus(m,id).toFixed(1)}%</i>`:''}</div>`; };
+    const slot=k=>{ const id=spEq(m,k); return `<div class="spslot" data-act="spslot" data-k="${k}" style="cursor:pointer"><small>${SP_SLOT[k]}</small>${id?spIco(SP[id]):'<span class="spemo">➕</span>'}<b>${id?SP[id].name:'ว่าง'}</b>${id?`<i>${SP_K[SP[id].k]} +${spBonus(m,id).toFixed(1)}%</i>`:''}</div>`; };
     const card=s=>{ const o=S0.own[s.id]; return `<button class="spc ${o?'':'no'} ${spSel===s.id?'sel':''}" style="--rc:${SP_R[s.r].c}" data-act="spsel" data-k="${s.id}">${spIco(s)}<small>${o?s.name:'???'}</small>${o?`<i>${'★'.repeat(o.st)} Lv.${o.lv}</i>`:''}${o&&o.cp>=SP_STAR_NEED[o.st]&&o.st<5?'<em>!</em>':''}</button>`; };
     let det='';
     if (sel){ const o=S0.own[sel.id];
@@ -5416,7 +5416,7 @@ if (typeof document !== 'undefined') (function(){
         <div class="csd">🐉 ล่ามังกร: ดาเมจ +โบนัสเดียวกัน (×1.5 ถ้าธาตุชนะทางมังกร) · 🏰 หน้าเมือง: ทอง +โบนัสเดียวกัน</div>
         ${o?`<div class="row2"><button class="mini ${o.lv<SP_LV_MAX&&S0.ess>=spLvCost(o.lv)?'':'off'}" data-act="splv">${o.lv>=SP_LV_MAX?'เลเวลสูงสุด':`อัปเลเวล ${ESS()} ${spLvCost(o.lv)}`}</button>
           <button class="mini ${o.st<5&&o.cp>=SP_STAR_NEED[o.st]?'':'off'}" data-act="spstar">${o.st>=5?'ดาวสูงสุด':`อัปดาว (ใช้ตัวซ้ำ ${SP_STAR_NEED[o.st]})`}</button></div>
-          <div class="spequip">${Object.keys(SP_SLOT).map(k=>`<button class="mini ${spEq(m,k)===sel.id?'':'off2'}" data-act="speq" data-k="${k}">${spEq(m,k)===sel.id?'✓ ':''}${SP_SLOT[k]}</button>`).join('')}</div>`:''}</div>`; }
+          <div class="spequip">${Object.keys(SP_SLOT).map(k=>`<button class="mini ${spEq(m,k)===sel.id?'':'off2'}" data-act="speq" data-k="${k}">${spEq(m,k)===sel.id?'✓ ':'+ '}${SP_SLOT[k]}</button>`).join('')}</div>`:''}</div>`; }
     return `<div class="overlay hub" ${pageBg('chars')}>${hubHead(m,'🐾 สัตว์วิญญาณ')}
       <div class="sumbox"><div class="rbcur"><span>${ESS()} ผลึกวิญญาณ ${S0.ess}</span><span>มี ${Object.keys(S0.own).length}/24 ตัว</span></div>
         <div class="spslots">${Object.keys(SP_SLOT).map(slot).join('')}</div>
@@ -5439,7 +5439,8 @@ if (typeof document !== 'undefined') (function(){
     if (act==='spstar'){ if (!o||o.st>=5||o.cp<SP_STAR_NEED[o.st]) return true; o.cp-=SP_STAR_NEED[o.st]; o.st++; hubMsg=`${SP[spSel].name} เป็น ${o.st} ดาว!`; storeMeta(m); render(); return true; }
     if (act==='spcc'){ spCityOpen=false; render(); return true; }
     if (act==='spgo'){ spCityOpen=false; hub='spirits'; hubMsg=''; render(); return true; }
-    if (act==='spcity'){ const id=b.dataset.id||null, S0=spState(m); if (id&&!S0.own[id]) return true; S0.eq.city=id; spCityOpen=false; storeMeta(m); idleCfgT=0; render(); return true; }
+    if (act==='spslot'){ spCityOpen=b.dataset.k; render(); return true; }
+    if (act==='spcity'){ const id=b.dataset.id||null, S0=spState(m), SL=spCityOpen===true?'city':spCityOpen||'city'; if (id&&!S0.own[id]) return true; S0.eq[SL]=id; spCityOpen=false; storeMeta(m); idleCfgT=0; render(); return true; }
     if (act==='speq'){ if (!o) return true; const k=b.dataset.k; S0.eq[k]=S0.eq[k]===spSel?null:spSel; storeMeta(m); idleCfgT=0; render(); return true; }
     return false; }
   window.__ht={htStart,htTick,F:()=>htFight,nestWaves};
