@@ -1284,7 +1284,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.68</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.69</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -3644,7 +3644,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rhelp" title="วิธีเล่น">❓</button><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.68</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rhelp" title="วิธีเล่น">❓</button><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.69</span>'}</div>`;
   }
   let runSet=false, runQuit=false, runHelp=false;
   function runPop(){
@@ -3905,7 +3905,7 @@ if (typeof document !== 'undefined') (function(){
     if (on && !shown){ el.innerHTML=tkInner(); el.classList.remove('tkhide'); }
     else if (!on && shown){ el.classList.add('tkhide'); setTimeout(()=>{ if (el.classList.contains('tkhide')) el.innerHTML=''; },450); } },1000);
   /* ---------- 🔔 แจ้งเตือนเกมมีอัปเดต ---------- */
-  const GAME_VER='v3.68'; let updSkip='', updT=0;
+  const GAME_VER='v3.69'; let updSkip='', updT=0;
   function updCheck(){ if (location.protocol==='file:' || document.getElementById('updpop')) return; if (Date.now()-updT<60000) return; updT=Date.now();
     fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{ if (!j||!j.v||j.v===GAME_VER||j.v===updSkip) return; updShow(j); }).catch(()=>{}); }
   function updShow(j){ const inRun=S&&S.phase&&S.phase!=='title'&&!S.over&&!hub, d=document.createElement('div'); d.id='updpop';
@@ -3993,7 +3993,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="pbtns"><button class="choice" data-act="guideopen"><span>📚 ข้อมูลเกม</span><small>วิธีเล่นเริ่มต้น · บันทึกสถานะ · ทรัพยากร · เวลารีเซ็ต · อุปกรณ์ · ธาตุ · อาชีพ</small></button><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.68<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.69<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
@@ -5857,7 +5857,7 @@ if (typeof document !== 'undefined') (function(){
     return `<div class="cptabs">${[['emo','😊 อีโมจิ'],['c','🦸 วีรชน'],['m','👾 มอนสเตอร์'],['p','🐾 สัตว์วิญญาณ']].map(([k,n])=>`<button class="${chatTab===k?'on':''}" data-act="chattab" data-k="${k}">${n}</button>`).join('')}</div><div class="cpgrid ${chatTab==='emo'?'emo':''}">${items}</div>${chatTab==='emo'?'':'<div class="cphint">แตะสติกเกอร์เพื่อส่งทันที</div>'}`; }
   function chatRow(r, uid, bl){ if (bl.includes(r.user_id)) return ''; const a=r.hero&&ALLCHARS[r.hero], me=r.user_id===uid, t=new Date(r.created_at), hm=t.toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'});
     const adm=!!r.is_admin, del=CHAT.admin?`<button class="cblk" data-act="chatdel" data-id="${r.id}" title="ลบข้อความ (แอดมิน)">🗑️</button>`:'';
-    return `<div class="cmsg ${me?'me':''} ${adm?'adm':''}"><span class="cav" data-act="pcard" data-u="${rkEsc(r.user_id||'')}" data-n="${rkEsc(r.name||'')}">${a?charArt(a.c,false,true):'🙂'}${adm?'<i class="cacrown">👑</i>':''}</span><div class="cbub"><div class="cnm">${adm?'<span class="admtag">👑 ADMIN</span>':''}<b data-act="pcard" data-u="${rkEsc(r.user_id||'')}" data-n="${rkEsc(r.name||'')}" style="cursor:pointer">${rkEsc(r.name||'ผู้กล้า')}<span class="ptag">${nameTag(r.user_id)}</span></b><small>${hm}</small>${del}${me||adm?'':`<button class="cblk" data-act="chatblock" data-u="${r.user_id}" data-n="${rkEsc(r.name||'')}" title="ซ่อนข้อความของผู้เล่นนี้">🚫</button>`}</div><div class="ctx">${chatBody(r.body)}</div></div></div>`; }
+    return `<div class="cmsg ${me?'me':''} ${adm?'adm':''}"><span class="cav" data-act="pcard" data-u="${rkEsc(r.user_id||'')}" data-n="${rkEsc(r.name||'')}">${a?charArt(a.c,false,true):'🙂'}${adm?'<i class="cacrown">👑</i>':''}</span><div class="cbub"><div class="cnm">${adm?'<span class="admtag">👑 ADMIN</span>':''}<b data-act="pcard" data-u="${rkEsc(r.user_id||'')}" data-n="${rkEsc(r.name||'')}" style="cursor:pointer">${rkEsc(r.name||'ผู้กล้า')}</b><small>${hm}</small>${del}${me||adm?'':`<button class="cblk" data-act="chatblock" data-u="${r.user_id}" data-n="${rkEsc(r.name||'')}" title="ซ่อนข้อความของผู้เล่นนี้">🚫</button>`}</div><div class="ctx">${chatBody(r.body)}</div></div></div>`; }
   function chatListHtml(){ const C=window.__dqCloud, uid=C&&C.auth&&C.auth.user.id, bl=chatBlocked();
     return CHAT.msgs.length ? CHAT.msgs.map(r=>chatRow(r,uid,bl)).join('') : `<p class="csd" style="text-align:center;margin:30px 0">${CHAT.err?'':(CHAT.loaded?'ยังไม่มีข้อความ ทักทายเพื่อนๆ เป็นคนแรกเลย!':'กำลังโหลดข้อความ…')}</p>`; }
   function chatPaint(){ const el=document.getElementById('chatlist'); if (!el) return; const atB=el.scrollHeight-el.scrollTop-el.clientHeight<60;
@@ -5904,11 +5904,11 @@ if (typeof document !== 'undefined') (function(){
   let rkSel=null, PC=null;
   const HOF_T={1:['ราชันแห่งหอคอย',''],2:['ตำนานแห่งหอคอย','l2'],3:['ตำนานแห่งหอคอย','l2']};
   function pTitle(pf){ const t=HOF_T[pf&&pf.ps&&pf.ps.hof]; return t?`<i class="ptitle ${t[1]}">${t[0]}</i>`:''; }
-  function pName(name,uid,pf){ return `<b class="${pf?pfNameCls(pf):''}">${rkEsc(name||'ผู้กล้า')}<span class="ptag">${nameTag(uid)}</span></b>${pTitle(pf)}`; }
+  function pName(name,uid,pf,tag){ return `<b class="${pf?pfNameCls(pf):''}">${rkEsc(name||'ผู้กล้า')}${tag?`<span class="ptag">${nameTag(uid)}</span>`:''}</b>${pTitle(pf)}`; }
   function pcardHtml(r){ const pf=(r.detail||{}).pf, ps=pf&&pf.ps; if (pf) cosFontsLoad();
     const av=pf?`<span class="avatar fr-${rkEsc(pf.fr||'basic')}">${pfAvArt(pf)}</span>`:`<span class="cbig">${rkAv(r)}</span>`;
     const mainA=pf&&pf.av&&ALLCHARS[pf.av];
-    let h=`<div class="pcard">${av}<div><div class="pcn">${pName(r.name,r.user_id,pf)}</div><div class="pcs">${mainA?'วีรชนประจำตัว: '+rkEsc(mainA.c.name):'ผู้กล้าแห่งเมืองสุดท้าย'}</div></div></div>`;
+    let h=`<div class="pcard">${av}<div><div class="pcn">${pName(r.name,r.user_id,pf,true)}</div><div class="pcs">${mainA?'วีรชนประจำตัว: '+rkEsc(mainA.c.name):'ผู้กล้าแห่งเมืองสุดท้าย'}</div></div></div>`;
     if (!ps) return h+`<p class="csd">ผู้เล่นนี้ยังไม่ได้เล่นเวอร์ชันใหม่ ข้อมูลโปรไฟล์จะขึ้นเมื่อเขาเล่นอีกครั้ง</p>`;
     const wk=ps.wk===wkNow()?ps.wb:0, c=(ic,l,v)=>`<div><small>${ic} ${l}</small><b>${v}</b></div>`;
     h+=`<div class="pcgrid">${c('🧭','ชั้นสูงสุด',fmt(ps.bf||0))}${c('📅','คะแนนสัปดาห์นี้',wk?fmt(wk):'-')}${c('🏛️','คะแนนตลอดกาล',ps.bs?fmt(ps.bs):'-')}${c('😈','ชนะบอส',fmt(ps.w||0)+' ครั้ง')}${c('🦸','วีรชนที่มี',fmt(ps.hc||0)+' ตัว')}${c('🏆','อันดับดีที่สุด',ps.rk?'#'+fmt(ps.rk):'-')}${c('🏅','คะแนนประลอง',ps.ar?fmt(ps.ar):'-')}${c('🗼','หอคอยร้อยชั้น',ps.ht?'ชั้น '+ps.ht:'-')}${c('👑','หอเกียรติยศ',ps.hof?'#'+ps.hof:'-')}</div>`;
