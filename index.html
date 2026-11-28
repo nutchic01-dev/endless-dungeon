@@ -968,6 +968,18 @@ img.gico{width:1.4em;height:1.4em;object-fit:contain;vertical-align:-0.35em;filt
 @keyframes sphin{from{transform:scale(.3) rotate(-10deg);opacity:0}to{transform:none;opacity:1}}
 .btabs button{padding:6px 1px!important}.btabs button span{font-size:11.5px}
 .bgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.eggi{display:inline-block;position:relative;line-height:0}.eggi img{filter:var(--ef)}.eggi.et0{--ef:none}.eggi.et1{--ef:drop-shadow(0 0 3px rgba(111,182,255,.7))}.eggi.et2{--ef:drop-shadow(0 0 6px #ffb347)}
+.eggi.et2::after{content:'✦';position:absolute;right:-2px;top:-2px;font-size:11px;line-height:1;color:#fff4b0;text-shadow:0 0 4px #ffb347;animation:eggtw 1.4s ease-in-out infinite}.eggi.big img{width:120px;height:auto}.eggi.big.et2::after{font-size:22px}
+@keyframes eggtw{50%{opacity:.2;transform:scale(.6)}}
+.eggbg{background:rgba(6,3,16,.88)!important}.eggstage{position:relative;width:300px;height:420px;display:flex;align-items:center;justify-content:center}
+.eggrays{position:absolute;left:50%;top:42%;width:520px;height:520px;margin:-260px 0 0 -260px;border-radius:50%;background:repeating-conic-gradient(from 0deg,color-mix(in srgb,var(--ec) 55%,transparent) 0 10deg,transparent 10deg 24deg);mask:radial-gradient(circle,#000 18%,transparent 62%);-webkit-mask:radial-gradient(circle,#000 18%,transparent 62%);opacity:0;animation:eggray 6s linear 1.35s infinite,eggin .4s ease 1.35s forwards}
+.eggshake{position:absolute;top:22%;animation:eggsh 1.3s ease-in forwards}.eggshake::before{content:'';position:absolute;inset:-30px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--tc) 60%,transparent),transparent 65%);animation:eggpul .5s ease-in-out infinite alternate}
+.eggflash{position:absolute;left:50%;top:40%;width:40px;height:40px;margin:-20px;border-radius:50%;background:#fff;opacity:0;animation:eggfl .7s ease-out 1.25s forwards}
+.eggres{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;opacity:0;transform:scale(.6);animation:eggrv .5s cubic-bezier(.2,1.6,.4,1) 1.4s forwards}
+.eggres .eggsp .spimg.big,.eggres .eggsp .spemo.big{width:150px;height:150px;font-size:110px;filter:drop-shadow(0 0 14px var(--ec))}.eggres b{font-size:22px;text-shadow:0 2px 4px #000}.eggres small{opacity:.85}.eggnew{margin:6px 0;padding:4px 12px;border-radius:12px;background:rgba(0,0,0,.45);font-weight:700;color:#ffe9a8}
+.eggstage.r2 .eggres b{animation:egglg 1.2s ease-in-out infinite}
+@keyframes eggsh{0%{transform:rotate(0)}10%{transform:rotate(-8deg)}20%{transform:rotate(8deg)}30%{transform:rotate(-10deg)}40%{transform:rotate(10deg)}50%{transform:rotate(-14deg) scale(1.03)}60%{transform:rotate(14deg) scale(1.05)}70%{transform:rotate(-16deg) scale(1.08)}80%{transform:rotate(16deg) scale(1.1)}90%{transform:scale(1.18);opacity:1}100%{transform:scale(1.35);opacity:0}}
+@keyframes eggpul{to{transform:scale(1.15);opacity:.6}}@keyframes eggfl{0%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(18)}}@keyframes eggrv{to{opacity:1;transform:scale(1)}}@keyframes eggray{to{transform:rotate(360deg)}}@keyframes eggin{to{opacity:1}}@keyframes egglg{50%{text-shadow:0 0 14px #ffb347,0 2px 4px #000}}
 .bitem{display:flex;flex-direction:column;align-items:center;gap:1px;padding:7px 2px 6px;border-radius:12px;border:1.5px solid rgba(255,209,102,.25);background:rgba(20,15,40,.7);color:var(--ink);font:inherit;cursor:pointer;min-width:0}
 .bitem .bic{height:34px;display:flex;align-items:center;font-size:26px}.bitem .bic img{height:32px;width:auto}.bitem b{font-size:13px}.bitem small{font-size:10px;color:var(--muted);line-height:1.15;text-align:center}
 .bitem.zero{opacity:.45}.bitem.sel{border-color:#ffd166;box-shadow:0 0 0 2px rgba(255,209,102,.4)}
@@ -1272,7 +1284,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.64</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.65</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -3632,7 +3644,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rhelp" title="วิธีเล่น">❓</button><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.64</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rhelp" title="วิธีเล่น">❓</button><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.65</span>'}</div>`;
   }
   let runSet=false, runQuit=false, runHelp=false;
   function runPop(){
@@ -3893,7 +3905,7 @@ if (typeof document !== 'undefined') (function(){
     if (on && !shown){ el.innerHTML=tkInner(); el.classList.remove('tkhide'); }
     else if (!on && shown){ el.classList.add('tkhide'); setTimeout(()=>{ if (el.classList.contains('tkhide')) el.innerHTML=''; },450); } },1000);
   /* ---------- 🔔 แจ้งเตือนเกมมีอัปเดต ---------- */
-  const GAME_VER='v3.64'; let updSkip='', updT=0;
+  const GAME_VER='v3.65'; let updSkip='', updT=0;
   function updCheck(){ if (location.protocol==='file:' || document.getElementById('updpop')) return; if (Date.now()-updT<60000) return; updT=Date.now();
     fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{ if (!j||!j.v||j.v===GAME_VER||j.v===updSkip) return; updShow(j); }).catch(()=>{}); }
   function updShow(j){ const inRun=S&&S.phase&&S.phase!=='title'&&!S.over&&!hub, d=document.createElement('div'); d.id='updpop';
@@ -3941,18 +3953,19 @@ if (typeof document !== 'undefined') (function(){
   /* ---------- 📬 จดหมาย / ของขวัญ (ส่งให้ทุกไอดีผ่านโค้ด) ---------- */
   const MAIL = [
     {id:'gift_leo_2611', t:'🎁 ของขวัญ: วีรชนลีโอ', d:'ขอบคุณผู้กล้าทุกท่านที่ร่วมทดสอบเกมช่วง Early Access รับ "ลีโอ สิงห์โล่ทอง" ไปร่วมทีมได้เลย! (ถ้ามีลีโออยู่แล้ว จะได้เศษลีโอ 50 ชิ้นแทน = อัปได้ 1 ดาว)', rw:{char:'leo'}},
+    {id:'gift_d3_2811', ts:Date.parse('2026-11-28T00:00:00+07:00'), t:'🎁 ของขวัญวันทดสอบวันที่ 3', d:'ขอบคุณผู้กล้าที่ร่วมทดสอบเกมมาถึงวันที่ 3! รับตั๋วสุ่มสกิน 10 ใบ ตั๋วสุ่มเรลิก 10 ใบ และไข่วิญญาณหายาก 1 ฟอง (ไข่จะอยู่ในกระเป๋า แท็บไอเทม กดเปิดได้เลย)', rw:{sktix:10, rtix:10, egg:[0,1,0]}},
     {id:'gift_bug_2611', t:'🐞 ของขวัญช่วยหาบัก: สกินตำนานลีโอ', d:'ขอบคุณทุกคนที่ช่วยแจ้งบักและทดสอบเกม! รับสกินระดับตำนาน "ชุดราชันย์สุริยสิงห์" ของลีโอไปเลย (ถ้ามีสกินนี้อยู่แล้ว จะได้เศษผ้าสกินคืนแทน)', rw:{skin:'leo_l'}},
   ];
   let mailPop=false;
   const mailGot = m => (m.mail=m.mail||{got:[]}).got;
   const mailAll = m => MAIL.concat(((m.mail||{}).dyn)||[]);
   const mailUnread = m => mailAll(m).filter(x=>!mailGot(m).includes(x.id)).length;
-  function mailRwTxt(r){ const a=[]; if (r.skin){ const [sid,st]=r.skin.split('_'); a.push(`👗 สกิน${SKIN_T[st].name} ${skinsOf(sid)[st].name} (${ALLCHARS[sid].c.name.split(' ')[0]})`); } if (r.char) a.push(`${ALLCHARS[r.char].c.icon} ${ALLCHARS[r.char].c.name}`); if (r.tickets) a.push(`🎟️ ${r.tickets}`); if (r.medals) a.push(`🎖️ ${fmt(r.medals)}`); if (r.dust) a.push(`✨ ${r.dust}`); return a.join(' · '); }
+  function mailRwTxt(r){ const a=[]; if (r.skin){ const [sid,st]=r.skin.split('_'); a.push(`👗 สกิน${SKIN_T[st].name} ${skinsOf(sid)[st].name} (${ALLCHARS[sid].c.name.split(' ')[0]})`); } if (r.char) a.push(`${ALLCHARS[r.char].c.icon} ${ALLCHARS[r.char].c.name}`); if (r.sktix) a.push(`🎀 ตั๋วสกิน ${r.sktix}`); if (r.rtix) a.push(`🏺 ตั๋วเรลิก ${r.rtix}`); if (r.egg) r.egg.forEach((n,t)=>{ if (n) a.push(`🥚 ${EGG_T[t].n} ×${n}`); }); if (r.tickets) a.push(`🎟️ ${r.tickets}`); if (r.medals) a.push(`🎖️ ${fmt(r.medals)}`); if (r.dust) a.push(`✨ ${r.dust}`); return a.join(' · '); }
   function mailClaim(m,x){ if (mailGot(m).includes(x.id)) return ''; const r=x.rw||{}, out=[];
     if (r.char && ALLCHARS[r.char]){ if (!owned(m,r.char)){ m.chars[r.char]={star:1,form:false,recs:[],main:0}; if (!m.show.main) m.show.main=r.char; if (!m.skin[r.char]){ const bt=['l','r','n'].find(t=>m.skins[r.char+'_'+t]); if (bt) m.skin[r.char]=bt; } out.push(`ได้วีรชน ${ALLCHARS[r.char].c.name}!`); }
       else { m.shards[r.char]=(m.shards[r.char]||0)+50; out.push(`มี${ALLCHARS[r.char].c.name.split(' ')[0]}แล้ว ได้เศษ 50 ชิ้นแทน`); } }
     if (r.skin){ const [sid,st]=r.skin.split('_'); if (!m.skins[r.skin]){ m.skins[r.skin]=true; if (m.chars[sid]) m.skin[sid]=st; out.push(`ได้สกิน ${skinsOf(sid)[st].name}!${m.chars[sid]?' (ใส่ให้แล้ว)':''}`); } else { m.skinSh+=SKIN_T[st].refund; out.push(`มีสกินนี้แล้ว ได้เศษผ้าสกิน ${SKIN_T[st].refund}`); } }
-    if (r.gem){ gemAdd(m,r.gem); out.push(`💎 +${r.gem}`); } if (r.tickets){ m.tickets+=r.tickets; out.push(`🎟️ +${r.tickets}`); } if (r.medals){ m.medals+=r.medals; out.push(`🎖️ +${r.medals}`); } if (r.dust){ m.dust+=r.dust; out.push(`✨ +${r.dust}`); }
+    if (r.gem){ gemAdd(m,r.gem); out.push(`💎 +${r.gem}`); } if (r.sktix){ m.sktix=(m.sktix||0)+r.sktix; out.push(`🎀 ตั๋วสกิน +${r.sktix}`); } if (r.rtix){ m.rtix=(m.rtix||0)+r.rtix; out.push(`ตั๋วเรลิก +${r.rtix}`); } if (r.egg){ const S0=spState(m); r.egg.forEach((n,t)=>{ if (n){ S0.eggs[t]+=n; out.push(`${EGG_T[t].n} +${n} (อยู่ในกระเป๋า แท็บไอเทม)`); } }); } if (r.tickets){ m.tickets+=r.tickets; out.push(`🎟️ +${r.tickets}`); } if (r.medals){ m.medals+=r.medals; out.push(`🎖️ +${r.medals}`); } if (r.dust){ m.dust+=r.dust; out.push(`✨ +${r.dust}`); }
     if (x.rk){ m.rkClaim=m.rkClaim||{}; m.rkClaim[x.rk]=1; }
     mailGot(m).push(x.id); return out.join(' · '); }
   let mailMsg='';
@@ -3980,7 +3993,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="pbtns"><button class="choice" data-act="guideopen"><span>📚 ข้อมูลเกม</span><small>วิธีเล่นเริ่มต้น · บันทึกสถานะ · ทรัพยากร · เวลารีเซ็ต · อุปกรณ์ · ธาตุ · อาชีพ</small></button><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.64<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.65<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
@@ -5304,7 +5317,7 @@ if (typeof document !== 'undefined') (function(){
   const spUi = (f, em) => SP_UI_READY.has(f) ? `<img class="cic" src="${SPI[f.replace('.webp','')]||'art/'+f}" alt="">` : em;
   const ESS = () => spUi('ui_spess.webp','🔮'), EGG = () => spUi('ui_spegg.webp','🥚');
   function spState(m){ if (!m.spirit) m.spirit={own:{daopui:{lv:1,st:1,cp:0}},eq:{ht:'daopui',dh:null,city:null},ess:20,nest:{day:'',left:3,best:0}}; const S0=m.spirit;
-    const d=dayKey(); if (S0.nest.day!==d){ S0.nest.day=d; S0.nest.left=3; } return S0; }
+    if (!S0.eggs) S0.eggs=[0,0,0]; const d=dayKey(); if (S0.nest.day!==d){ S0.nest.day=d; S0.nest.left=3; } return S0; }
   const spOwn = (m,id) => spState(m).own[id];
   function spBonus(m,id){ const o=spOwn(m,id), s=SP[id]; if (!o||!s) return 0; return [4,5,6][s.r] + 0.15*(o.lv-1) + 0.5*(o.st-1); }
   function spSkillMul(m,id){ const o=spOwn(m,id), s=SP[id]; if (!o||!s) return 0; return (1+0.04*(o.lv-1))*(1+0.15*(o.st-1))*[1,1.3,1.7][s.r]; }
@@ -5320,6 +5333,17 @@ if (typeof document !== 'undefined') (function(){
       <button class="choice wide" data-act="spcc" style="width:100%"><span>ปิด</span></button></div></div>`; }
   const spCityMul = m => { const id=spEq(m,'city'); return id?1+spBonus(m,id)/100:1; };
   function spDhMul(m,D){ const id=spEq(m,'dh'); if (!id) return 1; return 1+spBonus(m,id)/100*(BEATS[SP[id].el]===D.el?1.5:1); }
+  /* ไข่วิญญาณ 3 ระดับ (เก็บในกระเป๋า กดเปิดเอง) 0=ธรรมดา 1=หายาก (การันตีหายากขึ้นไป) 2=ตำนาน (การันตีตำนาน) */
+  const EGG_T=[{n:'ไข่วิญญาณธรรมดา',c:'#9fd3a8',d:'สุ่มสัตว์วิญญาณ โอกาสหายาก 12% ตำนาน 1%'},{n:'ไข่วิญญาณหายาก',c:'#6fb6ff',d:'การันตีสัตว์วิญญาณระดับหายากขึ้นไป (โอกาสตำนาน 8%)'},{n:'ไข่วิญญาณตำนาน',c:'#ffb347',d:'การันตีสัตว์วิญญาณระดับตำนาน'}];
+  const eggIco=(t,big)=>`<span class="eggi et${t}${big?' big':''}"><img class="cic" src="art/egg_t${t}.webp" alt=""></span>`;
+  function eggRoll(t){ const r=t===2?2:t===1?(Math.random()<0.08?2:1):(()=>{ const x=Math.random()*100; return x<1?2:x<13?1:0; })(); const L=SPIRITS.filter(s=>s.r===r); return pick(L).id; }
+  let eggOpen=null;
+  function eggPopHtml(){ if (!eggOpen) return ''; const s0=SP[eggOpen.id], col=SP_R[s0.r].c, m=loadMeta(), o=spOwn(m,eggOpen.id);
+    return `<div class="pop-bg eggbg" data-act="eggok"><div class="eggstage r${s0.r}" style="--ec:${col};--tc:${EGG_T[eggOpen.t].c}" data-act="noop">
+      <div class="eggrays"></div><div class="eggshake">${eggIco(eggOpen.t,true)}</div><div class="eggflash"></div>
+      <div class="eggres"><div class="eggsp">${spIco(s0,true)}</div><b style="color:${col}">${s0.name}</b><small>${SP_R[s0.r].n} · ${ {fire:'ไฟ',water:'น้ำ',wood:'ไม้',earth:'ดิน',light:'แสง',dark:'มืด'}[s0.el]||'' }</small>
+        <div class="eggnew">${eggOpen.isNew?'✨ ได้ตัวใหม่!':`ตัวซ้ำ · ใช้อัปดาวได้ (${o?o.cp:0} ตัว)`}</div>
+        <div class="row2"><button class="choice alt" data-act="eggok"><span>ปิด</span></button><button class="choice" data-act="eggsee"><span>🐾 ไปดูสัตว์วิญญาณ</span></button></div></div></div></div>`; }
   function spGive(m,id){ const S0=spState(m); if (S0.own[id]){ S0.own[id].cp++; return false; } S0.own[id]={lv:1,st:1,cp:0}; return true; }
   function spRollEgg(t, el){ const lr=1+0.6*t, rr=12+2*t, x=Math.random()*100, r=x<lr?2:x<lr+rr?1:0, e=Math.random()<0.6?el:pick(['fire','water','wood','earth','light','dark']);
     const pool=SPIRITS.filter(s=>s.r===r&&s.el===e); return pick(pool.length?pool:SPIRITS.filter(s=>s.r===r)).id; }
@@ -5657,6 +5681,7 @@ if (typeof document !== 'undefined') (function(){
       ['rsh',uiIco('rsh','✴️'),'เศษเรลิก',m.rsh,'ได้จากการแยกเรลิก ใช้แลกเรลิกที่ร้านเรลิก','shop:relic','ร้านเรลิก'],
       ['rc',UIC.rc,'ผลึกความทรงจำ',m.rc,'ใช้ตีบวกเรลิก','bag:relic','ดูเรลิก'],
       ['ro',UIC.ro,'หินพยากรณ์',m.ro,'ใช้สุ่มพลังแฝงของเรลิกใหม่','bag:relic','ดูเรลิก'],
+      ...[2,1,0].map(t=>['egg'+t,eggIco(t),EGG_T[t].n,sp.eggs[t]||0,EGG_T[t].d+' · กดเปิดได้เลย','@egg'+t,'🥚 เปิดไข่']),
       ['ess',ESS(),'ผลึกวิญญาณ',sp.ess,'ใช้อัปเลเวลสัตว์วิญญาณ','spirits','ไปสัตว์วิญญาณ'],
       ['scale',uiIco('scale','🐉'),'เกล็ดมังกร',dh.scales||0,'ได้จากล่ามังกร ใช้แลกของที่ร้านเกล็ดมังกร','dragon','ไปล่ามังกร'],
       ['eqtix',uiIco('eqtix','⚒️'),'ตั๋วตีอุปกรณ์',m.eq.tix,'ใช้ตีอุปกรณ์ให้นักรบที่โรงตีเหล็ก','troop:eq','ไปโรงตีเหล็ก'],
@@ -5666,7 +5691,7 @@ if (typeof document !== 'undefined') (function(){
     ]; }
   function bagItemTab(m){ const L=bagItems(m), it=L.find(x=>x[0]===bagItem);
     return `<div class="sumbox"><div class="bgrid">${L.map(([k,ic,n,c])=>`<button class="bitem ${c?'':'zero'} ${bagItem===k?'sel':''}" data-act="bagitem" data-k="${k}"><span class="bic">${ic}</span><b>${fmt(c)}</b><small>${n}</small></button>`).join('')}</div></div>
-      ${it?`<div class="sumbox bdet"><div class="bdh"><span class="bic big">${it[1]}</span><div><b>${it[2]}</b><div class="csd">มีอยู่ ${fmt(it[3])}</div></div></div><p class="csd" style="text-align:left">${it[4]}</p>${it[5]?`<button class="choice wide alt" data-act="baggo" data-k="${it[5]}"><span>${it[6]} ▶</span></button>`:''}</div>`:'<div class="gs" style="text-align:center">แตะไอเทมเพื่อดูรายละเอียดและที่ใช้</div>'}`; }
+      ${it?`<div class="sumbox bdet"><div class="bdh"><span class="bic big">${it[1]}</span><div><b>${it[2]}</b><div class="csd">มีอยู่ ${fmt(it[3])}</div></div></div><p class="csd" style="text-align:left">${it[4]}</p>${it[5]&&it[5].startsWith('@egg')?`<button class="choice wide" data-act="eggopen" data-k="${it[5].slice(4)}" ${it[3]?'':'disabled'}><span>${it[3]?'🥚 เปิดไข่':'ยังไม่มีไข่'}</span></button>`:it[5]?`<button class="choice wide alt" data-act="baggo" data-k="${it[5]}"><span>${it[6]} ▶</span></button>`:''}</div>`:'<div class="gs" style="text-align:center">แตะไอเทมเพื่อดูรายละเอียดและที่ใช้</div>'}`; }
   function bagShardTab(m){ const ids=Object.keys(m.shards).filter(id=>(m.shards[id]||0)>0&&ALLCHARS[id]).sort((a,b)=>(owned(m,b)-owned(m,a))||m.shards[b]-m.shards[a]);
     let ex=0; ids.forEach(id=>{ if (owned(m,id)){ const e=m.shards[id]-shardLeft(m,id); if (e>0) ex+=e*DUST_OF[ALLCHARS[id].tier]; } });
     return `<div class="sumbox"><h3>✂️ ย่อยเศษส่วนเกิน</h3><div class="csd">เศษของวีรชนที่มีแล้ว ส่วนที่เกินจากการอัปครบ 5 ดาวและกลายร่าง จะกลายเป็นผงดาว</div>
@@ -5893,7 +5918,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="sumbox"><h3>📜 สถิติในตารางนี้</h3><div class="gs">${rkTab==='hundred'?'':'ใช้ '+rkEsc(heroName)+' · '}คะแนน ${fmt(r.score)}${rkTab==='hundred'?' ชั้น':''}</div></div>
       ${html}<button class="choice wide" data-act="rkviewc"><span>ปิด</span></button></div></div>`; }
   function hubView(){ const m=loadMeta();
-    const W = (wPop ? worldPop() : '') + hvPopHtml(m) + pcPopHtml() + namePopHtml(m) + spCityPop(m);
+    const W = (wPop ? worldPop() : '') + hvPopHtml(m) + pcPopHtml() + namePopHtml(m) + spCityPop(m) + eggPopHtml();
     if (hub==='adv') return hubAdv(m)+W; if (hub==='perm'){ hub='shop'; shTab='medal'; } if (hub==='shop') return hubShop(m)+W; if (hub==='troop') return hubTroop(m)+W; if (hub==='dragon') return hubDragon(m)+W; if (hub==='hundred') return hubHundred(m)+W; if (hub==='arena') return hubArena(m)+W; if (hub==='guide') return hubGuide(m)+W; if (hub==='relicbag') return hubRelicBag(m)+W; if (hub==='bag') return hubBag(m)+W; if (hub==='rank') return hubRank(m)+W; if (hub==='chat') return hubChat(m)+W; if (hub==='spirits') return hubSpirits(m)+W; if (hub==='nest') return hubNest(m)+W; if (hub==='chars') return hubChars(m)+charPopup(m)+tryPopHtml(m)+W; if (hub==='gacha') return hubGacha(m)+W;
     return hubHome(m)+W; }
   function hubAct(act, b){
@@ -5937,6 +5962,10 @@ if (typeof document !== 'undefined') (function(){
     if (act==='rkviewc'){ rkSel=null; render(); return true; }
     if (act==='pcard'){ const C=window.__dqCloud; if (b.dataset.u) pcOpen(b.dataset.u, b.dataset.n||''); return true; }
     if (act==='pcardc'){ PC=null; render(); return true; }
+    if (act==='eggopen'){ const t=+b.dataset.k, m=loadMeta(), S0=spState(m); if (!(S0.eggs[t]>0)) return true; S0.eggs[t]--; const id=eggRoll(t), isNew=spGive(m,id); storeMeta(m); eggOpen={t,id,isNew};
+      SND.sfx('charge'); setTimeout(()=>SND.sfx(SP[id].r===2?'legend':'reveal'),1350); render(); return true; }
+    if (act==='eggok'){ eggOpen=null; render(); return true; }
+    if (act==='eggsee'){ eggOpen=null; hub='spirits'; render(); return true; }
     if (act==='nmsave'){ const v=((document.getElementById('nmin')||{}).value||'').trim(), er=nameOk(v); if (er){ nameErr=er; render(); setTimeout(()=>{ const i=document.getElementById('nmin'); if (i){ i.value=v; i.focus(); } },0); return true; } nameErr=''; m.name=v; storeMeta(m); const C=window.__dqCloud; if (C&&C.lbSync) setTimeout(()=>C.lbSync(),300); return done('✏️ ตั้งชื่อเป็น '+v+' แล้ว'); }
     if (act==='rksend'){ const C=window.__dqCloud; if (C&&C.lbSync) C.lbSync(true).then(()=>rkLoad(rkB(),true)); render(); return true; }
     if (act==='rkclaim'){ const per=rkPeriod(rkTab,m), D=RK_CACHE[rkTab+'|'+per]||{}, ci=rkClaimInfo(rkTab), cl=D.claim, tier=cl&&cl.rank?rkTier(rkTab,cl.rank):null;
