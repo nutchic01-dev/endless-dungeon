@@ -888,6 +888,7 @@ img.gico{width:1.4em;height:1.4em;object-fit:contain;vertical-align:-0.35em;filt
 .rsub small{display:block;opacity:.55;font-size:9.5px}.rsub.lock{border-color:#ffd34d;background:rgba(255,211,77,.12)}.rsub.empty{opacity:.4;text-align:center;cursor:default}
 .rskill{margin:6px 0;font-size:12px;padding:5px 8px;border-radius:8px;background:rgba(255,255,255,.04);opacity:.7}.rskill.on{opacity:1;background:linear-gradient(90deg,rgba(255,211,77,.2),rgba(162,89,255,.2));border:1px solid #ffd34d}
 .rcur{display:flex;gap:8px;justify-content:center;font-size:12.5px;margin-bottom:6px}.rcur span{background:rgba(0,0,0,.35);border-radius:999px;padding:2px 9px}
+.rlsheet-bg{position:fixed;inset:0;z-index:60;background:rgba(5,3,12,.45)}.rlsheet{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:100%;max-width:560px;max-height:72vh;overflow-y:auto;z-index:61;background:#1d1438;border:1.5px solid rgba(255,214,140,.5);border-bottom:0;border-radius:20px 20px 0 0;padding:14px 12px calc(14px + env(safe-area-inset-bottom));box-shadow:0 -10px 30px rgba(0,0,0,.6);animation:rlup .18s ease-out;text-align:left}.rlsx{position:sticky;top:0;float:right;z-index:2;width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.3);background:rgba(0,0,0,.4);color:#fff;font-size:16px}@keyframes rlup{from{transform:translate(-50%,40px);opacity:.3}}
 .rgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin:4px 0 8px}.rgi{position:relative;background:rgba(255,255,255,.04);border:1.5px solid transparent;border-radius:9px;padding:5px 0 3px;cursor:pointer}
 .rgi.sel{border-color:#ffd34d}.rgi em{position:absolute;left:2px;top:0;font-style:normal;color:#ffd34d;font-size:11px}.rgi small{display:block;font-size:8.5px;color:#9be7a0}
 .mini.off2{opacity:1;background:rgba(255,255,255,.08);border:1px dashed rgba(255,214,140,.5);color:#ffe6b0}
@@ -1284,7 +1285,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.70</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.71</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -3644,7 +3645,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rhelp" title="วิธีเล่น">❓</button><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.70</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rhelp" title="วิธีเล่น">❓</button><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.71</span>'}</div>`;
   }
   let runSet=false, runQuit=false, runHelp=false;
   function runPop(){
@@ -3905,7 +3906,7 @@ if (typeof document !== 'undefined') (function(){
     if (on && !shown){ el.innerHTML=tkInner(); el.classList.remove('tkhide'); }
     else if (!on && shown){ el.classList.add('tkhide'); setTimeout(()=>{ if (el.classList.contains('tkhide')) el.innerHTML=''; },450); } },1000);
   /* ---------- 🔔 แจ้งเตือนเกมมีอัปเดต ---------- */
-  const GAME_VER='v3.70'; let updSkip='', updT=0;
+  const GAME_VER='v3.71'; let updSkip='', updT=0;
   function updCheck(){ if (location.protocol==='file:' || document.getElementById('updpop')) return; if (Date.now()-updT<60000) return; updT=Date.now();
     fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{ if (!j||!j.v||j.v===GAME_VER||j.v===updSkip) return; updShow(j); }).catch(()=>{}); }
   function updShow(j){ const inRun=S&&S.phase&&S.phase!=='title'&&!S.over&&!hub, d=document.createElement('div'); d.id='updpop';
@@ -3993,7 +3994,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="pbtns"><button class="choice" data-act="guideopen"><span>📚 ข้อมูลเกม</span><small>วิธีเล่นเริ่มต้น · บันทึกสถานะ · ทรัพยากร · เวลารีเซ็ต · อุปกรณ์ · ธาตุ · อาชีพ</small></button><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.70<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.71<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
@@ -4689,9 +4690,11 @@ if (typeof document !== 'undefined') (function(){
         ${heroId?(r.on===heroId?`<button class="mini" data-act="rloff" data-k="${r.uid}">ถอด</button>`:`<button class="mini" data-act="rlon" data-k="${r.uid}" data-h="${heroId}">ใส่ให้ตัวนี้</button>`):''}
         ${!r.on?`<button class="mini off2" data-act="rlbreak" data-k="${r.uid}">แยก: ✴️ ${RELIC_DISMANTLE[r.t]}${r.lv?` + 💠 ${relicRefund(r)}`:''}</button>`:''}</div>
       <div class="gs" style="font-size:10.5px">การันตีพลังแฝงค่าสูง: ${m.rpity||0}/10 · ล็อกแถวที่ชอบแล้วสุ่มแถวอื่น (ยิ่งล็อกยิ่งใช้หินมาก)</div></div>`; }
-  function relicTab(m, heroId){ const cur=relicOf(m,heroId), list=(m.relics||[]).slice().sort((a,b)=>(b.id===heroId)-(a.id===heroId)||b.t-a.t||b.lv-a.lv), sel=list.find(r=>r.uid===relSel)||cur;
+  // การ์ดเรลิกที่แตะเลือก แสดงเป็นแผ่นเลื่อนขึ้นจากล่าง รายการด้านหลังไม่ขยับ
+  const rlSheet = (html,msg) => `<div class="rlsheet-bg" data-act="rlselc"></div><div class="rlsheet" data-act="noop"><button class="rlsx" data-act="rlselc">✕</button>${msg?`<div class="fup">${msg}</div>`:''}${html}</div>`;
+  function relicTab(m, heroId){ const cur=relicOf(m,heroId), list=(m.relics||[]).slice().sort((a,b)=>(b.id===heroId)-(a.id===heroId)||b.t-a.t||b.lv-a.lv), sel=list.find(r=>r.uid===relSel)||cur, pick=list.find(r=>r.uid===relSel);
     return `<div class="pop-sub">${hubMsg?`<div class="fup">${hubMsg}</div>`:''}<div class="rcur"><span>${UIC.rc} ${m.rc}</span><span>${UIC.ro} ${m.ro}</span><span>${UIC.tix} ตั๋ว ${m.rtix}</span></div>
-      ${sel?relicCard(m, sel, heroId):'<p class="csd">ยังไม่ได้ใส่เรลิก เลือกจากคลังด้านล่าง</p>'}
+      ${cur?relicCard(m, cur, heroId):'<p class="csd">ยังไม่ได้ใส่เรลิก เลือกจากคลังด้านล่าง</p>'}${pick&&pick!==cur?rlSheet(relicCard(m,pick,heroId),hubMsg):''}
       <div class="cslab">คลังเรลิก (${list.length}) · ★ = ของตัวนี้</div>
       ${list.length?`<div class="rgrid">${list.map(r=>`<button class="rgi ${sel&&sel.uid===r.uid?'sel':''}" data-act="rlsel" data-k="${r.uid}">${relicIco(r)}${r.id===heroId?'<em>★</em>':''}${r.on?`<small>${r.on===heroId?'ใส่อยู่':'ใช้งาน'}</small>`:''}</button>`).join('')}</div>`:'<p class="csd">ยังไม่มีเรลิก อัญเชิญได้ที่หน้าอัญเชิญ แท็บเรลิก</p>'}
       <button class="mini" data-act="goshop" data-k="relic">🏺 ร้านเรลิก</button> <button class="mini" data-act="rlgacha">🏺 อัญเชิญเรลิก</button></div>`; }
@@ -4752,6 +4755,7 @@ if (typeof document !== 'undefined') (function(){
   function relicAct(act, b){ const m=loadMeta(); const R=uid=>(m.relics||[]).find(r=>r.uid===uid);
     if (act==='rldev'){ if (!DEV_ON) return true; RELIC_IDS.forEach(id=>m.relics.push(relicNew(id,4))); hubMsg=`เสกเรลิกตำนานครบ ${RELIC_IDS.length} ชิ้น`; storeMeta(m); render(); return true; }
     if (act==='rlsel'){ hubMsg=''; relSel=b.dataset.k; render(); return true; }
+    if (act==='rlselc'){ hubMsg=''; relSel=null; render(); return true; }
     if (act==='rlgacha'){ hubMsg=''; charPop=null; hub='gacha'; gTab='rl'; render(); return true; }
     if (act==='rlclose'){ rlRes=null; render(); return true; }
     if (act==='rlon'){ const r=R(b.dataset.k), h=b.dataset.h; (m.relics||[]).forEach(x=>{ if (x.on===h) x.on=null; }); r.on=h; storeMeta(m); idleCfgT=0; render(); return true; }
@@ -5733,7 +5737,7 @@ if (typeof document !== 'undefined') (function(){
     if (bagRl==='break') return sub+relicBreakBody(m,true);
     const list=(m.relics||[]).slice().sort((a,b)=>b.t-a.t||b.lv-a.lv), sel=list.find(r=>r.uid===relSel);
     return sub+`<div class="sumbox"><div class="rbcur"><span>${UIC.rc} ${m.rc}</span><span>${UIC.ro} ${m.ro}</span><span>${UIC.tix} ${m.rtix}</span><span>ทั้งหมด ${list.length} ชิ้น</span></div></div>
-      ${sel?relicCard(m,sel,null):''}
+      ${sel?rlSheet(relicCard(m,sel,null),hubMsg):''}
       <div class="sumbox"><h3>🏺 เรลิกทั้งหมด</h3>${list.length?`<div class="rgrid">${list.map(r=>`<button class="rgi ${sel&&sel.uid===r.uid?'sel':''}" data-act="rlsel" data-k="${r.uid}">${relicIco(r)}${r.on?`<small>ใส่: ${ALLCHARS[r.on]?ALLCHARS[r.on].c.name.split(' ')[0]:''}</small>`:''}</button>`).join('')}</div>`:'<p class="csd">ยังไม่มีเรลิก อัญเชิญได้ที่หน้าอัญเชิญ แท็บเรลิก</p>'}
       <div class="gs">แตะเรลิกเพื่อดู ตีบวก สุ่มพลังแฝง หรือแยกทีละชิ้น · ใส่ให้วีรชนที่หน้าวีรชน</div></div>`; }
   function bagSpiritTab(m){ const S0=spState(m), n=Object.keys(S0.own).length;
