@@ -1284,7 +1284,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.67</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.68</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -3644,7 +3644,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rhelp" title="วิธีเล่น">❓</button><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.67</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rhelp" title="วิธีเล่น">❓</button><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.68</span>'}</div>`;
   }
   let runSet=false, runQuit=false, runHelp=false;
   function runPop(){
@@ -3905,7 +3905,7 @@ if (typeof document !== 'undefined') (function(){
     if (on && !shown){ el.innerHTML=tkInner(); el.classList.remove('tkhide'); }
     else if (!on && shown){ el.classList.add('tkhide'); setTimeout(()=>{ if (el.classList.contains('tkhide')) el.innerHTML=''; },450); } },1000);
   /* ---------- 🔔 แจ้งเตือนเกมมีอัปเดต ---------- */
-  const GAME_VER='v3.67'; let updSkip='', updT=0;
+  const GAME_VER='v3.68'; let updSkip='', updT=0;
   function updCheck(){ if (location.protocol==='file:' || document.getElementById('updpop')) return; if (Date.now()-updT<60000) return; updT=Date.now();
     fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{ if (!j||!j.v||j.v===GAME_VER||j.v===updSkip) return; updShow(j); }).catch(()=>{}); }
   function updShow(j){ const inRun=S&&S.phase&&S.phase!=='title'&&!S.over&&!hub, d=document.createElement('div'); d.id='updpop';
@@ -3993,7 +3993,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="pbtns"><button class="choice" data-act="guideopen"><span>📚 ข้อมูลเกม</span><small>วิธีเล่นเริ่มต้น · บันทึกสถานะ · ทรัพยากร · เวลารีเซ็ต · อุปกรณ์ · ธาตุ · อาชีพ</small></button><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.67<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.68<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
@@ -4103,17 +4103,17 @@ if (typeof document !== 'undefined') (function(){
         x.fillStyle='#ffe27a'; x.globalAlpha=0.7+0.3*Math.sin(IB.t*4+j); x.font=`${Math.round(hh*0.09)}px sans-serif`; x.textAlign='center'; x.fillText('✦',rx,ry); } x.globalAlpha=1; }
     if (t==='l'){ for (let j=0;j<5;j++){ const an=IB.t*1.6+j*1.256+ph, rx=px+Math.cos(an)*hh*0.42, ry=feet-hh*0.5+Math.sin(an)*hh*0.22;
         x.fillStyle=j%2?'#ffd34d':skinsOf(id).l.col; x.globalAlpha=0.6+0.4*Math.sin(IB.t*5+j); x.beginPath(); x.arc(rx,ry,2.2,0,Math.PI*2); x.fill(); } x.globalAlpha=1; } }
-  const IDLE_READY = new Set(['idle_tower.webp','idle_wall.webp','idle_plaza.webp','idle_plaza_fx.webp','idle_altar.webp','idle_soldier_tank.webp','idle_soldier_warrior.webp','idle_soldier_archer.webp','idle_soldier_mage.webp','idle_soldier_support.webp','idle_soldier_assassin.webp']); const iArt = f => IDLE_READY.has(f) ? 'art/'+f : null;
+  const IDLE_READY = new Set(['idle_tower.webp','idle_wall.webp','idle_plaza2.webp','idle_plaza_fx2.webp','idle_altar.webp','idle_soldier_tank.webp','idle_soldier_warrior.webp','idle_soldier_archer.webp','idle_soldier_mage.webp','idle_soldier_support.webp','idle_soldier_assassin.webp']); const iArt = f => IDLE_READY.has(f) ? 'art/'+f : null;
   const idleBand = st => BANDS[(st-1)%BANDS.length];
   const B_hasMini=B=>B.q.some(q=>q.mini)||B.mons.some(q=>q.mini&&q.hp>0);
   const IDLE_BART={};
-  const plazaFile=()=>'idle_plaza.webp';
+  const plazaFile=()=>'idle_plaza2.webp';
   // ชิ้นส่วนขยับได้ของกำแพง (ตัดจากภาพเดิม) [sx,sy,w,h,ox,oy] พิกัดภาพกว้าง 1200
   // ชิ้นส่วนขยับได้ของกำแพง (ตัดจากภาพเดิม) [sx,sy,w,h,ox,oy] พิกัดภาพกว้าง 1200 · f=ธง g=ยาม b=ป้ายธงแขวน
   const PLZ_FX={f1:[0,0,107,68,93,18],f2:[109,0,85,68,1115,18],g1:[196,0,57,97,190,150],g2:[255,0,56,94,343,150],g3:[313,0,56,94,801,150],g4:[371,0,58,97,953,150],b1:[431,0,65,164,56,188],b2:[498,0,53,144,197,270],b3:[553,0,47,150,465,230],b4:[602,0,59,84,571,190],b5:[663,0,48,150,688,230],b6:[713,0,54,144,950,270],b7:[769,0,65,164,1080,188]};
   const PLZ_FIRE=[[452,150,1],[752,150,1],[181,230,.62],[1021,230,.62]];
   const isNight=()=>{ const h=new Date().getHours(); return h>=19||h<6; };
-  function plazaPieces(x,PG,W,t,alert){ const fx=img(iArt('idle_plaza_fx.webp')), k=W/1200, Y=oy=>PG.y0+oy*k; if (!(fx&&fx.complete&&fx.naturalWidth)) return;
+  function plazaPieces(x,PG,W,t,alert){ const fx=img(iArt('idle_plaza_fx2.webp')), k=W/1200, Y=oy=>PG.y0+oy*k; if (!(fx&&fx.complete&&fx.naturalWidth)) return;
     ['b1','b2','b3','b4','b5','b6','b7'].forEach((f,j)=>{ const [sx,sy,w,h,ox,oy]=PLZ_FX[f]; for (let i=0;i<h;i+=2){ const q=i/h, dx=(Math.sin(t*1.6+j*1.3-i*0.03)*2.6+Math.sin(t*3.1+j)*0.6)*Math.pow(q,1.4); x.drawImage(fx,sx,sy+i,w,2,(ox+dx)*k,Y(oy+i),w*k,2*k+0.6); } });
     ['f1','f2'].forEach((f,j)=>{ const [sx,sy,w,h,ox,oy]=PLZ_FX[f]; for (let i=0;i<w;i+=2){ const dy=Math.sin(t*5.2-i*0.11+j)*(i/w)*4.5+Math.sin(t*2.3-i*0.05)*(i/w)*1.5; x.drawImage(fx,sx+i,sy,2,h,(ox+i)*k,Y(oy+dy),2*k+0.6,h*k); } });
     ['g1','g2','g3','g4'].forEach((g,j)=>{ const [sx,sy,w,h,ox,oy]=PLZ_FX[g], br=1+0.025*Math.sin(t*2.1+j*1.7), sw=Math.sin(t*0.9+j*2.3)*0.7, hop=alert?Math.abs(Math.sin(t*7+j*0.8))*4:0;
