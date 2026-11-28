@@ -629,6 +629,47 @@ img.gico{width:1.4em;height:1.4em;object-fit:contain;vertical-align:-0.35em;filt
 .hubnav{gap:3px;padding-left:4px;padding-right:4px}.hubnav button{min-height:54px;padding:5px 0;min-width:0}.hubnav small{font-size:10px;white-space:nowrap;letter-spacing:-.2px}.hubnav span{font-size:20px}
 .hubnav button.home{background:linear-gradient(#ffd34d,#e3a51f);color:#3a2600;font-weight:700;transform:translateY(-6px);box-shadow:0 4px 12px rgba(0,0,0,.4)}
 .hubnav button.home.on{box-shadow:0 0 0 2px #fff inset,0 4px 12px rgba(0,0,0,.4)}
+/* ===== แถบเมนูล่างแบบใหม่ (nv) ===== */
+.hubnav.nv{position:fixed!important;bottom:0;left:50%;transform:translateX(-50%);width:100%!important;max-width:560px;margin:0!important;z-index:30;gap:0;padding:8px 4px calc(6px + env(safe-area-inset-bottom));border-top:0}
+.hubnav.nv{grid-template-columns:repeat(3,minmax(0,1fr)) 82px repeat(3,minmax(0,1fr))!important}
+.overlay.hub:has(.hubnav.nv){padding-bottom:calc(100px + env(safe-area-inset-bottom))}
+.hubnav.nv button{background:none;box-shadow:none;border:0;min-height:58px;padding:2px 0;gap:2px;position:relative;transform:none;color:#e9e0ff}
+.hubnav.nv button span{height:36px;display:flex;align-items:flex-end;justify-content:center;transition:transform .15s}.hubnav.nv img.uiico{height:36px;filter:drop-shadow(0 2px 2px rgba(0,0,0,.6))}
+.hubnav.nv small{font-size:11px;font-weight:700;letter-spacing:0;text-shadow:0 1px 2px #000,0 0 4px #000}
+.hubnav.nv button.on:not(.home) span{transform:translateY(-4px) scale(1.12)}.hubnav.nv button.on:not(.home) small{color:#ffd34d}
+.hubnav.nv button.home,.hubnav.nv button.home.on{transform:none;background:none!important;box-shadow:none!important;color:#ffd34d}.hubnav.nv button.home.chatdot::after{top:-26px;right:calc(50% - 36px)}
+.hubnav.nv button.home span{position:absolute;left:50%;top:-30px;transform:translateX(-50%);width:68px;height:68px;border-radius:50%;align-items:center}
+.hubnav.nv button.home img.uiico{height:46px}.hubnav.nv button.home small{margin-top:38px}
+/* A: แถบราชวัง ขอบทอง */
+.nv-a{background:linear-gradient(180deg,#30225a 0%,#1a1236 55%,#110b24 100%);box-shadow:0 -8px 22px rgba(0,0,0,.55),inset 0 2px 0 #f1c35c,inset 0 3px 0 #7a4f12}
+.nv-a::before{content:'';position:absolute;left:0;right:0;top:-6px;height:8px;background:linear-gradient(90deg,transparent,#f1c35c 18%,#fff1b8 50%,#f1c35c 82%,transparent);clip-path:polygon(0 70%,46% 70%,50% 0,54% 70%,100% 70%,100% 100%,0 100%);opacity:.9}
+.nv-a button:not(.home)+button:not(.home)::before{content:'';position:absolute;left:0;top:14px;bottom:14px;width:1px;background:linear-gradient(transparent,rgba(241,195,92,.45),transparent)}
+.nv-a button.on:not(.home)::after{content:'';position:absolute;left:22%;right:22%;bottom:-2px;height:3px;border-radius:3px;background:#ffd34d;box-shadow:0 0 8px #ffb300}
+.nv-a button.home span{background:radial-gradient(circle at 50% 35%,#4a347f,#1d1438 70%);box-shadow:0 0 0 3px #f1c35c,0 0 0 5px #6b4410,0 0 18px rgba(255,190,70,.75),0 6px 12px rgba(0,0,0,.6)}
+.nv-a button.home small{color:#ffd34d}
+/* B: แท่นลอยกระจก */
+.hubnav.nv-b{left:50%;bottom:8px;width:calc(100% - 16px)!important;max-width:544px;border-radius:24px;background:rgba(28,18,58,.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,220,150,.35);box-shadow:0 10px 24px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.12);padding-bottom:calc(6px + env(safe-area-inset-bottom))}
+.nv-b button.on:not(.home) span::before{content:'';position:absolute;left:50%;top:0;transform:translateX(-50%);width:46px;height:46px;border-radius:14px;background:radial-gradient(circle,rgba(255,211,77,.45),rgba(255,211,77,0) 70%);z-index:-1}
+.nv-b button.home span{background:linear-gradient(180deg,#ffe28a,#e5a020);box-shadow:0 0 0 3px rgba(255,255,255,.85),0 0 20px rgba(255,200,80,.8),0 6px 12px rgba(0,0,0,.5)}
+/* D: แท่นลอย + ป้ายสี (ช่องไม่ทับกัน) */
+.hubnav.nv-d{gap:5px!important;padding:7px 7px calc(7px + env(safe-area-inset-bottom))!important;border-top:1px solid rgba(255,220,150,.35)!important}
+.nv-d button:not(.home){margin-top:0!important;min-height:60px}.nv-d button:not(.home) span{height:34px}.nv-d img.uiico{height:32px!important}
+.hubnav.nv-d button{justify-content:flex-end;padding:3px 0 6px!important;gap:3px}.hubnav.nv-d small{line-height:14px;height:14px}
+.nv-d button.home span{top:-30px}.nv-d button.home small{margin-top:0}
+.hubnav.nv-d .nv-adv{background:linear-gradient(180deg,rgba(255,120,105,.42),rgba(150,40,45,.30))!important}.hubnav.nv-d .nv-chars{background:linear-gradient(180deg,rgba(110,170,255,.42),rgba(35,75,160,.30))!important}.hubnav.nv-d .nv-bag{background:linear-gradient(180deg,rgba(225,170,110,.42),rgba(120,75,35,.30))!important}
+.hubnav.nv-d .nv-troop{background:linear-gradient(180deg,rgba(110,215,140,.42),rgba(30,110,60,.30))!important}.hubnav.nv-d .nv-shop{background:linear-gradient(180deg,rgba(255,180,100,.42),rgba(170,85,25,.30))!important}.hubnav.nv-d .nv-gacha{background:linear-gradient(180deg,rgba(200,140,255,.42),rgba(90,40,160,.30))!important}
+.hubnav.nv-d button:not(.home){border-color:rgba(255,255,255,.28)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 2px 6px rgba(0,0,0,.25)!important}
+.hubnav.nv-d button.on:not(.home){filter:none!important;outline:2px solid #ffd34d;box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 0 10px rgba(255,211,77,.55)!important}
+.hubnav.nv-d{background:rgba(28,18,58,.55)!important}
+/* C: ป้ายอัญมณีสีประจำเมนู */
+.nv-c{background:linear-gradient(180deg,#1d1438,#0f0a20);box-shadow:0 -6px 18px rgba(0,0,0,.5);border-top:1px solid rgba(255,214,140,.35)!important;gap:4px!important;padding-left:6px!important;padding-right:6px!important}
+.nv-c button:not(.home){border-radius:14px;margin-top:2px;border:1px solid rgba(255,255,255,.18);box-shadow:inset 0 2px 0 rgba(255,255,255,.25),inset 0 -3px 0 rgba(0,0,0,.25),0 3px 6px rgba(0,0,0,.4)}
+.nv-c .nv-adv{background:linear-gradient(180deg,#d9483b,#7d1d22)!important}.nv-c .nv-chars{background:linear-gradient(180deg,#3e7fe0,#1b3c86)!important}.nv-c .nv-bag{background:linear-gradient(180deg,#b9824a,#6a4220)!important}
+.nv-c .nv-troop{background:linear-gradient(180deg,#3fae5f,#1c5a31)!important}.nv-c .nv-shop{background:linear-gradient(180deg,#f0943a,#9a4a12)!important}.nv-c .nv-gacha{background:linear-gradient(180deg,#a45be6,#4e2287)!important}
+.nv-c button.on:not(.home){outline:2px solid #ffd34d;outline-offset:1px;filter:brightness(1.15)}
+.nv-c button.home span{background:radial-gradient(circle at 50% 35%,#ffe9a0,#e0a02a 60%,#8a5410);box-shadow:0 0 0 3px #fff3c4,0 0 18px rgba(255,200,80,.8),0 6px 12px rgba(0,0,0,.6)}
+.nv-c button.home small{color:#ffd34d}
+
 .pagebox{width:100%;max-width:440px;background:rgba(26,20,48,.82);border:1px solid var(--line);border-radius:16px;padding:10px;backdrop-filter:blur(4px);text-align:left;flex-shrink:0}
 .pagebox .pop-h{display:flex;align-items:center;gap:6px}
 .shtabs button{font-size:12px;padding:8px 2px}
@@ -916,6 +957,7 @@ img.gico{width:1.4em;height:1.4em;object-fit:contain;vertical-align:-0.35em;filt
 .spimg{width:56px;height:56px;object-fit:contain}.spimg.big{width:96px;height:96px}.spemo{font-size:38px;line-height:56px}.spemo.big{font-size:64px;line-height:96px}
 .spgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.spc{position:relative;border-radius:12px;border:1.5px solid var(--rc);background:rgba(255,255,255,.05);color:#fff;padding:6px 2px;display:flex;flex-direction:column;align-items:center;font:inherit;cursor:pointer}
 .spc small{font-size:10.5px;line-height:1.2;text-align:center}.spc i{font-style:normal;font-size:9.5px;color:#ffd98a}.spc.no{opacity:.45;filter:grayscale(1) brightness(.6)}.spc.sel{box-shadow:0 0 0 2px #ffe08a}.spc em{position:absolute;top:2px;right:4px;background:#ff5a5a;color:#fff;border-radius:50%;width:16px;height:16px;font-size:11px;font-style:normal;line-height:16px}
+.spgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;max-height:52vh;overflow:auto;margin:6px 0}.spcard{display:flex;flex-direction:column;align-items:center;gap:1px;padding:6px 2px;border-radius:12px;background:rgba(0,0,0,.28);border:1px solid rgba(255,214,140,.25);color:#fff;font:inherit}.spcard.on{border-color:#ffd34d;box-shadow:0 0 10px rgba(255,211,77,.5)}.spcard b{font-size:12px}.spcard small{font-size:10.5px;opacity:.8}.spcard i{font-size:10px;color:#ffd34d;font-style:normal}
 .spslots{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:8px 0}.spslot{border-radius:12px;background:rgba(0,0,0,.25);border:1px solid rgba(255,214,140,.3);display:flex;flex-direction:column;align-items:center;padding:6px 2px;text-align:center}
 .spslot small{font-size:9.5px;color:#cfc6e6;min-height:24px}.spslot b{font-size:11px}.spslot i{font-style:normal;font-size:10px;color:#9dffb0}.spslot .spimg{width:44px;height:44px}.spslot .spemo{font-size:30px;line-height:44px}
 .spdh{display:flex;gap:10px;align-items:center;margin-bottom:6px}.spequip{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
@@ -1230,7 +1272,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.63</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.64</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -3590,7 +3632,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rhelp" title="วิธีเล่น">❓</button><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.63</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rhelp" title="วิธีเล่น">❓</button><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.64</span>'}</div>`;
   }
   let runSet=false, runQuit=false, runHelp=false;
   function runPop(){
@@ -3762,7 +3804,8 @@ if (typeof document !== 'undefined') (function(){
       span.innerHTML=n.nodeValue.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'})[c]).replace(EMO_RE,(m0,e)=>{ const k=EMO_ICO[e]; if (k==='@egg') return EGG(); const h=uiIco(k,''); return h||m0; });
       n.parentNode.replaceChild(span,n); }); }
   function nav(){ const it=[['adv','⚔️','ผจญภัย'],['chars','🦸','วีรชน'],['bag','🎒','กระเป๋า'],['','🏰','เมือง'],['troop','🛡️','ทหาร'],['shop','🏪','ร้านค้า'],['gacha','🔮','อัญเชิญ']];
-    return `<nav class="hubnav">${it.map(([k,i,n])=>`<button data-act="hub" data-k="${k}" class="${(hub||'')===k?'on':''} ${k===''?'home':''}"><span>${uiIco(k||'home',i)}</span><small>${n}</small></button>`).join('')}</nav>`; }
+    const nv=' nv nv-b nv-c nv-d';
+    return `<nav class="hubnav${nv}">${it.map(([k,i,n])=>`<button data-act="hub" data-k="${k}" class="nv-${k||'home'} ${(hub||'')===k?'on':''} ${k===''?'home':''}"><span>${uiIco(k||'home',i)}</span><small>${n}</small></button>`).join('')}</nav>`; }
   function hubHead(m, title){ title=headIco(title); return `<div class="hubhead"><button class="back" data-act="hub" data-k="">◀ หน้าหลัก</button><b>${title}</b></div>${wallet(m)}${hubMsg?`<div class="hubmsg">${hubMsg}</div>`:''}`; }
   /* ---------- กรอบรูปโปรไฟล์ ---------- */
   const FRAMES = [
@@ -3850,7 +3893,7 @@ if (typeof document !== 'undefined') (function(){
     if (on && !shown){ el.innerHTML=tkInner(); el.classList.remove('tkhide'); }
     else if (!on && shown){ el.classList.add('tkhide'); setTimeout(()=>{ if (el.classList.contains('tkhide')) el.innerHTML=''; },450); } },1000);
   /* ---------- 🔔 แจ้งเตือนเกมมีอัปเดต ---------- */
-  const GAME_VER='v3.63'; let updSkip='', updT=0;
+  const GAME_VER='v3.64'; let updSkip='', updT=0;
   function updCheck(){ if (location.protocol==='file:' || document.getElementById('updpop')) return; if (Date.now()-updT<60000) return; updT=Date.now();
     fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{ if (!j||!j.v||j.v===GAME_VER||j.v===updSkip) return; updShow(j); }).catch(()=>{}); }
   function updShow(j){ const inRun=S&&S.phase&&S.phase!=='title'&&!S.over&&!hub, d=document.createElement('div'); d.id='updpop';
@@ -3937,7 +3980,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="pbtns"><button class="choice" data-act="guideopen"><span>📚 ข้อมูลเกม</span><small>วิธีเล่นเริ่มต้น · บันทึกสถานะ · ทรัพยากร · เวลารีเซ็ต · อุปกรณ์ · ธาตุ · อาชีพ</small></button><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.63<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.64<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
@@ -4047,10 +4090,12 @@ if (typeof document !== 'undefined') (function(){
         x.fillStyle='#ffe27a'; x.globalAlpha=0.7+0.3*Math.sin(IB.t*4+j); x.font=`${Math.round(hh*0.09)}px sans-serif`; x.textAlign='center'; x.fillText('✦',rx,ry); } x.globalAlpha=1; }
     if (t==='l'){ for (let j=0;j<5;j++){ const an=IB.t*1.6+j*1.256+ph, rx=px+Math.cos(an)*hh*0.42, ry=feet-hh*0.5+Math.sin(an)*hh*0.22;
         x.fillStyle=j%2?'#ffd34d':skinsOf(id).l.col; x.globalAlpha=0.6+0.4*Math.sin(IB.t*5+j); x.beginPath(); x.arc(rx,ry,2.2,0,Math.PI*2); x.fill(); } x.globalAlpha=1; } }
-  const IDLE_READY = new Set(['idle_tower.webp','idle_wall.webp','idle_altar.webp','idle_soldier_tank.webp','idle_soldier_warrior.webp','idle_soldier_archer.webp','idle_soldier_mage.webp','idle_soldier_support.webp','idle_soldier_assassin.webp']); const iArt = f => IDLE_READY.has(f) ? 'art/'+f : null;
+  const IDLE_READY = new Set(['idle_tower.webp','idle_wall.webp','idle_plaza.webp','idle_altar.webp','idle_soldier_tank.webp','idle_soldier_warrior.webp','idle_soldier_archer.webp','idle_soldier_mage.webp','idle_soldier_support.webp','idle_soldier_assassin.webp']); const iArt = f => IDLE_READY.has(f) ? 'art/'+f : null;
   const idleBand = st => BANDS[(st-1)%BANDS.length];
   const B_hasMini=B=>B.q.some(q=>q.mini)||B.mons.some(q=>q.mini&&q.hp>0);
   const IDLE_BART={};
+  const plazaFile=()=>'idle_plaza.webp';
+  function plazaGeom(W,H){ const pa=img(iArt(plazaFile())); if (!(pa&&pa.complete&&pa.naturalWidth)) return null; const h=W*pa.naturalHeight/pa.naturalWidth, y0=H-218-0.55*h; return {pa,h,y0,wy:y0+0.27*h,base:y0+0.55*h}; }
   const idleMapKey=st=>{ const b=idleBand(st), M=HT_MAPS.find(x=>x.band===b.name); return M?M.key:'forest'; };
   const EL_RGB={fire:'255,138,61',water:'76,201,240',wood:'110,224,122',earth:'217,168,91',light:'255,226,122',dark:'176,123,255'};
   // บรรยากาศตามแมพ: [ชนิด, จำนวน, สี]
@@ -4146,7 +4191,7 @@ if (typeof document !== 'undefined') (function(){
     if (cv.width!==Math.round(W*dpr)||cv.height!==Math.round(H*dpr)){ cv.width=Math.round(W*dpr); cv.height=Math.round(H*dpr); }
     const x=cv.getContext('2d'); x.setTransform(dpr,0,0,dpr,0,0); x.clearRect(0,0,W,H);
     const Wv=IB.wave, d=IB.st||{st:1,sub:1}, band=idleBand(d.st), bg=img(ART.bg[band.name]);
-    const tkb=(()=>{ const t=document.querySelector('.overlay.hub.home>.ticker'); return t ? t.getBoundingClientRect().bottom - cv.getBoundingClientRect().top : 0; })(), top=Math.min(H*0.45, Math.max(Math.min(205,H*0.3), tkb+64)), wallY=H-196, doorY=top+10, cx=W/2, span=IW-38-WALL_X;
+    const tkb=(()=>{ const t=document.querySelector('.overlay.hub.home>.ticker'); return t ? t.getBoundingClientRect().bottom - cv.getBoundingClientRect().top : 0; })(), top=Math.min(H*0.45, Math.max(Math.min(205,H*0.3), tkb+64)), PG=plazaGeom(W,H), wallY=PG?PG.wy:H-196, doorY=top+10, cx=W/2, span=IW-38-WALL_X;
     const tOf=px=>Math.max(0,Math.min(1,(px-WALL_X)/span));
     const SY=px=>wallY-tOf(px)*(wallY-doorY);
     const SX=(px,py)=>{ const t=tOf(px), off=((py-LANE0)/(LANE1-LANE0)-0.5)*(W-70); return cx+off*(1-0.72*t*t); };
@@ -4178,7 +4223,7 @@ if (typeof document !== 'undefined') (function(){
         bar(x,sx,sy-hh-7,(m.mini?42:boss?60:20)*sc,m.hp/m.mx,boss?'#ff5a5a':'#ff8a5a'); } }
     // ลานแท่นบูชา: แถวหลัง (ธนู/เวท/ซัพ) แถวหน้า (แทงก์/นักรบ/นักฆ่า) วีรชนยืนบนแท่น ช่อง 2 เป็นรูปผู้ช่วยที่ฐานแท่น
     const ai=img(iArt('idle_altar.webp')), M=IB.m||{chars:{},skin:{}}, HP={}; IB.hits=[];
-    const ROWB=['archer','mage','support'], ROWF=['tank','warrior','assassin'], yB=H-182, yF=H-98, hhB=60, hhF=70;
+    const ROWB=['archer','mage','support'], ROWF=['tank','warrior','assassin'], yB=PG?PG.base+32:H-182, yF=PG?PG.base+112:H-98, hhB=60, hhF=70;
     const slots=IDLE_CLS.map((c,k)=>{ const back=ROWB.includes(c), i=(back?ROWB:ROWF).indexOf(c), on=IB.st&&IB.st.best>=IDLE_UNLOCK[c], al=(IB.st&&IB.st.alt&&IB.st.alt[c])||{}, s2=on&&((al.atk||0)+(al.hp||0))>=SLOT2_NEED;
       const ax=back?W*(0.25+i*0.25):W*(0.14+i*0.36), base=back?yB:yF, aw=back?50:60, top=base-aw*0.62, hh=back?hhB:hhF;
       return {c,k,back,ax,base,aw,top,hh,on,s2,h1:on&&IB.st.hero&&IB.st.hero[c],h2:s2&&IB.st.hero2&&IB.st.hero2[c]}; });
@@ -4191,7 +4236,7 @@ if (typeof document !== 'undefined') (function(){
       x.restore(); x.strokeStyle=o.h2?'#ffd56a':'rgba(255,230,160,.7)'; x.lineWidth=1.6; if (!o.h2) x.setLineDash([3,2]); x.beginPath(); x.arc(bx,by,r,0,Math.PI*2); x.stroke(); x.setLineDash([]);
       if (!o.h2){ x.fillStyle='rgba(255,230,160,.95)'; x.font=`bold ${r+3}px sans-serif`; x.textAlign='center'; x.textBaseline='middle'; x.fillText('+',bx,by+1); x.textBaseline='alphabetic'; }
       IB.hits.push({x:bx-r-3,y:by-r-3,w:r*2+6,h:r*2+6,c:o.c,s:1,pri:1}); };
-    { const pa=img(iArt('idle_plaza.webp')); IB.plazaArt=!!(pa&&pa.complete&&pa.naturalWidth); idleCircle(x,cx,(yB+yF)/2-8,W*0.33,W*0.11,IB.t||0,IB.plazaArt); }
+    if (PG){ x.drawImage(PG.pa,0,PG.y0,W,PG.h); const ib=PG.y0+PG.h; if (ib<H){ const sw=PG.pa.naturalWidth, sh=PG.pa.naturalHeight, st=Math.round(sh*0.06); x.drawImage(PG.pa,0,sh-st,sw,st,0,ib-1,W,H-ib+1); } } idleCircle(x,cx,PG?PG.y0+0.74*PG.h:(yB+yF)/2-8,W*0.33,W*0.11,IB.t||0,!!PG);
     [...slots.filter(o=>o.back),...slots.filter(o=>!o.back)].forEach(o=>{ drawAltar(o);
       if (o.on && o.h1){ const el=o.h1===ROOKIE?'light':(ALLCHARS[o.h1]&&ALLCHARS[o.h1].c.el); idleBeam(x,o,el,IB.t||0); }
       if (!o.on){ x.font='14px sans-serif'; x.textAlign='center'; x.fillStyle='#fff'; x.fillText('🔒',o.ax,o.top-4); return; }
@@ -4201,8 +4246,15 @@ if (typeof document !== 'undefined') (function(){
       else { x.strokeStyle='rgba(255,230,160,.65)'; x.setLineDash([4,3]); x.beginPath(); x.arc(o.ax,o.top-o.hh*0.45,o.hh*0.2,0,Math.PI*2); x.stroke(); x.setLineDash([]); x.fillStyle='rgba(255,230,160,.9)'; x.font='bold 18px sans-serif'; x.textAlign='center'; x.fillText('+',o.ax,o.top-o.hh*0.45+6);  const pu=0.6+0.4*Math.sin((IB.t||0)*4); x.font='bold 10px sans-serif'; x.lineWidth=3; x.strokeStyle='rgba(0,0,0,.75)'; x.strokeText('แตะวางวีรชน',o.ax,o.top-o.hh*0.7); x.fillStyle=`rgba(255,220,120,${pu})`; x.fillText('แตะวางวีรชน',o.ax,o.top-o.hh*0.7); }
       IB.hits.push({x:o.ax-o.aw*0.45,y:o.top-o.hh,w:o.aw*0.9,h:o.hh+o.aw*0.6,c:o.c,s:0});
       if (o.s2) badge(o); });
+    // สัตว์วิญญาณประจำเมือง (ช่อง city) ลอยอยู่ช่องว่างระหว่างแท่นแถวหน้า แตะเพื่อเปลี่ยน
+    { const sid=(()=>{ try{ const S0=M.spirit; const id=S0&&S0.eq&&S0.eq.city; return id&&S0.own&&S0.own[id]?id:null; }catch(e){ return null; } })(), t=IB.t||0, sx=W*0.32, sy=yF-30+Math.sin(t*2.2)*3, r=18;
+      x.save(); x.fillStyle='rgba(0,0,0,.28)'; x.beginPath(); x.ellipse(sx,yF-6,14,4,0,0,6.28); x.fill();
+      if (sid){ const s0=SP[sid], col=EL_RGB[s0.el]||'255,226,122'; x.globalCompositeOperation='lighter'; const g=x.createRadialGradient(sx,sy,2,sx,sy,r*1.6); g.addColorStop(0,`rgba(${col},.55)`); g.addColorStop(1,`rgba(${col},0)`); x.fillStyle=g; x.beginPath(); x.arc(sx,sy,r*1.6,0,6.28); x.fill(); x.globalCompositeOperation='source-over';
+        const si=SPIRIT_READY.has(`spirit_${sid}.webp`)?img(spSrc(sid)):null; if (si&&si.complete&&si.naturalWidth){ const hh=40, ww=hh*si.naturalWidth/si.naturalHeight; x.drawImage(si,sx-ww/2,sy-hh/2-4,ww,hh); } else { x.font='26px sans-serif'; x.textAlign='center'; x.textBaseline='middle'; x.fillText(s0.ic,sx,sy); x.textBaseline='alphabetic'; } }
+      else { x.strokeStyle='rgba(255,230,160,.7)'; x.setLineDash([4,3]); x.lineWidth=1.5; x.beginPath(); x.arc(sx,sy,r*0.8,0,6.28); x.stroke(); x.setLineDash([]); x.fillStyle='rgba(255,230,160,.95)'; x.font='bold 16px sans-serif'; x.textAlign='center'; x.fillText('+',sx,sy+6); x.font='bold 9px sans-serif'; x.fillText('สัตว์วิญญาณ',sx,sy+r+6); }
+      x.restore(); IB.hits.push({x:sx-r-4,y:sy-r-6,w:r*2+8,h:r*2+12,c:'@sp',s:0,pri:1}); }
     // กำแพงเมืองของเรา (ฉากหน้าล่างสุด) บอกว่าลานแท่นบูชาคือแนวป้องกันหน้าประตูเมือง
-    { const wi=img(iArt('idle_wall.webp')); if (wi&&wi.complete&&wi.naturalWidth){ const wH=W*wi.naturalHeight/wi.naturalWidth, y0=H-72-wH*0.17; x.drawImage(wi,0,y0,W,wH); }
+    if (!PG){ const wi=img(iArt('idle_wall.webp')); if (wi&&wi.complete&&wi.naturalWidth){ const wH=W*wi.naturalHeight/wi.naturalWidth, y0=H-72-wH*0.17; x.drawImage(wi,0,y0,W,wH); }
       else { x.fillStyle='#8d8296'; x.fillRect(0,H-72,W,72); } }
     // กระสุน + เอฟเฟค (แปลงพิกัด)
     for (const p of IB.proj){ const px=SX(p.x,p.y+18), py=SY(p.x)-18*SC(p.x), qx=SX(p.tx,p.ty+18), qy=SY(p.tx)-18*SC(p.tx);
@@ -4387,7 +4439,7 @@ if (typeof document !== 'undefined') (function(){
     if (a==='pull'||a==='skpull'||a==='rlpull') setTimeout(()=>{ const best=a==='rlpull'?Math.max(-1,...(rlRes||[]).map(r=>r.t)):0; SND.sfx(best>=4?'legend':'reveal'); },650); }, true);
   window.__idle = () => IB;
   document.addEventListener('click', e=>{ if (!e.target || e.target.id!=='idlecv') return; const r=e.target.getBoundingClientRect(), px=e.clientX-r.left, py=e.clientY-r.top;
-    const hs=(IB.hits||[]).filter(h=>px>=h.x&&px<=h.x+h.w&&py>=h.y&&py<=h.y+h.h), h=hs.find(h=>h.pri)||hs[0]; if (h){ heroPop={c:h.c,s:h.s}; const L=document.createElement('div'); L.id='hplayer'; L.innerHTML=wallHeroPop(loadMeta()); document.querySelector('.overlay.hub.home')?.appendChild(L.firstElementChild); } });
+    const hs=(IB.hits||[]).filter(h=>px>=h.x&&px<=h.x+h.w&&py>=h.y&&py<=h.y+h.h), h=hs.find(h=>h.pri)||hs[0]; if (h&&h.c==='@sp'){ spCityOpen=true; render(); return; } if (h){ heroPop={c:h.c,s:h.s}; const L=document.createElement('div'); L.id='hplayer'; L.innerHTML=wallHeroPop(loadMeta()); document.querySelector('.overlay.hub.home')?.appendChild(L.firstElementChild); } });
   function idleRow(m){ const d=m.idle, mins=chestMins(m), ok=mins>=CHEST_MIN, ms=m.daily.mission?'✅':`${m.daily.runs}/3`, D=dhDragon(), dt=DH_TRIES-dhState(m).tries.n;
     return `<div class="iside l"><button class="sbtn chest ${ok?'ready':''}" data-act="ichest"><i>${uiIco('chest','🎁')}</i><span id="ichestt">${hm(mins)}</span>
         <div class="cbar"><i id="ichestb" style="width:${mins/CHEST_MAX*100}%"></i></div><b id="ichest">${ok?'กดรับได้':`อีก ${CHEST_MIN-mins} น.`}</b></button>
@@ -5260,6 +5312,12 @@ if (typeof document !== 'undefined') (function(){
   function spSkillTxt(m,id){ const s=SP[id], mu=spSkillMul(m,id)||[1,1.3,1.7][s.r];
     return s.k==='atk' ? `${SP_SK.atk[s.el]}: ตีศัตรูทุกตัว ${Math.round(80*mu)}% ของพลังโจมตีวีรชนที่แรงที่สุด` : s.k==='hp' ? `${SP_SK.hp}: ฮีลทั้งทีม ${Math.round(8*mu)}% ของพลังชีวิต` : `${SP_SK.spd}: ทั้งทีมรับดาเมจ -50% นาน ${(2+mu).toFixed(1)} วินาที`; }
   const spEq = (m,slot) => { const id=spState(m).eq[slot]; return id&&spOwn(m,id)?id:null; };
+  let spCityOpen=false;
+  function spCityPop(m){ if (!spCityOpen) return ''; const S0=spState(m), cur=spEq(m,'city'), own=Object.keys(S0.own).filter(id=>SP[id]).sort((a,b)=>SP[b].r-SP[a].r||spBonus(m,b)-spBonus(m,a));
+    return `<div class="pop-bg" data-act="spcc"><div class="pop altpop" data-act="noop"><div class="pop-h">🐾 <b>สัตว์วิญญาณประจำเมือง</b></div><p class="csd">ให้โบนัสกับการต่อสู้หน้าเมือง (ทหารและวีรชนบนแท่น) · แตะเพื่อเลือก</p>
+      <div class="spgrid">${own.map(id=>{ const s0=SP[id], o=S0.own[id]; return `<button class="spcard ${id===cur?'on':''}" data-act="spcity" data-id="${id}">${spIco(s0)}<b style="color:${SP_R[s0.r].c}">${s0.name}</b><small>Lv.${o.lv} · ${'★'.repeat(o.st)}</small><small>${SP_K[s0.k]} +${spBonus(m,id).toFixed(1)}%</small>${id===cur?'<i>✓ ใช้อยู่</i>':''}</button>`; }).join('')}</div>
+      <div class="row2">${cur?'<button class="choice alt" data-act="spcity" data-id=""><span>เอาออก</span></button>':''}<button class="choice alt" data-act="spgo"><span>🥚 ไปหน้าสัตว์วิญญาณ</span></button></div>
+      <button class="choice wide" data-act="spcc" style="width:100%"><span>ปิด</span></button></div></div>`; }
   const spCityMul = m => { const id=spEq(m,'city'); return id?1+spBonus(m,id)/100:1; };
   function spDhMul(m,D){ const id=spEq(m,'dh'); if (!id) return 1; return 1+spBonus(m,id)/100*(BEATS[SP[id].el]===D.el?1.5:1); }
   function spGive(m,id){ const S0=spState(m); if (S0.own[id]){ S0.own[id].cp++; return false; } S0.own[id]={lv:1,st:1,cp:0}; return true; }
@@ -5327,6 +5385,9 @@ if (typeof document !== 'undefined') (function(){
     const o=spSel&&S0.own[spSel];
     if (act==='splv'){ if (!o||o.lv>=SP_LV_MAX) return true; const c=spLvCost(o.lv); if (S0.ess<c){ hubMsg='ผลึกวิญญาณไม่พอ'; render(); return true; } S0.ess-=c; o.lv++; hubMsg=`${SP[spSel].name} Lv.${o.lv}`; storeMeta(m); idleCfgT=0; render(); return true; }
     if (act==='spstar'){ if (!o||o.st>=5||o.cp<SP_STAR_NEED[o.st]) return true; o.cp-=SP_STAR_NEED[o.st]; o.st++; hubMsg=`${SP[spSel].name} เป็น ${o.st} ดาว!`; storeMeta(m); render(); return true; }
+    if (act==='spcc'){ spCityOpen=false; render(); return true; }
+    if (act==='spgo'){ spCityOpen=false; hub='spirits'; hubMsg=''; render(); return true; }
+    if (act==='spcity'){ const id=b.dataset.id||null, S0=spState(m); if (id&&!S0.own[id]) return true; S0.eq.city=id; spCityOpen=false; storeMeta(m); idleCfgT=0; render(); return true; }
     if (act==='speq'){ if (!o) return true; const k=b.dataset.k; S0.eq[k]=S0.eq[k]===spSel?null:spSel; storeMeta(m); idleCfgT=0; render(); return true; }
     return false; }
   window.__ht={htStart,htTick,F:()=>htFight,nestWaves};
@@ -5832,7 +5893,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="sumbox"><h3>📜 สถิติในตารางนี้</h3><div class="gs">${rkTab==='hundred'?'':'ใช้ '+rkEsc(heroName)+' · '}คะแนน ${fmt(r.score)}${rkTab==='hundred'?' ชั้น':''}</div></div>
       ${html}<button class="choice wide" data-act="rkviewc"><span>ปิด</span></button></div></div>`; }
   function hubView(){ const m=loadMeta();
-    const W = (wPop ? worldPop() : '') + hvPopHtml(m) + pcPopHtml() + namePopHtml(m);
+    const W = (wPop ? worldPop() : '') + hvPopHtml(m) + pcPopHtml() + namePopHtml(m) + spCityPop(m);
     if (hub==='adv') return hubAdv(m)+W; if (hub==='perm'){ hub='shop'; shTab='medal'; } if (hub==='shop') return hubShop(m)+W; if (hub==='troop') return hubTroop(m)+W; if (hub==='dragon') return hubDragon(m)+W; if (hub==='hundred') return hubHundred(m)+W; if (hub==='arena') return hubArena(m)+W; if (hub==='guide') return hubGuide(m)+W; if (hub==='relicbag') return hubRelicBag(m)+W; if (hub==='bag') return hubBag(m)+W; if (hub==='rank') return hubRank(m)+W; if (hub==='chat') return hubChat(m)+W; if (hub==='spirits') return hubSpirits(m)+W; if (hub==='nest') return hubNest(m)+W; if (hub==='chars') return hubChars(m)+charPopup(m)+tryPopHtml(m)+W; if (hub==='gacha') return hubGacha(m)+W;
     return hubHome(m)+W; }
   function hubAct(act, b){

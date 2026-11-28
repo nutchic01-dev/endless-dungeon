@@ -1,6 +1,6 @@
 # DEV NOTES — ผู้กล้าแห่งดันเจี้ยนไร้สิ้นสุด
 
-บันทึกสำหรับ Claude ในแชทใหม่ อ่านไฟล์นี้ก่อนเริ่มงานทุกครั้ง (อัปเดตล่าสุด: v3.63, 27 พ.ย. 2026)
+บันทึกสำหรับ Claude ในแชทใหม่ อ่านไฟล์นี้ก่อนเริ่มงานทุกครั้ง (อัปเดตล่าสุด: v3.64, 27 พ.ย. 2026)
 
 ## วิธีทำงานกับเจ้าของเกม
 - ตอบเป็นภาษาไทยเสมอ
@@ -87,3 +87,9 @@
 - `idlePortal` ประตูมิติหน้าหอคอย (doorY+16) · `idleCircle` วงเวทหมุน/เรืองแสงกลางลานแท่น (ถ้ามี art idle_plaza.webp จะวาดแค่แสงเรือง)
 - `idleBeam` ลำแสงจากแท่นตามธาตุวีรชน `EL_RGB`
 - เตรียม hook `idle_plaza.webp` (ยังไม่อยู่ใน IDLE_READY) สำหรับภาพกำแพงเมือง+ลานใหม่
+
+## v3.64 — หน้าเมืองใหม่ + เมนูล่างใหม่ + สัตว์วิญญาณหน้าเมือง
+- `art/idle_plaza.webp` (Scenario asset_Losh3h7PQgNudRoREYGxXQ3z, 1200x840 พื้นใส ประตูใส) · `plazaGeom(W,H)`: y0=H-218-0.55h, wallY(ปลายทางเดิน)=y0+0.27h, base=y0+0.55h · แท่น yB=base+32 yF=base+112 · ยืดแถบล่าง 6% ของภาพลงถึงขอบจอ · ไม่วาด idle_wall เมื่อมี plaza
+- เมนูล่าง: `.hubnav.nv.nv-b.nv-c.nv-d` = แถบลอยกระจก + ป้ายสีโปร่งประจำเมนู (ปุ่ม class nv-<key>) · position:fixed ติดขอบล่าง (เดิม sticky bottom:-20px ทำให้ตัวหนังสือตกจอ) · คอลัมน์กลาง 82px ให้วงกลมเมืองไม่ทับ · .overlay.hub:has(.nv) padding-bottom 100px
+- สัตว์วิญญาณช่อง city ลอยที่ (0.32W, yF-30) แตะ → `spCityPop` (act spcity/spcc/spgo ใน spAct) · hit c:'@sp'
+- Scenario: ใช้ไป 36 CU (3 ภาพกำแพง) ไฟล์อีก 2 แบบอยู่ใน Scenario (asset_UnEnmCfKy6eXhEEiqCrnxekc, asset_GG3277savcmRVSLZWgz6vmnT)
