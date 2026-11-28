@@ -1291,7 +1291,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.75</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.76</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -1460,7 +1460,7 @@ const HIDDEN = {
   smith:{need:8,by:'pen', cls:{name:'ช่างตีเหล็กตำนาน',icon:'🧑‍🏭',type:'phy',m:{hp:1.3,atk:1.3,def:1.2},skills:[{name:'ค้อนทุบเกราะ',cd:3,kind:'dmg',mult:2.0,shred:0.1},{name:'ตีดาบให้ทีม',cd:5,kind:'buff',atk:0.15,turns:3}]},
     char:{id:'smith',el:'fire',name:'ช่างตีเหล็กตำนาน',icon:'🧑‍🏭',sp:true,hidden:true,s:[{name:'ค้อนเพลิง',cd:4,kind:'dmg',mult:2.8,pen:40,dot:0.3},{name:'ค้อนแห่งตำนาน',cd:6,kind:'dmg',mult:5.0,pen:60,shred:0.25}]}},
 };
-Object.entries(HIDDEN).forEach(([k,h])=>{ const mm=h.cls.m; h.cls.m={hp:+(mm.hp*1.15).toFixed(3),atk:+(mm.atk*1.15).toFixed(3),def:+(mm.def*1.15).toFixed(3)}; CLASSES[k] = Object.assign({hidden:true, desc:'อาชีพลับ'}, h.cls); });   // อาชีพลับ: ค่าพลังพื้นฐาน +15%
+Object.entries(HIDDEN).forEach(([k,h])=>{ const mm=h.cls.m; h.cls.m={hp:+(mm.hp*1.05).toFixed(3),atk:+(mm.atk*1.05).toFixed(3),def:+(mm.def*1.05).toFixed(3)};   // v3.76 ลดจาก ×1.15 (ยังสูงกว่าอาชีพปกติ 8-15%) CLASSES[k] = Object.assign({hidden:true, desc:'อาชีพลับ'}, h.cls); });   // อาชีพลับ: ค่าพลังพื้นฐาน +15%
 /* =========================================================
    สกิล v2: คลาส 1 = 2 สกิล (เลเวลเดียวกัน) · คลาส 2 = สกิลอาชีพรวม + พาสซีฟ + สกิล 3 + อัลติเมท
    ค่าในข้อมูลคือค่าที่ Lv.3 · tags: f=ไฟ h=หนัก t=สายฟ้า c=คริ
@@ -3651,7 +3651,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rhelp" title="วิธีเล่น">❓</button><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.75</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rhelp" title="วิธีเล่น">❓</button><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.76</span>'}</div>`;
   }
   let runSet=false, runQuit=false, runHelp=false;
   function runPop(){
@@ -3912,7 +3912,7 @@ if (typeof document !== 'undefined') (function(){
     if (on && !shown){ el.innerHTML=tkInner(); el.classList.remove('tkhide'); }
     else if (!on && shown){ el.classList.add('tkhide'); setTimeout(()=>{ if (el.classList.contains('tkhide')) el.innerHTML=''; },450); } },1000);
   /* ---------- 🔔 แจ้งเตือนเกมมีอัปเดต ---------- */
-  const GAME_VER='v3.75'; let updSkip='', updT=0;
+  const GAME_VER='v3.76'; let updSkip='', updT=0;
   function updCheck(){ if (location.protocol==='file:' || document.getElementById('updpop')) return; if (Date.now()-updT<60000) return; updT=Date.now();
     fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{ if (!j||!j.v||j.v===GAME_VER||j.v===updSkip) return; updShow(j); }).catch(()=>{}); }
   function updShow(j){ const inRun=S&&S.phase&&S.phase!=='title'&&!S.over&&!hub, d=document.createElement('div'); d.id='updpop';
@@ -4001,7 +4001,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="pbtns"><button class="choice" data-act="guideopen"><span>📚 ข้อมูลเกม</span><small>วิธีเล่นเริ่มต้น · บันทึกสถานะ · ทรัพยากร · เวลารีเซ็ต · อุปกรณ์ · ธาตุ · อาชีพ</small></button><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.75<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.76<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
@@ -4194,7 +4194,7 @@ if (typeof document !== 'undefined') (function(){
   const ROOKIE='_c1', ROOKIE_MUL=1.1;
   const altOn = (m,c) => !!m.idle.hero[c];
   function heroMulOne(m, id, c){ if (id===ROOKIE) return ROOKIE_MUL; const a=id&&ALLCHARS[id], ch=id&&m.chars[id]; if (!a||!ch||heroIdleCls(id)!==c) return 1;
-    const pw=relicPower(m,id); return (1.5+0.25*((ch.star||1)-1)+(ch.form?0.5:0)+(a.tier==='hid'?0.6:a.tier!=='n'?0.3:0))*(1+(Math.sqrt(pw.dps*pw.hp)-1)*0.5)*(pw.match?1.15:1); }
+    const pw=relicPower(m,id); return (1.5+0.25*((ch.star||1)-1)+(ch.form?0.5:0)+(a.tier==='hid'?0.45:a.tier!=='n'?0.3:0))*(1+(Math.sqrt(pw.dps*pw.hp)-1)*0.5)*(pw.match?1.15:1); }
   function idleHeroMul(m, c){ const m1=heroMulOne(m,m.idle.hero[c],c), m2=slot2On(m,c)?heroMulOne(m,m.idle.hero2[c],c):1; return m1+(m2>1?(m2-1)*0.6:0); }
   const idleUlts = (m,c) => (m.idle.hero[c]!==ROOKIE&&heroMulOne(m,m.idle.hero[c],c)>1?1:0)+(slot2On(m,c)&&heroMulOne(m,m.idle.hero2[c],c)>1?1:0);
   const idleCfgOf = m => idleCfgFrom(m.idle.alt, idleUnlocked(m).filter(c=>altOn(m,c)), c=>idleHeroMul(m,c), c=>idleUlts(m,c), c=>eqMul(m.eq,c));
@@ -4866,7 +4866,7 @@ if (typeof document !== 'undefined') (function(){
   function dhState(m){ const w=dhWeek(); if (!m.dh) m.dh={kills:{},scales:0,team:[]}; if (m.dh.wk!==w){ m.dh.wk=w; m.dh.dmg=0; m.dh.claimed=[]; m.dh.best=0; m.dh.slain=false; m.dh.lv=1; } if (!m.dh.lv) m.dh.lv=1;
     const d=dayKey(); if (!m.dh.tries||m.dh.tries.d!==d) m.dh.tries={d,n:0}; m.dh.team=(m.dh.team||[]).filter(id=>m.chars[id]); return m.dh; }
   function dhHero(m,id,D){ const a=ALLCHARS[id], ch=m.chars[id], cls=heroIdleCls(id), el=a.c.el;
-    let dps=({n:1000,sp:1500,hid:2150})[a.tier]*(1+0.25*((ch.star||1)-1))*(ch.form?1.4:1);
+    let dps=({n:1000,sp:1500,hid:1800})[a.tier]*(1+0.25*((ch.star||1)-1))*(ch.form?1.4:1);
     const hp=12000*(1+0.25*((ch.star||1)-1))*(ch.form?1.3:1);
     const em = el===dhWeak(D.el) ? 1.5 : el===D.el ? 0.7 : 1, pw=heroPw(m,id);
     return {id,cls,el,dps:dps*em*pw.dps,hp:hp*pw.hp,em,spd:pw.spd,res:pw.res,heal:pw.heal,sig:pw.match?RELIC_CLS(id):null,fx:Object.assign(FX0(),pw.fx||{}),dd:0,tk:0,hl:0,form:!!ch.form}; }
