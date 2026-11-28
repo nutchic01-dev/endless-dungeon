@@ -1291,7 +1291,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.74</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.75</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -3651,7 +3651,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rhelp" title="วิธีเล่น">❓</button><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.74</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rhelp" title="วิธีเล่น">❓</button><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.75</span>'}</div>`;
   }
   let runSet=false, runQuit=false, runHelp=false;
   function runPop(){
@@ -3912,7 +3912,7 @@ if (typeof document !== 'undefined') (function(){
     if (on && !shown){ el.innerHTML=tkInner(); el.classList.remove('tkhide'); }
     else if (!on && shown){ el.classList.add('tkhide'); setTimeout(()=>{ if (el.classList.contains('tkhide')) el.innerHTML=''; },450); } },1000);
   /* ---------- 🔔 แจ้งเตือนเกมมีอัปเดต ---------- */
-  const GAME_VER='v3.74'; let updSkip='', updT=0;
+  const GAME_VER='v3.75'; let updSkip='', updT=0;
   function updCheck(){ if (location.protocol==='file:' || document.getElementById('updpop')) return; if (Date.now()-updT<60000) return; updT=Date.now();
     fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{ if (!j||!j.v||j.v===GAME_VER||j.v===updSkip) return; updShow(j); }).catch(()=>{}); }
   function updShow(j){ const inRun=S&&S.phase&&S.phase!=='title'&&!S.over&&!hub, d=document.createElement('div'); d.id='updpop';
@@ -3960,19 +3960,20 @@ if (typeof document !== 'undefined') (function(){
   /* ---------- 📬 จดหมาย / ของขวัญ (ส่งให้ทุกไอดีผ่านโค้ด) ---------- */
   const MAIL = [
     {id:'gift_leo_2611', t:'🎁 ของขวัญ: วีรชนลีโอ', d:'ขอบคุณผู้กล้าทุกท่านที่ร่วมทดสอบเกมช่วง Early Access รับ "ลีโอ สิงห์โล่ทอง" ไปร่วมทีมได้เลย! (ถ้ามีลีโออยู่แล้ว จะได้เศษลีโอ 50 ชิ้นแทน = อัปได้ 1 ดาว)', rw:{char:'leo'}},
+    {id:'gift_d4_2911', ts:Date.parse('2026-11-29T05:00:00+07:00'), t:'🎁 ของขวัญวันทดสอบวันที่ 4', d:'ขอบคุณผู้กล้าที่ร่วมทดสอบเกมมาถึงวันที่ 4! รับกล่องสุ่มเรลิกตำนาน 1 กล่อง (การันตีเรลิกระดับตำนาน) ตั๋วสุ่มสกิน 10 ใบ และตั๋วสุ่มเรลิก 10 ใบ', rw:{rlbox:[4,1], sktix:10, rtix:10}},
     {id:'gift_d3_2811', ts:Date.parse('2026-11-28T00:00:00+07:00'), t:'🎁 ของขวัญวันทดสอบวันที่ 3', d:'ขอบคุณผู้กล้าที่ร่วมทดสอบเกมมาถึงวันที่ 3! รับตั๋วสุ่มสกิน 10 ใบ ตั๋วสุ่มเรลิก 10 ใบ และไข่วิญญาณหายาก 1 ฟอง (ไข่จะอยู่ในกระเป๋า แท็บไอเทม กดเปิดได้เลย)', rw:{sktix:10, rtix:10, egg:[0,1,0]}},
     {id:'gift_bug_2611', t:'🐞 ของขวัญช่วยหาบัก: สกินตำนานลีโอ', d:'ขอบคุณทุกคนที่ช่วยแจ้งบักและทดสอบเกม! รับสกินระดับตำนาน "ชุดราชันย์สุริยสิงห์" ของลีโอไปเลย (ถ้ามีสกินนี้อยู่แล้ว จะได้เศษผ้าสกินคืนแทน)', rw:{skin:'leo_l'}},
   ];
   let mailPop=false;
   const mailGot = m => (m.mail=m.mail||{got:[]}).got;
-  const mailAll = m => MAIL.concat(((m.mail||{}).dyn)||[]);
+  const mailAll = m => MAIL.filter(x=>!x.ts||Date.now()>=x.ts).concat(((m.mail||{}).dyn)||[]);   // ของขวัญที่ตั้งเวลา (ts อนาคต) จะโผล่เมื่อถึงเวลา
   const mailUnread = m => mailAll(m).filter(x=>!mailGot(m).includes(x.id)).length;
-  function mailRwTxt(r){ const a=[]; if (r.skin){ const [sid,st]=r.skin.split('_'); a.push(`👗 สกิน${SKIN_T[st].name} ${skinsOf(sid)[st].name} (${ALLCHARS[sid].c.name.split(' ')[0]})`); } if (r.char) a.push(`${ALLCHARS[r.char].c.icon} ${ALLCHARS[r.char].c.name}`); if (r.sktix) a.push(`🎀 ตั๋วสกิน ${r.sktix}`); if (r.rtix) a.push(`🏺 ตั๋วเรลิก ${r.rtix}`); if (r.egg) r.egg.forEach((n,t)=>{ if (n) a.push(`🥚 ${EGG_T[t].n} ×${n}`); }); if (r.tickets) a.push(`🎟️ ${r.tickets}`); if (r.medals) a.push(`🎖️ ${fmt(r.medals)}`); if (r.dust) a.push(`✨ ${r.dust}`); return a.join(' · '); }
+  function mailRwTxt(r){ const a=[]; if (r.skin){ const [sid,st]=r.skin.split('_'); a.push(`👗 สกิน${SKIN_T[st].name} ${skinsOf(sid)[st].name} (${ALLCHARS[sid].c.name.split(' ')[0]})`); } if (r.char) a.push(`${ALLCHARS[r.char].c.icon} ${ALLCHARS[r.char].c.name}`); if (r.rlbox) a.push(`🏺 กล่องสุ่มเรลิก${RT[r.rlbox[0]].n} ×${r.rlbox[1]}`); if (r.sktix) a.push(`🎀 ตั๋วสกิน ${r.sktix}`); if (r.rtix) a.push(`🏺 ตั๋วเรลิก ${r.rtix}`); if (r.egg) r.egg.forEach((n,t)=>{ if (n) a.push(`🥚 ${EGG_T[t].n} ×${n}`); }); if (r.tickets) a.push(`🎟️ ${r.tickets}`); if (r.medals) a.push(`🎖️ ${fmt(r.medals)}`); if (r.dust) a.push(`✨ ${r.dust}`); return a.join(' · '); }
   function mailClaim(m,x){ if (mailGot(m).includes(x.id)) return ''; const r=x.rw||{}, out=[];
     if (r.char && ALLCHARS[r.char]){ if (!owned(m,r.char)){ m.chars[r.char]={star:1,form:false,recs:[],main:0}; if (!m.show.main) m.show.main=r.char; if (!m.skin[r.char]){ const bt=['l','r','n'].find(t=>m.skins[r.char+'_'+t]); if (bt) m.skin[r.char]=bt; } out.push(`ได้วีรชน ${ALLCHARS[r.char].c.name}!`); }
       else { m.shards[r.char]=(m.shards[r.char]||0)+50; out.push(`มี${ALLCHARS[r.char].c.name.split(' ')[0]}แล้ว ได้เศษ 50 ชิ้นแทน`); } }
     if (r.skin){ const [sid,st]=r.skin.split('_'); if (!m.skins[r.skin]){ m.skins[r.skin]=true; if (m.chars[sid]) m.skin[sid]=st; out.push(`ได้สกิน ${skinsOf(sid)[st].name}!${m.chars[sid]?' (ใส่ให้แล้ว)':''}`); } else { m.skinSh+=SKIN_T[st].refund; out.push(`มีสกินนี้แล้ว ได้เศษผ้าสกิน ${SKIN_T[st].refund}`); } }
-    if (r.gem){ gemAdd(m,r.gem); out.push(`💎 +${r.gem}`); } if (r.sktix){ m.sktix=(m.sktix||0)+r.sktix; out.push(`🎀 ตั๋วสกิน +${r.sktix}`); } if (r.rtix){ m.rtix=(m.rtix||0)+r.rtix; out.push(`ตั๋วเรลิก +${r.rtix}`); } if (r.egg){ const S0=spState(m); r.egg.forEach((n,t)=>{ if (n){ S0.eggs[t]+=n; out.push(`${EGG_T[t].n} +${n} (อยู่ในกระเป๋า แท็บไอเทม)`); } }); } if (r.tickets){ m.tickets+=r.tickets; out.push(`🎟️ +${r.tickets}`); } if (r.medals){ m.medals+=r.medals; out.push(`🎖️ +${r.medals}`); } if (r.dust){ m.dust+=r.dust; out.push(`✨ +${r.dust}`); }
+    if (r.gem){ gemAdd(m,r.gem); out.push(`💎 +${r.gem}`); } if (r.rlbox){ const [t,n]=r.rlbox; for (let i=0;i<n;i++){ const x=relicNew(RELIC_IDS[(Math.random()*RELIC_IDS.length)|0], t); (m.relics=m.relics||[]).push(x); out.push(`🏺 ${relicName(x)} (${RT[t].n})`); } } if (r.sktix){ m.sktix=(m.sktix||0)+r.sktix; out.push(`🎀 ตั๋วสกิน +${r.sktix}`); } if (r.rtix){ m.rtix=(m.rtix||0)+r.rtix; out.push(`ตั๋วเรลิก +${r.rtix}`); } if (r.egg){ const S0=spState(m); r.egg.forEach((n,t)=>{ if (n){ S0.eggs[t]+=n; out.push(`${EGG_T[t].n} +${n} (อยู่ในกระเป๋า แท็บไอเทม)`); } }); } if (r.tickets){ m.tickets+=r.tickets; out.push(`🎟️ +${r.tickets}`); } if (r.medals){ m.medals+=r.medals; out.push(`🎖️ +${r.medals}`); } if (r.dust){ m.dust+=r.dust; out.push(`✨ +${r.dust}`); }
     if (x.rk){ m.rkClaim=m.rkClaim||{}; m.rkClaim[x.rk]=1; }
     mailGot(m).push(x.id); return out.join(' · '); }
   let mailMsg='';
@@ -4000,7 +4001,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="pbtns"><button class="choice" data-act="guideopen"><span>📚 ข้อมูลเกม</span><small>วิธีเล่นเริ่มต้น · บันทึกสถานะ · ทรัพยากร · เวลารีเซ็ต · อุปกรณ์ · ธาตุ · อาชีพ</small></button><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.74<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.75<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
