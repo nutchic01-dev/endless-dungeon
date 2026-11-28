@@ -142,3 +142,11 @@
 - คลาสลับ ×1.15 → ×1.05 (ยังสูงกว่าคลาสปกติ ~8-15%) · พลังหน้าเมือง hid +0.6 → +0.45 (sp +0.3) · ล่ามังกร dps hid 2150 → 1800 (sp 1500, n 1000)
 
 - กฎ: ห้ามใส่คอมเมนต์ // กลางบรรทัดที่มีโค้ดต่อท้าย (v3.76 เคยทำเกมพังชั่วคราว ~2 นาที) · ต้องเช็ก node --check ผ่านก่อน push เสมอ
+
+## ตัวละครใหม่ 12 ตัว (ภาพ Scenario GPT Image 2.5 Sunburst 2048 high, 15 CU/แผ่น, ตาราง 3x3)
+- ช่อง: 1 ร่างปกติ · 2 กลายร่าง · 3 สกินธรรมดา · 4 สกินหายาก · 5 สกินตำนาน · 6 เรลิก · 7 ไอคอนอัลติ · 8 ท่าสำรอง · 9 ว่าง
+- fern asset_sJsSTaAfxRHtjc9HpiUgWJuR · morgan asset_7iCRgNxZyXAYb5ACEEA8yV72 · ken asset_TQNvfB8BugvmRkB1Xi4Nhd8r · rashid asset_HJwFmVJMkyJD3XPoAnAhq1wF
+- thor asset_BJsSU3yQDzkQC52QAdCX2fcH · sylvan asset_ndQ4HEj3iYe5E7xTq37FnmHe · ember asset_A4fa3ZgfshhAVRmYZZEGVhcK · gaia asset_7n5QbL2YvJsD1goET4kpiCZP
+- nerea asset_HJd6EUEXfLqvNzKGG2p1vmb5 · rock asset_6Xkm7za5xXwHj6Q6THFwxRVA · wesp asset_c49Sc76yj3966d2sRjVrfiJi · kurenai asset_LU2mZAhXmKzDEWCPLsqB3Ewr
+- ignar (ไม่ใช้ ซ้ำเบลซ เก็บไว้ทำสกินเบลซ) asset_uMFCu2Sqt2gfQC7Rfdh1Tw8Q · รวมใช้ 195 CU
+- ธาตุหลังเพิ่ม: มืด 8 น้ำ 6 อื่นๆ 7 → ตัวรอบถัดไปให้เพิ่มน้ำ · Scenario แผน cu-pro รันพร้อมกันได้สูงสุด 7 งาน
