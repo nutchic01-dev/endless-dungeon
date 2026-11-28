@@ -1291,7 +1291,7 @@ img.elico{height:1.2em;vertical-align:-.25em}
 </style>
 </head>
 <body>
-<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.73</div>
+<div id="dqload"><div class="ldbg"></div><div class="ldsh"></div><div class="ldver">v3.74</div>
 <div class="ldlogo"><div class="l1">ผู้กล้าแห่ง</div><div class="l2"><span data-t="ดันเจี้ยน">ดันเจี้ยน</span><br><span data-t="ไร้สิ้นสุด">ไร้สิ้นสุด</span></div></div>
 <div class="ldbot"><div class="ldbar"><div class="ldfill"></div><img class="ldrun" src="art/char_leo.webp" alt=""></div>
 <div class="ldtxt">กำลังเปิดประตูดันเจี้ยน…</div><div class="ldtap">✦ แตะเพื่อเริ่มผจญภัย ✦</div><div class="ldtip"></div></div></div>
@@ -3651,7 +3651,7 @@ if (typeof document !== 'undefined') (function(){
       <span class="chip">🪙 <b>${fmt(S.gold)}</b></span>
       <span class="chip"><span class="rune-dot" style="background:${r.color}"></span>${S.rune.lv?`${r.pct}% · ${S.rune.timer} ชั้น`:'ไม่มีรูน'}</span>
       ${S.books?`<span class="chip book" data-act="tab" data-t="skills">📘 <b>${S.books}</b></span>`:''}
-      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rhelp" title="วิธีเล่น">❓</button><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.73</span>'}</div>`;
+      ${S.phase!=='title'&&!S.over?`<span class="tbr"><button class="tbtn" data-act="rhelp" title="วิธีเล่น">❓</button><button class="tbtn" data-act="rset" title="ตั้งค่าเสียง">${uiIco('settings','⚙️')}</button><button class="tbtn quit" data-act="rquit" ${battleView?'disabled':''}>ออกหอคอย</button></span>`:'<span class="proto">v3.74</span>'}</div>`;
   }
   let runSet=false, runQuit=false, runHelp=false;
   function runPop(){
@@ -3912,7 +3912,7 @@ if (typeof document !== 'undefined') (function(){
     if (on && !shown){ el.innerHTML=tkInner(); el.classList.remove('tkhide'); }
     else if (!on && shown){ el.classList.add('tkhide'); setTimeout(()=>{ if (el.classList.contains('tkhide')) el.innerHTML=''; },450); } },1000);
   /* ---------- 🔔 แจ้งเตือนเกมมีอัปเดต ---------- */
-  const GAME_VER='v3.73'; let updSkip='', updT=0;
+  const GAME_VER='v3.74'; let updSkip='', updT=0;
   function updCheck(){ if (location.protocol==='file:' || document.getElementById('updpop')) return; if (Date.now()-updT<60000) return; updT=Date.now();
     fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{ if (!j||!j.v||j.v===GAME_VER||j.v===updSkip) return; updShow(j); }).catch(()=>{}); }
   function updShow(j){ const inRun=S&&S.phase&&S.phase!=='title'&&!S.over&&!hub, d=document.createElement('div'); d.id='updpop';
@@ -4000,7 +4000,7 @@ if (typeof document !== 'undefined') (function(){
       <div class="pbtns"><button class="choice" data-act="guideopen"><span>📚 ข้อมูลเกม</span><small>วิธีเล่นเริ่มต้น · บันทึกสถานะ · ทรัพยากร · เวลารีเซ็ต · อุปกรณ์ · ธาตุ · อาชีพ</small></button><button class="choice alt" data-act="tutreset"><span>📖 ดูวิธีเล่นอีกครั้ง</span><small>สอนเล่นทุกหน้าใหม่ตั้งแต่ต้น</small></button></div>
       ${typeof window.cloudHtml==='function'?window.cloudHtml():''}${window.__dqCloud&&window.__dqCloud.auth?'':saveHtml()}
       ${devHtml(m)}
-      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.73<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
+      <div class="pop-f" data-act="vertap">${window.__dqCloud&&window.__dqCloud.auth?'ข้อมูลเซฟอยู่ในบัญชีของคุณ':'ข้อมูลเซฟอยู่ในเบราว์เซอร์เครื่องนี้'} · v3.74<br>แตะนอกกรอบเพื่อปิด</div></div></div>`;
   }
   function saveHtml(){
     const msg = saveMsg ? `<div class="svmsg">${saveMsg}</div>` : '';
@@ -4500,7 +4500,7 @@ if (typeof document !== 'undefined') (function(){
   let sysOpen=false;
   const SYS_LIST=[
     ['⚔️ ผจญภัย',[['adv','🗼','หอคอยไร้สิ้นสุด','โหมดหลัก ไต่ให้สูง เก็บพลังให้วีรชน','hub','adv'],['daily','📅','ด่านท้าทายรายวัน','ด่านพิเศษเปลี่ยนทุกวัน แข่งอันดับรายวัน','hub','adv'],['hundred','🏯','หอคอยร้อยชั้น','พาทีมวีรชน 5 ตัวไต่ 100 ชั้น','htopen',''],['nest','🥚','รังวิญญาณ','สู้ผู้พิทักษ์ หาไข่สัตว์วิญญาณ วันละ 3 รอบ','nestopen','',('spirit')],['dragon','🐉','ล่ามังกร','บอสประจำสัปดาห์ ยิ่งตียิ่งเลเวลสูง','dhopen',''],['arena','🏟️','สนามประลอง','PvP สู้ทีมผู้เล่นอื่น ไต่คะแนนประลอง','arnopen','']]],
-    ['🦸 วีรชน',[['chars','chars','วีรชน','อัปดาว กลายร่าง ดูสถิติ','hub','chars','star'],['spirit','egg','สัตว์วิญญาณ','สัตว์ช่วยสู้ ใส่ได้ 3 ช่อง','spopen','','spirit'],['relic','tab_relic','คลังเรลิก','ตีบวก สุ่มพลังแฝง ใส่ให้วีรชน','rbopen','','relic'],['skin','skin','สกิน','เปลี่ยนชุด ได้สถานะเพิ่ม','goskin','','skin']]],
+    ['🦸 วีรชน',[['chars','chars','วีรชน','อัปดาว กลายร่าง ดูสถิติ','hub','chars','star'],['spirit','egg','สัตว์วิญญาณ','สัตว์ช่วยสู้ ใส่ได้ 3 ช่อง','spopen','','spirit'],['relic','tab_relic','คลังเรลิก','ดูทั้งหมด ตีบวก สุ่มพลังแฝง แยก','rbopen','','relic'],['skin','skin','สกิน','เปลี่ยนชุด ได้สถานะเพิ่ม','goskin','','skin']]],
     ['🏰 เมือง',[['troop','troop','ทหาร · แท่นบูชา','อัปพลังทหารหน้าเมือง','hub','troop'],['forge','eqtix','ตีอุปกรณ์ทหาร','สุ่มอาวุธ/ชุดให้ทหารแต่ละสาย','eqopen','','forge'],['chest','chest','กล่องสมบัติออฟไลน์','ทองสะสมระหว่างไม่ได้เล่น','ichest','','chest'],['mission','mission','ภารกิจรายวัน','ทำครบรับเพชรและรางวัล','imission','']]],
     ['🛒 ร้าน & อัญเชิญ',[['gacha','gacha','อัญเชิญ','สุ่มเศษวีรชน สกิน เรลิก','hub','gacha','gacha'],['shop','shop','ร้านค้า','ร้านเพชร ลดราคาทุกวัน · ร้านเหรียญ · PvP','hub','shop'],['bag','bag','กระเป๋า','ไอเทม ไข่วิญญาณ เศษ อุปกรณ์','hub','bag','egg']]],
     ['💬 อื่นๆ',[['rank','rank','ตารางอันดับ','รายสัปดาห์ · หอเกียรติยศ','hub','rank'],['chat','chat','แชทโลก','คุยกับผู้เล่นทั้งเซิร์ฟ','hub','chat'],['mail','📮','จดหมาย','ของขวัญและรางวัลอันดับ','mailopen',''],['guide','lore','คู่มือ','อธิบายทุกระบบ','guideopen','start']]]];
@@ -4732,7 +4732,7 @@ if (typeof document !== 'undefined') (function(){
     [...rbSel].forEach(u=>{ const r=all.find(x=>x.uid===u); if (!r||r.on) rbSel.delete(u); });
     const sel=all.filter(r=>rbSel.has(r.uid)), sh=sel.reduce((a,r)=>a+RELIC_DISMANTLE[r.t],0), rf=sel.reduce((a,r)=>a+relicRefund(r),0);
     const cnt=t=>all.filter(r=>r.t===t&&!r.on).length, allOn=t=>{ const fr=all.filter(r=>r.t===t&&!r.on); return fr.length&&fr.every(r=>rbSel.has(r.uid)); };
-    return `<div class="overlay hub" ${pageBg('gacha')}>${hubHead(m,'🏺 คลังเรลิก')}${relicBreakBody(m,true)}${nav()}</div>`; }
+    return `<div class="overlay hub" ${pageBg('gacha')}>${hubHead(m,'🏺 คลังเรลิก')}${bagRelicTab(m)}<div class="row2" style="margin-top:6px"><button class="choice alt" data-act="goshop" data-k="relic"><span>🏺 ร้านเรลิก</span></button><button class="choice alt" data-act="rlgacha"><span>✨ อัญเชิญเรลิก</span></button></div>${nav()}</div>`; }
   function relicBreakBody(m, withList){ const all=(m.relics||[]).slice().sort((a,b)=>(!!a.on-!!b.on)||a.t-b.t||a.lv-b.lv), list=all.filter(r=>rbFilter<0||r.t===rbFilter);
     [...rbSel].forEach(u=>{ const r=all.find(x=>x.uid===u); if (!r||r.on) rbSel.delete(u); });
     const sel=all.filter(r=>rbSel.has(r.uid)), sh=sel.reduce((a,r)=>a+RELIC_DISMANTLE[r.t],0), rf=sel.reduce((a,r)=>a+relicRefund(r),0);
@@ -4751,7 +4751,7 @@ if (typeof document !== 'undefined') (function(){
         <div style="text-align:center" class="dhrs">จะได้ ✴️ ${sh}${rf?` + ${UIC.rc} ${rf}`:''}<br><small class="csd">แยกแล้วเอาคืนไม่ได้</small></div>
         <div class="row2"><button class="choice alt" data-act="rbno"><span>ยกเลิก</span></button><button class="choice" data-act="rbyes"><span>แยกเลย</span></button></div></div></div>`:''}`; }
   function rbAct(act,b){
-    if (act==='rbopen'){ hub='relicbag'; charPop=null; rbSel=new Set(); rbAsk=false; hubMsg=''; render(); return true; }
+    if (act==='rbopen'){ hub='relicbag'; charPop=null; rbSel=new Set(); rbAsk=false; hubMsg=''; bagRl='list'; relSel=null; render(); return true; }
     if (act==='rbfil'){ rbFilter=+b.dataset.t; render(); return true; }
     if (act==='rbclear'){ rbSel.clear(); render(); return true; }
     if (act==='rbgo'){ if (rbSel.size){ rbAsk=true; render(); } return true; }
